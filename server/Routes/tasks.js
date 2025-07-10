@@ -46,13 +46,20 @@ router.patch("/:id", verifyToken, async (req, res) => {
   const { title, description, category, tags } = req.body;
 
   if (!title && !description && !category && !tags) {
-    return res.status(400).json({ message: "Al menos un campo debe ser actualizado" });
+    return res
+      .status(400)
+      .json({ message: "Al menos un campo debe ser actualizado" });
   }
 
   try {
-    const [task] = await pool.query("SELECT * FROM tasks WHERE id = ? AND user_id = ?", [taskId, userId]);
+    const [task] = await pool.query(
+      "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
+      [taskId, userId]
+    );
     if (task.length === 0) {
-      return res.status(404).json({ message: "Tarea no encontrada o no autorizada" });
+      return res
+        .status(404)
+        .json({ message: "Tarea no encontrada o no autorizada" });
     }
 
     const fields = [];
@@ -77,13 +84,40 @@ router.patch("/:id", verifyToken, async (req, res) => {
 
     values.push(taskId, userId);
 
-    const sql = `UPDATE tasks SET ${fields.join(", ")} WHERE id = ? AND user_id = ?`;
+    const sql = `UPDATE tasks SET ${fields.join(
+      ", "
+    )} WHERE id = ? AND user_id = ?`;
 
     await pool.query(sql, values);
 
     res.json({ message: "Tarea actualizada correctamente" });
   } catch (error) {
     console.error("Error al actualizar tarea:", error);
+    res.status(500).json({ message: "Error del servidor" });
+  }
+});
+// Ruta para eliminar una tarea
+router.delete("/:id", verifyToken, async (req, res) => {
+  const taskId = req.params.id;
+  const userId = req.user.id;
+
+  if (!taskId) {
+    return res.status(400).json({ message: "ID de tarea es obligatorio" });
+  }
+
+  try {
+    const [result] = await pool.query(
+      "DELETE FROM tasks WHERE id = ? AND user_id = ?",
+      [taskId, userId]
+    );
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ message: "Tarea no encontrada o no autorizada" });
+    }
+    res.status(200).json({ message: "Tarea eliminada correctamente" });
+  } catch (error) {
+    console.error("Error al eliminar tarea:", error);
     res.status(500).json({ message: "Error del servidor" });
   }
 });
