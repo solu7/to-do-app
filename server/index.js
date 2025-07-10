@@ -2,12 +2,14 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const pool = require("./db");
+const authRoutes = require("./Routes/auth");
 
 const app = express();
 const PORT = process.env.PORT;
-
-app.use(cors());
 app.use(express.json());
+app.use(cors());
+
+app.use("/auth", authRoutes);
 
 app.get("/", async (req, res) => {
   try {
