@@ -16,13 +16,13 @@ app.use("/tasks", taskRoutes);
 app.get("/", async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT NOW() AS now");
-    res.send(`Server is running! it's: ${rows[0].now} from the database.`);
+    res.send(`El servidor esta corriendo, son las : ${rows[0].now}.`);
   } catch (error) {
-    console.error("Error querying the database ", error);
-    res.status(500).send("Could not connect to the database");
+    console.error("Error al conectar a la base de datos", error);
+    res.status(500).send("No se pudo conectar a la base de datos :(");
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running in http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
