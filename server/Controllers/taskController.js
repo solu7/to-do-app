@@ -1,29 +1,39 @@
-const { getTasksByUser } = require("../Models/taskModel");
-
-const listTasks = async (req, res) => {
-  const userId = req.user.id;
-  const { page = 1, limit = 10, category, tags } = req.query;
-
-  try {
-    const filters = { category, tags };
-    console.log("filters:", filters);
-    console.log("SQL WHERE:", filterClause);
-    console.log("values:", values);
-    const tasks = await getTasksByUser(userId, page, limit, filters);
-    res.json(tasks);
-  } catch (error) {
-    console.error("Error al obtener tareas:");
-    res.status(500).json({ message: "Error del servidor" });
-  }
-};
+const taskModel = require("../Models/taskModel");
 
 const getTasks = async (req, res) => {
   const userId = req.user.id;
   try {
-    const tasks = await taskModel.getTasksByUser(userId);
+    const tasks = await taskModel.getLatestTasks(userId);
     res.json(tasks);
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener tareas" });
+    console.error("Error al obtener tareas del usuario:", error);
+    res.status(500).json({ message: "Error al obtener tareas del usuario" });
+  }
+}
+
+const filterTasksByTags = async (req, res) => {
+  const userId = req.user.id;
+  const { tags } = req.query;
+
+  try {
+    const tasks = await taskModel.getTasksByTag(userId, tags);
+    res.json(tasks);
+  } catch (error) {
+    console.error("Error al filtrar por tags:", error);
+    res.status(500).json({ message: "Error del servidor" });
+  }
+};
+
+const filterTasksByCategory = async (req, res) => {
+  const userId = req.user.id;
+  const { category } = req.query;
+
+  try {
+    const tasks = await taskModel.getTasksByCategory(userId, category);
+    res.json(tasks);
+  } catch (error) {
+    console.error("Error al filtrar por categoría:", error);
+    res.status(500).json({ message: "Error del servidor" });
   }
 };
 
@@ -108,8 +118,9 @@ const deleteTask = async (req, res) => {
 
 module.exports = {
   getTasks,
+  filterTasksByCategory,
+  filterTasksByTags,
   createTask,
   updateTask,
   deleteTask,
-  listTasks,
 };

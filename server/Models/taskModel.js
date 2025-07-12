@@ -1,21 +1,31 @@
 const pool = require("../db");
-const { buildTaskFilterQuery } = require("../Utils/filters");
-// Listar tareas por usuario
-async function getTasksByUser(userId, page = 1, limit = 10, filters = {}) {
-  const offset = (page - 1) * limit;
 
-  let query = "SELECT * FROM tasks WHERE user_id = ?";
-  const values = [userId];
-
-  const { filterClause, values: filterValues } = buildTaskFilterQuery(filters);
-  query += filterClause;
-
-  query += " ORDER BY created_at DESC LIMIT ? OFFSET ?";
-  values.push(...filterValues, parseInt(limit), parseInt(offset));
-
-  const [tasks] = await pool.query(query, values);
+// Últimas 10 tareas
+const getLatestTasks = async (userId) => {
+  const [tasks] = await pool.query(
+    "SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC LIMIT 10",
+    [userId]
+  );
   return tasks;
-}
+};
+
+// Filtrar por categoría
+const getTasksByCategory = async (userId, category) => {
+  const [tasks] = await pool.query(
+    "SELECT * FROM tasks WHERE user_id = ? AND category = ? ORDER BY created_at DESC",
+    [userId, category]
+  );
+  return tasks;
+};
+
+// Filtrar por tag 
+const getTasksByTag = async (userId, tag) => {
+  const [tasks] = await pool.query(
+    "SELECT * FROM tasks WHERE user_id = ? AND tags LIKE ? ORDER BY created_at DESC",
+    [userId, `%${tag}%`]
+  );
+  return tasks;
+};
 
 // Crear tarea
 const createTask = async (userId, title, description, category, tags) => {
@@ -53,7 +63,9 @@ const deleteTask = async (taskId, userId) => {
 };
 
 module.exports = {
-  getTasksByUser,
+  getLatestTasks,
+  getTasksByCategory,
+  getTasksByTag,
   createTask,
   updateTask,
   findTaskById,
