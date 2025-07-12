@@ -11,16 +11,34 @@ const getTasks = async (req, res) => {
   }
 }
 
-const filterTasksByTags = async (req, res) => {
+const assignTagToTask = async (req, res) => {
   const userId = req.user.id;
-  const { tags } = req.query;
+  const taskId = req.params.taskId;
+  const { tagId } = req.body;
+
+  if (!tagId) {
+    return res.status(400).json({ message: "El ID del tag es obligatorio" });
+  }
 
   try {
-    const tasks = await taskModel.getTasksByTag(userId, tags);
-    res.json(tasks);
+    await taskModel.assignTagToTask(userId, taskId, tagId);
+    res.status(200).json({ message: "Tag asignado correctamente a la tarea" });
   } catch (error) {
-    console.error("Error al filtrar por tags:", error);
-    res.status(500).json({ message: "Error del servidor" });
+    console.error("Error al asignar tag a tarea:", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const removeTagFromTask = async (req, res) => {
+  const userId = req.user.id;
+  const { taskId, tagId } = req.params;
+
+  try {
+    await taskModel.removeTagFromTask(userId, taskId, tagId);
+    res.status(200).json({ message: "Tag eliminado correctamente de la tarea" });
+  } catch (error) {
+    console.error("Error al eliminar tag de tarea:", error);
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -39,14 +57,14 @@ const filterTasksByCategory = async (req, res) => {
 
 const createTask = async (req, res) => {
   const userId = req.user.id;
-  const { title, description, category, tags } = req.body;
+  const { title, description, category } = req.body;
 
   if (!title) {
     return res.status(400).json({ message: "El título es obligatorio" });
   }
 
   try {
-    await taskModel.createTask(userId, title, description, category, tags);
+    await taskModel.createTask(userId, title, description, category);
     res.status(201).json({ message: "Tarea creada correctamente" });
   } catch (error) {
     res.status(500).json({ message: "Error al crear tarea" });
@@ -56,9 +74,9 @@ const createTask = async (req, res) => {
 const updateTask = async (req, res) => {
   const userId = req.user.id;
   const taskId = req.params.id;
-  const { title, description, category, tags } = req.body;
+  const { title, description, category } = req.body;
 
-  if (!title && !description && !category && !tags) {
+  if (!title && !description && !category) {
     return res
       .status(400)
       .json({ message: "Al menos un campo debe ser actualizado" });
@@ -86,10 +104,6 @@ const updateTask = async (req, res) => {
     if (category) {
       fields.push("category = ?");
       values.push(category);
-    }
-    if (tags) {
-      fields.push("tags = ?");
-      values.push(tags);
     }
 
     await taskModel.updateTask(taskId, userId, fields, values);
@@ -119,8 +133,9 @@ const deleteTask = async (req, res) => {
 module.exports = {
   getTasks,
   filterTasksByCategory,
-  filterTasksByTags,
   createTask,
   updateTask,
   deleteTask,
+  assignTagToTask,
+  removeTagFromTask,
 };

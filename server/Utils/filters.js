@@ -7,11 +7,6 @@ function buildTaskFilterQuery(filters) {
     values.push(filters.category);
   }
 
-  if (filters.tags) {
-    filterClause += " AND tags LIKE ?";
-    values.push(`%${filters.tags}%`);
-  }
-
   return { filterClause, values };
 }
 

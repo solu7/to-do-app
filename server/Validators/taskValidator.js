@@ -14,10 +14,6 @@ const createTaskValidator = [
     .optional()
     .isIn(["personal", "trabajo", "estudio", "otro"])
     .withMessage("Categoría inválida"),
-  body("tags")
-    .optional()
-    .isString()
-    .withMessage("Tags debe ser un texto separado por comas"),
 ];
 
 const updateTaskValidator = [
@@ -26,7 +22,6 @@ const updateTaskValidator = [
   body("category")
     .optional()
     .isIn(["personal", "trabajo", "estudio", "otro"]),
-  body("tags").optional().isString(),
 ];
 
 module.exports = {

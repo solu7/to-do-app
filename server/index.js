@@ -4,6 +4,7 @@ require("dotenv").config();
 const pool = require("./db");
 const authRoutes = require("./Routes/auth");
 const taskRoutes = require("./Routes/tasks");
+const tagRoutes = require("./Routes/tags");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
+app.use("/tags", tagRoutes);
 
 app.get("/", async (req, res) => {
   try {
