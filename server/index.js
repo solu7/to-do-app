@@ -5,6 +5,7 @@ const pool = require("./db");
 const authRoutes = require("./Routes/auth");
 const taskRoutes = require("./Routes/tasks");
 const tagRoutes = require("./Routes/tags");
+const categoryRoutes = require("./Routes/categories");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -14,6 +15,7 @@ app.use(cors());
 app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/tags", tagRoutes);
+app.use("/categories", categoryRoutes);
 
 app.get("/", async (req, res) => {
   try {

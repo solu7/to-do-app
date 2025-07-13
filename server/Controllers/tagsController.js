@@ -1,4 +1,4 @@
-const tagModel = require("../Models/tagModel");
+const tagModel = require("../Models/tagsModel");
 
 const createTag = async (req, res) => {
   const userId = req.user.id;

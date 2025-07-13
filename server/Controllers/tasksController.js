@@ -1,4 +1,4 @@
-const taskModel = require("../Models/taskModel");
+const taskModel = require("../Models/tasksModel");
 
 const getTasks = async (req, res) => {
   const userId = req.user.id;
@@ -52,6 +52,42 @@ const filterTasksByCategory = async (req, res) => {
   } catch (error) {
     console.error("Error al filtrar por categoría:", error);
     res.status(500).json({ message: "Error del servidor" });
+  }
+};
+
+const assignCategoriesToTask = async (req, res) => {
+  const userId = req.user.id;
+  const { taskId } = req.params;
+  const { categoryIds } = req.body;
+
+  if (!Array.isArray(categoryIds) || categoryIds.length === 0) {
+    return res
+      .status(400)
+      .json({ message: "Debes proporcionar un array de IDs de categorías" });
+  }
+
+  try {
+    await taskModel.assignCategoriesToTask(userId, taskId, categoryIds);
+    res.status(200).json({ message: "Categorías asignadas correctamente a la tarea" });
+  } catch (error) {
+    console.error("Error al asignar categorías a la tarea:", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const removeCategoryFromTask = async (req, res) => {
+  const userId = req.user.id;
+  const { taskId, categoryId } = req.params;
+
+  try {
+    const result = await taskModel.removeCategoryFromTask(userId, taskId, categoryId);
+    if (result.notFound) {
+      return res.status(404).json({ message: "Tarea no encontrada" });
+    }
+    res.status(200).json({ message: "Categoría eliminada de la tarea" });
+  } catch (error) {
+    console.error("Error al quitar la categoría de la tarea:", error);
+    res.status(500).json({ message: "Error del servidor", error: error.message });
   }
 };
 
@@ -138,4 +174,6 @@ module.exports = {
   deleteTask,
   assignTagToTask,
   removeTagFromTask,
+  assignCategoriesToTask,
+  removeCategoryFromTask,
 };
