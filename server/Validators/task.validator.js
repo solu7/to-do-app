@@ -19,9 +19,7 @@ const createTaskValidator = [
 const updateTaskValidator = [
   body("title").optional().isLength({ max: 100 }),
   body("description").optional().isLength({ max: 500 }),
-  body("category")
-    .optional()
-    .isIn(["personal", "trabajo", "estudio", "otro"]),
+  body("category").optional().isIn(["personal", "trabajo", "estudio", "otro"]),
 ];
 
 module.exports = {

@@ -1,11 +1,13 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const userModel = require("../Models/userModel");
+const userModel = require("../Models/user.model");
 
 async function register(req, res) {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ message: "Email y password son obligatorios" });
+    return res
+      .status(400)
+      .json({ message: "Email y password son obligatorios" });
   }
 
   try {
@@ -27,7 +29,9 @@ async function register(req, res) {
 async function login(req, res) {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ message: "Email y password son obligatorios" });
+    return res
+      .status(400)
+      .json({ message: "Email y password son obligatorios" });
   }
 
   try {

@@ -1,7 +1,9 @@
-const pool = require("../db");
+const pool = require("../Config/db");
 
 async function findUserByEmail(email) {
-  const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
+  const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
+    email,
+  ]);
   return rows;
 }
 
