@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const verifyToken = require("../Middleware/auth.middleware");
-const tagController = require("../Controllers/tag.controller");
+const verifyToken = require("../auth/auth.middleware");
+const tagController = require("./tag.controller");
 
 router.get("/:tagName/tasks", verifyToken, tagController.filterTasksByTags);
 

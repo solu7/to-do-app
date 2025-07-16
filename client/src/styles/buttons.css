@@ -3,12 +3,13 @@
   align-items: center;
   justify-content: center;
   height: 35px;
-  width: 130px;
+  width: 135px;
   background-color: var(--primary-color, #327dee);
   color: white;
   font-family: "principal-font", sans-serif;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
 }
 .btn:hover {
   transition: all 0.4s ease-in-out;
@@ -30,6 +31,7 @@
   font-family: "principal-font", sans-serif;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
 }
 .btn-secondary:hover {
   transition: all 0.4s ease-in-out;

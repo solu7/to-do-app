@@ -1,4 +1,4 @@
-const pool = require("../Config/db");
+const pool = require("../shared/db");
 
 const createTag = async (userId, name) => {
   const [result] = await pool.query(

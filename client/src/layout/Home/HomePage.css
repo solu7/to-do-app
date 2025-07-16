@@ -1,0 +1,42 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+}
+.home-page-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; 
+  gap: 80px;
+}
+.home-page-header-text {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+h1 {
+  font-family: "principal-font-bold", sans-serif;
+  font-size: 55px;
+}
+.home-page-description {
+  font-family: "principal-font", sans-serif;
+  font-size: 19px;
+  line-height: 40px;
+  color: var(--grey);
+}
+.home-page-image {
+  height: 500px;
+}
+.btn.goGitHubProject {
+  transform: scale(1.15);
+  border-radius: 8px;
+  width: 150px;
+}
+.btn.goGitHubProject:hover {
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.05);
+}

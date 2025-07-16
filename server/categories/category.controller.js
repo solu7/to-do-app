@@ -1,4 +1,4 @@
-const categoryModel = require("../Models/category.model");
+const categoryModel = require("./category.model");
 
 const createCategory = async (req, res) => {
   const userId = req.user.id;
@@ -59,7 +59,7 @@ const removeCategoryFromTask = async (req, res) => {
   const { taskId, categoryId } = req.params;
 
   try {
-    const result = await categoryModelModel.removeCategoryFromTask(
+    const result = await categoryModel.removeCategoryFromTask(
       userId,
       taskId,
       categoryId

@@ -1,4 +1,4 @@
-const tagModel = require("../Models/tag.model");
+const tagModel = require("./tag.model");
 
 const createTag = async (req, res) => {
   const userId = req.user.id;
@@ -29,7 +29,7 @@ const assignTagToTask = async (req, res) => {
   }
 
   try {
-    await taskModel.assignTagToTask(userId, taskId, tagId);
+    await tagModel.assignTagToTask(userId, taskId, tagId);
     res.status(200).json({ message: "Tag asignado correctamente a la tarea" });
   } catch (error) {
     console.error("Error al asignar tag a tarea:", error);
@@ -42,7 +42,7 @@ const removeTagFromTask = async (req, res) => {
   const { taskId, tagId } = req.params;
 
   try {
-    await taskModel.removeTagFromTask(userId, taskId, tagId);
+    await tagModel.removeTagFromTask(userId, taskId, tagId);
     res
       .status(200)
       .json({ message: "Tag eliminado correctamente de la tarea" });

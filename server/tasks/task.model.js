@@ -1,4 +1,4 @@
-const pool = require("../Config/db");
+const pool = require("../shared/db");
 
 const getLatestTasks = async (userId) => {
   const [tasks] = await pool.query(

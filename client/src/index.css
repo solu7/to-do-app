@@ -1,16 +1,23 @@
-@import './styles/buttons.css';
-@import './styles/global.css';
+@import "./styles/buttons.css";
+@import "./styles/global.css";
+@import "./styles/utility.css";
 
 :root {
   --primary-color: rgb(50, 125, 238);
   --secondary-color: rgba(50, 125, 238, 0.144);
   --dark-color: #14348f;
   --black: rgb(80, 80, 80);
+  --grey: rgb(99, 99, 99);
 }
 
 @font-face {
   font-family: "principal-font";
   src: url(./assets/fonts/Gontserrat-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "principal-font-light";
+  src: url(./assets/fonts/Gontserrat-Light.ttf) format("truetype");
 }
 
 @font-face {

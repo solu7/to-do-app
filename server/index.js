@@ -2,12 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
-const pool = require("./Config/db");
+const pool = require("./shared/db");
 
-const authRoutes = require("./Routes/auth.routes");
-const taskRoutes = require("./Routes/tasks.routes");
-const tagRoutes = require("./Routes/tags.routes");
-const categoryRoutes = require("./Routes/categories.routes");
+const authRoutes = require("./auth/auth.routes");
+const taskRoutes = require("./tasks/tasks.routes");
+const tagRoutes = require("./tags/tags.routes");
+const categoryRoutes = require("./categories/categories.routes");
 
 const app = express();
 const PORT = process.env.PORT;

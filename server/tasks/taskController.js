@@ -1,4 +1,4 @@
-const taskModel = require("../Models/task.model");
+const taskModel = require("./task.model");
 
 const getTasks = async (req, res) => {
   const userId = req.user.id;
