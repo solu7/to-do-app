@@ -1,7 +1,7 @@
 import './App.css'
 
 import Navbar from './layout/NavBar/Navbar'
-import HomePage from './layout/Home/HomePage'
+import HomePage from './pages/Home/HomePage'
 
 function App() {
 

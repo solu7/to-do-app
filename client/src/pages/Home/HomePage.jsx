@@ -1,6 +1,8 @@
 import "./HomePage.css";
 import { useExternalNavigation } from "../../hooks/useExternalNavigation";
 import homeImage from "../../assets/images/home-principal.avif";
+import FeaturesSection from "../../layout/featuresSection/FeaturesSection";
+import TechUsedSection from "../../layout/TechsUsedSection/TechsUsedSection";
 
 function HomePage() {
   const { goToGitHubProject } = useExternalNavigation();
@@ -13,8 +15,8 @@ function HomePage() {
           </h1>
           <p className="home-page-description">
             Este proyecto es full-stack construida con React, Node.js, Express y
-            MySQL, pensada paragestionar tus tareas. Más allá de la
-            funcionalidad, el foco estuvo en la calidad del código: buscando
+            MySQL, pensada para gestionar tus tareas. Más allá de la
+            funcionalidad, el foco estuvo en la calidad del código, buscando
             implementar buenas prácticas, una estructura de carpetas lógica y
             mantenible, y algunas medidas de seguridad para un resultado
             confiable y escalable.
@@ -25,6 +27,9 @@ function HomePage() {
         </div>
         <img className="home-page-image" src={homeImage} alt="" />
       </div>
+      <div className="imageExample"></div>
+      <FeaturesSection />
+      <TechUsedSection />
     </div>
   );
 }

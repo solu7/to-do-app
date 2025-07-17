@@ -1,0 +1,107 @@
+/* * Seccion entera de tecnologias usadas */
+
+.tech-used-section {
+  /* Contenedor de la seccion entera */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tech-used-section-title {
+  /* Titulo de toda la seccion */
+  font-family: "principal-font", sans-serif;
+  font-size: 30px;
+  color: var(--black);
+}
+.tech-used-section-title span {
+  color: var(--primary-color);
+}
+
+/* * Seccion de lenguajes usados */
+
+.tech-used-section-languages {
+  /* Contenedor de la Seccion de lenguajes (Back y Front) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  margin-top: 50px;
+}
+.tech-used-languages {
+  /* Contenedor de las secciones Back y Front */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+.languages-used-title {
+  /* Titulo de las secciones de lenguajes (Back y Front) */
+  font-family: "principal-font-extra-bold", sans-serif;
+  font-size: 15px;
+  color: var(--opacity-grey);
+  margin-bottom: 30px;
+  position: relative;
+}
+.languages-used-title::after {
+  /* Decoracion del titulo de las secciones de lenguajes */
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--opacity-grey),
+    transparent
+  );
+}
+.languages {
+  /* Contenedor de todos los lenguajes de la seccion */
+  display: flex;
+  flex-direction: row;
+  gap: 150px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* * Seccion de herramientas usadas */
+
+.tech-used-section-tools {
+  /* Contenedor de la Seccion de Herramientas */
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  margin-bottom: 50px;
+  align-items: center;
+}
+.tech-used-section-tools-title {
+  /* Titulo de la Seccion de Herramientas */
+  font-family: "principal-font", sans-serif;
+  font-size: 18px;
+  color: var(--opacity-grey);
+  position: relative;
+}
+.tech-used-section-tools-title::after {
+  /* Decoracion del titulo de la Seccion de Herramientas */
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--opacity-grey),
+    transparent
+  );
+}
+.tech-used-tools {
+  /* Contenedor de las herramientas */
+  margin-top: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+}

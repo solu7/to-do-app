@@ -1,16 +1,14 @@
 .home-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin-top: 60px;
 }
 .home-page-header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center; 
-  gap: 80px;
+  justify-content: space-between;
+  padding: 0px 190px 0px 190px;
 }
 .home-page-header-text {
   width: 500px;

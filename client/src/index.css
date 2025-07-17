@@ -8,11 +8,14 @@
   --dark-color: #14348f;
   --black: rgb(80, 80, 80);
   --grey: rgb(99, 99, 99);
+  --light-grey: rgb(151, 151, 151);
+  --opacity-grey: rgba(201, 201, 201, 0.836);
 }
 
 @font-face {
   font-family: "principal-font";
   src: url(./assets/fonts/Gontserrat-Regular.ttf) format("truetype");
+  letter-spacing: 0.3px;
 }
 
 @font-face {
@@ -23,4 +26,9 @@
 @font-face {
   font-family: "principal-font-bold";
   src: url(./assets/fonts/Gontserrat-Medium.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "principal-font-extra-bold";
+  src: url(./assets/fonts/Gontserrat-Bold.ttf) format("truetype");
 }
