@@ -71,7 +71,7 @@
   /* Contenedor de la Seccion de Herramientas */
   display: flex;
   flex-direction: column;
-  margin-top: 70px;
+  margin-top: 90px;
   margin-bottom: 50px;
   align-items: center;
 }
