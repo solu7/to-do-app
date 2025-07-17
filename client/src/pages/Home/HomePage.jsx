@@ -1,8 +1,8 @@
 import "./HomePage.css";
 import { useExternalNavigation } from "../../hooks/useExternalNavigation";
 import homeImage from "../../assets/images/home-principal.avif";
-import FeaturesSection from "../../layout/featuresSection/FeaturesSection";
-import TechUsedSection from "../../layout/TechsUsedSection/TechsUsedSection";
+import FeaturesSection from "./Features/FeaturesSection";
+import TechUsedSection from "./TechsUsed/TechsUsedSection";
 
 function HomePage() {
   const { goToGitHubProject } = useExternalNavigation();
