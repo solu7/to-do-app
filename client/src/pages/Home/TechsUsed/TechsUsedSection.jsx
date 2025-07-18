@@ -35,9 +35,9 @@ function TechUsedSection() {
         </section>
       </section>
       <section className="tech-used-section-tools">
-        <h2 className="tech-used-section-tools-title">
+        <p className="tech-used-section-tools-title">
           Herramientas y librerias.
-        </h2>
+        </p>
         <section className="tech-used-tools">
             {toolsUsed.map((item, idx) => (
               <ToolsUsedArticle key={idx} {...item} />

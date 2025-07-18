@@ -19,7 +19,7 @@
 }
 .navbar-links a {
     font-family: "principal-font", sans-serif;
-    color: var(--black);
+    color: var(--dark-grey);
 }
 .navbar-links a:hover {
   transition: all 0.3s ease-in-out;

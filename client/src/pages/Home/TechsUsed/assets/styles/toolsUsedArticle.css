@@ -7,7 +7,7 @@
 .tool-used p {
   font-family: "principal-font-extra-bold", sans-serif;
   font-size: 14px;
-  color: var(--black);
+  color: var(--dark-grey);
   letter-spacing: 0px;
 }
 .tool-used img {

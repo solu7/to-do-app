@@ -10,15 +10,18 @@
   flex-direction: row;
   gap: 35px;
   padding: 0px 190px 0px 190px;
-  margin-bottom: 70px;
 }
 .features-title {
   font-family: "principal-font", sans-serif;
   font-size: 30px;
-  color: var(--black);
+  color: var(--dark-grey);
   text-align: center;
   letter-spacing: 0.5px;
 }
 .features-title span {
   color: var(--primary-color);
+}
+.footer-about-project {
+  display: flex;
+  flex-direction: column;
 }

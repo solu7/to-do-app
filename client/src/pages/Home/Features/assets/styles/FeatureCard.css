@@ -1,24 +1,17 @@
 .feature-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
   width: 250px;
   height: 290px;
   padding: 20px;
-  position: relative;
+  background: white;
+  border: 2px solid var(--opacity-grey);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 3px 3px 9px rgba(61, 61, 61, 0.1);
 }
-.feature-card::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--light-grey),
-    transparent
-  );
+.feature-card:hover {
+  transform: scale(1.05);
+  border: 2px solid var(--primary-color);
 }
 .feature-card-icon {
   height: 60px;

@@ -7,7 +7,7 @@
 .tech-used p {
   font-family: "principal-font-extra-bold", sans-serif;
   font-size: 20px;
-  color: var(--black);
+  color: var(--dark-grey);
   letter-spacing: 0px;
 }
 .tech-used img {

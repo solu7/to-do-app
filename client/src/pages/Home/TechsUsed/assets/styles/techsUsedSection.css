@@ -10,7 +10,7 @@
   /* Titulo de toda la seccion */
   font-family: "principal-font", sans-serif;
   font-size: 30px;
-  color: var(--black);
+  color: var(--dark-grey);
 }
 .tech-used-section-title span {
   color: var(--primary-color);
@@ -35,26 +35,13 @@
 }
 .languages-used-title {
   /* Titulo de las secciones de lenguajes (Back y Front) */
-  font-family: "principal-font-extra-bold", sans-serif;
-  font-size: 15px;
-  color: var(--opacity-grey);
+  font-family: "principal-font-bold", sans-serif;
+  font-size: 14px;
+  color: var(--light-grey);
   margin-bottom: 30px;
-  position: relative;
-}
-.languages-used-title::after {
-  /* Decoracion del titulo de las secciones de lenguajes */
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  right: 0;
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--opacity-grey),
-    transparent
-  );
+  background-color: var(--ultra-light-grey);
+    padding: 8px 16px;
+    border-radius: 6px;
 }
 .languages {
   /* Contenedor de todos los lenguajes de la seccion */
@@ -72,30 +59,16 @@
   display: flex;
   flex-direction: column;
   margin-top: 90px;
-  margin-bottom: 50px;
   align-items: center;
 }
 .tech-used-section-tools-title {
   /* Titulo de la Seccion de Herramientas */
-  font-family: "principal-font", sans-serif;
-  font-size: 18px;
-  color: var(--opacity-grey);
-  position: relative;
-}
-.tech-used-section-tools-title::after {
-  /* Decoracion del titulo de la Seccion de Herramientas */
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  right: 0;
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--opacity-grey),
-    transparent
-  );
+  font-family: "principal-font-bold", sans-serif;
+  font-size: 14px;
+  color: var(--light-grey);
+    background-color: var(--ultra-light-grey);
+    padding: 8px 16px;
+    border-radius: 6px;
 }
 .tech-used-tools {
   /* Contenedor de las herramientas */

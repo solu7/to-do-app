@@ -16,10 +16,19 @@
   flex-direction: column;
   gap: 30px;
 }
-h1 {
+.home-page-header-text h1 {
   font-family: "principal-font-bold", sans-serif;
   font-size: 55px;
 }
+.home-page-header-text span {
+  	background: linear-gradient(90deg, var(--primary-color), rgb(128, 201, 250), var(--primary-color)) -100%/ 200%;
+	-webkit-background-clip: text;
+	        background-clip: text;
+	color: transparent;
+	animation: shimmer 2s linear infinite
+}
+@keyframes shimmer { to { background-position: 100% } }
+
 .home-page-description {
   font-family: "principal-font", sans-serif;
   font-size: 19px;
