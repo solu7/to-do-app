@@ -1,21 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const verifyToken = require("../auth/auth.middleware");
-const categoryController = require("./category.controller");
+import { Router } from "express";
+const router = Router();
+import verifyToken from "../auth/auth.middleware.js";
+import {
+  createCategory,
+  assignCategoriesToTask,
+  removeCategoryFromTask,
+} from "./category.controller.js";
 
-router.get("/:category", verifyToken, categoryController.filterTasksByCategory);
+router.post("/", verifyToken, createCategory);
 
-router.post("/", verifyToken, categoryController.createCategory);
-router.post(
-  "/assign/:taskId",
-  verifyToken,
-  categoryController.assignCategoriesToTask
-);
+router.post("/:taskId", verifyToken, assignCategoriesToTask);
 
-router.delete(
-  "/:taskId/categories/:categoryId",
-  verifyToken,
-  categoryController.removeCategoryFromTask
-);
+router.delete("/:taskId/:categoryId", verifyToken, removeCategoryFromTask);
 
-module.exports = router;
+export default router;

@@ -1,8 +1,9 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const userModel = require("../users/user.model");
+import { hash, compare } from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
+const { sign } = jsonwebtoken;
+import { findUserByEmail, createUser } from "../users/user.model.js";
 
-async function register(req, res) {
+export async function register(req, res) {
   const { email, password } = req.body;
   if (!email || !password) {
     return res
@@ -11,13 +12,13 @@ async function register(req, res) {
   }
 
   try {
-    const existingUser = await userModel.findUserByEmail(email);
+    const existingUser = await findUserByEmail(email);
     if (existingUser.length > 0) {
       return res.status(409).json({ message: "El email ya está registrado" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await userModel.createUser(email, hashedPassword);
+    const hashedPassword = await hash(password, 10);
+    await createUser(email, hashedPassword);
 
     res.status(201).json({ message: "Usuario registrado correctamente" });
   } catch (error) {
@@ -26,7 +27,7 @@ async function register(req, res) {
   }
 }
 
-async function login(req, res) {
+export async function login(req, res) {
   const { email, password } = req.body;
   if (!email || !password) {
     return res
@@ -35,19 +36,21 @@ async function login(req, res) {
   }
 
   try {
-    const users = await userModel.findUserByEmail(email);
+    const users = await findUserByEmail(email);
     if (users.length === 0) {
+      console.log("error finduserbyemail")
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
 
     const user = users[0];
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
+      console.log("error passwordmatch")
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
 
-    const token = jwt.sign(
+    const token = sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
@@ -60,7 +63,3 @@ async function login(req, res) {
   }
 }
 
-module.exports = {
-  register,
-  login,
-};

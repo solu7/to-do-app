@@ -1,17 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const verifyToken = require("../auth/auth.middleware");
-const tagController = require("./tag.controller");
+import { Router } from "express";
+const router = Router();
+import verifyToken from "../auth/auth.middleware.js";
+import { createTag, assignTagToTask, removeTagFromTask } from "./tag.controller.js";
 
-router.get("/:tagName/tasks", verifyToken, tagController.filterTasksByTags);
+router.post("/", verifyToken, createTag);
 
-router.post("/createTag", verifyToken, tagController.createTag);
-router.post("/:taskId/tags", verifyToken, tagController.assignTagToTask);
+router.post("/:taskId", verifyToken, assignTagToTask);
 
-router.delete(
-  "/:taskId/tags/:tagId",
-  verifyToken,
-  tagController.removeTagFromTask
-);
+router.delete("/:taskId/:tagId", verifyToken, removeTagFromTask);
 
-module.exports = router;
+export default router;

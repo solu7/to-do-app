@@ -1,6 +1,6 @@
-const categoryModel = require("./category.model");
+import { createCategory as _createCategory, assignCategoriesToTask as _assignCategoriesToTask, removeCategoryFromTask as _removeCategoryFromTask } from "./category.model.js";
 
-const createCategory = async (req, res) => {
+export const createCategory = async (req, res) => {
   const userId = req.user.id;
   const { name } = req.body;
 
@@ -11,7 +11,7 @@ const createCategory = async (req, res) => {
   }
 
   try {
-    const category = await categoryModel.createCategory(userId, name.trim());
+    const category = await _createCategory(userId, name.trim());
     res.status(201).json(category);
   } catch (error) {
     console.error("Error al crear la categoría:", error);
@@ -19,20 +19,7 @@ const createCategory = async (req, res) => {
   }
 };
 
-const filterTasksByCategory = async (req, res) => {
-  const userId = req.user.id;
-  const { category } = req.query;
-
-  try {
-    const tasks = await categoryModel.getTasksByCategory(userId, category);
-    res.json(tasks);
-  } catch (error) {
-    console.error("Error al filtrar por categoría:", error);
-    res.status(500).json({ message: "Error del servidor" });
-  }
-};
-
-const assignCategoriesToTask = async (req, res) => {
+export const assignCategoriesToTask = async (req, res) => {
   const userId = req.user.id;
   const { taskId } = req.params;
   const { categoryIds } = req.body;
@@ -44,7 +31,7 @@ const assignCategoriesToTask = async (req, res) => {
   }
 
   try {
-    await categoryModel.assignCategoriesToTask(userId, taskId, categoryIds);
+    await _assignCategoriesToTask(userId, taskId, categoryIds);
     res
       .status(200)
       .json({ message: "Categorías asignadas correctamente a la tarea" });
@@ -54,12 +41,12 @@ const assignCategoriesToTask = async (req, res) => {
   }
 };
 
-const removeCategoryFromTask = async (req, res) => {
+export const removeCategoryFromTask = async (req, res) => {
   const userId = req.user.id;
   const { taskId, categoryId } = req.params;
 
   try {
-    const result = await categoryModel.removeCategoryFromTask(
+    const result = await _removeCategoryFromTask(
       userId,
       taskId,
       categoryId
@@ -76,9 +63,3 @@ const removeCategoryFromTask = async (req, res) => {
   }
 };
 
-module.exports = {
-  createCategory,
-  filterTasksByCategory,
-  assignCategoriesToTask,
-  removeCategoryFromTask,
-};

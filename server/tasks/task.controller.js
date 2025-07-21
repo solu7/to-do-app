@@ -1,9 +1,9 @@
-const taskModel = require("./task.model");
+import { getLatestTasks, createTask as _createTask, findTaskById, updateTask as _updateTask, deleteTask as _deleteTask } from "./task.model.js";
 
-const getTasks = async (req, res) => {
+export const getTasks = async (req, res) => {
   const userId = req.user.id;
   try {
-    const tasks = await taskModel.getLatestTasks(userId);
+    const tasks = await getLatestTasks(userId);
     res.json(tasks);
   } catch (error) {
     console.error("Error al obtener tareas del usuario:", error);
@@ -11,7 +11,7 @@ const getTasks = async (req, res) => {
   }
 };
 
-const createTask = async (req, res) => {
+export const createTask = async (req, res) => {
   const userId = req.user.id;
   const { title, description, category } = req.body;
 
@@ -20,14 +20,14 @@ const createTask = async (req, res) => {
   }
 
   try {
-    await taskModel.createTask(userId, title, description, category);
+    await _createTask(userId, title, description, category);
     res.status(201).json({ message: "Tarea creada correctamente" });
   } catch (error) {
     res.status(500).json({ message: "Error al crear tarea" });
   }
 };
 
-const updateTask = async (req, res) => {
+export const updateTask = async (req, res) => {
   const userId = req.user.id;
   const taskId = req.params.id;
   const { title, description, category } = req.body;
@@ -39,7 +39,7 @@ const updateTask = async (req, res) => {
   }
 
   try {
-    const task = await taskModel.findTaskById(taskId, userId);
+    const task = await findTaskById(taskId, userId);
     if (task.length === 0) {
       return res
         .status(404)
@@ -62,19 +62,19 @@ const updateTask = async (req, res) => {
       values.push(category);
     }
 
-    await taskModel.updateTask(taskId, userId, fields, values);
+    await _updateTask(taskId, userId, fields, values);
     res.json({ message: "Tarea actualizada correctamente" });
   } catch (error) {
     res.status(500).json({ message: "Error al actualizar tarea" });
   }
 };
 
-const deleteTask = async (req, res) => {
+export const deleteTask = async (req, res) => {
   const userId = req.user.id;
   const taskId = req.params.id;
 
   try {
-    const result = await taskModel.deleteTask(taskId, userId);
+    const result = await _deleteTask(taskId, userId);
     if (result.affectedRows === 0) {
       return res
         .status(404)
@@ -86,9 +86,3 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = {
-  getTasks,
-  createTask,
-  updateTask,
-  deleteTask,
-};

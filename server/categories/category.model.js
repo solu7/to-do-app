@@ -1,6 +1,6 @@
-const pool = require("../shared/db");
+import pool from "../shared/db.js";
 
-const createCategory = async (userId, name) => {
+export const createCategory = async (userId, name) => {
   const [result] = await pool.query(
     `INSERT INTO categories (user_id, name)
      VALUES (?, ?)
@@ -23,7 +23,7 @@ const createCategory = async (userId, name) => {
   }
 };
 
-const assignCategoriesToTask = async (userId, taskId, categoryIds) => {
+export const assignCategoriesToTask = async (userId, taskId, categoryIds) => {
   const [task] = await pool.query(
     "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
     [taskId, userId]
@@ -64,7 +64,7 @@ const assignCategoriesToTask = async (userId, taskId, categoryIds) => {
   }
 };
 
-const removeCategoryFromTask = async (userId, taskId, categoryId) => {
+export const removeCategoryFromTask = async (userId, taskId, categoryId) => {
   const [tasks] = await pool.query(
     "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
     [taskId, userId]
@@ -81,17 +81,4 @@ const removeCategoryFromTask = async (userId, taskId, categoryId) => {
   return { notFound: false };
 };
 
-const getTasksByCategory = async (category) => {
-  const [tasks] = await pool.query(
-    "SELECT * FROM task_categories WHERE category_id = ?",
-    [category]
-  );
-  return tasks;
-};
 
-module.exports = {
-  createCategory,
-  assignCategoriesToTask,
-  removeCategoryFromTask,
-  getTasksByCategory,
-};

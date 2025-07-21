@@ -1,6 +1,6 @@
-const { body } = require("express-validator");
+import { body } from "express-validator";
 
-const createTaskValidator = [
+export const createTaskValidator = [
   body("title")
     .notEmpty()
     .withMessage("El título es obligatorio")
@@ -16,13 +16,8 @@ const createTaskValidator = [
     .withMessage("Categoría inválida"),
 ];
 
-const updateTaskValidator = [
+export const updateTaskValidator = [
   body("title").optional().isLength({ max: 100 }),
   body("description").optional().isLength({ max: 500 }),
   body("category").optional().isIn(["personal", "trabajo", "estudio", "otro"]),
 ];
-
-module.exports = {
-  createTaskValidator,
-  updateTaskValidator,
-};

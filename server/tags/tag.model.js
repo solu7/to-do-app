@@ -1,6 +1,6 @@
-const pool = require("../shared/db");
+import pool from "../shared/db.js";
 
-const createTag = async (userId, name) => {
+export const createTag = async (userId, name) => {
   const [result] = await pool.query(
     `INSERT INTO tags (user_id, name)
      VALUES (?, ?)
@@ -22,7 +22,7 @@ const createTag = async (userId, name) => {
   }
 };
 
-const assignTagToTask = async (userId, taskId, tagId) => {
+export const assignTagToTask = async (userId, taskId, tagId) => {
   const [task] = await pool.query(
     "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
     [taskId, userId]
@@ -46,7 +46,7 @@ const assignTagToTask = async (userId, taskId, tagId) => {
   );
 };
 
-const removeTagFromTask = async (userId, taskId, tagId) => {
+export const removeTagFromTask = async (userId, taskId, tagId) => {
   const [task] = await pool.query(
     "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
     [taskId, userId]
@@ -72,24 +72,4 @@ const removeTagFromTask = async (userId, taskId, tagId) => {
   if (result.affectedRows === 0) {
     throw new Error("El tag no estaba asignado a esta tarea");
   }
-};
-
-const getTasksByTagName = async (userId, tagName) => {
-  const [tasks] = await pool.query(
-    `SELECT t.*
-     FROM tasks t
-     JOIN task_tags tt ON t.id = tt.task_id
-     JOIN tags g ON g.id = tt.tag_id
-     WHERE t.user_id = ? AND g.name = ?
-     ORDER BY t.created_at DESC`,
-    [userId, tagName]
-  );
-  return tasks;
-};
-
-module.exports = {
-  getTasksByTagName,
-  createTag,
-  assignTagToTask,
-  removeTagFromTask,
 };

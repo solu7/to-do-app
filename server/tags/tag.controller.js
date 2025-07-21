@@ -1,6 +1,6 @@
-const tagModel = require("./tag.model");
+import { createTag as _createTag, assignTagToTask as _assignTagToTask, removeTagFromTask as _removeTagFromTask } from "./tag.model.js";
 
-const createTag = async (req, res) => {
+export const createTag = async (req, res) => {
   const userId = req.user.id;
   const { name } = req.body;
 
@@ -11,7 +11,7 @@ const createTag = async (req, res) => {
   }
 
   try {
-    const tag = await tagModel.createTag(userId, name.trim());
+    const tag = await _createTag(userId, name.trim());
     res.status(201).json(tag);
   } catch (error) {
     console.error("Error al crear el tag:", error);
@@ -19,7 +19,7 @@ const createTag = async (req, res) => {
   }
 };
 
-const assignTagToTask = async (req, res) => {
+export const assignTagToTask = async (req, res) => {
   const userId = req.user.id;
   const taskId = req.params.taskId;
   const { tagId } = req.body;
@@ -29,7 +29,7 @@ const assignTagToTask = async (req, res) => {
   }
 
   try {
-    await tagModel.assignTagToTask(userId, taskId, tagId);
+    await _assignTagToTask(userId, taskId, tagId);
     res.status(200).json({ message: "Tag asignado correctamente a la tarea" });
   } catch (error) {
     console.error("Error al asignar tag a tarea:", error);
@@ -37,12 +37,12 @@ const assignTagToTask = async (req, res) => {
   }
 };
 
-const removeTagFromTask = async (req, res) => {
+export const removeTagFromTask = async (req, res) => {
   const userId = req.user.id;
   const { taskId, tagId } = req.params;
 
   try {
-    await tagModel.removeTagFromTask(userId, taskId, tagId);
+    await _removeTagFromTask(userId, taskId, tagId);
     res
       .status(200)
       .json({ message: "Tag eliminado correctamente de la tarea" });
@@ -50,24 +50,4 @@ const removeTagFromTask = async (req, res) => {
     console.error("Error al eliminar tag de tarea:", error);
     res.status(400).json({ message: error.message });
   }
-};
-
-const filterTasksByTags = async (req, res) => {
-  const userId = req.user.id;
-  const { tags } = req.query;
-
-  try {
-    const tasks = await tagModel.getTasksByTagName(userId, tags);
-    res.json(tasks);
-  } catch (error) {
-    console.error("Error al filtrar por tags:", error);
-    res.status(500).json({ message: "Error del servidor" });
-  }
-};
-
-module.exports = {
-  filterTasksByTags,
-  createTag,
-  assignTagToTask,
-  removeTagFromTask,
 };

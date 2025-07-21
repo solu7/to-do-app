@@ -1,18 +1,19 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
+import dotenv from "dotenv";
+dotenv.config();
+import express, { json } from "express";
+import cors from "cors";
 
-const pool = require("./shared/db");
+import pool from "./shared/db.js";
 
-const authRoutes = require("./auth/auth.routes");
-const taskRoutes = require("./tasks/tasks.routes");
-const tagRoutes = require("./tags/tags.routes");
-const categoryRoutes = require("./categories/categories.routes");
+import authRoutes from "./auth/auth.routes.js";
+import taskRoutes from "./tasks/tasks.routes.js";
+import tagRoutes from "./tags/tags.routes.js";
+import categoryRoutes from "./categories/categories.routes.js";
 
 const app = express();
 const PORT = process.env.PORT;
 
-app.use(express.json());
+app.use(json());
 app.use(cors());
 
 app.use("/auth", authRoutes);

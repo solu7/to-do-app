@@ -1,8 +1,8 @@
-const express = require("express");
-const router = express.Router();
-const authController = require("../auth/auth.controller");
-const { registerValidator } = require("./auth.validator");
-const { validationResult } = require("express-validator");
+import { Router } from "express";
+const router = Router();
+import { login, register } from "../auth/auth.controller.js";
+import { registerValidator } from "./auth.validator.js";
+import { validationResult } from "express-validator";
 
 router.post(
   "/register",
@@ -14,8 +14,8 @@ router.post(
     }
     next();
   },
-  authController.login
+  register
 );
-router.post("/login", authController.login);
+router.post("/login", login);
 
-module.exports = router;
+export default router;

@@ -1,14 +1,23 @@
-const express = require("express");
-const router = express.Router();
-const verifyToken = require("../auth/auth.middleware");
-const taskController = require("../tasks/taskController");
+import { Router } from "express";
+const router = Router();
+import verifyToken from "../auth/auth.middleware.js";
+import {
+  getTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "./task.controller.js";
 
-router.get("/", verifyToken, taskController.getTasks);
+import { filterTasks } from "./filterTasks/filterTasks.controller.js";
 
-router.post("/", verifyToken, taskController.createTask);
+router.get("/", verifyToken, getTasks);
 
-router.patch("/:id", verifyToken, taskController.updateTask);
+router.post("/", verifyToken, createTask);
 
-router.delete("/:id", verifyToken, taskController.deleteTask);
+router.patch("/:id", verifyToken, updateTask);
 
-module.exports = router;
+router.delete("/:id", verifyToken, deleteTask);
+
+router.post("/filter", verifyToken, filterTasks);
+
+export default router;
