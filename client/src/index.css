@@ -6,12 +6,13 @@
   --primary-color: rgb(50, 125, 238);
   --secondary-color: rgba(50, 125, 238, 0.144);
   --dark-color: #14348f;
-  --black: rgb(49, 49, 49);
-  --dark-grey: rgb(80, 80, 80);
-  --grey: rgb(99, 99, 99);
+  --black: rgb(51, 51, 51);
+  --ultra-light-blue: rgb(249 250 251);
+  /* Greys */
+  --dark-grey: rgb(77, 77, 77);
+  --grey: rgb(107, 107, 107);
   --light-grey: rgb(151, 151, 151);
-  --opacity-grey: rgba(201, 201, 201, 0.836);
-  --ultra-light-grey: rgba(235, 235, 235, 0.541);
+  --opacity-grey: rgb(241 241 241);
 }
 
 @font-face {

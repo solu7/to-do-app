@@ -2,18 +2,22 @@ import "./navbar.css";
 import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 
+
 function Navbar() {
   return (
     <nav className="navbar">
+      <div className="nav-bar-brand">
       <img className="navbar-logo" src={logo} alt="Aplication Logo" />
+      <p><span>To-do</span> App</p>
+      </div>
       <div className="navbar-links">
-        <Link to="/">Inicio</Link>
-        <Link to="/about">Sobre nosotros</Link>
-        <Link to="/contact">Contactanos</Link>
-        <Link to="/frequentQuest">Preguntas Frecuentes</Link>
-        <Link to="/planes">Planes</Link>
+        <Link>Inicio</Link>
+        <Link>Sobre nosotros</Link>
+        <Link>Contactanos</Link>
+        <Link>Preguntas Frecuentes</Link>
+        <Link>Planes</Link>
         <div className="navbar-auth-links">
-          <Link to="/login">
+          <Link>
             <button className="btn">Iniciar Sesion</button>
           </Link>
           <Link to="/register">

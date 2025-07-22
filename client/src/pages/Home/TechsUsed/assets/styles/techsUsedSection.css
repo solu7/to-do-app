@@ -39,7 +39,7 @@
   font-size: 14px;
   color: var(--light-grey);
   margin-bottom: 30px;
-  background-color: var(--ultra-light-grey);
+  background-color: var(--opacity-grey);
     padding: 8px 16px;
     border-radius: 6px;
 }
@@ -66,7 +66,7 @@
   font-family: "principal-font-bold", sans-serif;
   font-size: 14px;
   color: var(--light-grey);
-    background-color: var(--ultra-light-grey);
+    background-color: var(--opacity-grey);
     padding: 8px 16px;
     border-radius: 6px;
 }

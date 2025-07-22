@@ -1,10 +1,10 @@
 import "./Footer.css";
-import userIcon from "./assets/images/userIcon.png";
+import userIcon from "../../assets/images/logo.png"
 
 function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-about-project">
+      <div className="footer-about-project"> 
         <div className="footer-header">
           <img
             className="footer-user-icon"

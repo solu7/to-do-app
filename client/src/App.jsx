@@ -1,16 +1,16 @@
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
 
-import Navbar from './layout/NavBar/Navbar'
-import HomePage from './pages/Home/HomePage'
+import HomePage from "./pages/Home/HomePage.jsx";
+import RegisterPage from "./pages/Register/Register.jsx"
 
 function App() {
-
   return (
-    <div className='app-container'>
-      <Navbar />
-      <HomePage />
-    </div>
-  )
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/register" element={<RegisterPage />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

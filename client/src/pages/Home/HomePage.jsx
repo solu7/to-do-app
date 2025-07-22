@@ -1,14 +1,16 @@
 import "./HomePage.css";
-import { useExternalNavigation } from "../../hooks/useExternalNavigation";
+import Navbar from "../../layout/NavBar/Navbar.jsx";
+import { useExternalNavigation } from "../../hooks/useExternalNavigation.js";
 import homeImage from "../../assets/images/home-principal.avif";
-import FeaturesSection from "./Features/FeaturesSection";
-import TechUsedSection from "./TechsUsed/TechsUsedSection";
-import Footer from "../../layout/Footer/Footer";
+import FeaturesSection from "./Features/FeaturesSection.jsx";
+import TechUsedSection from "./TechsUsed/TechsUsedSection.jsx";
+import Footer from "../../layout/Footer/Footer.jsx";
 
 function HomePage() {
   const { goToGitHubProject } = useExternalNavigation();
   return (
     <div className="home-page">
+      <Navbar/>
       <div className="home-page-header">
         <div className="home-page-header-text">
           <h1>

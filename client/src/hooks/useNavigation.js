@@ -5,5 +5,6 @@ export const useNavigation = () => {
 
   return {
     goToHome: () => navigate("/"),
+    goRegisterPage: () => navigate('/register')
   };
 };

@@ -8,9 +8,18 @@
 }
 
 .navbar-logo {
-  height: 55px;
+  height: 37px;
 }
-
+.nav-bar-brand {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  font-family: "principal-font-bold";
+}
+.nav-bar-brand span {
+  color: var(--primary-color);
+}
 .navbar-links {
   display: flex;
   gap: 2.5rem;
