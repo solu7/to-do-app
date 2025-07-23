@@ -1,6 +1,12 @@
 {
+  "name": "todo-app",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "dependencies": {
-    "express-validator": "^7.2.1",
-    "mysql2": "^3.14.1"
+    "zod": "^4.0.5"
   }
 }

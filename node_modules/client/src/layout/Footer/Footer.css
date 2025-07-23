@@ -1,0 +1,105 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 70px;
+  position: relative;
+}
+.footer-user-icon {
+  width: 40px;
+}
+.footer-list-title {
+  font-family: "principal-font-bold", sans-serif;
+  font-size: 16px;
+  color: var(--black);
+  margin-bottom: 50px;
+}
+.footer-list-title.social {
+  margin-top: 40px;
+}
+
+.footer-list {
+  font-family: "principal-font", sans-serif;
+  font-size: 11px;
+  color: var(--grey);
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  list-style: none;
+  cursor: pointer;
+}
+.footer-list.learned {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  letter-spacing: 0.3px;
+  cursor: initial;
+}
+.footer-list.features {
+  cursor: initial;
+}
+.footer-list.contact {
+  cursor: initial;
+}
+.footer-list.learned ul {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 10px;
+  margin: 0;
+}
+.footer-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  border: 1px solid var(--opacity-grey);
+  padding: 8px 15px 8px 15px;
+  border-radius: 10px 5px;
+  box-shadow: 3px 3px 9px rgba(85, 85, 85, 0.096);
+  background-color: white;
+}
+.footer-header-title {
+  font-family: "principal-font", sans-serif;
+  font-size: 22px;
+  color: var(--black);
+}
+.footer-list-title.learned {
+  margin-bottom: 35px;
+}
+.footer-list-title.learned span {
+  color: var(--primary-color);
+}
+.footer-header-title span {
+  color: var(--primary-color);
+}
+.footer-project-description {
+  font-family: "principal-font-bold", sans-serif;
+  font-size: 16px;
+  color: var(--black);
+  margin-top: 15px;
+  margin-bottom: 45px;
+  line-height: 40px;
+}
+.footer-about-project {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+.footer-section {
+  width: 200px;
+  padding: 20px;
+  border-radius: 7px;
+  border-bottom: 1px solid var(--light-grey);
+}
+.codedBy {
+  position: absolute;
+  bottom: -90px;
+  font-family: "principal-font", sans-serif;
+  font-size: 10px;
+  color: var(--light-grey);
+    text-align: center;
+    padding-bottom: 15px;
+
+}
