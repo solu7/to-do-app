@@ -17,7 +17,7 @@ function Navbar() {
         <Link>Preguntas Frecuentes</Link>
         <Link>Planes</Link>
         <div className="navbar-auth-links">
-          <Link>
+          <Link to="/login">
             <button className="btn">Iniciar Sesion</button>
           </Link>
           <Link to="/register">

@@ -1,7 +1,7 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 2rem;
+  padding: 1rem 2rem;
   align-items: center;
   border-bottom: 1px solid #0000000f;
   background-color: white;

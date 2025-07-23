@@ -6,10 +6,9 @@
 .register-subcontainer {
   display: flex;
   flex-direction: column;
-  align-items: start;
   gap: 50px;
-  padding: 120px 0px;
   border-radius: 10px;
+  margin-top: 100px;
 }
 .register-header {
   display: flex;
@@ -26,71 +25,25 @@
 .register h1 span {
   color: var(--primary-color);
 }
-.register-inputs-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
 .register form {
   width: 550px;
   display: flex;
   flex-direction: column;
   gap: 25px;
-  font-family: "principal-font-bold";
-  font-size: 12px;
-  color: var(--grey);
-}
-.register form input {
-  width: 100%;
-  height: 45px;
-  border-radius: 10px;
-  border: 1px solid var(--opacity-grey);
-  padding: 20px;
-  font-family: "principal-font-bold";
-  font-size: 11px;
-  color: var(--grey);
-  outline: none;
-}
-.register form input:focus {
-  border: 2px solid var(--primary-color);
-  box-shadow: 3px 3px 9px rgba(56, 56, 56, 0.1);
-}
-.register form input::placeholder {
-  font-family: "principal-font";
-  font-size: 11px;
-  color: var(--light-grey);
-}
-.register-input-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-}
-.register form img {
-  width: 12px;
-  object-fit: contain;
 }
 .register-btn,
 .register-btn-sec {
   width: 100%;
   border-radius: 10px;
 }
-.register-inputs-container.create-acc {
+.register-submits {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
 }
+.success-message,
 .error-message {
-  margin-top: 10px;
-  color: var(--primary-color);
-  font-size: 11px;
-}
-.error-message span {
-  color: var(--primary-color);
-}
-.success-message {
   font-family: "principal-font-bold";
   font-size: 16px;
   margin-left: auto;
@@ -102,4 +55,27 @@
 }
 .success-message-hr {
   margin: 15px 0px 0px;
+}
+.register-back-home {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+  cursor: pointer;
+  font-family: "principal-font-bold";
+  font-size: 12px;
+  color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+.register-back-home:hover {
+  transform: scale(0.97);
+}
+
+.register-back-home img {
+  width: 38px;
+  object-fit: contain;
+  padding: 7px;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
 }
