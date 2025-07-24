@@ -17,14 +17,13 @@ export const useRegisterForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setError: setFormError,
   } = useForm({
     resolver: zodResolver(registerSchema),
     mode: "onTouched",
   });
 
   const onSubmit = async (data) => {
-    setGeneralError("");
-    setSuccess("");
 
     try {
       const response = await registerUser({
@@ -49,12 +48,12 @@ export const useRegisterForm = () => {
       ) {
         err.details.errors.forEach((backendError) => {
           if (backendError.path) {
-            setGeneralError(backendError.path, {
+            setFormError(backendError.path, {
               type: "backend",
               message: backendError.msg,
             });
           } else {
-            setGeneralError(backendError.msg);
+            setFormError(backendError.msg);
           }
         });
       } else if (err.message) {
@@ -69,7 +68,6 @@ export const useRegisterForm = () => {
   return {
     register,
     handleSubmit: handleSubmit(onSubmit),
-    onSubmit,
     errors,
     generalError,
     success,

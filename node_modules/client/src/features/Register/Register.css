@@ -1,14 +1,14 @@
 .register {
   display: flex;
   justify-content: center;
-  height: 100vh;
+  margin-top: 100px;
 }
-.register-subcontainer {
+.register-container {
   display: flex;
   flex-direction: column;
   gap: 50px;
   border-radius: 10px;
-  margin-top: 100px;
+  width: 550px;
 }
 .register-header {
   display: flex;
@@ -26,7 +26,6 @@
   color: var(--primary-color);
 }
 .register form {
-  width: 550px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -36,32 +35,18 @@
   width: 100%;
   border-radius: 10px;
 }
-.register-submits {
+.register-buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
-}
-.success-message,
-.error-message {
-  font-family: "principal-font-bold";
-  font-size: 16px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--grey);
-}
-.success-message span {
-  color: var(--primary-color);
-}
-.success-message-hr {
-  margin: 15px 0px 0px;
 }
 .register-back-home {
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: center;
-  margin-top: 20px;
+  justify-content: center;
   cursor: pointer;
   font-family: "principal-font-bold";
   font-size: 12px;

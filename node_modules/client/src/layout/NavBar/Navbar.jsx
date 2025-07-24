@@ -8,7 +8,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="nav-bar-brand">
       <img className="navbar-logo" src={logo} alt="Aplication Logo" />
-      <p><span>To-do</span> App</p>
+      <p><span>todo</span>-app</p>
       </div>
       <div className="navbar-links">
         <Link>Inicio</Link>

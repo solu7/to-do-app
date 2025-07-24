@@ -8,14 +8,16 @@
 }
 
 .navbar-logo {
-  height: 37px;
+  height: 29px;
 }
 .nav-bar-brand {
   display: flex;
   flex-direction: row;
-  gap: 15px;
+  gap: 10px;
   align-items: center;
-  font-family: "principal-font-bold";
+  font-family: "principal-font-extra-bold";
+  color: var(--black);
+  font-size: 18px;
 }
 .nav-bar-brand span {
   color: var(--primary-color);
@@ -27,8 +29,9 @@
   align-items: center;
 }
 .navbar-links a {
-    font-family: "principal-font", sans-serif;
-    color: var(--dark-grey);
+  font-family: "principal-font", sans-serif;
+  color: var(--dark-grey);
+  width: fit-content;
 }
 .navbar-links a:hover {
   transition: all 0.3s ease-in-out;
@@ -36,7 +39,6 @@
   transform: scale(0.97);
   color: var(--primary-color);
 }
-
 
 .navbar-auth-links {
   display: flex;

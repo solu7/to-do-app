@@ -1,7 +1,6 @@
 import "./InputField.css"
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useRegisterForm } from "../Register/hooks/useRegisterForm";
 
 export function InputField({
   inputIcon,
@@ -9,11 +8,9 @@ export function InputField({
   placeholder,
   type,
   inputName,
+  register,
+  errors
 }) {
-  const {
-    register,
-    errors,
-  } = useRegisterForm();
   const fieldError = errors[inputName];
   return (
     <div className="input-field">
