@@ -6,8 +6,8 @@ export const getTasks = async (req, res) => {
     const tasks = await getLatestTasks(userId);
     res.json(tasks);
   } catch (error) {
-    console.error("Error al obtener tareas del usuario:", error);
-    res.status(500).json({ message: "Error al obtener tareas del usuario" });
+    console.error("Error getting tasks from user:", error);
+    res.status(500).json({ message: "Error getting tasks from user" });
   }
 };
 
@@ -16,14 +16,14 @@ export const createTask = async (req, res) => {
   const { title, description, category } = req.body;
 
   if (!title) {
-    return res.status(400).json({ message: "El título es obligatorio" });
+    return res.status(400).json({ message: "Title is required" });
   }
 
   try {
     await _createTask(userId, title, description, category);
-    res.status(201).json({ message: "Tarea creada correctamente" });
+    res.status(201).json({ message: "Task created successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error al crear tarea" });
+    res.status(500).json({ message: "Error creating task" });
   }
 };
 
@@ -35,7 +35,7 @@ export const updateTask = async (req, res) => {
   if (!title && !description && !category) {
     return res
       .status(400)
-      .json({ message: "Al menos un campo debe ser actualizado" });
+      .json({ message: "There is nothing to update" });
   }
 
   try {
@@ -43,7 +43,7 @@ export const updateTask = async (req, res) => {
     if (task.length === 0) {
       return res
         .status(404)
-        .json({ message: "Tarea no encontrada o no autorizada" });
+        .json({ message: "Task not found or not authorized" });
     }
 
     const fields = [];
@@ -63,9 +63,9 @@ export const updateTask = async (req, res) => {
     }
 
     await _updateTask(taskId, userId, fields, values);
-    res.json({ message: "Tarea actualizada correctamente" });
+    res.json({ message: "Task updated successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error al actualizar tarea" });
+    res.status(500).json({ message: "Error updating task" });
   }
 };
 
@@ -78,11 +78,11 @@ export const deleteTask = async (req, res) => {
     if (result.affectedRows === 0) {
       return res
         .status(404)
-        .json({ message: "Tarea no encontrada o no autorizada" });
+        .json({ message: "Task not found or not authorized" });
     }
-    res.json({ message: "Tarea eliminada correctamente" });
+    res.json({ message: "Task successfully deleted" });
   } catch (error) {
-    res.status(500).json({ message: "Error al eliminar tarea" });
+    res.status(500).json({ message: "Error deleting task" });
   }
 };
 

@@ -3,22 +3,22 @@ import { body } from "express-validator";
 export const registerValidator = [
   body("username")
     .isLength({ min: 3 })
-    .withMessage("Tu username debe tener 3 caracteres como minimo."),
-  body("email").isEmail().withMessage("Email inválido."),
+    .withMessage("Your username is too short"),
+  body("email").isEmail().withMessage("Invalid email"),
   body("password")
     .isLength({ min: 6 })
-    .withMessage("La contraseña debe tener al menos 6 caracteres.")
+    .withMessage("The password is too short")
     .matches(/[a-z]/)
-    .withMessage("La contraseña debe tener una miniscula.")
+    .withMessage("The password must be a lowercase letter.")
     .matches(/[A-Z]/)
-    .withMessage("La contraseña debe tener una letra mayúscula")
+    .withMessage("The password must have a capital letter")
     .matches(/\d/)
-    .withMessage("La contraseña debe tener un número")
+    .withMessage("The password must have a number")
     .matches(/[@$!%*?&]/)
-    .withMessage("La contraseña debe tener un símbolo especial"),
+    .withMessage("The password must have a special symbol"),
 ];
 
 export const loginValidator = [
-  body("email").isEmail().withMessage("Email inválido"),
-  body("password").notEmpty().withMessage("La contraseña es obligatoria."),
+  body("email").isEmail().withMessage("Invalid email"),
+  body("password").notEmpty().withMessage("Password is required"),
 ];

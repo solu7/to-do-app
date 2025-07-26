@@ -3,21 +3,18 @@ import { body } from "express-validator";
 export const createTaskValidator = [
   body("title")
     .notEmpty()
-    .withMessage("El título es obligatorio")
+    .withMessage("Title is required")
     .isLength({ max: 100 })
-    .withMessage("El título no puede superar los 100 caracteres"),
+    .withMessage("The title can't be that long."),
   body("description")
     .optional()
-    .isLength({ max: 500 })
-    .withMessage("La descripción no puede superar los 500 caracteres"),
-  body("category")
-    .optional()
-    .isIn(["personal", "trabajo", "estudio", "otro"])
-    .withMessage("Categoría inválida"),
+    .isLength({ max: 200 })
+    .withMessage("The description can't be that long."),
+  body("category").optional().withMessage("Invalid category."),
 ];
 
 export const updateTaskValidator = [
   body("title").optional().isLength({ max: 100 }),
   body("description").optional().isLength({ max: 500 }),
-  body("category").optional().isIn(["personal", "trabajo", "estudio", "otro"]),
+  body("category").optional(),
 ];

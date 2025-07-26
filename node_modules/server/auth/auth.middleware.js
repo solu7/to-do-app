@@ -5,7 +5,7 @@ function verifyToken(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "Token no proporcionado" });
+    return res.status(401).json({ message: "Token not provided" });
   }
 
   const token = authHeader.split(" ")[1];
@@ -15,7 +15,7 @@ function verifyToken(req, res, next) {
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(403).json({ message: "Token inválido o expirado" });
+    return res.status(403).json({ message: "Invalid or expired token" });
   }
 }
 

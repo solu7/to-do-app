@@ -28,13 +28,13 @@ app.use("/categories", categoryRoutes);
 app.get("/", async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT NOW() AS now");
-    res.send(`El servidor esta corriendo, son las : ${rows[0].now}.`);
+    res.send(`Server is running, its : ${rows[0].now}.`);
   } catch (error) {
-    console.error("Error al conectar a la base de datos", error);
-    res.status(500).send("No se pudo conectar a la base de datos :(");
+    console.error("Error to connect to database: ", error);
+    res.status(500).send("Could not connect to the database :(");
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Server is running in http://localhost:${PORT}`);
 });

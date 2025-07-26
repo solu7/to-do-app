@@ -8,7 +8,7 @@ export const filterTasks = async (req, res) => {
     const tasks = await getFilteredTasks(userId, tags, categories);
     res.json(tasks);
   } catch (error) {
-    console.error("Error al filtrar tareas:", error);
-    res.status(500).json({ message: "Error del servidor" });
+    console.error("Error filtering tasks:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
