@@ -1,0 +1,13 @@
+.nav-item {
+  font-family: "principal-font";
+  font-size: 13px;
+  color: var(--light-grey);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+.nav-icon {
+  width: 20px;
+  object-fit: contain;
+}

@@ -5,3 +5,25 @@
   grid-column-gap: 50px;
   grid-row-gap: 0px;
 }
+.dashboard-content {
+  margin-top: 90px;
+}
+.add-task {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  font-family: "principal-font-bold";
+  font-size: 14px;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+.add-task img {
+  width: 20px;
+}
+.add-task:hover {
+  transform: scale(1.03);
+}

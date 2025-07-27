@@ -1,13 +1,20 @@
 import "./Dashboard.css";
-import Sidebar from "./components/Sidebar";
+
+import { Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Today from "./pages/Today/Today";
 
 function Dashboard() {
   return (
     <div className="dashboard">
       <Sidebar />
-      <h1>Seccion a mostrar</h1>
+      <main className="dashboard-content">
+        <Routes>
+          <Route path="/" element={<Today />} />
+        </Routes>
+      </main>
       <div>
-        <h1>Filtros  y features</h1>
+        <h1>Filtros y features</h1>
       </div>
     </div>
   );
