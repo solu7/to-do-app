@@ -1,8 +1,14 @@
 import "./Today.css";
+import { useState } from "react";
 import Task from "../components/Task/Task.jsx";
 import addIcon from "../../assets/images/addIcon.svg";
+import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
 
 function Today() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const handleModal = () => {
+    setModalIsOpen(!modalIsOpen);
+  };
   return (
     <div className="today">
       <h3 className="today-title">
@@ -17,8 +23,9 @@ function Today() {
       </section>
       <div className="add-task">
         <img src={addIcon} alt="Icono de añadir" />
-        <p>Añadir tarea</p>
+        <p onClick={handleModal}>Añadir tarea</p>
       </div>
+      {!!modalIsOpen && <AddTaskModal />}
     </div>
   );
 }
