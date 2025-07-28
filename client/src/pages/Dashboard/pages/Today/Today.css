@@ -1,0 +1,19 @@
+.today {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.today-title {
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "principal-font";
+  font-size: 23px;
+}
+.today-title span {
+    color: var(--primary-color);
+}
+.today-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
