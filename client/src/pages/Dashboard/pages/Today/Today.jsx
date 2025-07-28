@@ -2,7 +2,7 @@ import "./Today.css";
 import { useState } from "react";
 import Task from "../components/Task/Task.jsx";
 import addIcon from "../../assets/images/addIcon.svg";
-import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
+import AddTaskModal from "../components/Task/modals/AddTaskModal/AddTaskModal.jsx";
 
 function Today() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
