@@ -1,8 +1,8 @@
 import "./Dashboard.css";
 
 import { Routes, Route } from "react-router-dom";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Today from "./pages/Today/Today";
+import Sidebar from "./components/Sidebar/Sidebar.jsx";
+import Today from "./views/Today/Today.jsx";
 
 function Dashboard() {
   return (
