@@ -13,22 +13,30 @@
   border-radius: 10px;
   border: none;
   background: none;
-}
-.task-modal-input:focus {
-  outline: none;
+  padding: 1px;
 }
 .task-modal-input.title {
   font-size: 19px;
   font-family: "principal-font-bold";
+  color: var(--primary-color);
 }
 .task-modal-input.title::placeholder {
-  color: var(--dark-grey);
+  color: var(--light-grey);
+}
+.task-modal-input.title:focus {
+  outline: none;
+  color: var(--primary-color);
 }
 .task-modal-input.desc {
   font-size: 13px;
   font-family: "principal-font";
+  color: var(--light-grey);
 }
 .task-modal-input.desc::placeholder {
+  color: var(--ultra-light-grey);
+}
+.task-modal-input.desc:focus {
+  outline: none;
   color: var(--light-grey);
 }
 .task-modal-filters {

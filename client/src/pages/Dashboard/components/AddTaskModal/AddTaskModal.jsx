@@ -12,7 +12,7 @@ const AddTaskModal = () => {
         <input
           className="task-modal-input desc"
           type="text"
-          placeholder="Descripcion de la tarea"
+          placeholder="Descripcion"
         />
       </section>
       <section className="task-modal-filters">
