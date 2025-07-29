@@ -13,14 +13,14 @@ export const getTasks = async (req, res) => {
 
 export const createTask = async (req, res) => {
   const userId = req.user.id;
-  const { title, description, category } = req.body;
+  const { title, description } = req.body;
 
   if (!title) {
     return res.status(400).json({ message: "El título es obligatorio" });
   }
 
   try {
-    await _createTask(userId, title, description, category);
+    await _createTask(userId, title, description);
     res.status(201).json({ message: "Tarea creada correctamente" });
   } catch (error) {
     res.status(500).json({ message: "Error al crear tarea" });
