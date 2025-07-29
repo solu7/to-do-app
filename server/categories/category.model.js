@@ -81,4 +81,10 @@ export const removeCategoryFromTask = async (userId, taskId, categoryId) => {
   return { notFound: false };
 };
 
-
+export const getAllCategories = async (userId) => {
+  const [categories] = await pool.query(
+    "SELECT id, name FROM categories WHERE user_id = ?",
+    [userId]
+  );
+  return categories;
+};

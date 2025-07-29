@@ -1,4 +1,9 @@
-import { createCategory as _createCategory, assignCategoriesToTask as _assignCategoriesToTask, removeCategoryFromTask as _removeCategoryFromTask } from "./category.model.js";
+import {
+  createCategory as _createCategory,
+  assignCategoriesToTask as _assignCategoriesToTask,
+  removeCategoryFromTask as _removeCategoryFromTask,
+  getAllCategories as _getAllCategories,
+} from "./category.model.js";
 
 export const createCategory = async (req, res) => {
   const userId = req.user.id;
@@ -46,11 +51,7 @@ export const removeCategoryFromTask = async (req, res) => {
   const { taskId, categoryId } = req.params;
 
   try {
-    const result = await _removeCategoryFromTask(
-      userId,
-      taskId,
-      categoryId
-    );
+    const result = await _removeCategoryFromTask(userId, taskId, categoryId);
     if (result.notFound) {
       return res.status(404).json({ message: "Tarea no encontrada" });
     }
@@ -63,3 +64,13 @@ export const removeCategoryFromTask = async (req, res) => {
   }
 };
 
+export const getAllCategories = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const categories = await _getAllCategories(userId);
+    res.status(200).json(categories);;
+  } catch (error) {
+    console.error("Error al obtener categorias del usuario:", error);
+    res.status(500).json({ message: "Error al obtener categorias del usuario" });
+  }
+};

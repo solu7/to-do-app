@@ -5,7 +5,10 @@ import {
   createCategory,
   assignCategoriesToTask,
   removeCategoryFromTask,
+  getAllCategories,
 } from "./category.controller.js";
+
+router.get("/", verifyToken, getAllCategories);
 
 router.post("/", verifyToken, createCategory);
 
