@@ -1,32 +1,14 @@
 import "react-datepicker/dist/react-datepicker.css";
 import "./AddTaskModal.css";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
-import PriorityPicker from "../utils/PriorityPicker/PriorityPicker";
+import DropdownButton from "../utils/DropdownButton/DropdownButton.jsx";
+import { TaskCategoriesList } from "../../assets/data/TaskCategoriesList.js";
+import { TaskPrioritiesList } from "../../assets/data/TaskPrioritiesList.js";
+import categoryIcon from "../../assets/images/categoryIcon.png";
 
 const AddTaskModal = () => {
-  const [priorityPickerIsOpen, setPriorityPickerIsOpen] = useState(false);
-  const pickerContainerRef = useRef(null);
-  const handlePicker = () => {
-    setPriorityPickerIsOpen((priorityPickerIsOpen) => !priorityPickerIsOpen);
-  };
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        priorityPickerIsOpen &&
-        pickerContainerRef.current &&
-        !pickerContainerRef.current.contains(event.target)
-      ) {
-        setPriorityPickerIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [priorityPickerIsOpen]);
-
   const [selectedDate, setSelectedDate] = useState(null);
   return (
     <div className="task-modal">
@@ -47,27 +29,21 @@ const AddTaskModal = () => {
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
-            onClick={handlePicker}
             locale={es}
             dateFormat="dd/MM/yyyy"
             customInput={<button className="modal-filter-button">Fecha</button>}
           />
         </div>
-        <div ref={pickerContainerRef} className="task-modal-filter">
-          <img src="" alt="" />
-          <button onClick={handlePicker} className="modal-filter-button">
-            Prioridad
-          </button>
-          {!!priorityPickerIsOpen && <PriorityPicker />}
-        </div>
-        <div className="task-modal-filter">
-          <img src="" alt="" />
-          <button className="modal-filter-button">Categoria</button>
-        </div>
-        <div className="task-modal-filter">
-          <img src="" alt="" />
-          <button className="modal-filter-button">Tag</button>
-        </div>
+        <DropdownButton
+          buttonText="Prioridad"
+          buttonIcon={categoryIcon}
+          itemList={TaskPrioritiesList}
+        />
+        <DropdownButton
+          buttonText="Categoria"
+          buttonIcon={categoryIcon}
+          itemList={TaskCategoriesList}
+        />
       </section>
       <section className="task-modal-buttons">
         <button className="task-modal-add-btn">Añadir tarea</button>

@@ -1,5 +1,5 @@
 import "./Task.css"
-import priority4Icon from "./assets/images/priority4Icon.svg";
+import priority4Icon from "./assets/images/Priorities/priority4Icon.svg";
 
 
 function Task() {
