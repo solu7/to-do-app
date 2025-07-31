@@ -1,34 +1,16 @@
 .dropdown-button {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid var(--primary-color);
-  border-radius: 10px;
-  padding: 5px 12px 5px 12px;
   position: relative;
-  cursor: pointer;
+  display: inline-block;
+  transition: 0.3s ease-in-out;
 }
-.dropdown-button__wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5px;
-}
-.dropdown-button__icon {
-  width: 20px;
-  object-fit: contain;
-}
-.dropdown-button__button {
-  font-family: "principal-font-bold";
-  font-size: 10px;
-  letter-spacing: 0.5px;
-  background: none;
-  border: none;
-  color: var(--primary-color);
-  cursor: pointer;
+.dropdown-button:hover {
+  transform: scale(1.05);
 }
 .dropdown-button__menu {
   position: absolute;
-  transform: translate(-12px, -140px);
+  bottom: 133%;
+  left: 50%;
+  transform: translateX(-50%);
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -44,10 +26,17 @@
   width: max-content;
 }
 .dropdown-menu__item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
 }
 .dropdown-menu__icon {
-    width: 25px;
+  width: 15px;
+}
+.react-datepicker-wrapper {
+  transition: 0.3s ease-in-out;
+}
+.react-datepicker-wrapper:hover {
+  transform: scale(1.05);
 }

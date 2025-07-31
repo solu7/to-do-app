@@ -6,7 +6,12 @@ import es from "date-fns/locale/es";
 import DropdownButton from "../utils/DropdownButton/DropdownButton.jsx";
 import { TaskCategoriesList } from "../../assets/data/TaskCategoriesList.js";
 import { TaskPrioritiesList } from "../../assets/data/TaskPrioritiesList.js";
+import { TaskTagsList } from "../../assets/data/TaskTagsList.js";
 import categoryIcon from "../../assets/images/categoryIcon.png";
+import priorityIcon from "../../assets/images/priorityIcon.png";
+import tagIcon from "../../assets/images/tagIcon.png";
+import dateIcon from "../../assets/images/dateIcon.png";
+import DropdownWrapper from "../utils/DropdownButton/DropdownWrapper.jsx";
 
 const AddTaskModal = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -25,24 +30,27 @@ const AddTaskModal = () => {
         />
       </section>
       <section className="task-modal-filters">
-        <div className="task-modal-filter">
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            locale={es}
-            dateFormat="dd/MM/yyyy"
-            customInput={<button className="modal-filter-button">Fecha</button>}
-          />
-        </div>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          locale={es}
+          dateFormat="dd/MM/yyyy"
+          customInput={<DropdownWrapper buttonIcon={dateIcon} buttonText="Fecha"/>}
+        />
         <DropdownButton
           buttonText="Prioridad"
-          buttonIcon={categoryIcon}
+          buttonIcon={priorityIcon}
           itemList={TaskPrioritiesList}
         />
         <DropdownButton
           buttonText="Categoria"
           buttonIcon={categoryIcon}
           itemList={TaskCategoriesList}
+        />
+        <DropdownButton
+          buttonText="Tags"
+          buttonIcon={tagIcon}
+          itemList={TaskTagsList}
         />
       </section>
       <section className="task-modal-buttons">

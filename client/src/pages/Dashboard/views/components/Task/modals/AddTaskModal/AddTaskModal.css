@@ -1,7 +1,7 @@
 .task-modal {
   background-color: var(--ultra-light-blue);
   border: solid 2px var(--secondary-color);
-  width: 400px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 35px;

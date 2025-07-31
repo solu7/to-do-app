@@ -1,7 +1,7 @@
 .sidebar {
   background-color: var(--ultra-light-blue);
   width: 320px;
-  height: 100vh;
+  height: 100%;
   font-family: "principal-font-bold";
   font-size: 14px;
   display: flex;

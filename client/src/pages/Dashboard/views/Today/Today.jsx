@@ -20,6 +20,10 @@ function Today() {
         <Task />
         <Task />
         <Task />
+        <Task />
+        <Task />
+        <Task />
+        <Task />
       </section>
       <div className="add-task">
         <img src={addIcon} alt="Icono de añadir" />
