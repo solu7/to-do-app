@@ -1,7 +1,7 @@
 import "./Today.css";
 import { useState } from "react";
 import Task from "../components/Task/Task.jsx";
-import addIcon from "../../assets/images/addIcon.svg";
+import AddTaskButton from "../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../components/Task/modals/AddTaskModal/AddTaskModal.jsx";
 
 function Today() {
@@ -25,10 +25,7 @@ function Today() {
         <Task />
         <Task />
       </section>
-      <div className="add-task">
-        <img src={addIcon} alt="Icono de añadir" />
-        <p onClick={handleModal}>Añadir tarea</p>
-      </div>
+      <AddTaskButton onClick={handleModal}/>
       {!!modalIsOpen && <AddTaskModal />}
     </div>
   );

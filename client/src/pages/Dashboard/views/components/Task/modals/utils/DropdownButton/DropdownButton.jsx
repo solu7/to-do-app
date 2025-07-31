@@ -35,7 +35,7 @@ function DropdownButton({ buttonText, buttonIcon, itemList }) {
       <DropdownWrapper buttonIcon={buttonIcon} buttonText={buttonText}/>
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <motion.ul
             className="dropdown-button__menu"
             initial={{
               opacity: 0,
@@ -60,7 +60,7 @@ function DropdownButton({ buttonText, buttonIcon, itemList }) {
                 {item.name}
               </li>
             ))}
-          </motion.div>
+          </motion.ul>
         )}
       </AnimatePresence>
     </div>
