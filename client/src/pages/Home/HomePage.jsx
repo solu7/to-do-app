@@ -1,7 +1,7 @@
 import "./HomePage.css";
 import Navbar from "../../layout/NavBar/Navbar.jsx";
-import { useExternalNavigation } from "../../hooks/useExternalNavigation.js";
-import homeImage from "../../assets/images/home-principal.avif";
+import { useExternalNavigation } from "../../core/hooks/useExternalNavigation.js";
+import homeImage from "../../core/assets/images/home-principal.avif";
 import FeaturesSection from "./Features/FeaturesSection.jsx";
 import TechUsedSection from "./TechsUsed/TechsUsedSection.jsx";
 import Footer from "../../layout/Footer/Footer.jsx";

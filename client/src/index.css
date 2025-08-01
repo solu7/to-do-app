@@ -18,20 +18,20 @@
 
 @font-face {
   font-family: "principal-font";
-  src: url(./assets/fonts/Gontserrat-Regular.ttf) format("truetype");
+  src: url(./core/assets/fonts/Gontserrat-Regular.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "principal-font-light";
-  src: url(./assets/fonts/Gontserrat-Light.ttf) format("truetype");
+  src: url(./core/assets/fonts/Gontserrat-Light.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "principal-font-bold";
-  src: url(./assets/fonts/Gontserrat-Medium.ttf) format("truetype");
+  src: url(./core/assets/fonts/Gontserrat-Medium.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "principal-font-extra-bold";
-  src: url(./assets/fonts/Gontserrat-SemiBold.ttf) format("truetype");
+  src: url(./core/assets/fonts/Gontserrat-SemiBold.ttf) format("truetype");
 }
