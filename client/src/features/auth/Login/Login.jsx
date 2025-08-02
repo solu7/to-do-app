@@ -14,7 +14,7 @@ import emailIcon from "../../assets/images/emailIcon.svg";
 import homeIcon from "../../../core/assets/icons/homeIcon.svg";
 
 function Login() {
-  const { goToHome } = useNavigation();
+  const { goToDashboard } = useNavigation();
   const [generalError, setGeneralError] = useState("");
   const [success, setSuccess] = useState("");
   const {
@@ -40,8 +40,8 @@ function Login() {
       setSuccess("¡Usuario logeado correctamente!");
       reset();
       setTimeout(() => {
-        goToHome();
-      }, 3000);
+        goToDashboard();
+      }, 2500);
     } catch (err) {
       console.error("Error al logear el usuario:", err);
 

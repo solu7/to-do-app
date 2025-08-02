@@ -9,13 +9,13 @@ import helpIcon from "../../assets/images/helpIcon.png";
 import NavItem from "./components/NavItem.jsx";
 import { navItems } from "./data/navItems.js";
 
-function Sidebar() {
+function Sidebar({username}) {
   return (
     <nav className="sidebar">
       <section className="sidebar-header">
         <div className="sidebar-user">
           <img className="sidebar-header-img" src={userIcon} alt="User icon" />
-          <p>Username</p>
+          <p>{username}</p>
         </div>
         <div className="sidebar-config">
           <img

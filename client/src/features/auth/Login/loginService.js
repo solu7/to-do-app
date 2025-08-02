@@ -7,13 +7,14 @@ export async function loginUser({ email, password }) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ email, password }),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
 
-      throw new Error(errorData.message || "Error en el registro");
+      throw new Error(errorData.message || "Error en el inicio de sesion");
     }
 
     const data = await response.json();
