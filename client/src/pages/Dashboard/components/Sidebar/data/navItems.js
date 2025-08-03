@@ -9,6 +9,7 @@ export const navItems = [
   {
     icon: addIcon,
     name: "Añade una tarea",
+    action: "addTask",
   },
   {
     icon: inboxIcon,

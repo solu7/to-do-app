@@ -5,8 +5,8 @@ import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton.jsx";
 import { TaskCategoriesList } from "../../../categories/data/TaskCategoriesList.js";
-import { TaskPrioritiesList } from "../../../priorities/data/TaskPrioritiesList.js";;
-import { TaskTagsList } from "../../../tags/data/TaskTagsList.js";;
+import { TaskPrioritiesList } from "../../../priorities/data/TaskPrioritiesList.js";
+import { TaskTagsList } from "../../../tags/data/TaskTagsList.js";
 import categoryIcon from "../../assets/images/SectionIcon/categoryIcon.png";
 import priorityIcon from "../../assets/images/SectionIcon/priorityIcon.png";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
@@ -35,7 +35,9 @@ const AddTaskModal = () => {
           onChange={(date) => setSelectedDate(date)}
           locale={es}
           dateFormat="dd/MM/yyyy"
-          customInput={<DropdownWrapper buttonIcon={dateIcon} buttonText="Fecha"/>}
+          customInput={
+            <DropdownWrapper buttonIcon={dateIcon} buttonText="Fecha" />
+          }
         />
         <DropdownButton
           buttonText="Prioridad"

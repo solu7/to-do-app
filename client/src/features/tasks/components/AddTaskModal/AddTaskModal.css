@@ -1,6 +1,6 @@
 .task-modal {
-  background-color: var(--ultra-light-blue);
-  border: solid 2px var(--secondary-color);
+  background-color: var(--light-blue);
+  border: solid 2px var(--primary-color);
   display: flex;
   width: 450px;
   flex-direction: column;
@@ -9,6 +9,11 @@
   box-shadow: 3px 3px 9px rgb(109 109 109 / 16%);
   margin-left: auto;
   margin-right: auto;
+  position: fixed;
+  z-index: 1000;
+    top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .task-modal-input {
   width: 100%;

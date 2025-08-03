@@ -36,7 +36,7 @@ function Today() {
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <AddTaskModal isOpen={modalIsOpen} onClose={handleModal} />
+            <AddTaskModal onClose={handleModal}/>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,15 +1,22 @@
 import "./Sidebar.css";
 
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 import userIcon from "../../assets/images/userIcon.png";
 import configIcon from "../../assets/images/configIcon.png";
 import closepanelIcon from "../../assets/images/closepanelIcon.png";
 import projectsIcon from "../../assets/images/projectsIcon.png";
 import helpIcon from "../../assets/images/helpIcon.png";
+import AddTaskModal from "../../../../features/tasks/components/AddTaskModal/AddTaskModal.jsx";
 
 import NavItem from "./components/NavItem.jsx";
 import { navItems } from "./data/navItems.js";
 
-function Sidebar({username}) {
+function Sidebar({ username }) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const handleModal = () => {
+    setModalIsOpen(!modalIsOpen);
+  };
   return (
     <nav className="sidebar">
       <section className="sidebar-header">
@@ -33,9 +40,29 @@ function Sidebar({username}) {
 
       <ul className="principal-nav">
         {navItems.map((item, idx) => (
-          <NavItem key={idx} {...item} />
+          <NavItem
+            key={idx}
+            {...item}
+            onClick={item.action === "addTask" ? handleModal : undefined}
+          />
         ))}
       </ul>
+      <AnimatePresence>
+        {!!modalIsOpen && (
+          <motion.div
+          className="modal-overlay"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.3 }}
+          >
+            <AddTaskModal
+              onClose={handleModal}
+              modalClass="centered"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <section className="my-projects">
         <p>Mis proyectos</p>
