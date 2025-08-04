@@ -1,0 +1,5 @@
+.edit-panel {
+  width: 450px;
+  margin-left: auto;
+  background-color: var(--light-blue);
+}

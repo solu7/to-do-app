@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import TodayView from "../../features/tasks/views/Today/TodayView.jsx";
+import EditPanel from "./components/EditPanel/EditPanel.jsx";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Dashboard() {
@@ -40,9 +41,7 @@ function Dashboard() {
           <Route path="/" element={<TodayView />} />
         </Routes>
       </main>
-      <div>
-        <h1>Filtros y features</h1>
-      </div>
+      <EditPanel />
     </div>
   );
 }
