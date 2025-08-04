@@ -8,7 +8,7 @@
 }
 .dropdown-button__menu {
   position: absolute;
-  bottom: 133%;
+  top: 133%;
   left: 50%;
   transform: translateX(-50%);
   list-style: none;

@@ -11,9 +11,21 @@
   margin-right: auto;
   position: fixed;
   z-index: 1000;
-    top: 50%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
 .task-modal-input {
   width: 100%;
@@ -98,7 +110,7 @@
   cursor: pointer;
 }
 .task-modal-second-btn {
-  background-color: var(--opacity-grey);
+  background-color: white;
   color: var(--primary-color);
   font-family: "principal-font-bold";
 }
@@ -138,12 +150,18 @@ h2.react-datepicker__current-month {
 .react-datepicker__day--selected {
   background-color: var(--primary-color);
   color: white;
+  outline: none;
 }
 .react-datepicker__navigation-icon::before {
   border-color: white;
 }
 .react-datepicker__triangle {
   opacity: 0;
+}
+
+.react-datepicker__day--outside-month {
+  color: var(--ultra-light-grey);
+  font-size: 0.55rem;
 }
 .task-modal-filter {
   position: relative;
