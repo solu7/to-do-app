@@ -3,7 +3,7 @@
 @import "./styles/utility.css";
 
 :root {
-  --primary-color: rgb(50, 125, 238);
+  --primary-color: #327dee;
   --secondary-color: rgba(50, 125, 238, 0.144);
   --dark-color: #14348f;
   --black: rgb(51, 51, 51);

@@ -22,7 +22,7 @@
   color: var(--dark-grey);
 }
 .sidebar-header-img {
-  width: 25px;
+  width: 28px;
   object-fit: contain;
 }
 .sidebar-config {
@@ -30,8 +30,14 @@
   flex-direction: row;
   gap: 15px;
 }
-.sidebar-config img {
+.sidebar-config__icon {
+  width: 20px;
+  object-fit: contain;
   cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.sidebar-config__icon:hover {
+  transform: rotate(-40deg) scale(0.90);
 }
 .principal-nav {
   display: flex;

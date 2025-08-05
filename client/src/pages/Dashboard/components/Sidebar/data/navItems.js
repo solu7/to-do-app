@@ -1,4 +1,4 @@
-import addIcon from "../../../assets/images/addIcon.svg";
+import addIcon from "../../../assets/images/addIcon.png";
 import inboxIcon from "../../../assets/images/inboxIcon.png";
 import todayIcon from "../../../assets/images/todayIcon.png";
 import upcomingIcon from "../../../assets/images/upcomingIcon.png";

@@ -1,11 +1,11 @@
 import "./AddTaskButton.css";
-import addIcon from "../../../../pages/Dashboard/assets/images/addIcon.png";
+import addIconWhite from "../../../../pages/Dashboard/assets/images/addIconWhite.png";
 
 function AddTaskButton({ onClick }) {
   return (
     <div className="add-task-container" onClick={onClick}>
       <section className="add-task">
-        <img src={addIcon} alt="Icono de añadir" />
+        <img src={addIconWhite} alt="Icono de añadir" />
         <p>Añadir tarea</p>
       </section>
     </div>

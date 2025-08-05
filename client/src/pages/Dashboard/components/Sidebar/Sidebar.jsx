@@ -23,12 +23,12 @@ function Sidebar({ username }) {
         </div>
         <div className="sidebar-config">
           <img
-            className="sidebar-header-img"
+            className="sidebar-config__icon"
             src={configIcon}
             alt="Config icon"
           />
           <img
-            className="sidebar-header-img"
+            className="sidebar-config__icon"
             src={closepanelIcon}
             alt="Close panel icon"
           />
