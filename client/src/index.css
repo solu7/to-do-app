@@ -12,7 +12,7 @@
   /* Greys */
   --dark-grey: rgb(77, 77, 77);
   --grey: rgb(107, 107, 107);
-  --light-grey: rgb(158, 157, 157);
+  --light-grey: #9e9d9d;
   --ultra-light-grey: rgb(201, 201, 201);
   --opacity-grey: rgb(240 240 240);
 }

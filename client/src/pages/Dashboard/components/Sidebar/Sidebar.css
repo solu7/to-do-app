@@ -8,6 +8,7 @@
   flex-direction: column;
   gap: 40px;
   padding: 30px;
+  border-right: 1px solid var(--secondary-color);
 }
 .sidebar-header {
   display: flex;

@@ -8,12 +8,13 @@
   margin-right: auto;
   font-family: "principal-font";
   font-size: 23px;
+  color: var(--dark-grey);
 }
 .today-title span {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 .today-tasks {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }

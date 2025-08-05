@@ -1,7 +1,7 @@
-import priority1Icon from "../../tasks/assets/images/ItemIcon/priority1Icon.svg"
-import priority2Icon from "../../tasks/assets/images/ItemIcon/priority2Icon.svg"
-import priority3Icon from "../../tasks/assets/images/ItemIcon/priority3Icon.svg"
-import priority4Icon from "../../tasks/assets/images/ItemIcon/priority4Icon.svg"
+import priority1Icon from "../../tasks/assets/images/ItemIcon/priority1Icon.png"
+import priority2Icon from "../../tasks/assets/images/ItemIcon/priority2Icon.png"
+import priority3Icon from "../../tasks/assets/images/ItemIcon/priority3Icon.png"
+import priority4Icon from "../../tasks/assets/images/ItemIcon/priority4Icon.png"
 
 export const TaskPrioritiesList = [
   {
