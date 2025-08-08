@@ -1,10 +1,11 @@
 import "./EditPanel.css";
 import todayIcon from "../../assets/images/todayIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
-import priorityIcon from "../../../../features/tasks/assets/images/SectionIcon/priorityIcon.png";
+import priority1FullIcon from "../../../../features/tasks/assets/images/ItemIcon/priority1FullIcon.png";
 import tagIcon from "../../../../features/tasks/assets/images/SectionIcon/tagIcon.png";
 import categoryIcon from "../../../../features/tasks/assets/images/SectionIcon/categoryIcon.png";
 import deleteIcon from "../../../../features/tasks/assets/images/SectionIcon/deleteIcon.png";
+import closeIcon from "../../../../features/tasks/assets/images/SectionIcon/closeIcon.png";
 
 function EditPanel() {
   return (
@@ -24,12 +25,19 @@ function EditPanel() {
         </label>
       </section>
       <section className="edit-panel__task">
-        <div className="edit-panel__task-main">
-          <h3 className="edit-panel__task-title">Titulo de la tarea</h3>
+        <section className="edit-panel__task-main">
+          <div className="edit-panel__task-header">
+            <h3 className="edit-panel__task-title">Titulo de la tarea</h3>
+            <img
+              className="edit-panel__task-icon"
+              src={priority1FullIcon}
+              alt="Icono de prioridad"
+            />
+          </div>
           <p className="edit-panel__task-description">
             Descripcion de la tarea, aqui va toda esa info
           </p>
-        </div>
+        </section>
         <div className="edit-panel__task-comment-container">
           <img
             className="edit-panel__task-comment-icon"
@@ -53,19 +61,12 @@ function EditPanel() {
         <div className="edit-panel__options">
           <img
             className="edit-panel__options-icon"
-            src={priorityIcon}
-            alt="Icono de prioridad"
-          />
-          <p>Prioridad</p>
-        </div>
-        <div className="edit-panel__options">
-          <img
-            className="edit-panel__options-icon"
             src={tagIcon}
             alt="Icono de tag"
           />
           <p>Tags</p>
         </div>
+        <span className="edit-panel__options-separator"></span>
         <div className="edit-panel__options">
           <img
             className="edit-panel__options-icon"
@@ -74,6 +75,7 @@ function EditPanel() {
           />
           <p>Categorias</p>
         </div>
+        <span className="edit-panel__options-separator"></span>
         <div className="edit-panel__options">
           <img
             className="edit-panel__options-icon"
@@ -83,6 +85,10 @@ function EditPanel() {
           <p>Eliminar</p>
         </div>
       </section>
+      <div className="edit-panel__close-container">
+        <img className="edit-panel__close-icon" src={closeIcon} alt="" />
+        <p>Cerrar</p>
+      </div>
     </div>
   );
 }

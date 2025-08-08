@@ -3,6 +3,7 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  flex: 1;
 }
 .tool-used p {
   font-family: "principal-font-extra-bold", sans-serif;

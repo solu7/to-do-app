@@ -9,6 +9,7 @@
 .input-field input {
   height: 45px;
   border-radius: 10px;
+  background-color: white;
   border: 1px solid var(--opacity-grey);
   padding: 20px;
   font-family: "principal-font-bold";

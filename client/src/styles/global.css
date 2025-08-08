@@ -5,6 +5,12 @@
   letter-spacing: 0.3px;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: system-ui, sans-serif;
   background: var(--ultra-light-blue);

@@ -10,13 +10,13 @@ function HomePage() {
   const { goToGitHubProject } = useExternalNavigation();
   return (
     <div className="home-page">
-      <Navbar/>
-      <div className="home-page-header">
-        <div className="home-page-header-text">
+      <Navbar />
+      <div className="home-page__header">
+        <div className="home-page__header-text">
           <h1>
             <span className="highlight">To-Do</span> App
           </h1>
-          <p className="home-page-description">
+          <p className="home-page__description">
             Este es un proyecto full-stack construido con React, Node.js,
             Express y MySQL, pensada para gestionar tus tareas. Más allá de la
             funcionalidad, el foco estuvo en la calidad del código, buscando
@@ -27,7 +27,7 @@ function HomePage() {
             Codigo en GitHub
           </button>
         </div>
-        <img className="home-page-image" src={homeImage} alt="" />
+        <img className="home-page__image" src={homeImage} alt="" />
       </div>
       <div className="imageExample"></div>
       <FeaturesSection />
