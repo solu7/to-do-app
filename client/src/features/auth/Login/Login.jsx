@@ -71,7 +71,6 @@ function Login() {
   };
   return (
     <div className="login">
-      <div className="login-container">
         <div className="login-header">
           <img className="login-logo" src={logo} alt="App Logo" />
           <h1>
@@ -164,7 +163,6 @@ function Login() {
           </div>
         </Link>
       </div>
-    </div>
   );
 }
 export default Login;
