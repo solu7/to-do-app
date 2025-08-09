@@ -1,12 +1,12 @@
 import "./TodayView.css";
-import {useModal} from "../../../../core/hooks/useModal.js"
-import { AnimatePresence, motion } from "framer-motion";
+
+import { useAddTaskModal } from "../../hooks/useAddTaskModal.js"
 import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
 
 function Today() {
-const { modalIsOpen, openModal, closeModal } = useModal();
+ const { addTaskModalIsOpen ,openAddTaskModal, closeAddTaskModal } = useAddTaskModal();
   return (
     <div className="today">
       <h3 className="today-title">
@@ -23,20 +23,12 @@ const { modalIsOpen, openModal, closeModal } = useModal();
         <TaskCard />
         <TaskCard />
       </section>
-      <AddTaskButton onClick={openModal} />
+      <AddTaskButton onClick={openAddTaskModal} />
 
-      <AnimatePresence>
-        {!!modalIsOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <AddTaskModal onClose={closeModal}/>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AddTaskModal
+        onClose={closeAddTaskModal}
+        AddTaskModalIsOpen={addTaskModalIsOpen}
+      />
     </div>
   );
 }

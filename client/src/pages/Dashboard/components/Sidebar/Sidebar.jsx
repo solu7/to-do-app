@@ -1,7 +1,7 @@
 import "./Sidebar.css";
-
+import { useAddTaskModal } from "../../../../features/tasks/hooks/useAddTaskModal.js";
 import { AnimatePresence, motion } from "framer-motion";
-import { useModal } from "../../../../core/hooks/useModal.js";
+import openIcon from "../../assets/images/openIcon.png";
 import userIcon from "../../assets/images/userIcon.png";
 import configIcon from "../../assets/images/configIcon.png";
 import closepanelIcon from "../../assets/images/closepanelIcon.png";
@@ -12,65 +12,91 @@ import AddTaskModal from "../../../../features/tasks/components/AddTaskModal/Add
 import NavItem from "./components/NavItem.jsx";
 import { navItems } from "./data/navItems.js";
 
-function Sidebar({ username }) {
-  const { modalIsOpen, openModal, closeModal } = useModal();
+function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
+  const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
+    useAddTaskModal();
+
+  const sidebarVariants = {
+    open: { width: "60%", transition: { duration: 0.3 } },
+    closed: { width: "30%", transition: { duration: 0.3 } },
+  };
+  const arrowVariants = {
+    open: { rotate: 0, transition: { duration: 0.05 } },
+    closed: { rotate: 180, transition: { duration: 0.05 } },
+  };
   return (
-    <nav className="sidebar">
-      <section className="sidebar-header">
-        <div className="sidebar-user">
-          <img className="sidebar-header-img" src={userIcon} alt="User icon" />
-          <p>{username}</p>
-        </div>
-        <div className="sidebar-config">
-          <img
-            className="sidebar-config__icon"
-            src={configIcon}
-            alt="Config icon"
-          />
-          <img
-            className="sidebar-config__icon"
-            src={closepanelIcon}
-            alt="Close panel icon"
-          />
-        </div>
-      </section>
+    <motion.nav
+      className="sidebar"
+      variants={sidebarVariants}
+      initial={isOpen ? "open" : "closed"}
+      animate={isOpen ? "open" : "closed"}
+      exit="closed"
+    >
+      {isOpen && (
+        <motion.div
+        className="sidebar-content-wrapper"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 0.3 } }}
+        exit={{ opacity: 0 }}
+        >
+          <section className="sidebar-header">
+            <div className="sidebar-user">
+              <img
+                className="sidebar-header-img"
+                src={userIcon}
+                alt="User icon"
+              />
+              <p>{username}</p>
+            </div>
+          </section>
 
-      <ul className="principal-nav">
-        {navItems.map((item, idx) => (
-          <NavItem
-            key={idx}
-            {...item}
-            onClick={item.action === "addTask" ? openModal : undefined}
+          <ul className="principal-nav">
+            {navItems.map((item, idx) => (
+              <NavItem
+                key={idx}
+                {...item}
+                onClick={
+                  item.action === "addTask" ? openAddTaskModal : undefined
+                }
+              />
+            ))}
+          </ul>
+          <AddTaskModal
+            onClose={closeAddTaskModal}
+            AddTaskModalIsOpen={addTaskModalIsOpen}
           />
-        ))}
-      </ul>
-      <AnimatePresence>
-        {!!modalIsOpen && (
-          <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <AddTaskModal onClose={closeModal} />
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      <section className="my-projects">
-        <p>Mis proyectos</p>
-        <div className="project">
-          <img src={projectsIcon} alt="Project icon" />
-          <p>Proyecto</p>
-        </div>
-      </section>
+          <section className="my-projects">
+            <p>Mis proyectos</p>
+            <div className="project">
+              <img src={projectsIcon} alt="Project icon" />
+              <p>Proyecto</p>
+            </div>
+          </section>
 
-      <section className="sidebar-help">
-        <img src={helpIcon} alt="Help icon" />
-        <p>Mas</p>
-      </section>
-    </nav>
+          <section className="sidebar-help">
+            <img src={helpIcon} alt="Help icon" />
+            <p>Mas</p>
+          </section>
+        </motion.div>
+      )}
+      <div className="sidebar-config">
+        <img
+          className="sidebar-config__icon"
+          src={configIcon}
+          alt="Config icon"
+        />
+        <motion.img
+          className="sidebar-config__icon"
+          src={closepanelIcon}
+          alt="Close panel icon"
+          role="button"
+          onClick={isOpen ? onClose : openDashboardSidebar}
+          variants={arrowVariants}
+          animate={isOpen ? "open" : "closed"}
+        />
+      </div>
+    </motion.nav>
   );
 }
 export default Sidebar;

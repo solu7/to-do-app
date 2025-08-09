@@ -9,3 +9,7 @@
 .dashboard-content {
   margin-top: 50px;
 }
+.dashboard.w-sidebar {
+  grid-template-columns: 0.7fr 1.3fr 1fr;
+}
+
