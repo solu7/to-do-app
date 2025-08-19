@@ -18,10 +18,6 @@ function Today() {
         <TaskCard />
         <TaskCard />
         <TaskCard />
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
       </section>
       <AddTaskButton onClick={openAddTaskModal} />
 

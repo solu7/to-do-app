@@ -1,6 +1,7 @@
 .today {
   display: flex;
   flex-direction: column;
+  gap: 60px;
 }
 .today-title {
   margin-left: auto;
@@ -16,4 +17,9 @@
 .today-tasks {
   display: flex;
   flex-direction: column;
+}
+@media (width < 1500px) {
+  .today {
+    gap: 0px;
+  }
 }

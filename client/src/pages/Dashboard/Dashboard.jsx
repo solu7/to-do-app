@@ -5,6 +5,7 @@ import { useDashboardSidebar } from "./components/Sidebar/hooks/useDashboardSide
 import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import TodayView from "../../features/tasks/views/Today/TodayView.jsx";
 import EditPanel from "./components/EditPanel/EditPanel.jsx";
+import { useTaskEditPanel } from "./components/Sidebar/hooks/useTaskEditPanel.js";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Dashboard() {
@@ -13,6 +14,12 @@ function Dashboard() {
     openDashboardSidebar,
     closeDashboardSidebar,
   } = useDashboardSidebar();
+
+    const {
+    taskEditPanelIsOpen,
+    openTaskEditPanel,
+    closeTaskEditPanel,
+  } = useTaskEditPanel();
 
   const [username, setUsername] = useState("");
 
@@ -40,9 +47,10 @@ function Dashboard() {
   useEffect(() => {
     getLoggedUsername();
     openDashboardSidebar();
+    openTaskEditPanel();
   }, []);
   return (
-    <div className={`dashboard ${dashboardSidebarIsOpen ? "" : "w-sidebar"}`}>
+    <div className="dashboard">
       <Sidebar
         isOpen={dashboardSidebarIsOpen}
         onClose={closeDashboardSidebar}
@@ -54,7 +62,7 @@ function Dashboard() {
           <Route path="/" element={<TodayView />} />
         </Routes>
       </main>
-      <EditPanel />
+      <EditPanel isOpen={taskEditPanelIsOpen} onClose={closeTaskEditPanel} openTaskEditPanel={openTaskEditPanel}/>
     </div>
   );
 }

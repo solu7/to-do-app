@@ -1,13 +1,19 @@
 .edit-panel {
-  width: 450px;
-  margin-left: auto;
-  background-color: var(--light-blue);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  background-color: var(--light-blue);
   padding: 30px;
-  gap: 60px;
   font-family: "principal-font";
   border-left: 1px solid var(--secondary-color);
+}
+.edit-panel__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
 }
 .edit-panel__items {
   display: flex;
@@ -197,13 +203,12 @@
   font-size: 14px;
   font-family: "principal-font-bold";
   color: var(--primary-color);
-  margin-top: auto;
   cursor: pointer;
   align-items: center;
   transition: 0.3s ease-in-out;
 }
 .edit-panel__close-container:hover {
-  transform: scale(0.985)
+  transform: scale(0.985);
 }
 .edit-panel__close-icon {
   width: 20px;

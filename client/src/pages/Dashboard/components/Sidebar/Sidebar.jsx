@@ -17,12 +17,12 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
     useAddTaskModal();
 
   const sidebarVariants = {
-    open: { width: "60%", transition: { duration: 0.3 } },
-    closed: { width: "30%", transition: { duration: 0.3 } },
+    open: { transition: { duration: 0.8 } },
+    closed: { transition: { duration: 0.8 } },
   };
   const arrowVariants = {
-    open: { rotate: 0, transition: { duration: 0.05 } },
-    closed: { rotate: 180, transition: { duration: 0.05 } },
+    open: { rotate: 0, transition: { duration: 0.02 } },
+    closed: { rotate: 180, transition: { duration: 0.02 } },
   };
   return (
     <motion.nav

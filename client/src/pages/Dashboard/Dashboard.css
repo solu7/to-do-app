@@ -1,15 +1,10 @@
 .dashboard {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr;
-  grid-column-gap: 50px;
-  grid-row-gap: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   height: 100vh;
 }
 .dashboard-content {
-  margin-top: 50px;
+  width: 45%;
 }
-.dashboard.w-sidebar {
-  grid-template-columns: 0.7fr 1.3fr 1fr;
-}
-

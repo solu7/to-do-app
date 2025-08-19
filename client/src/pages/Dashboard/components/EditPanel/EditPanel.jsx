@@ -6,88 +6,102 @@ import tagIcon from "../../../../features/tasks/assets/images/SectionIcon/tagIco
 import categoryIcon from "../../../../features/tasks/assets/images/SectionIcon/categoryIcon.png";
 import deleteIcon from "../../../../features/tasks/assets/images/SectionIcon/deleteIcon.png";
 import closeIcon from "../../../../features/tasks/assets/images/SectionIcon/closeIcon.png";
+import openIcon from "../../assets/images/openIcon.png";
 
-function EditPanel() {
+function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
   return (
     <div className="edit-panel">
-      <section className="edit-panel__items">
-        <div className="edit-panel__date-container">
-          <img
-            className="edit-panel__date-icon"
-            src={todayIcon}
-            alt="Icono de hoy"
-          />
-          <p className="edit-panel__date">Fecha que le pusiste a la tarea</p>
+      {isOpen && (
+        <div className="edit-panel__content-wrapper">
+          <section className="edit-panel__items">
+            <div className="edit-panel__date-container">
+              <img
+                className="edit-panel__date-icon"
+                src={todayIcon}
+                alt="Icono de hoy"
+              />
+              <p className="edit-panel__date">
+                Fecha que le pusiste a la tarea
+              </p>
+            </div>
+            <label htmlFor="" className="edit-panel__completed-container">
+              <input className="edit-panel__completed" type="checkbox" />
+              <span className="edit-panel__completed-checkmark"></span>
+            </label>
+          </section>
+          <section className="edit-panel__task">
+            <section className="edit-panel__task-filters">
+              <div className="edit-panel__task-filters-item">
+                <img src={tagIcon} alt="Icono de tag" />
+                <p>Tag 1</p>
+              </div>
+              <div className="edit-panel__task-filters-item">
+                <img src={categoryIcon} alt="Icono de tag" />
+                <p>Category 1</p>
+              </div>
+            </section>
+            <section className="edit-panel__task-main">
+              <div className="edit-panel__task-header">
+                <h3 className="edit-panel__task-title">Titulo de la tarea</h3>
+                <img
+                  className="edit-panel__task-icon"
+                  src={priority1FullIcon}
+                  alt="Icono de prioridad"
+                />
+              </div>
+              <p className="edit-panel__task-description">
+                Descripcion de la tarea, aqui va toda esa info
+              </p>
+            </section>
+            <div className="edit-panel__task-comment-container">
+              <img
+                className="edit-panel__task-comment-icon"
+                src={commentIcon}
+                alt=""
+              />
+              <p className="edit-panel__task-comment">Comentario de la tarea</p>
+            </div>
+          </section>
+          <section className="edit-panel__options-container">
+            <div className="edit-panel__options">
+              <img
+                className="edit-panel__options-icon"
+                src={tagIcon}
+                alt="Icono de tag"
+              />
+              <p>Tags</p>
+            </div>
+            <span className="edit-panel__options-separator"></span>
+            <div className="edit-panel__options">
+              <img
+                className="edit-panel__options-icon"
+                src={categoryIcon}
+                alt="Icono de categoria"
+              />
+              <p>Categorias</p>
+            </div>
+            <span className="edit-panel__options-separator"></span>
+            <div className="edit-panel__options">
+              <img
+                className="edit-panel__options-icon"
+                src={deleteIcon}
+                alt="Icono de eliminar"
+              />
+              <p>Eliminar</p>
+            </div>
+          </section>
         </div>
-        <label htmlFor="" className="edit-panel__completed-container">
-          <input className="edit-panel__completed" type="checkbox" />
-          <span className="edit-panel__completed-checkmark"></span>
-        </label>
-      </section>
-      <section className="edit-panel__task">
-        <section className="edit-panel__task-main">
-          <div className="edit-panel__task-header">
-            <h3 className="edit-panel__task-title">Titulo de la tarea</h3>
-            <img
-              className="edit-panel__task-icon"
-              src={priority1FullIcon}
-              alt="Icono de prioridad"
-            />
-          </div>
-          <p className="edit-panel__task-description">
-            Descripcion de la tarea, aqui va toda esa info
-          </p>
-        </section>
-        <div className="edit-panel__task-comment-container">
-          <img
-            className="edit-panel__task-comment-icon"
-            src={commentIcon}
-            alt=""
-          />
-          <p className="edit-panel__task-comment">Comentario de la tarea</p>
-        </div>
-        <section className="edit-panel__task-filters">
-          <div className="edit-panel__task-filters-item">
-            <img src={tagIcon} alt="Icono de tag" />
-            <p>Tag 1</p>
-          </div>
-          <div className="edit-panel__task-filters-item">
-            <img src={categoryIcon} alt="Icono de tag" />
-            <p>Category 1</p>
-          </div>
-        </section>
-      </section>
-      <section className="edit-panel__options-container">
-        <div className="edit-panel__options">
-          <img
-            className="edit-panel__options-icon"
-            src={tagIcon}
-            alt="Icono de tag"
-          />
-          <p>Tags</p>
-        </div>
-        <span className="edit-panel__options-separator"></span>
-        <div className="edit-panel__options">
-          <img
-            className="edit-panel__options-icon"
-            src={categoryIcon}
-            alt="Icono de categoria"
-          />
-          <p>Categorias</p>
-        </div>
-        <span className="edit-panel__options-separator"></span>
-        <div className="edit-panel__options">
-          <img
-            className="edit-panel__options-icon"
-            src={deleteIcon}
-            alt="Icono de eliminar"
-          />
-          <p>Eliminar</p>
-        </div>
-      </section>
-      <div className="edit-panel__close-container">
-        <img className="edit-panel__close-icon" src={closeIcon} alt="" />
-        <p>Cerrar</p>
+      )}
+      <div
+        className="edit-panel__close-container"
+        onClick={isOpen ? onClose : openTaskEditPanel}
+      >
+        <img
+          className="edit-panel__close-icon"
+          src={isOpen ? closeIcon : openIcon}
+          alt="Icono de abrir o cerrar el panel"
+        />
+        {isOpen && <p>Cerrar</p>}
       </div>
     </div>
   );
