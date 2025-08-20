@@ -80,7 +80,7 @@
 }
 .edit-panel__completed-container .edit-panel__completed-checkmark:after {
   left: 9px;
-  top: 3px;
+  top: 4px;
   width: 4px;
   height: 11px;
   border: solid white;
@@ -107,14 +107,14 @@
 }
 .edit-panel__task-title {
   font-size: 22px;
-  color: var(--dark-grey);
+  color: var(--grey);
   border: none;
   background: none;
   font-family: "principal-font-bold";
   outline: none;
 }
 .edit-panel__task-title::placeholder {
-  color: var(--dark-grey);
+  color: var(--grey);
 }
 .edit-panel__task-priority {
   width: 24px;
@@ -154,7 +154,7 @@
 }
 .edit-panel__task-comment::before {
   left: 9px;
-  top: 4px;
+  top: 3px;
   width: 4px;
   height: 11px;
   border: solid white;

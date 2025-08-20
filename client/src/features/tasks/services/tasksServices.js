@@ -19,3 +19,21 @@ export async function createTask({ title, description }) {
     throw error;
   }
 }
+
+export async function getLatestTasks() {
+  try {
+    const response = await fetch(`${API_URL}/tasks`, {
+      method: "GET",
+      body: JSON.stringify(),
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al obtener tareas");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

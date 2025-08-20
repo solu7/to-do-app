@@ -1,10 +1,10 @@
 .dashboard {
   display: flex;
-  align-items: center;
   justify-content: center;
-  position: relative;
   height: 100vh;
+  overflow: scroll;
 }
 .dashboard-content {
   width: 45%;
+  margin: 50px 0px;
 }

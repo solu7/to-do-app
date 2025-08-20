@@ -3,19 +3,19 @@ import priority1Icon from "./assets/images/ItemIcon/priority1Icon.png";
 import tagIcon from "./assets/images/SectionIcon/tagIcon.png";
 import categoryIcon from "./assets/images/SectionIcon/categoryIcon.png";
 
-function TaskCard() {
+function TaskCard({ title, description }) {
   return (
     <div className="task">
       <section className="task__header">
         <div className="task__title">
-          <p>Titulo de la tarea</p>
+          <p>{title}</p>
           <img
             className="task-priority-icon"
             src={priority1Icon}
             alt="Icono de prioridad que tiene la tarea"
           />
         </div>
-        <p className="task-description">Descripcion de la tarea</p>
+        <p className="task-description">{description}</p>
       </section>
       <section className="task__filters">
         <div className="task__filters-item">

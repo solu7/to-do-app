@@ -2,7 +2,7 @@ import pool from "../shared/db.js";
 
 export const getLatestTasks = async (userId) => {
   const [tasks] = await pool.query(
-    "SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC LIMIT 10",
+    "SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at ASC LIMIT 10",
     [userId]
   );
   return tasks;

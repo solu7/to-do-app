@@ -15,11 +15,8 @@ function Dashboard() {
     closeDashboardSidebar,
   } = useDashboardSidebar();
 
-    const {
-    taskEditPanelIsOpen,
-    openTaskEditPanel,
-    closeTaskEditPanel,
-  } = useTaskEditPanel();
+  const { taskEditPanelIsOpen, openTaskEditPanel, closeTaskEditPanel } =
+    useTaskEditPanel();
 
   const [username, setUsername] = useState("");
 
@@ -62,7 +59,11 @@ function Dashboard() {
           <Route path="/" element={<TodayView />} />
         </Routes>
       </main>
-      <EditPanel isOpen={taskEditPanelIsOpen} onClose={closeTaskEditPanel} openTaskEditPanel={openTaskEditPanel}/>
+      <EditPanel
+        isOpen={taskEditPanelIsOpen}
+        onClose={closeTaskEditPanel}
+        openTaskEditPanel={openTaskEditPanel}
+      />
     </div>
   );
 }
