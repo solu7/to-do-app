@@ -1,4 +1,4 @@
-.today {
+.today-container {
   display: flex;
   flex-direction: column;
   gap: 60px;
@@ -17,6 +17,23 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+.no-tasks {
+  height: 100%;
+  justify-content: center;
+}
+.no-tasks__message {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-family: "principal-font";
+  color: var(--primary-color);
+}
+.no-tasks__icon {
+  width: 35px;
+  object-fit: contain;
 }
 @media (width < 1500px) {
   .today {
