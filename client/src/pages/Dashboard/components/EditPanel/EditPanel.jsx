@@ -3,10 +3,14 @@ import todayIcon from "../../assets/images/todayIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
 import priority1FullIcon from "../../../../features/tasks/assets/images/ItemIcon/priority1FullIcon.png";
 import tagIcon from "../../../../features/tasks/assets/images/SectionIcon/tagIcon.png";
+import tagItemIcon from "../../../../features/tasks/assets/images/ItemIcon/tagItemIcon.png";
 import categoryIcon from "../../../../features/tasks/assets/images/SectionIcon/categoryIcon.png";
+import categoryItemIcon from "../../../../features/tasks/assets/images/ItemIcon/categoryItemIcon.png";
 import deleteIcon from "../../../../features/tasks/assets/images/SectionIcon/deleteIcon.png";
 import closeIcon from "../../../../features/tasks/assets/images/SectionIcon/closeIcon.png";
 import openIcon from "../../assets/images/openIcon.png";
+import saveIcon from "../../assets/images/saveIcon.png";
+import resetIcon from "../../assets/images/resetIcon.png";
 
 function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
   return (
@@ -30,28 +34,55 @@ function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
             </label>
           </section>
           <section className="edit-panel__task">
-            <section className="edit-panel__task-filters">
-              <div className="edit-panel__task-filters-item">
-                <img src={tagIcon} alt="Icono de tag" />
-                <p>Tag 1</p>
-              </div>
-              <div className="edit-panel__task-filters-item">
-                <img src={categoryIcon} alt="Icono de tag" />
-                <p>Category 1</p>
-              </div>
+            <section className="edit-panel__filters">
+              <section className="edit-panel__task-filters">
+                <div className="edit-panel__task-filters-item">
+                  <img src={tagIcon} alt="Icono de tag" />
+                  <p>Tag 1</p>
+                </div>
+                <div className="edit-panel__task-filters-item">
+                  <img src={categoryIcon} alt="Icono de tag" />
+                  <p>Category 1</p>
+                </div>
+              </section>
+              <section className="edit-panel__add-filter-container">
+                <div className="edit-panel__add-filter">
+                  <img
+                    className="edit-panel__add-filter-icon"
+                    src={tagItemIcon}
+                    alt="Icono de tag"
+                  />
+                  <p>Agregar Tags</p>
+                </div>
+                <span className="edit-panel__add-filter-separator"></span>
+                <div className="edit-panel__add-filter">
+                  <img
+                    className="edit-panel__add-filter-icon"
+                    src={categoryItemIcon}
+                    alt="Icono de categoria"
+                  />
+                  <p>Agregar Categorias</p>
+                </div>
+              </section>
             </section>
             <section className="edit-panel__task-main">
               <div className="edit-panel__task-header">
-                <h3 className="edit-panel__task-title">Titulo de la tarea</h3>
+                <input
+                  type="text"
+                  className="edit-panel__task-title"
+                  placeholder="Titulo de la tarea"
+                />
                 <img
-                  className="edit-panel__task-icon"
+                  className="edit-panel__task-priority"
                   src={priority1FullIcon}
                   alt="Icono de prioridad"
                 />
               </div>
-              <p className="edit-panel__task-description">
-                Descripcion de la tarea, aqui va toda esa info
-              </p>
+              <input
+                type="text"
+                className="edit-panel__task-description"
+                placeholder="Descripcion de la tarea, aqui va toda esa info"
+              />
             </section>
             <div className="edit-panel__task-comment-container">
               <img
@@ -59,35 +90,37 @@ function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
                 src={commentIcon}
                 alt=""
               />
-              <p className="edit-panel__task-comment">Comentario de la tarea</p>
+              <input
+                type="text"
+                className="edit-panel__task-comment"
+                placeholder="Comentario de la tarea"
+              />
             </div>
           </section>
           <section className="edit-panel__options-container">
-            <div className="edit-panel__options">
+            <div className="edit-panel__option">
               <img
-                className="edit-panel__options-icon"
-                src={tagIcon}
-                alt="Icono de tag"
+                className="edit-panel__option-icon"
+                src={resetIcon}
+                alt="Icono de resetear"
               />
-              <p>Tags</p>
+              <p>Restablecer</p>
             </div>
-            <span className="edit-panel__options-separator"></span>
-            <div className="edit-panel__options">
+            <div className="edit-panel__option">
               <img
-                className="edit-panel__options-icon"
-                src={categoryIcon}
-                alt="Icono de categoria"
+                className="edit-panel__option-icon"
+                src={saveIcon}
+                alt="Icono de guardar"
               />
-              <p>Categorias</p>
+              <p>Guardar</p>
             </div>
-            <span className="edit-panel__options-separator"></span>
-            <div className="edit-panel__options">
+            <div className="edit-panel__option">
               <img
-                className="edit-panel__options-icon"
+                className="edit-panel__option-icon"
                 src={deleteIcon}
-                alt="Icono de eliminar"
+                alt="Icono de borrar"
               />
-              <p>Eliminar</p>
+              <p>Borrar</p>
             </div>
           </section>
         </div>
