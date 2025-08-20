@@ -17,6 +17,7 @@
 .today-tasks {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 @media (width < 1500px) {
   .today {

@@ -154,7 +154,7 @@
 }
 .edit-panel__task-comment::before {
   left: 9px;
-  top: 3px;
+  top: 4px;
   width: 4px;
   height: 11px;
   border: solid white;
