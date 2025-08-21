@@ -8,6 +8,7 @@ export async function createTask({ title, description }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ title, description }),
+      credentials: "include",
     });
     if (!response.ok) {
       const errorData = await response.json();

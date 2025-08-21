@@ -36,6 +36,7 @@
   border: none;
   background: none;
   padding: 1px;
+  resize: none;
 }
 .task-modal-input.title {
   font-size: clamp(1.1rem, 2.3vw, 1.25rem );

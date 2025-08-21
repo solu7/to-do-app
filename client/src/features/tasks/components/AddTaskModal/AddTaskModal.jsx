@@ -13,10 +13,28 @@ import priorityIcon from "../../assets/images/SectionIcon/priorityIcon.png";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
 import dateIcon from "../../assets/images/SectionIcon/dateIcon.png";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper.jsx";
+import { createTask } from "../../services/tasksServices.js";
 
 const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   const [selectedDate, setSelectedDate] = useState(null);
 
+  const [title, setTitle] = useState("Titulo de la tarea");
+  const [description, setDescription] = useState("Descripcion de la tarea.");
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleAddTask = ({ title, description }) => {
+    createTask({
+      title,
+      description,
+    });
+    onClose();
+  };
   return (
     <AnimatePresence>
       {!!AddTaskModalIsOpen && (
@@ -30,15 +48,19 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
         >
           <div className="task-modal" onClick={(e) => e.stopPropagation()}>
             <section className="task-modal-main">
-              <input
+              <textarea
                 className="task-modal-input title"
-                type="text"
-                placeholder="Titulo de la tarea"
+                onChange={handleTitleChange}
+                value={title}
+                placeholder={title}
+                rows="1"
               />
-              <input
+              <textarea
                 className="task-modal-input desc"
-                type="text"
-                placeholder="Descripcion"
+                onChange={handleDescriptionChange}
+                value={description}
+                placeholder={description}
+                rows="1"
               />
             </section>
             <section className="task-modal-filters">
@@ -69,7 +91,12 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
               />
             </section>
             <section className="task-modal-buttons">
-              <button className="task-modal-add-btn">Añadir tarea</button>
+              <button
+                onClick={() => handleAddTask({ title, description })}
+                className="task-modal-add-btn"
+              >
+                Añadir tarea
+              </button>
               <button className="task-modal-second-btn" onClick={onClose}>
                 Cancelar
               </button>

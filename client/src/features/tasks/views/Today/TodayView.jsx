@@ -22,7 +22,7 @@ function Today() {
   };
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [addTaskModalIsOpen]);
   return (
     <div
       className={
