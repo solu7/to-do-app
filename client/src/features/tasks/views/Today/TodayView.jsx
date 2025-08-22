@@ -8,7 +8,7 @@ import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
 import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
 import { getLatestTasks } from "../../services/tasksServices.js";
 
-function Today() {
+function Today({ onTaskClick }) {
   const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
     useAddTaskModal();
   const [tasks, setTasks] = useState([]);
@@ -20,9 +20,14 @@ function Today() {
       console.error("Error de conexión:", err);
     }
   };
+  const handleTaskAdded = () => {
+    fetchTasks(); // Vuelve a cargar las tareas
+    closeAddTaskModal(); // Cierra el modal
+  };
+
   useEffect(() => {
     fetchTasks();
-  }, [addTaskModalIsOpen]);
+  }, []);
   return (
     <div
       className={
@@ -39,6 +44,7 @@ function Today() {
               key={task.id}
               title={task.title}
               description={task.description}
+              onClick={() => onTaskClick(task)}
             />
           ))
         ) : (
@@ -57,6 +63,7 @@ function Today() {
       <AddTaskModal
         onClose={closeAddTaskModal}
         AddTaskModalIsOpen={addTaskModalIsOpen}
+        onTaskAdded={handleTaskAdded}
       />
     </div>
   );

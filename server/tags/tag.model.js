@@ -22,6 +22,14 @@ export const createTag = async (userId, name) => {
   }
 };
 
+export const getTagsInTask = async (userId, taskId) => {
+  const [tags] = await pool.query(
+    "SELECT t.* FROM tags t JOIN task_tags tt ON t.id = tt.tag_id WHERE tt.task_id = ? AND t.user_id = ?",
+    [taskId, userId]
+  );
+  return tags;
+};
+
 export const assignTagToTask = async (userId, taskId, tagId) => {
   const [task] = await pool.query(
     "SELECT * FROM tasks WHERE id = ? AND user_id = ?",

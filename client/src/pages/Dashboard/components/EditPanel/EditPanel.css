@@ -112,6 +112,7 @@
   background: none;
   font-family: "principal-font-bold";
   outline: none;
+  resize: none;
 }
 .edit-panel__task-title::placeholder {
   color: var(--grey);
@@ -128,6 +129,7 @@
   outline: none;
   border: none;
   font-family: "principal-font";
+  resize: none;
 }
 .edit-panel__task-description::placeholder {
   color: var(--light-grey);
@@ -148,6 +150,7 @@
   background: none;
   outline: none;
   font-family: "principal-font";
+  resize: none;
 }
 .edit-panel__task-comment::placeholder {
   color: var(--primary-color);

@@ -20,6 +20,21 @@ function Dashboard() {
 
   const [username, setUsername] = useState("");
 
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleTaskSelection = (task) => {
+    setSelectedTask(task);
+    openTaskEditPanel();
+  };
+
+  const handleOpenEditPanel = () => {
+    if (selectedTask) {
+      openTaskEditPanel();
+    } else {
+      closeTaskEditPanel();
+    }
+  };
+
   const getLoggedUsername = async () => {
     try {
       const response = await fetch(`${API_URL}/users`, {
@@ -44,7 +59,6 @@ function Dashboard() {
   useEffect(() => {
     getLoggedUsername();
     openDashboardSidebar();
-    openTaskEditPanel();
   }, []);
   return (
     <div className="dashboard">
@@ -56,13 +70,17 @@ function Dashboard() {
       />
       <main className="dashboard-content">
         <Routes>
-          <Route path="/" element={<TodayView />} />
+          <Route
+            path="/"
+            element={<TodayView onTaskClick={handleTaskSelection} />}
+          />
         </Routes>
       </main>
       <EditPanel
         isOpen={taskEditPanelIsOpen}
         onClose={closeTaskEditPanel}
-        openTaskEditPanel={openTaskEditPanel}
+        handleOpenEditPanel={handleOpenEditPanel}
+        task={selectedTask}
       />
     </div>
   );

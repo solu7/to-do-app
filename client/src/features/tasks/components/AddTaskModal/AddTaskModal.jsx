@@ -15,7 +15,7 @@ import dateIcon from "../../assets/images/SectionIcon/dateIcon.png";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper.jsx";
 import { createTask } from "../../services/tasksServices.js";
 
-const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
+const AddTaskModal = ({ onClose, AddTaskModalIsOpen, onTaskAdded }) => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const [title, setTitle] = useState("Titulo de la tarea");
@@ -28,12 +28,18 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
     setDescription(e.target.value);
   };
 
-  const handleAddTask = ({ title, description }) => {
-    createTask({
-      title,
-      description,
-    });
-    onClose();
+  const handleAddTask = async ({ title, description }) => {
+    try {
+      await createTask({
+        title,
+        description,
+      });
+      if (onTaskAdded) {
+        onTaskAdded();
+      }
+    } catch (error) {
+      console.error("Error al crear la tarea:", error);
+    }
   };
   return (
     <AnimatePresence>

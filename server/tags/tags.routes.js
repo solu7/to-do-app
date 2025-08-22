@@ -1,7 +1,9 @@
 import { Router } from "express";
 const router = Router();
 import verifyToken from "../auth/auth.middleware.js";
-import { createTag, assignTagToTask, removeTagFromTask } from "./tag.controller.js";
+import { createTag, assignTagToTask, removeTagFromTask, getTagsInTask } from "./tag.controller.js";
+
+router.get("/:taskId", verifyToken, getTagsInTask);
 
 router.post("/", verifyToken, createTag);
 

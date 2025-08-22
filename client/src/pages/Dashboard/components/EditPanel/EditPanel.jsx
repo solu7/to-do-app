@@ -1,4 +1,5 @@
 import "./EditPanel.css";
+import { useState, useEffect } from "react";
 import todayIcon from "../../assets/images/todayIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
 import priority1FullIcon from "../../../../features/tasks/assets/images/ItemIcon/priority1FullIcon.png";
@@ -12,7 +13,15 @@ import openIcon from "../../assets/images/openIcon.png";
 import saveIcon from "../../assets/images/saveIcon.png";
 import resetIcon from "../../assets/images/resetIcon.png";
 
-function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
+function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  useEffect(() => {
+    if (task) {
+      setTitle(task.title || "Titulo por defecto");
+      setDescription(task.description || "Descripcion por defecto");
+    }
+  }, [task]);
   return (
     <div className="edit-panel">
       {isOpen && (
@@ -67,10 +76,11 @@ function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
             </section>
             <section className="edit-panel__task-main">
               <div className="edit-panel__task-header">
-                <input
+                <textarea
                   type="text"
                   className="edit-panel__task-title"
-                  placeholder="Titulo de la tarea"
+                  placeholder={title}
+                  rows="1"
                 />
                 <img
                   className="edit-panel__task-priority"
@@ -78,10 +88,11 @@ function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
                   alt="Icono de prioridad"
                 />
               </div>
-              <input
+              <textarea
                 type="text"
                 className="edit-panel__task-description"
-                placeholder="Descripcion de la tarea, aqui va toda esa info"
+                placeholder={description}
+                rows="2"
               />
             </section>
             <div className="edit-panel__task-comment-container">
@@ -90,10 +101,11 @@ function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
                 src={commentIcon}
                 alt=""
               />
-              <input
+              <textarea
                 type="text"
                 className="edit-panel__task-comment"
                 placeholder="Comentario de la tarea"
+                rows="1"
               />
             </div>
           </section>
@@ -127,7 +139,7 @@ function EditPanel({ isOpen, onClose, openTaskEditPanel }) {
       )}
       <div
         className="edit-panel__close-container"
-        onClick={isOpen ? onClose : openTaskEditPanel}
+        onClick={isOpen ? onClose : handleOpenEditPanel}
       >
         <img
           className="edit-panel__close-icon"

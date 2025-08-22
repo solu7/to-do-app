@@ -3,9 +3,9 @@ import priority1Icon from "./assets/images/ItemIcon/priority1Icon.png";
 import tagIcon from "./assets/images/SectionIcon/tagIcon.png";
 import categoryIcon from "./assets/images/SectionIcon/categoryIcon.png";
 
-function TaskCard({ title, description }) {
+function TaskCard({ title, description, onClick }) {
   return (
-    <div className="task">
+    <div className="task" onClick={onClick}>
       <section className="task__header">
         <div className="task__title">
           <p>{title}</p>
