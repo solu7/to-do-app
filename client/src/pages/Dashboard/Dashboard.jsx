@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar/Sidebar.jsx";
 import TodayView from "../../features/tasks/views/Today/TodayView.jsx";
 import EditPanel from "./components/EditPanel/EditPanel.jsx";
 import { useTaskEditPanel } from "./components/Sidebar/hooks/useTaskEditPanel.js";
+import { TaskProvider } from "../../context/TaskContext.jsx";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Dashboard() {
@@ -61,28 +62,30 @@ function Dashboard() {
     openDashboardSidebar();
   }, []);
   return (
-    <div className="dashboard">
-      <Sidebar
-        isOpen={dashboardSidebarIsOpen}
-        onClose={closeDashboardSidebar}
-        username={username}
-        openDashboardSidebar={openDashboardSidebar}
-      />
-      <main className="dashboard-content">
-        <Routes>
-          <Route
-            path="/"
-            element={<TodayView onTaskClick={handleTaskSelection} />}
-          />
-        </Routes>
-      </main>
-      <EditPanel
-        isOpen={taskEditPanelIsOpen}
-        onClose={closeTaskEditPanel}
-        handleOpenEditPanel={handleOpenEditPanel}
-        task={selectedTask}
-      />
-    </div>
+    <TaskProvider>
+      <div className="dashboard">
+        <Sidebar
+          isOpen={dashboardSidebarIsOpen}
+          onClose={closeDashboardSidebar}
+          username={username}
+          openDashboardSidebar={openDashboardSidebar}
+        />
+        <main className="dashboard-content">
+          <Routes>
+            <Route
+              path="/"
+              element={<TodayView onTaskClick={handleTaskSelection} />}
+            />
+          </Routes>
+        </main>
+        <EditPanel
+          isOpen={taskEditPanelIsOpen}
+          onClose={closeTaskEditPanel}
+          handleOpenEditPanel={handleOpenEditPanel}
+          task={selectedTask}
+        />
+      </div>
+    </TaskProvider>
   );
 }
 

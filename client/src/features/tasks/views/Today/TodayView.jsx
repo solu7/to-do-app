@@ -6,28 +6,35 @@ import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
 import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
-import { getLatestTasks } from "../../services/tasksServices.js";
+import { getTagsInTask } from "../../../tags/services/tagsServices.js";
+import { useTasks } from "../../../../context/TaskContext.jsx";
 
 function Today({ onTaskClick }) {
   const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
     useAddTaskModal();
-  const [tasks, setTasks] = useState([]);
-  const fetchTasks = async () => {
+  const [tagsInTask, setTagsInTask] = useState([]);
+
+  const fetchTags = async (taskIds) => {
+    if (!taskIds || taskIds.length === 0) {
+      return;
+    }
     try {
-      const data = await getLatestTasks();
-      setTasks(data);
+      const allTags = {};
+      for (const taskId of taskIds) {
+        const data = await getTagsInTask({ taskId });
+        allTags[taskId] = data;
+      }
+      setTagsInTask(allTags);
     } catch (err) {
       console.error("Error de conexión:", err);
     }
   };
-  const handleTaskAdded = () => {
-    fetchTasks(); // Vuelve a cargar las tareas
-    closeAddTaskModal(); // Cierra el modal
-  };
+  const { tasks } = useTasks();
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    const taskIds = tasks.map((task) => task.id);
+    fetchTags(taskIds);
+  }, [tasks]);
   return (
     <div
       className={
@@ -45,6 +52,7 @@ function Today({ onTaskClick }) {
               title={task.title}
               description={task.description}
               onClick={() => onTaskClick(task)}
+              tagsInTask={tagsInTask[task.id] || []}
             />
           ))
         ) : (
@@ -63,7 +71,6 @@ function Today({ onTaskClick }) {
       <AddTaskModal
         onClose={closeAddTaskModal}
         AddTaskModalIsOpen={addTaskModalIsOpen}
-        onTaskAdded={handleTaskAdded}
       />
     </div>
   );

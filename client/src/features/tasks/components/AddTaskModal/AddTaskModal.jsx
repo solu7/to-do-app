@@ -14,12 +14,14 @@ import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
 import dateIcon from "../../assets/images/SectionIcon/dateIcon.png";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper.jsx";
 import { createTask } from "../../services/tasksServices.js";
+import { useTasks } from "../../../../context/TaskContext.jsx";
 
-const AddTaskModal = ({ onClose, AddTaskModalIsOpen, onTaskAdded }) => {
+const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
+  const { fetchTasks } = useTasks();
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -34,9 +36,8 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen, onTaskAdded }) => {
         title,
         description,
       });
-      if (onTaskAdded) {
-        onTaskAdded();
-      }
+      fetchTasks();
+      onClose();
     } catch (error) {
       console.error("Error al crear la tarea:", error);
     }
