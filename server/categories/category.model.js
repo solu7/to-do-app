@@ -23,6 +23,14 @@ export const createCategory = async (userId, name) => {
   }
 };
 
+export const getCategoriesInTask = async (userId, taskId) => {
+  const [categories] = await pool.query(
+    "SELECT c.* FROM categories c JOIN task_categories tc ON c.id = tc.category_id WHERE tc.task_id = ? AND c.user_id = ?",
+    [taskId, userId]
+  );
+  return categories;
+};
+
 export const assignCategoriesToTask = async (userId, taskId, categoryIds) => {
   const [task] = await pool.query(
     "SELECT * FROM tasks WHERE id = ? AND user_id = ?",

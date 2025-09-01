@@ -3,6 +3,8 @@ import {
   assignCategoriesToTask as _assignCategoriesToTask,
   removeCategoryFromTask as _removeCategoryFromTask,
   getAllCategories as _getAllCategories,
+  getCategoriesInTask as _getCategoriesInTask,
+  
 } from "./category.model.js";
 
 export const createCategory = async (req, res) => {
@@ -20,6 +22,19 @@ export const createCategory = async (req, res) => {
     res.status(201).json(category);
   } catch (error) {
     console.error("Error al crear la categoría:", error);
+    res.status(500).json({ message: "Error del servidor" });
+  }
+};
+
+export const getCategoriesInTask = async (req, res) => {
+  const userId = req.user.id;
+  const taskId = req.params.taskId;
+
+  try {
+    const categoriesInTask = await _getCategoriesInTask(userId, taskId);
+    res.status(200).json(categoriesInTask);
+  } catch (error) {
+    console.error("Error al obtener las categorias:", error);
     res.status(500).json({ message: "Error del servidor" });
   }
 };

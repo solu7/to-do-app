@@ -3,7 +3,13 @@ import priority1Icon from "./assets/images/ItemIcon/priority1Icon.png";
 import tagIcon from "./assets/images/SectionIcon/tagIcon.png";
 import categoryIcon from "./assets/images/SectionIcon/categoryIcon.png";
 
-function TaskCard({ title, description, onClick, tagsInTask }) {
+function TaskCard({
+  title,
+  description,
+  onClick,
+  tagsInTask,
+  categoriesInTask,
+}) {
   return (
     <div className="task" onClick={onClick}>
       <section className="task__header">
@@ -29,14 +35,17 @@ function TaskCard({ title, description, onClick, tagsInTask }) {
               <p>{tag.name}</p>
             </div>
           ))}
-        <div className="task__filters-item">
-          <img
-            className="task__filters-item__icon"
-            src={categoryIcon}
-            alt="Icono de tag"
-          />
-          <p>Category 1</p>
-        </div>
+        {categoriesInTask.length > 0 &&
+          categoriesInTask.map((category) => (
+            <div className="task__filters-item" key={category.id}>
+              <img
+                className="task__filters-item__icon"
+                src={categoryIcon}
+                alt="Icono de categoría"
+              />
+              <p>{category.name}</p>
+            </div>
+          ))}
       </section>
       <hr className="task-card__hr" />
     </div>

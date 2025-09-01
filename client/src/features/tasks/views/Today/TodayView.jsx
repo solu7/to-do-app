@@ -1,40 +1,20 @@
 import "./TodayView.css";
-
-import { useState, useEffect } from "react";
 import { useAddTaskModal } from "../../hooks/useAddTaskModal.js";
 import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
 import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
 import { getTagsInTask } from "../../../tags/services/tagsServices.js";
+import { getCategoriesInTask } from "../../../categories/services/categoriesServices.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
+import { useTaskData } from "../../services/useTaskData.js";
 
 function Today({ onTaskClick }) {
   const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
     useAddTaskModal();
-  const [tagsInTask, setTagsInTask] = useState([]);
-
-  const fetchTags = async (taskIds) => {
-    if (!taskIds || taskIds.length === 0) {
-      return;
-    }
-    try {
-      const allTags = {};
-      for (const taskId of taskIds) {
-        const data = await getTagsInTask({ taskId });
-        allTags[taskId] = data;
-      }
-      setTagsInTask(allTags);
-    } catch (err) {
-      console.error("Error de conexión:", err);
-    }
-  };
   const { tasks } = useTasks();
-
-  useEffect(() => {
-    const taskIds = tasks.map((task) => task.id);
-    fetchTags(taskIds);
-  }, [tasks]);
+  const tagsInTask = useTaskData(tasks, getTagsInTask);
+  const categoriesInTask = useTaskData(tasks, getCategoriesInTask);
   return (
     <div
       className={
@@ -53,6 +33,7 @@ function Today({ onTaskClick }) {
               description={task.description}
               onClick={() => onTaskClick(task)}
               tagsInTask={tagsInTask[task.id] || []}
+              categoriesInTask={categoriesInTask[task.id] || []}
             />
           ))
         ) : (

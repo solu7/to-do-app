@@ -6,9 +6,12 @@ import {
   assignCategoriesToTask,
   removeCategoryFromTask,
   getAllCategories,
+  getCategoriesInTask
 } from "./category.controller.js";
 
 router.get("/", verifyToken, getAllCategories);
+
+router.get("/:taskId", verifyToken, getCategoriesInTask);
 
 router.post("/", verifyToken, createCategory);
 
