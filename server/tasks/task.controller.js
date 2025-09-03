@@ -30,9 +30,9 @@ export const createTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   const userId = req.user.id;
   const taskId = req.params.id;
-  const { title, description, category } = req.body;
+  const { title, description } = req.body;
 
-  if (!title && !description && !category) {
+  if (!title && !description) {
     return res
       .status(400)
       .json({ message: "Al menos un campo debe ser actualizado" });
@@ -56,10 +56,6 @@ export const updateTask = async (req, res) => {
     if (description) {
       fields.push("description = ?");
       values.push(description);
-    }
-    if (category) {
-      fields.push("category = ?");
-      values.push(category);
     }
 
     await _updateTask(taskId, userId, fields, values);

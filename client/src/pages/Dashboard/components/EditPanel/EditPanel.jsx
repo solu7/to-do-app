@@ -1,5 +1,5 @@
 import "./EditPanel.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import todayIcon from "../../assets/images/todayIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
 import priority1FullIcon from "../../../../features/tasks/assets/images/ItemIcon/priority1FullIcon.png";
@@ -12,14 +12,42 @@ import closeIcon from "../../../../features/tasks/assets/images/SectionIcon/clos
 import openIcon from "../../assets/images/openIcon.png";
 import saveIcon from "../../assets/images/saveIcon.png";
 import resetIcon from "../../assets/images/resetIcon.png";
+import { getTagsInTask } from "../../../../features/tags/services/tagsServices";
+import { getCategoriesInTask } from "../../../../features/categories/services/categoriesServices";
+import { useTaskData } from "../../../../features/tasks/services/useTaskData";
+import useAutoGrowTextarea from "../../../../core/hooks/useAutoGrowTextarea";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [comment, setComment] = useState("");
+  const [originalTask, setOriginalTask] = useState(null);
+
+  const titleRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const commentRef = useRef(null);
+
+  useAutoGrowTextarea(titleRef, title);
+  useAutoGrowTextarea(descriptionRef, description);
+  useAutoGrowTextarea(commentRef, comment);
+
+  const tagsInTask = useTaskData(task, getTagsInTask);
+  const categoriesInTask = useTaskData(task, getCategoriesInTask);
+
+  const handleResetTask = () => {
+    if (originalTask) {
+      setTitle(originalTask.title || "");
+      setDescription(originalTask.description || "");
+      setComment(originalTask.comment || "Comentario de la tarea");
+    }
+  };
+
   useEffect(() => {
     if (task) {
+      setOriginalTask(task);
       setTitle(task.title || "Titulo por defecto");
       setDescription(task.description || "Descripcion por defecto");
+      setComment("Comentario de la tarea");
     }
   }, [task]);
   return (
@@ -45,14 +73,31 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
           <section className="edit-panel__task">
             <section className="edit-panel__filters">
               <section className="edit-panel__task-filters">
-                <div className="edit-panel__task-filters-item">
-                  <img src={tagIcon} alt="Icono de tag" />
-                  <p>Tag 1</p>
-                </div>
-                <div className="edit-panel__task-filters-item">
-                  <img src={categoryIcon} alt="Icono de tag" />
-                  <p>Category 1</p>
-                </div>
+                {tagsInTask[task?.id]?.length > 0 &&
+                  tagsInTask[task.id].map((tag) => (
+                    <div className="edit-panel__task-filters-item" key={tag.id}>
+                      <img
+                        className="edit-panel__task__filters-item__icon"
+                        src={tagIcon}
+                        alt="Icono de tag"
+                      />
+                      <p>{tag.name}</p>
+                    </div>
+                  ))}
+                {categoriesInTask[task?.id]?.length > 0 &&
+                  categoriesInTask[task.id].map((category) => (
+                    <div
+                      className="edit-panel__task-filters-item"
+                      key={category.id}
+                    >
+                      <img
+                        className="edit-panel__task__filters-item__icon"
+                        src={categoryIcon}
+                        alt="Icono de categoría"
+                      />
+                      <p>{category.name}</p>
+                    </div>
+                  ))}
               </section>
               <section className="edit-panel__add-filter-container">
                 <div className="edit-panel__add-filter">
@@ -77,10 +122,12 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
             <section className="edit-panel__task-main">
               <div className="edit-panel__task-header">
                 <textarea
+                  ref={titleRef}
                   type="text"
                   className="edit-panel__task-title"
-                  placeholder={title}
+                  value={title}
                   rows="1"
+                  onChange={(e) => setTitle(e.target.value)}
                 />
                 <img
                   className="edit-panel__task-priority"
@@ -89,10 +136,13 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 />
               </div>
               <textarea
+                ref={descriptionRef}
                 type="text"
                 className="edit-panel__task-description"
                 placeholder={description}
                 rows="2"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </section>
             <div className="edit-panel__task-comment-container">
@@ -102,15 +152,22 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 alt=""
               />
               <textarea
+                ref={commentRef}
                 type="text"
                 className="edit-panel__task-comment"
-                placeholder="Comentario de la tarea"
+                placeholder={comment}
                 rows="1"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
               />
             </div>
           </section>
           <section className="edit-panel__options-container">
-            <div className="edit-panel__option">
+            <div
+              className="edit-panel__option"
+              role="button"
+              onClick={handleResetTask}
+            >
               <img
                 className="edit-panel__option-icon"
                 src={resetIcon}

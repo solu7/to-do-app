@@ -15,9 +15,11 @@ export const useTaskData = (tasks, fetchFunction) => {
         return;
       }
 
+      const taskList = Array.isArray(tasks) ? tasks : [tasks];
+
       try {
         const allData = {};
-        for (const task of tasks) {
+        for (const task of taskList) {
           const data = await fetchFunction({ taskId: task.id });
           allData[task.id] = data;
         }
