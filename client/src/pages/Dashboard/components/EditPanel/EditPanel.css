@@ -197,8 +197,17 @@
 .edit-panel__add-filter-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  gap: 25px;
+}
+.edit-panel__add-filter-container .dropdown-button__wrapper {
+  padding: 0;
+  border: none;
+  gap: 15px;
+}
+.edit-panel__add-filter-container .dropdown-button__button {
+  font-size: 13px;
+  color: var(--light-grey);
 }
 .edit-panel__add-filter {
   display: flex;

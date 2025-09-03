@@ -16,6 +16,11 @@ import { getTagsInTask } from "../../../../features/tags/services/tagsServices";
 import { getCategoriesInTask } from "../../../../features/categories/services/categoriesServices";
 import { useTaskData } from "../../../../features/tasks/services/useTaskData";
 import useAutoGrowTextarea from "../../../../core/hooks/useAutoGrowTextarea";
+import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
+import { TaskCategoriesList } from "../../../../features/categories/data/TaskCategoriesList";
+import { getAllTags } from "../../../../features/tags/services/tagsServices";
+import { getAllCategories } from "../../../../features/categories/services/categoriesServices";
+import useFetchAllData from "../../../../core/hooks/useFetchAllData";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const [title, setTitle] = useState("");
@@ -31,6 +36,8 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   useAutoGrowTextarea(descriptionRef, description);
   useAutoGrowTextarea(commentRef, comment);
 
+  const allUserTags = useFetchAllData(getAllTags);
+  const allUserCategories = useFetchAllData(getAllCategories);
   const tagsInTask = useTaskData(task, getTagsInTask);
   const categoriesInTask = useTaskData(task, getCategoriesInTask);
 
@@ -100,23 +107,19 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                   ))}
               </section>
               <section className="edit-panel__add-filter-container">
-                <div className="edit-panel__add-filter">
-                  <img
-                    className="edit-panel__add-filter-icon"
-                    src={tagItemIcon}
-                    alt="Icono de tag"
-                  />
-                  <p>Agregar Tags</p>
-                </div>
+                <DropdownButton
+                  buttonText="Tags"
+                  buttonIcon={tagItemIcon}
+                  itemList={allUserTags}
+                  itemListIcon={tagItemIcon}
+                />
                 <span className="edit-panel__add-filter-separator"></span>
-                <div className="edit-panel__add-filter">
-                  <img
-                    className="edit-panel__add-filter-icon"
-                    src={categoryItemIcon}
-                    alt="Icono de categoria"
-                  />
-                  <p>Agregar Categorias</p>
-                </div>
+                <DropdownButton
+                  buttonText="Categorias"
+                  buttonIcon={categoryItemIcon}
+                  itemList={allUserCategories}
+                  itemListIcon={categoryItemIcon}
+                />
               </section>
             </section>
             <section className="edit-panel__task-main">
