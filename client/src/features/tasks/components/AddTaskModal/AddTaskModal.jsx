@@ -5,9 +5,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton.jsx";
-import { TaskCategoriesList } from "../../../categories/data/TaskCategoriesList.js";
 import { TaskPrioritiesList } from "../../../priorities/data/TaskPrioritiesList.js";
-import { TaskTagsList } from "../../../tags/data/TaskTagsList.js";
 import categoryIcon from "../../assets/images/SectionIcon/categoryIcon.png";
 import priorityIcon from "../../assets/images/SectionIcon/priorityIcon.png";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
@@ -15,6 +13,9 @@ import dateIcon from "../../assets/images/SectionIcon/dateIcon.png";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper.jsx";
 import { createTask } from "../../services/tasksServices.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
+import { getAllTags } from "../../../tags/services/tagsServices.js";
+import { getAllCategories } from "../../../categories/services/categoriesServices.js";
+import useFetchAllData from "../../../../core/hooks/useFetchAllData.js";
 
 const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -22,6 +23,8 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
   const { fetchTasks } = useTasks();
+  const allUserTags = useFetchAllData(getAllTags);
+  const allUserCategories = useFetchAllData(getAllCategories);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -85,16 +88,19 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
                 buttonText="Prioridad"
                 buttonIcon={priorityIcon}
                 itemList={TaskPrioritiesList}
+                itemListIcon={priorityIcon}
               />
               <DropdownButton
                 buttonText="Categoria"
                 buttonIcon={categoryIcon}
-                itemList={TaskCategoriesList}
+                itemList={allUserCategories}
+                itemListIcon={categoryIcon}
               />
               <DropdownButton
                 buttonText="Tags"
                 buttonIcon={tagIcon}
-                itemList={TaskTagsList}
+                itemList={allUserTags}
+                itemListIcon={tagIcon}
               />
             </section>
             <section className="task-modal-buttons">
