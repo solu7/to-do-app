@@ -3,7 +3,7 @@ const router = Router();
 import verifyToken from "../auth/auth.middleware.js";
 import {
   createCategory,
-  assignCategoriesToTask,
+  assignCategoryToTask,
   removeCategoryFromTask,
   getAllCategories,
   getCategoriesInTask
@@ -15,7 +15,7 @@ router.get("/:taskId", verifyToken, getCategoriesInTask);
 
 router.post("/", verifyToken, createCategory);
 
-router.post("/:taskId", verifyToken, assignCategoriesToTask);
+router.post("/:taskId", verifyToken, assignCategoryToTask);
 
 router.delete("/:taskId/:categoryId", verifyToken, removeCategoryFromTask);
 

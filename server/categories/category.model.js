@@ -31,45 +31,28 @@ export const getCategoriesInTask = async (userId, taskId) => {
   return categories;
 };
 
-export const assignCategoriesToTask = async (userId, taskId, categoryIds) => {
-  const [task] = await pool.query(
-    "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
-    [taskId, userId]
+export const assignCategoryToTask = async (userId, taskId, categoryId) => {
+  const [validationResult] = await pool.query(
+    `
+      SELECT
+        (SELECT 1 FROM tasks WHERE id = ? AND user_id = ?) AS taskExists,
+        (SELECT 1 FROM categories WHERE id = ? AND user_id = ?) AS categoryExists
+    `,
+    [taskId, userId, categoryId, userId]
   );
-  if (task.length === 0) {
-    throw new Error("Tarea no encontrada o no autorizada");
-  }
+  const { taskExists, categoryExists } = validationResult[0];
 
-  if (!Array.isArray(categoryIds) || categoryIds.length === 0) {
-    throw new Error("No se proporcionaron categorías");
+  if (!taskExists) {
+    throw new Error("Tarea no encontrada o no autorizada.");
   }
-
-  const [categories] = await pool.query(
-    `SELECT id FROM categories WHERE id IN (${categoryIds
-      .map(() => "?")
-      .join(",")}) AND user_id = ?`,
-    [...categoryIds, userId]
+  if (!categoryExists) {
+    throw new Error("Categoría no encontrada o no autorizada.");
+  }
+  await pool.query(
+    `INSERT IGNORE INTO task_categories (task_id, category_id)
+      VALUES (?, ?)`,
+    [taskId, categoryId]
   );
-  const validCategoryIds = categories.map((cat) => cat.id);
-
-  const unauthorized = categoryIds.filter(
-    (id) => !validCategoryIds.includes(id)
-  );
-  if (unauthorized.length > 0) {
-    throw new Error(
-      `Categoría(s) no autorizada(s): ${unauthorized.join(", ")}`
-    );
-  }
-
-  const values = validCategoryIds.map((categoryId) => [taskId, categoryId]);
-  if (values.length > 0) {
-    await pool.query(
-      `INSERT IGNORE INTO task_categories (task_id, category_id) VALUES ${values
-        .map(() => "(?, ?)")
-        .join(", ")}`,
-      values.flat()
-    );
-  }
 };
 
 export const removeCategoryFromTask = async (userId, taskId, categoryId) => {

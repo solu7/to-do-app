@@ -21,9 +21,13 @@ import {
   getAllTags,
   assignTagToTask,
 } from "../../../../features/tags/services/tagsServices";
-import { getAllCategories } from "../../../../features/categories/services/categoriesServices";
+import {
+  getAllCategories,
+  assignCategoryToTask,
+} from "../../../../features/categories/services/categoriesServices";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
 import { useTasks } from "../../../../context/TaskContext";
+import { useTaskItemAssignment } from "../../../../features/tasks/hooks/useTaskItemAssignment";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const [title, setTitle] = useState("");
@@ -41,8 +45,14 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
-  const { data: tagsInTask, refetch: refetchTagsInTask } = useTaskData(task, getTagsInTask);
-  const { data: categoriesInTask } = useTaskData(task, getCategoriesInTask);
+  const { data: tagsInTask, refetch: refetchTagsInTask } = useTaskData(
+    task,
+    getTagsInTask
+  );
+  const { data: categoriesInTask, refetch: refetchCategoriesInTask } =
+    useTaskData(task, getCategoriesInTask);
+
+  const { handleAssignItem } = useTaskItemAssignment();
 
   const handleResetTask = () => {
     if (originalTask) {
@@ -52,21 +62,24 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     }
   };
 
-  const { fetchTasks } = useTasks();
+  const handleAssignTag = (tag) => {
+    handleAssignItem({
+      task: task,
+      item: tag,
+      assignFunction: assignTagToTask,
+      refetchFunction: refetchTagsInTask,
+      payloadKey: "tagId",
+    });
+  };
 
-  const handleAssignTag = async (tag) => {
-    try {
-      if (!task || !tag) return;
-      await assignTagToTask({
-        taskId: task.id,
-        tagId: tag.id,
-      });
-      refetchTagsInTask();
-      fetchTasks();
-      console.log(`Tag '${tag.name}' asignado a la tarea ${task.id}`);
-    } catch (error) {
-      console.error("Error al asignar tag:", error);
-    }
+  const handleAssignCategory = (category) => {
+    handleAssignItem({
+      task: task,
+      item: category,
+      assignFunction: assignCategoryToTask,
+      refetchFunction: refetchCategoriesInTask,
+      payloadKey: "categoryId",
+    });
   };
 
   useEffect(() => {
@@ -141,6 +154,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                   buttonIcon={categoryItemIcon}
                   itemList={allUserCategories}
                   itemListIcon={categoryItemIcon}
+                  onItemClick={handleAssignCategory}
                 />
               </section>
             </section>
