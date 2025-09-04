@@ -1,5 +1,4 @@
 import "./EditPanel.css";
-import { useState, useEffect, useRef } from "react";
 import todayIcon from "../../assets/images/todayIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
 import priority1FullIcon from "../../../../features/tasks/assets/images/ItemIcon/priority1FullIcon.png";
@@ -15,7 +14,6 @@ import resetIcon from "../../assets/images/resetIcon.png";
 import { getTagsInTask } from "../../../../features/tags/services/tagsServices";
 import { getCategoriesInTask } from "../../../../features/categories/services/categoriesServices";
 import { useTaskData } from "../../../../features/tasks/services/useTaskData";
-import useAutoGrowTextarea from "../../../../core/hooks/useAutoGrowTextarea";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
 import {
   getAllTags,
@@ -26,22 +24,24 @@ import {
   assignCategoryToTask,
 } from "../../../../features/categories/services/categoriesServices";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
-import { useTasks } from "../../../../context/TaskContext";
 import { useTaskItemAssignment } from "../../../../features/tasks/hooks/useTaskItemAssignment";
+import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [comment, setComment] = useState("");
-  const [originalTask, setOriginalTask] = useState(null);
-
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const commentRef = useRef(null);
-
-  useAutoGrowTextarea(titleRef, title);
-  useAutoGrowTextarea(descriptionRef, description);
-  useAutoGrowTextarea(commentRef, comment);
+  const {
+    title,
+    setTitle,
+    description,
+    setDescription,
+    comment,
+    setComment,
+    panelWidth,
+    titleRef,
+    descriptionRef,
+    commentRef,
+    resizeHandleRef,
+    handleResetTask,
+  } = useTaskEditPanel(task);
 
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
@@ -53,14 +53,6 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     useTaskData(task, getCategoriesInTask);
 
   const { handleAssignItem } = useTaskItemAssignment();
-
-  const handleResetTask = () => {
-    if (originalTask) {
-      setTitle(originalTask.title || "");
-      setDescription(originalTask.description || "");
-      setComment(originalTask.comment || "Comentario de la tarea");
-    }
-  };
 
   const handleAssignTag = (tag) => {
     handleAssignItem({
@@ -82,17 +74,12 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     });
   };
 
-  useEffect(() => {
-    if (task) {
-      setOriginalTask(task);
-      setTitle(task.title || "Titulo por defecto");
-      setDescription(task.description || "Descripcion por defecto");
-      setComment("Comentario de la tarea");
-    }
-  }, [task]);
-
   return (
-    <div className="edit-panel">
+    <div
+      className="edit-panel"
+      ref={resizeHandleRef}
+      style={{ width: panelWidth + "px" }}
+    >
       {isOpen && (
         <div className="edit-panel__content-wrapper">
           <section className="edit-panel__items">
@@ -106,8 +93,15 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 Fecha que le pusiste a la tarea
               </p>
             </div>
-            <label htmlFor="" className="edit-panel__completed-container">
-              <input className="edit-panel__completed" type="checkbox" />
+            <label
+              htmlFor="task-completed"
+              className="edit-panel__completed-container"
+            >
+              <input
+                id="task-completed"
+                className="edit-panel__completed"
+                type="checkbox"
+              />
               <span className="edit-panel__completed-checkmark"></span>
             </label>
           </section>
@@ -123,6 +117,11 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                         alt="Icono de tag"
                       />
                       <p>{tag.name}</p>
+                      <img
+                        className="edit-panel__task-filters-item__close-icon"
+                        src={closeIcon}
+                        alt="Icono de eliminar tag"
+                      />
                     </div>
                   ))}
                 {categoriesInTask[task?.id]?.length > 0 &&
@@ -161,6 +160,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
             <section className="edit-panel__task-main">
               <div className="edit-panel__task-header">
                 <textarea
+                  id="edit-panel__task-title"
                   ref={titleRef}
                   type="text"
                   className="edit-panel__task-title"
@@ -175,6 +175,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 />
               </div>
               <textarea
+                id="edit-panel__task-description"
                 ref={descriptionRef}
                 type="text"
                 className="edit-panel__task-description"
@@ -191,6 +192,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 alt=""
               />
               <textarea
+                id="edit-panel__task-comment"
                 ref={commentRef}
                 type="text"
                 className="edit-panel__task-comment"

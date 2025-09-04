@@ -9,6 +9,9 @@
   padding: 30px;
   font-family: "principal-font";
   border-left: 1px solid var(--secondary-color);
+  container-name: task-edit-panel;
+  width: min-content;
+  min-width: min-content;
 }
 .edit-panel__content-wrapper {
   display: flex;
@@ -176,7 +179,8 @@
 .edit-panel__task-filters {
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  flex-wrap: wrap;
+  gap: 20px 35px;
 }
 .edit-panel__task-filters-item {
   display: flex;
@@ -188,10 +192,29 @@
   background-color: var(--secondary-color);
   padding: 6px 10px;
   border-radius: 5px;
+  position: relative;
+}
+.edit-panel__task-filters-item__main {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 .edit-panel__task-filters-item img {
   width: 15px;
   object-fit: contain;
+}
+.edit-panel__task-filters-item__close-icon {
+  width: 15px;
+  object-fit: contain;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  position: absolute;
+  right: -25px;
+}
+.edit-panel__task-filters-item:hover
+  .edit-panel__task-filters-item__close-icon {
+  opacity: 1;
 }
 
 .edit-panel__add-filter-container {
@@ -239,6 +262,7 @@
 .edit-panel__options-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   gap: 20px;
 }
 .edit-panel__option {
@@ -280,4 +304,7 @@
 }
 .edit-panel__close-icon {
   width: 20px;
+}
+
+@container task-edit-panel (width >= 500px) {
 }
