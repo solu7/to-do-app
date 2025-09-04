@@ -13,8 +13,11 @@ function Today({ onTaskClick }) {
   const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
     useAddTaskModal();
   const { tasks } = useTasks();
-  const tagsInTask = useTaskData(tasks, getTagsInTask);
-  const categoriesInTask = useTaskData(tasks, getCategoriesInTask);
+  const { data: tagsInTask } = useTaskData(
+    tasks,
+    getTagsInTask
+  );
+  const { data: categoriesInTask } = useTaskData(tasks, getCategoriesInTask);
   return (
     <div
       className={

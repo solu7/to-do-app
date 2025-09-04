@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
  */
 export const useTaskData = (tasks, fetchFunction) => {
   const [dataByTaskId, setDataByTaskId] = useState({});
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +31,8 @@ export const useTaskData = (tasks, fetchFunction) => {
     };
 
     fetchData();
-  }, [tasks, fetchFunction]);
+  }, [tasks, fetchFunction, refetchTrigger]);
+  const refetch = () => setRefetchTrigger((prev) => prev + 1);
 
-  return dataByTaskId;
+  return { data: dataByTaskId, refetch };
 };

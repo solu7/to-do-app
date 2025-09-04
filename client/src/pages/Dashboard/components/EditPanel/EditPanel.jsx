@@ -17,10 +17,13 @@ import { getCategoriesInTask } from "../../../../features/categories/services/ca
 import { useTaskData } from "../../../../features/tasks/services/useTaskData";
 import useAutoGrowTextarea from "../../../../core/hooks/useAutoGrowTextarea";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
-import { TaskCategoriesList } from "../../../../features/categories/data/TaskCategoriesList";
-import { getAllTags } from "../../../../features/tags/services/tagsServices";
+import {
+  getAllTags,
+  assignTagToTask,
+} from "../../../../features/tags/services/tagsServices";
 import { getAllCategories } from "../../../../features/categories/services/categoriesServices";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
+import { useTasks } from "../../../../context/TaskContext";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const [title, setTitle] = useState("");
@@ -38,14 +41,31 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
-  const tagsInTask = useTaskData(task, getTagsInTask);
-  const categoriesInTask = useTaskData(task, getCategoriesInTask);
+  const { data: tagsInTask, refetch: refetchTagsInTask } = useTaskData(task, getTagsInTask);
+  const { data: categoriesInTask } = useTaskData(task, getCategoriesInTask);
 
   const handleResetTask = () => {
     if (originalTask) {
       setTitle(originalTask.title || "");
       setDescription(originalTask.description || "");
       setComment(originalTask.comment || "Comentario de la tarea");
+    }
+  };
+
+  const { fetchTasks } = useTasks();
+
+  const handleAssignTag = async (tag) => {
+    try {
+      if (!task || !tag) return;
+      await assignTagToTask({
+        taskId: task.id,
+        tagId: tag.id,
+      });
+      refetchTagsInTask();
+      fetchTasks();
+      console.log(`Tag '${tag.name}' asignado a la tarea ${task.id}`);
+    } catch (error) {
+      console.error("Error al asignar tag:", error);
     }
   };
 
@@ -57,6 +77,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
       setComment("Comentario de la tarea");
     }
   }, [task]);
+
   return (
     <div className="edit-panel">
       {isOpen && (
@@ -112,6 +133,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                   buttonIcon={tagItemIcon}
                   itemList={allUserTags}
                   itemListIcon={tagItemIcon}
+                  onItemClick={handleAssignTag}
                 />
                 <span className="edit-panel__add-filter-separator"></span>
                 <DropdownButton

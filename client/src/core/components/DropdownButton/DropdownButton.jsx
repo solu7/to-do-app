@@ -3,7 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DropdownWrapper from "../DropdownWrapper/DropdownWrapper.jsx";
 
-function DropdownButton({ buttonText, buttonIcon, itemList, itemListIcon }) {
+function DropdownButton({
+  buttonText,
+  buttonIcon,
+  itemList,
+  itemListIcon,
+  onItemClick,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef(null);
@@ -49,7 +55,17 @@ function DropdownButton({ buttonText, buttonIcon, itemList, itemListIcon }) {
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
             {itemList.map((item, idx) => (
-              <li className="dropdown-menu__item" key={idx}>
+              <li
+                className="dropdown-menu__item"
+                key={idx}
+                onClick={() => {
+                  if (onItemClick) {
+                    onItemClick(item);
+                  } else {
+                    setIsOpen(false);
+                  }
+                }}
+              >
                 {!!itemListIcon && (
                   <img
                     className="dropdown-menu__icon"
