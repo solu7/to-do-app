@@ -70,14 +70,12 @@ function Dashboard() {
           username={username}
           openDashboardSidebar={openDashboardSidebar}
         />
-        <main className="dashboard-content">
-          <Routes>
-            <Route
-              path="/"
-              element={<TodayView onTaskClick={handleTaskSelection} />}
-            />
-          </Routes>
-        </main>
+        <Routes>
+          <Route
+            path="/"
+            element={<TodayView onTaskClick={handleTaskSelection} />}
+          />
+        </Routes>
         <EditPanel
           isOpen={taskEditPanelIsOpen}
           onClose={closeTaskEditPanel}

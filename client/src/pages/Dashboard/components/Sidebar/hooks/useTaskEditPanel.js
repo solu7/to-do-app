@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import useAutoGrowTextarea from "../../../../../core/hooks/useAutoGrowTextarea";
 import { useResizer } from "../../../../../core/hooks/useResizer";
 
-export const useTaskEditPanel = (task, initialWidth = "auto") => {
+export const useTaskEditPanel = (task) => {
   const [taskEditPanelIsOpen, setTaskEditPanelIsOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -10,8 +10,8 @@ export const useTaskEditPanel = (task, initialWidth = "auto") => {
   const [originalTask, setOriginalTask] = useState(null);
 
   const { elementWidth: panelWidth, elementRef: resizeHandleRef } = useResizer(
-    "auto",
-    0.8
+    0,
+    0.98,
   );
 
   const titleRef = useRef(null);

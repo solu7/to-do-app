@@ -29,7 +29,8 @@
 .task__filters {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 .task__filters-item {
   display: flex;

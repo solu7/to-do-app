@@ -2,16 +2,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: absolute;
-  right: 0;
   height: 100%;
   background-color: var(--light-blue);
   padding: 30px;
   font-family: "principal-font";
   border-left: 1px solid var(--secondary-color);
   container-name: task-edit-panel;
-  width: min-content;
-  min-width: min-content;
+  container-type: inline-size;
+  min-width: 345px;
+}
+.edit-panel.closed {
+  min-width: 80px;
 }
 .edit-panel__content-wrapper {
   display: flex;
@@ -262,15 +263,16 @@
 .edit-panel__options-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   gap: 20px;
+  flex-wrap: wrap;
 }
 .edit-panel__option {
   height: fit-content;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 15px;
   padding: 6px 10px;
   font-size: 12px;
   color: var(--primary-color);
@@ -279,6 +281,7 @@
   border-radius: 8px;
   transition: 0.25s ease-in-out;
   cursor: pointer;
+  flex: 1;
 }
 .edit-panel__option:hover {
   transform: scale(0.97);
@@ -306,5 +309,13 @@
   width: 20px;
 }
 
-@container task-edit-panel (width >= 500px) {
+@container task-edit-panel (width >= 600px) {
+  .edit-panel__option {
+    gap: 35px;
+  }
+}
+@container task-edit-panel (width >= 850px) {
+  .edit-panel__option {
+    gap: 65px;
+  }
 }

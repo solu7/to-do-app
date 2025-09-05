@@ -76,7 +76,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
   return (
     <div
-      className="edit-panel"
+      className={`edit-panel ${isOpen ? "" : "closed"}`}
       ref={resizeHandleRef}
       style={{ width: panelWidth + "px" }}
     >
