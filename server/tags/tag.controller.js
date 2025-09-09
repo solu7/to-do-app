@@ -70,7 +70,8 @@ export const assignTagToTask = async (req, res) => {
 
 export const removeTagFromTask = async (req, res) => {
   const userId = req.user.id;
-  const { taskId, tagId } = req.params;
+  const { taskId } = req.params;
+  const { tagId } = req.body;
 
   try {
     await _removeTagFromTask(userId, taskId, tagId);

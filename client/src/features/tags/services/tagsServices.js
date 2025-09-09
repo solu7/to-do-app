@@ -59,3 +59,26 @@ export async function assignTagToTask({ taskId, tagId }) {
     throw error;
   }
 }
+
+export async function removeTagFromTask({ taskId, tagId }) {
+  try {
+    const response = await fetch(`${API_URL}/tags/${taskId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tagId }),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al eliminar el tag de la tarea.");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

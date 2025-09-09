@@ -62,7 +62,8 @@ export const assignCategoryToTask = async (req, res) => {
 
 export const removeCategoryFromTask = async (req, res) => {
   const userId = req.user.id;
-  const { taskId, categoryId } = req.params;
+  const { taskId } = req.params;
+  const { categoryId } = req.body;
 
   try {
     const result = await _removeCategoryFromTask(userId, taskId, categoryId);

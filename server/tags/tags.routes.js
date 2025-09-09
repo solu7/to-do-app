@@ -11,6 +11,6 @@ router.post("/", verifyToken, createTag);
 
 router.post("/:taskId", verifyToken, assignTagToTask);
 
-router.delete("/:taskId/:tagId", verifyToken, removeTagFromTask);
+router.delete("/:taskId", verifyToken, removeTagFromTask);
 
 export default router;

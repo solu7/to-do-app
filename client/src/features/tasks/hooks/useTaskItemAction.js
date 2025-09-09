@@ -1,13 +1,13 @@
 import { useTasks } from "../../../context/TaskContext";
 
-export const useTaskItemAssignment = () => {
+export const useTaskItemAction = () => {
   const { fetchTasks } = useTasks();
 
-  const handleAssignItem = async ({
+  const handleActionItem = async ({
     task,
     item,
-    assignFunction,
-    refetchFunction,
+    action,
+    refetch,
     payloadKey,
   }) => {
     try {
@@ -15,17 +15,16 @@ export const useTaskItemAssignment = () => {
         console.error("Task o item no definidos.");
         return;
       }
-      await assignFunction({
+      await action({
         taskId: task.id,
         [payloadKey]: item.id,
       });
-      refetchFunction();
+      refetch();
       fetchTasks();
-      console.log(`${item.name} asignado a la tarea ${task.id}`);
     } catch (error) {
-      console.error(`Error al asignar item:`, error);
+      console.error(`Error al interacturar con el item:`, error);
     }
   };
 
-  return { handleAssignItem };
+  return { handleActionItem };
 };

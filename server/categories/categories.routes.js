@@ -17,6 +17,6 @@ router.post("/", verifyToken, createCategory);
 
 router.post("/:taskId", verifyToken, assignCategoryToTask);
 
-router.delete("/:taskId/:categoryId", verifyToken, removeCategoryFromTask);
+router.delete("/:taskId", verifyToken, removeCategoryFromTask);
 
 export default router;

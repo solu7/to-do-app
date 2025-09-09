@@ -11,20 +11,22 @@ import closeIcon from "../../../../features/tasks/assets/images/SectionIcon/clos
 import openIcon from "../../assets/images/openIcon.png";
 import saveIcon from "../../assets/images/saveIcon.png";
 import resetIcon from "../../assets/images/resetIcon.png";
-import { getTagsInTask } from "../../../../features/tags/services/tagsServices";
-import { getCategoriesInTask } from "../../../../features/categories/services/categoriesServices";
-import { useTaskData } from "../../../../features/tasks/services/useTaskData";
-import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
 import {
   getAllTags,
+  getTagsInTask,
   assignTagToTask,
+  removeTagFromTask,
 } from "../../../../features/tags/services/tagsServices";
 import {
   getAllCategories,
+  getCategoriesInTask,
   assignCategoryToTask,
+  removeCategoryFromTask,
 } from "../../../../features/categories/services/categoriesServices";
+import { useTaskData } from "../../../../features/tasks/services/useTaskData";
+import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
-import { useTaskItemAssignment } from "../../../../features/tasks/hooks/useTaskItemAssignment";
+import { useTaskItemAction } from "../../../../features/tasks/hooks/useTaskItemAction";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
@@ -52,24 +54,44 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const { data: categoriesInTask, refetch: refetchCategoriesInTask } =
     useTaskData(task, getCategoriesInTask);
 
-  const { handleAssignItem } = useTaskItemAssignment();
+  const { handleActionItem } = useTaskItemAction();
 
   const handleAssignTag = (tag) => {
-    handleAssignItem({
+    handleActionItem({
       task: task,
       item: tag,
-      assignFunction: assignTagToTask,
-      refetchFunction: refetchTagsInTask,
+      action: assignTagToTask,
+      refetch: refetchTagsInTask,
+      payloadKey: "tagId",
+    });
+  };
+
+  const handleRemoveTag = (tag) => {
+    handleActionItem({
+      task: task,
+      item: tag,
+      action: removeTagFromTask,
+      refetch: refetchTagsInTask,
       payloadKey: "tagId",
     });
   };
 
   const handleAssignCategory = (category) => {
-    handleAssignItem({
+    handleActionItem({
       task: task,
       item: category,
-      assignFunction: assignCategoryToTask,
-      refetchFunction: refetchCategoriesInTask,
+      action: assignCategoryToTask,
+      refetch: refetchCategoriesInTask,
+      payloadKey: "categoryId",
+    });
+  };
+
+  const handleRemoveCategory = (category) => {
+    handleActionItem({
+      task: task,
+      item: category,
+      action: removeCategoryFromTask,
+      refetch: refetchCategoriesInTask,
       payloadKey: "categoryId",
     });
   };
@@ -121,6 +143,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                         className="edit-panel__task-filters-item__close-icon"
                         src={closeIcon}
                         alt="Icono de eliminar tag"
+                        onClick={() => handleRemoveTag(tag)}
                       />
                     </div>
                   ))}
@@ -136,6 +159,12 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                         alt="Icono de categoría"
                       />
                       <p>{category.name}</p>
+                      <img
+                        className="edit-panel__task-filters-item__close-icon"
+                        src={closeIcon}
+                        alt="Icono de eliminar categorias"
+                        onClick={() => handleRemoveCategory(category)}
+                      />
                     </div>
                   ))}
               </section>
