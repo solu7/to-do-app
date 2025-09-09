@@ -30,6 +30,11 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+.dropdown-menu__item:hover {
+  color: var(--primary-color);
 }
 .dropdown-menu__icon {
   width: 15px;

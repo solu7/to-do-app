@@ -233,6 +233,10 @@
   font-size: 13px;
   color: var(--light-grey);
 }
+.edit-panel__add-filter-container .dropdown-menu__item:hover {
+    color: var(--light-grey);
+}
+
 .edit-panel__add-filter {
   display: flex;
   flex-direction: row;
