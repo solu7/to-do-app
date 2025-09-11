@@ -11,6 +11,7 @@ import taskRoutes from "./tasks/tasks.routes.js";
 import tagRoutes from "./tags/tags.routes.js";
 import categoryRoutes from "./categories/categories.routes.js";
 import userRoutes from "./users/user.routes.js";
+import dateRoutes from "./date/date.routes.js"
 
 const app = express();
 const PORT = process.env.PORT;
@@ -28,6 +29,7 @@ app.use("/tasks", taskRoutes);
 app.use("/tags", tagRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/users", userRoutes);
+app.use("/dates", dateRoutes);
 
 app.get("/", async (req, res) => {
   try {

@@ -1,4 +1,9 @@
 import "./EditPanel.css";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import es from "date-fns/locale/es";
+import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper";
 import todayIcon from "../../assets/images/todayIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
 import priority1FullIcon from "../../../../features/tasks/assets/images/ItemIcon/priority1FullIcon.png";
@@ -23,6 +28,7 @@ import {
   assignCategoryToTask,
   removeCategoryFromTask,
 } from "../../../../features/categories/services/categoriesServices";
+import { useTaskDate } from "../../../../features/date/hooks/useTaskDate";
 import { useTaskData } from "../../../../features/tasks/services/useTaskData";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
@@ -47,6 +53,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
+
   const { data: tagsInTask, refetch: refetchTagsInTask } = useTaskData(
     task,
     getTagsInTask
@@ -54,10 +61,10 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const { data: categoriesInTask, refetch: refetchCategoriesInTask } =
     useTaskData(task, getCategoriesInTask);
 
-  const { handleActionItem } = useTaskItemAction();
+  const { handleTaskItemAction } = useTaskItemAction();
 
   const handleAssignTag = (tag) => {
-    handleActionItem({
+    handleTaskItemAction({
       task: task,
       item: tag,
       action: assignTagToTask,
@@ -67,7 +74,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   };
 
   const handleRemoveTag = (tag) => {
-    handleActionItem({
+    handleTaskItemAction({
       task: task,
       item: tag,
       action: removeTagFromTask,
@@ -77,7 +84,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   };
 
   const handleAssignCategory = (category) => {
-    handleActionItem({
+    handleTaskItemAction({
       task: task,
       item: category,
       action: assignCategoryToTask,
@@ -87,7 +94,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   };
 
   const handleRemoveCategory = (category) => {
-    handleActionItem({
+    handleTaskItemAction({
       task: task,
       item: category,
       action: removeCategoryFromTask,
@@ -95,6 +102,9 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
       payloadKey: "categoryId",
     });
   };
+
+  const { selectedDate, handleDateChange, formattedDateText } =
+    useTaskDate(task);
 
   return (
     <div
@@ -106,14 +116,19 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
         <div className="edit-panel__content-wrapper">
           <section className="edit-panel__items">
             <div className="edit-panel__date-container">
-              <img
-                className="edit-panel__date-icon"
-                src={todayIcon}
-                alt="Icono de hoy"
+              <DatePicker
+                selected={selectedDate}
+                onChange={handleDateChange}
+                locale={es}
+                dateFormat="dd/MM/yyyy"
+                showOutsideDays={false}
+                customInput={
+                  <DropdownWrapper
+                    buttonIcon={todayIcon}
+                    buttonText={formattedDateText}
+                  />
+                }
               />
-              <p className="edit-panel__date">
-                Fecha que le pusiste a la tarea
-              </p>
             </div>
             <label
               htmlFor="task-completed"

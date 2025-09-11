@@ -3,21 +3,22 @@ import { useTasks } from "../../../context/TaskContext";
 export const useTaskItemAction = () => {
   const { fetchTasks } = useTasks();
 
-  const handleActionItem = async ({
+  const handleTaskItemAction = async ({
     task,
     item,
     action,
     refetch,
     payloadKey,
+    payloadValue,
   }) => {
     try {
-      if (!task || !item) {
-        console.error("Task o item no definidos.");
+      if (!task) {
+        console.error("Task no definida.");
         return;
       }
       await action({
         taskId: task.id,
-        [payloadKey]: item.id,
+        [payloadKey]: payloadValue || item?.id,
       });
       refetch();
       fetchTasks();
@@ -26,5 +27,5 @@ export const useTaskItemAction = () => {
     }
   };
 
-  return { handleActionItem };
+  return { handleTaskItemAction };
 };
