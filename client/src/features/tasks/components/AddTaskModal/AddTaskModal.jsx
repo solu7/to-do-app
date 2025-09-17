@@ -10,21 +10,38 @@ import categoryIcon from "../../assets/images/SectionIcon/categoryIcon.png";
 import priorityIcon from "../../assets/images/SectionIcon/priorityIcon.png";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
 import dateIcon from "../../assets/images/SectionIcon/dateIcon.png";
+import closeIcon from "../../assets/images/SectionIcon/closeIcon.png";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper.jsx";
 import { createTask } from "../../services/tasksServices.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
-import { getAllTags } from "../../../tags/services/tagsServices.js";
-import { getAllCategories } from "../../../categories/services/categoriesServices.js";
+import {
+  getAllTags,
+  assignTagToTask,
+} from "../../../tags/services/tagsServices.js";
+import {
+  getAllCategories,
+  assignCategoryToTask,
+} from "../../../categories/services/categoriesServices.js";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData.js";
+import { useTaskItemRelations } from "../../hooks/useTaskItemRelations.js";
 
 const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   const [selectedDate, setSelectedDate] = useState(null);
-
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
   const { fetchTasks } = useTasks();
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
+
+  const {
+    selectedTags,
+    selectedCategories,
+    handleAssignTag,
+    handleAssignCategory,
+    handleRemoveTag,
+    handleRemoveCategory,
+    resetRelations,
+  } = useTaskItemRelations();
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -33,16 +50,28 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
     setDescription(e.target.value);
   };
 
-  const handleAddTask = async ({ title, description }) => {
+  const handleAddTask = async () => {
     try {
-      await createTask({
-        title,
-        description,
-      });
+      const newTask = await createTask({ title, description });
+      const taskId = newTask.id;
+
+      const assignTagsPromises = selectedTags.map((tag) =>
+        assignTagToTask({ taskId, tagId: tag.id })
+      );
+      const assignCategoriesPromises = selectedCategories.map((category) =>
+        assignCategoryToTask({ taskId, categoryId: category.id })
+      );
+
+      await Promise.allSettled([
+        ...assignTagsPromises,
+        ...assignCategoriesPromises,
+      ]);
+
       fetchTasks();
+      resetRelations();
       onClose();
     } catch (error) {
-      console.error("Error al crear la tarea:", error);
+      console.error("Error al crear y/o asignar la tarea:", error);
     }
   };
   return (
@@ -57,6 +86,41 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
           onClick={onClose}
         >
           <div className="task-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="task-modal-filters">
+              {selectedTags.map((tag) => (
+                <div className="task-modal-filters-item" key={tag.id}>
+                  <img
+                    className="task-modal-filters-item__icon"
+                    src={tagIcon}
+                    alt="Icono de tag"
+                  />
+                  <p>{tag.name}</p>
+                  <img
+                    className="task-modal-filters-item__close-icon"
+                    src={closeIcon}
+                    alt="Icono de eliminar tag"
+                    onClick={() => handleRemoveTag(tag.id)}
+                  />
+                </div>
+              ))}
+              {selectedCategories.map((category) => (
+                <div className="task-modal-filters-item" key={category.id}>
+                  <img
+                    className="task-modal-filters-item__icon"
+                    src={categoryIcon}
+                    alt="Icono de categoria"
+                  />
+                  <p>{category.name}</p>
+                  <img
+                    className="task-modal-filters-item__close-icon"
+                    src={closeIcon}
+                    alt="Icono de eliminar categoria"
+                    onClick={() => handleRemoveCategory(category.id)}
+                  />
+                </div>
+              ))}
+            </div>
+
             <section className="task-modal-main">
               <textarea
                 className="task-modal-input title"
@@ -73,7 +137,7 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
                 rows="1"
               />
             </section>
-            <section className="task-modal-filters">
+            <section className="task-modal__select-filters">
               <DatePicker
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
@@ -95,19 +159,18 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
                 buttonIcon={categoryIcon}
                 itemList={allUserCategories}
                 itemListIcon={categoryIcon}
+                onItemClick={handleAssignCategory}
               />
               <DropdownButton
                 buttonText="Tags"
                 buttonIcon={tagIcon}
                 itemList={allUserTags}
                 itemListIcon={tagIcon}
+                onItemClick={handleAssignTag}
               />
             </section>
             <section className="task-modal-buttons">
-              <button
-                onClick={() => handleAddTask({ title, description })}
-                className="task-modal-add-btn"
-              >
+              <button onClick={handleAddTask} className="task-modal-add-btn">
                 Añadir tarea
               </button>
               <button className="task-modal-second-btn" onClick={onClose}>

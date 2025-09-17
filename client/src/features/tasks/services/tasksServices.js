@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export async function createTask({ title, description }) {
+/*export async function createTask({ title, description }) {
   try {
     const response = await fetch(`${API_URL}/tasks`, {
       method: "POST",
@@ -16,6 +16,29 @@ export async function createTask({ title, description }) {
     }
     const data = await response.json();
     return data;
+  } catch (error) {
+    throw error;
+  }
+}*/
+
+export async function createTask({ title, description }) {
+  try {
+    const response = await fetch(`${API_URL}/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, description }),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al crear la tarea.");
+    }
+    
+    const newTaskData = await response.json(); 
+    return newTaskData;
   } catch (error) {
     throw error;
   }

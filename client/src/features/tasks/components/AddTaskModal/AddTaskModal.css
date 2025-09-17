@@ -2,6 +2,7 @@
   background-color: var(--light-blue);
   border: solid 2px var(--primary-color);
   display: flex;
+  gap: 25px;
   width: 550px;
   flex-direction: column;
   padding: 35px;
@@ -39,7 +40,7 @@
   resize: none;
 }
 .task-modal-input.title {
-  font-size: clamp(1.1rem, 2.3vw, 1.25rem );
+  font-size: clamp(1.1rem, 2.3vw, 1.25rem);
   font-family: "principal-font-bold";
   color: var(--primary-color);
 }
@@ -54,7 +55,6 @@
   font-size: clamp(15px, 1vw, 15px);
   font-family: "principal-font";
   color: var(--light-grey);
-  margin-top: 5px;
 }
 .task-modal-input.desc::placeholder {
   color: var(--ultra-light-grey);
@@ -66,8 +66,8 @@
 .task-modal-filters {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin-top: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
   @media (width < 650px) {
     flex-wrap: wrap;
     gap: min(15px, 10vw);
@@ -76,6 +76,38 @@
     }
   }
 }
+.task-modal-filters-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-family: "principal-font-bold";
+  font-size: 13px;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  padding: 6px 10px;
+  border-radius: 5px;
+  align-items: center;
+}
+.task-modal-filters-item__close-icon {
+  cursor: pointer;
+}
+.task-modal-filters-item img {
+  width: 15px;
+  object-fit: contain;
+}
+.no-filters__message {
+  font-family: "principal-font";
+  color: var(--light-grey);
+  font-size: 12px;
+}
+.task-modal__select-filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .modal-filter-button {
   padding: 5px 12px 5px 12px;
   font-family: "principal-font-bold";
@@ -103,7 +135,6 @@
   outline: none;
 }
 .task-modal-buttons {
-  margin-top: 25px;
   display: flex;
   flex-direction: column;
   gap: 15px;

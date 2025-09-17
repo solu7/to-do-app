@@ -1,4 +1,10 @@
-import { getLatestTasks, createTask as _createTask, findTaskById, updateTask as _updateTask, deleteTask as _deleteTask } from "./task.model.js";
+import {
+  getLatestTasks,
+  createTask as _createTask,
+  findTaskById,
+  updateTask as _updateTask,
+  deleteTask as _deleteTask,
+} from "./task.model.js";
 
 export const getTasks = async (req, res) => {
   const userId = req.user.id;
@@ -14,16 +20,12 @@ export const getTasks = async (req, res) => {
 export const createTask = async (req, res) => {
   const userId = req.user.id;
   const { title, description } = req.body;
-
-  if (!title) {
-    return res.status(400).json({ message: "El título es obligatorio" });
-  }
-
   try {
-    await _createTask(userId, title, description);
-    res.status(201).json({ message: "Tarea creada correctamente" });
+    const newTask = await _createTask(userId, title, description);
+    res.status(201).json(newTask);
   } catch (error) {
-    res.status(500).json({ message: "Error al crear tarea" });
+    console.error("Error al crear la tarea:", error);
+    res.status(500).json({ message: "Error del servidor" });
   }
 };
 
@@ -81,4 +83,3 @@ export const deleteTask = async (req, res) => {
     res.status(500).json({ message: "Error al eliminar tarea" });
   }
 };
-

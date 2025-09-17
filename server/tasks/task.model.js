@@ -9,10 +9,14 @@ export const getLatestTasks = async (userId) => {
 };
 
 export const createTask = async (userId, title, description) => {
-  await pool.query(
-    "INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)",
+  const [result] = await pool.query(
+    `INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)`,
     [userId, title, description]
   );
+  const [newTask] = await pool.query("SELECT * FROM tasks WHERE id = ?", [
+    result.insertId,
+  ]);
+  return newTask[0];
 };
 
 export const updateTask = async (taskId, userId, fields, values) => {
@@ -38,4 +42,3 @@ export const deleteTask = async (taskId, userId) => {
   );
   return result;
 };
-
