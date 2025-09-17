@@ -1,88 +1,10 @@
-import "./Dashboard.css";
-import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import { useDashboardSidebar } from "./components/Sidebar/hooks/useDashboardSidebar.js";
-import Sidebar from "./components/Sidebar/Sidebar.jsx";
-import TodayView from "../../features/tasks/views/Today/TodayView.jsx";
-import EditPanel from "./components/EditPanel/EditPanel.jsx";
-import { useTaskEditPanel } from "./components/Sidebar/hooks/useTaskEditPanel.js";
-import { TaskProvider } from "../../context/TaskContext.jsx";
-const API_URL = import.meta.env.VITE_API_URL;
+import { TaskProvider } from "../../context/TaskContext";
+import DashboardContent from "./components/DashboardContent/DashboardContent";
 
 function Dashboard() {
-  const {
-    dashboardSidebarIsOpen,
-    openDashboardSidebar,
-    closeDashboardSidebar,
-  } = useDashboardSidebar();
-
-  const { taskEditPanelIsOpen, openTaskEditPanel, closeTaskEditPanel } =
-    useTaskEditPanel();
-
-  const [username, setUsername] = useState("");
-
-  const [selectedTask, setSelectedTask] = useState(null);
-
-  const handleTaskSelection = (task) => {
-    setSelectedTask(task);
-    openTaskEditPanel();
-  };
-
-  const handleOpenEditPanel = () => {
-    if (selectedTask) {
-      openTaskEditPanel();
-    } else {
-      closeTaskEditPanel();
-    }
-  };
-
-  const getLoggedUsername = async () => {
-    try {
-      const response = await fetch(`${API_URL}/users`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUsername(data.username);
-      } else {
-        setUsername("Invitado");
-      }
-    } catch (error) {
-      console.error("Error de conexión:", error);
-      setUsername("Invitado");
-    }
-  };
-  useEffect(() => {
-    getLoggedUsername();
-    openDashboardSidebar();
-  }, []);
   return (
     <TaskProvider>
-      <div className="dashboard">
-        <Sidebar
-          isOpen={dashboardSidebarIsOpen}
-          onClose={closeDashboardSidebar}
-          username={username}
-          openDashboardSidebar={openDashboardSidebar}
-        />
-        <Routes>
-          <Route
-            path="/"
-            element={<TodayView onTaskClick={handleTaskSelection} />}
-          />
-        </Routes>
-        <EditPanel
-          isOpen={taskEditPanelIsOpen}
-          onClose={closeTaskEditPanel}
-          handleOpenEditPanel={handleOpenEditPanel}
-          task={selectedTask}
-        />
-      </div>
+      <DashboardContent />
     </TaskProvider>
   );
 }

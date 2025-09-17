@@ -28,27 +28,30 @@ import {
   assignCategoryToTask,
   removeCategoryFromTask,
 } from "../../../../features/categories/services/categoriesServices";
+import { useTasks } from "../../../../context/TaskContext";
 import { useTaskDate } from "../../../../features/date/hooks/useTaskDate";
 import { useTaskData } from "../../../../features/tasks/services/useTaskData";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
 import { useTaskItemAction } from "../../../../features/tasks/hooks/useTaskItemAction";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
+import { updateTask as updateTaskService } from "../../../../features/tasks/services/tasksServices";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
+  const { fetchTasks } = useTasks();
   const {
-    title,
-    setTitle,
-    description,
-    setDescription,
-    comment,
-    setComment,
     panelWidth,
     titleRef,
     descriptionRef,
     commentRef,
     resizeHandleRef,
     handleResetTask,
+    title,
+    setTitle,
+    description,
+    setDescription,
+    comment,
+    setComment,
   } = useTaskEditPanel(task);
 
   const allUserTags = useFetchAllData(getAllTags);
@@ -106,6 +109,30 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const { selectedDate, handleDateChange, formattedDateText } =
     useTaskDate(task);
 
+  const handleSaveTask = async () => {
+    if (!task || !task.id) {
+      console.error("No se puede guardar: Tarea no válida.");
+      return;
+    }
+
+    const fieldsToUpdate = {};
+    if (title !== task.title) {
+      fieldsToUpdate.title = title;
+    }
+    if (description !== task.description) {
+      fieldsToUpdate.description = description;
+    }
+
+    if (Object.keys(fieldsToUpdate).length > 0) {
+      try {
+        await updateTaskService({ taskId: task.id, ...fieldsToUpdate });
+        console.log("Tarea actualizada correctamente.");
+        fetchTasks();
+      } catch (error) {
+        console.error("Error al guardar la tarea:", error);
+      }
+    }
+  };
   return (
     <div
       className={`edit-panel ${isOpen ? "" : "closed"}`}
@@ -260,7 +287,11 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
               />
               <p>Restablecer</p>
             </div>
-            <div className="edit-panel__option">
+            <div
+              className="edit-panel__option"
+              role="button"
+              onClick={handleSaveTask}
+            >
               <img
                 className="edit-panel__option-icon"
                 src={saveIcon}

@@ -38,3 +38,26 @@ export async function getLatestTasks() {
     throw error;
   }
 }
+
+export async function updateTask({ taskId, title, description }) {
+  try {
+    const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, description }),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al actualizar la tarea.");
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error("Error en updateTask:", error);
+    throw error;
+  }
+}

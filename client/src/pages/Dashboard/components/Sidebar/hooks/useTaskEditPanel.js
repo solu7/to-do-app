@@ -11,7 +11,7 @@ export const useTaskEditPanel = (task) => {
 
   const { elementWidth: panelWidth, elementRef: resizeHandleRef } = useResizer(
     0,
-    0.98,
+    0.98
   );
 
   const titleRef = useRef(null);
@@ -24,12 +24,12 @@ export const useTaskEditPanel = (task) => {
 
   useEffect(() => {
     if (task) {
-      setOriginalTask(task);
-      setTitle(task.title || "Titulo por defecto");
-      setDescription(task.description || "Descripcion por defecto");
-      setComment("Comentario de la tarea");
+      setOriginalTask({ ...task });
+      setTitle(task.title || "");
+      setDescription(task.description || "");
+      setComment(task.comment || "Comentario de la tarea");
     }
-  }, [task]);
+  }, [task?.id]);
 
   const handleResetTask = () => {
     if (originalTask) {
@@ -49,17 +49,17 @@ export const useTaskEditPanel = (task) => {
     openTaskEditPanel,
     closeTaskEditPanel,
     toggleTaskEditPanel,
-    title,
-    setTitle,
-    description,
-    setDescription,
-    comment,
-    setComment,
     panelWidth,
     titleRef,
     descriptionRef,
     commentRef,
     resizeHandleRef,
     handleResetTask,
+    title,
+    setTitle,
+    description,
+    setDescription,
+    comment,
+    setComment,
   };
 };

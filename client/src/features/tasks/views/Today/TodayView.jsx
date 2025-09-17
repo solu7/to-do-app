@@ -34,7 +34,7 @@ function Today({ onTaskClick }) {
               key={task.id}
               title={task.title}
               description={task.description}
-              onClick={() => onTaskClick(task)}
+              onClick={() => onTaskClick(task.id)}
               tagsInTask={tagsInTask[task.id] || []}
               categoriesInTask={categoriesInTask[task.id] || []}
             />
