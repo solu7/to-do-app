@@ -54,10 +54,32 @@ export async function updateTask({ taskId, title, description }) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Error al actualizar la tarea.");
     }
-    
+
     return await response.json();
   } catch (error) {
     console.error("Error en updateTask:", error);
+    throw error;
+  }
+}
+
+export async function deleteTask(taskId) {
+  try {
+    const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al eliminar la tarea.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error en deleteTask:", error);
     throw error;
   }
 }

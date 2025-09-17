@@ -35,7 +35,7 @@ import DropdownButton from "../../../../core/components/DropdownButton/DropdownB
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
 import { useTaskItemAction } from "../../../../features/tasks/hooks/useTaskItemAction";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
-import { updateTask as updateTaskService } from "../../../../features/tasks/services/tasksServices";
+import { useTaskActions } from "../../../../features/tasks/hooks/useTaskActions";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const { fetchTasks } = useTasks();
@@ -109,30 +109,10 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const { selectedDate, handleDateChange, formattedDateText } =
     useTaskDate(task);
 
-  const handleSaveTask = async () => {
-    if (!task || !task.id) {
-      console.error("No se puede guardar: Tarea no válida.");
-      return;
-    }
-
-    const fieldsToUpdate = {};
-    if (title !== task.title) {
-      fieldsToUpdate.title = title;
-    }
-    if (description !== task.description) {
-      fieldsToUpdate.description = description;
-    }
-
-    if (Object.keys(fieldsToUpdate).length > 0) {
-      try {
-        await updateTaskService({ taskId: task.id, ...fieldsToUpdate });
-        console.log("Tarea actualizada correctamente.");
-        fetchTasks();
-      } catch (error) {
-        console.error("Error al guardar la tarea:", error);
-      }
-    }
-  };
+  const { handleSaveTask, handleDeleteTask } = useTaskActions(
+    fetchTasks,
+    onClose
+  );
   return (
     <div
       className={`edit-panel ${isOpen ? "" : "closed"}`}
@@ -290,7 +270,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
             <div
               className="edit-panel__option"
               role="button"
-              onClick={handleSaveTask}
+              onClick={() => handleSaveTask(task, title, description)}
             >
               <img
                 className="edit-panel__option-icon"
@@ -299,7 +279,10 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
               />
               <p>Guardar</p>
             </div>
-            <div className="edit-panel__option">
+            <div
+              className="edit-panel__option"
+              onClick={() => handleDeleteTask(task.id)}
+            >
               <img
                 className="edit-panel__option-icon"
                 src={deleteIcon}
