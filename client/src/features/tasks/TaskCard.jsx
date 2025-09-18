@@ -1,7 +1,7 @@
 import "./TaskCard.css";
-import priority1Icon from "./assets/images/ItemIcon/priority1Icon.png";
 import tagIcon from "./assets/images/SectionIcon/tagIcon.png";
 import categoryIcon from "./assets/images/SectionIcon/categoryIcon.png";
+import { TaskPrioritiesList } from "../priorities/data/TaskPrioritiesList";
 
 function TaskCard({
   title,
@@ -9,7 +9,10 @@ function TaskCard({
   onClick,
   tagsInTask,
   categoriesInTask,
+  priority
 }) {
+  const priorityData = TaskPrioritiesList.find((p) => p.value === priority);
+  const priorityIcon = priorityData ? priorityData.icon : null;
   return (
     <div className="task" onClick={onClick}>
       <section className="task__header">
@@ -17,8 +20,8 @@ function TaskCard({
           <p>{title}</p>
           <img
             className="task-priority-icon"
-            src={priority1Icon}
-            alt="Icono de prioridad que tiene la tarea"
+            src={priorityIcon}
+            alt="Icono de prioridad de la tarea"
           />
         </div>
         <p className="task-description">{description}</p>

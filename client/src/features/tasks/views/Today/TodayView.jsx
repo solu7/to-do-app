@@ -8,6 +8,7 @@ import { getTagsInTask } from "../../../tags/services/tagsServices.js";
 import { getCategoriesInTask } from "../../../categories/services/categoriesServices.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
 import { useTaskData } from "../../services/useTaskData.js";
+import { getTaskPriority } from "../../../priorities/services/prioritiesServices.js";
 
 function Today({ onTaskClick }) {
   const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
@@ -18,6 +19,7 @@ function Today({ onTaskClick }) {
     getTagsInTask
   );
   const { data: categoriesInTask } = useTaskData(tasks, getCategoriesInTask);
+  const { data: priorityInTask } = useTaskData(tasks, getTaskPriority);
   return (
     <div
       className={
@@ -37,6 +39,7 @@ function Today({ onTaskClick }) {
               onClick={() => onTaskClick(task.id)}
               tagsInTask={tagsInTask[task.id] || []}
               categoriesInTask={categoriesInTask[task.id] || []}
+              priority={priorityInTask[task.id]?.priority}
             />
           ))
         ) : (

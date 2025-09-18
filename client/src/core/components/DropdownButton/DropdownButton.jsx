@@ -12,6 +12,8 @@ function DropdownButton({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const [positionClass, setPositionClass] = useState("");
+
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -32,6 +34,19 @@ function DropdownButton({
     };
   }, [isOpen, setIsOpen]);
 
+  useEffect(() => {
+    if (isOpen) {
+      const rect = dropdownRef.current.getBoundingClientRect();
+      const spaceRight = window.innerWidth - rect.right;
+
+      if (spaceRight < 150) {
+        setPositionClass("menu-left");
+      } else {
+        setPositionClass("");
+      }
+    }
+  }, [isOpen]);
+
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
   };
@@ -42,7 +57,7 @@ function DropdownButton({
       <AnimatePresence>
         {isOpen && (
           <motion.ul
-            className="dropdown-button__menu"
+            className={`dropdown-button__menu ${positionClass}`}
             initial={{
               opacity: 0,
             }}
@@ -66,11 +81,11 @@ function DropdownButton({
                   }
                 }}
               >
-                {!!itemListIcon && (
+                {(itemListIcon || item.icon) && (
                   <img
                     className="dropdown-menu__icon"
-                    src={itemListIcon}
-                    alt="Icono de item de lista"
+                    src={item.icon || itemListIcon}
+                    alt={`Icono de ${item.name}`}
                   />
                 )}
                 {item.name}

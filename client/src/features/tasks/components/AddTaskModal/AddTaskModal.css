@@ -31,6 +31,10 @@
   align-items: center;
   z-index: 999;
 }
+.task-modal-main-header {
+  display: flex;
+  flex-direction: row;
+}
 .task-modal-input {
   width: 100%;
   border-radius: 10px;

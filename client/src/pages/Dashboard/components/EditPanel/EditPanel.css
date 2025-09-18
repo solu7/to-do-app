@@ -120,6 +120,15 @@
   align-items: center;
   justify-content: space-between;
 }
+.edit-panel__task-header .dropdown-button__wrapper {
+  padding: 0;
+  gap: 0;
+  border: none;
+}
+.edit-panel__task-header .dropdown-button__icon {
+  width: 24px;
+  object-fit: contain;
+}
 .edit-panel__task-title {
   font-size: 22px;
   color: var(--grey);
@@ -131,11 +140,6 @@
 }
 .edit-panel__task-title::placeholder {
   color: var(--grey);
-}
-.edit-panel__task-priority {
-  width: 24px;
-  object-fit: contain;
-  cursor: pointer;
 }
 .edit-panel__task-description {
   color: var(--light-grey);

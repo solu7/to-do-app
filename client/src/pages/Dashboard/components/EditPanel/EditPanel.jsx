@@ -1,12 +1,10 @@
 import "./EditPanel.css";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper";
 import todayIcon from "../../assets/images/todayIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
-import priority1FullIcon from "../../../../features/tasks/assets/images/ItemIcon/priority1FullIcon.png";
 import tagIcon from "../../../../features/tasks/assets/images/SectionIcon/tagIcon.png";
 import tagItemIcon from "../../../../features/tasks/assets/images/ItemIcon/tagItemIcon.png";
 import categoryIcon from "../../../../features/tasks/assets/images/SectionIcon/categoryIcon.png";
@@ -36,6 +34,9 @@ import useFetchAllData from "../../../../core/hooks/useFetchAllData";
 import { useTaskItemAction } from "../../../../features/tasks/hooks/useTaskItemAction";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
 import { useTaskActions } from "../../../../features/tasks/hooks/useTaskActions";
+import { setTaskPriority } from "../../../../features/priorities/services/prioritiesServices";
+import { useTaskPriority } from "../../../../features/priorities/hooks/useTaskPriority";
+import { TaskPrioritiesList } from "../../../../features/priorities/data/TaskPrioritiesList";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const { fetchTasks } = useTasks();
@@ -108,6 +109,12 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
   const { selectedDate, handleDateChange, formattedDateText } =
     useTaskDate(task);
+
+  const { priorityIcon, handleSavePriority } = useTaskPriority(task);
+
+  const handleSetPriority = (selectedItem) => {
+    handleSavePriority(task.id, selectedItem.value);
+  };
 
   const { handleSaveTask, handleDeleteTask } = useTaskActions(
     fetchTasks,
@@ -219,11 +226,13 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                   rows="1"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <img
-                  className="edit-panel__task-priority"
-                  src={priority1FullIcon}
-                  alt="Icono de prioridad"
-                />
+                {priorityIcon && (
+                  <DropdownButton
+                    buttonIcon={priorityIcon}
+                    itemList={TaskPrioritiesList}
+                    onItemClick={handleSetPriority}
+                  />
+                )}
               </div>
               <textarea
                 id="edit-panel__task-description"

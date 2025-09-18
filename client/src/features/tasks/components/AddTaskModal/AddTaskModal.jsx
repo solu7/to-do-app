@@ -7,7 +7,7 @@ import es from "date-fns/locale/es";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton.jsx";
 import { TaskPrioritiesList } from "../../../priorities/data/TaskPrioritiesList.js";
 import categoryIcon from "../../assets/images/SectionIcon/categoryIcon.png";
-import priorityIcon from "../../assets/images/SectionIcon/priorityIcon.png";
+import priorityListIcon from "../../assets/images/SectionIcon/priorityIcon.png";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
 import dateIcon from "../../assets/images/SectionIcon/dateIcon.png";
 import closeIcon from "../../assets/images/SectionIcon/closeIcon.png";
@@ -24,14 +24,18 @@ import {
 } from "../../../categories/services/categoriesServices.js";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData.js";
 import { useTaskItemRelations } from "../../hooks/useTaskItemRelations.js";
+import { useTaskPriority } from "../../../priorities/hooks/useTaskPriority.js";
 
 const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
+
   const { fetchTasks } = useTasks();
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
+  const { selectedPriority, handleSetPriority, handleSavePriority, priorityIcon } =
+    useTaskPriority();
 
   const {
     selectedTags,
@@ -52,6 +56,7 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
 
   const closeAndResetRelations = () => {
     resetRelations();
+    handleSetPriority(null);
     onClose();
   };
 
@@ -60,17 +65,21 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
       const newTask = await createTask({ title, description });
       const taskId = newTask.id;
 
-      const assignTagsPromises = selectedTags.map((tag) =>
-        assignTagToTask({ taskId, tagId: tag.id })
-      );
-      const assignCategoriesPromises = selectedCategories.map((category) =>
-        assignCategoryToTask({ taskId, categoryId: category.id })
-      );
+      const assignPromises = [];
 
-      await Promise.allSettled([
-        ...assignTagsPromises,
-        ...assignCategoriesPromises,
-      ]);
+      selectedTags.forEach((tag) =>
+        assignPromises.push(assignTagToTask({ taskId, tagId: tag.id }))
+      );
+      selectedCategories.forEach((category) =>
+        assignPromises.push(
+          assignCategoryToTask({ taskId, categoryId: category.id })
+        )
+      );
+      if (selectedPriority) {
+        assignPromises.push(handleSavePriority(taskId, selectedPriority.value));
+      }
+
+      await Promise.allSettled(assignPromises);
 
       fetchTasks();
       closeAndResetRelations();
@@ -126,13 +135,22 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
             </div>
 
             <section className="task-modal-main">
-              <textarea
-                className="task-modal-input title"
-                onChange={handleTitleChange}
-                value={title}
-                placeholder={title}
-                rows="1"
-              />
+              <div className="task-modal-main-header">
+                <textarea
+                  className="task-modal-input title"
+                  onChange={handleTitleChange}
+                  value={title}
+                  placeholder={title}
+                  rows="1"
+                />
+                {selectedPriority && (
+                  <img
+                    className="task-modal-priority-icon"
+                    src={priorityIcon}
+                    alt={`Prioridad ${selectedPriority.value}`}
+                  />
+                )}
+              </div>
               <textarea
                 className="task-modal-input desc"
                 onChange={handleDescriptionChange}
@@ -154,9 +172,9 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
               />
               <DropdownButton
                 buttonText="Prioridad"
-                buttonIcon={priorityIcon}
+                buttonIcon={priorityListIcon}
                 itemList={TaskPrioritiesList}
-                itemListIcon={priorityIcon}
+                onItemClick={handleSetPriority}
               />
               <DropdownButton
                 buttonText="Categoria"
