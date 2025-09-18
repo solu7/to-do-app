@@ -50,6 +50,11 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
     setDescription(e.target.value);
   };
 
+  const closeAndResetRelations = () => {
+    resetRelations();
+    onClose();
+  };
+
   const handleAddTask = async () => {
     try {
       const newTask = await createTask({ title, description });
@@ -68,8 +73,7 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
       ]);
 
       fetchTasks();
-      resetRelations();
-      onClose();
+      closeAndResetRelations();
     } catch (error) {
       console.error("Error al crear y/o asignar la tarea:", error);
     }
@@ -83,7 +87,7 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          onClick={onClose}
+          onClick={closeAndResetRelations}
         >
           <div className="task-modal" onClick={(e) => e.stopPropagation()}>
             <div className="task-modal-filters">
@@ -173,7 +177,10 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
               <button onClick={handleAddTask} className="task-modal-add-btn">
                 Añadir tarea
               </button>
-              <button className="task-modal-second-btn" onClick={onClose}>
+              <button
+                className="task-modal-second-btn"
+                onClick={closeAndResetRelations}
+              >
                 Cancelar
               </button>
             </section>
