@@ -6,18 +6,24 @@ import {
   createTask,
   updateTask,
   deleteTask,
+  getTaskCompletionStatus,
+  toggleTaskCompletionStatus,
 } from "./task.controller.js";
 
 import { filterTasks } from "./filterTasks/filterTasks.controller.js";
 
 router.get("/", verifyToken, getTasks);
 
+router.get("/:id/status", verifyToken, getTaskCompletionStatus);
+
 router.post("/", verifyToken, createTask);
+
+router.post("/filter", verifyToken, filterTasks);
 
 router.patch("/:id", verifyToken, updateTask);
 
-router.delete("/:id", verifyToken, deleteTask);
+router.patch("/:id/toggle", verifyToken, toggleTaskCompletionStatus);
 
-router.post("/filter", verifyToken, filterTasks);
+router.delete("/:id", verifyToken, deleteTask);
 
 export default router;

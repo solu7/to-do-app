@@ -39,7 +39,7 @@ function DropdownButton({
       const rect = dropdownRef.current.getBoundingClientRect();
       const spaceRight = window.innerWidth - rect.right;
 
-      if (spaceRight < 150) {
+      if (spaceRight < 30) {
         setPositionClass("menu-left");
       } else {
         setPositionClass("");

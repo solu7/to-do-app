@@ -4,6 +4,8 @@ import {
   findTaskById,
   updateTask as _updateTask,
   deleteTask as _deleteTask,
+  getTaskCompletionStatus as _getTaskCompletionStatus,
+  toggleTaskCompletion as _toggleTaskCompletion,
 } from "./task.model.js";
 
 export const getTasks = async (req, res) => {
@@ -81,5 +83,70 @@ export const deleteTask = async (req, res) => {
     res.json({ message: "Tarea eliminada correctamente" });
   } catch (error) {
     res.status(500).json({ message: "Error al eliminar tarea" });
+  }
+};
+
+export const getTaskCompletionStatus = async (req, res) => {
+  const userId = req.user.id;
+  const taskId = req.params.id;
+
+  try {
+    const status = await _getTaskCompletionStatus(
+      taskId,
+      userId,
+      "completed"
+    );
+
+    if (status === null) {
+      return res
+        .status(404)
+        .json({ message: "Tarea no encontrada o no autorizada." });
+    }
+
+    res.status(200).json({
+      taskId,
+      completed: status,
+      isCompleted: status === 1,
+    });
+  } catch (error) {
+    console.error(`Error al obtener el estado de la tarea ${taskId}:`, error);
+    res.status(500).json({ message: "Error del servidor." });
+  }
+};
+
+export const toggleTaskCompletionStatus = async (req, res) => {
+  const userId = req.user.id;
+  const taskId = req.params.id;
+
+  try {
+    const currentStatus = await _getTaskCompletionStatus(
+      taskId,
+      userId,
+      "completed"
+    );
+
+    if (currentStatus === null) {
+      return res
+        .status(404)
+        .json({ message: "Tarea no encontrada o no autorizada." });
+    }
+
+    const newStatus = 1 - currentStatus;
+
+    await _toggleTaskCompletion(taskId, userId, newStatus);
+
+    res.status(200).json({
+      message: `Tarea ${taskId} actualizada. Nuevo estado completado: ${newStatus}`,
+      completed: newStatus,
+      isCompleted: newStatus === 1,
+    });
+  } catch (error) {
+    console.error(
+      `Error al alternar el estado de completado de la tarea ${taskId}:`,
+      error
+    );
+    res
+      .status(500)
+      .json({ message: "Error del servidor al actualizar la tarea." });
   }
 };
