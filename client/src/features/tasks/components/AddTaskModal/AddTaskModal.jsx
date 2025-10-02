@@ -25,17 +25,23 @@ import {
 import useFetchAllData from "../../../../core/hooks/useFetchAllData.js";
 import { useTaskItemRelations } from "../../hooks/useTaskItemRelations.js";
 import { useTaskPriority } from "../../../priorities/hooks/useTaskPriority.js";
+import { useTaskDate } from "../../../date/hooks/useTaskDate.js";
 
 const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
-  const [selectedDate, setSelectedDate] = useState(null);
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
 
   const { fetchTasks } = useTasks();
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
-  const { selectedPriority, handleSetPriority, handleSavePriority, priorityIcon } =
-    useTaskPriority();
+  const {
+    selectedPriority,
+    handleSetPriority,
+    handleSavePriority,
+    priorityIcon,
+  } = useTaskPriority();
+  const { selectedDate, handleDateChange, formattedDateText, handleSaveDate } =
+    useTaskDate();
 
   const {
     selectedTags,
@@ -57,6 +63,9 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   const closeAndResetRelations = () => {
     resetRelations();
     handleSetPriority(null);
+    handleDateChange(null);
+    setTitle("Titulo de la tarea");
+    setDescription("Descripcion de la tarea.");
     onClose();
   };
 
@@ -77,6 +86,9 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
       );
       if (selectedPriority) {
         assignPromises.push(handleSavePriority(taskId, selectedPriority.value));
+      }
+      if (selectedDate) {
+        assignPromises.push(handleSaveDate(taskId, selectedDate));
       }
 
       await Promise.allSettled(assignPromises);
@@ -134,8 +146,12 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
               ))}
             </div>
 
-            <section className="task-modal-main">
-              <div className="task-modal-main-header">
+            <section className="task-modal__header">
+              <div className="task-modal__header-date">
+                <img src={dateIcon} alt="Icono de fecha" />
+                <p>{formattedDateText}</p>
+              </div>
+              <div className="task-modal__header-main">
                 <textarea
                   className="task-modal-input title"
                   onChange={handleTitleChange}
@@ -162,7 +178,7 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
             <section className="task-modal__select-filters">
               <DatePicker
                 selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
+                onChange={handleDateChange}
                 locale={es}
                 dateFormat="dd/MM/yyyy"
                 showOutsideDays={false}

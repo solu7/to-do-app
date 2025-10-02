@@ -31,9 +31,32 @@
   align-items: center;
   z-index: 999;
 }
-.task-modal-main-header {
+.task-modal__header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.task-modal__header-date {
+  font-family: "principal-font-bold";
+  color: var(--primary-color);
+  font-size: 13px;
   display: flex;
   flex-direction: row;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.task-modal__header-date img {
+  height: 18px;
+  object-fit: contain;
+}
+.task-modal__header-main {
+  display: flex;
+  flex-direction: row;
+}
+.task-modal__header-secondary {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
 }
 .task-modal-input {
   width: 100%;
@@ -54,6 +77,10 @@
 .task-modal-input.title:focus {
   outline: none;
   color: var(--primary-color);
+}
+.task-modal-priority-icon {
+  width: 24px;
+  object-fit: contain;
 }
 .task-modal-input.desc {
   font-size: clamp(15px, 1vw, 15px);

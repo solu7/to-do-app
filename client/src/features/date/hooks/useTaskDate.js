@@ -28,27 +28,42 @@ export const useTaskDate = (task) => {
     }
   }, [task, rawTaskDate]);
 
-  const handleDateChange = async (date) => {
-    setSelectedDate(date);
-    if (task && task.id && date) {
-      try {
-        const formattedDate = date.toISOString().split("T")[0];
-        await useSetTaskDate({ taskId: task.id, date: formattedDate });
+  const handleSaveDate = async (taskId, date) => {
+    if (!taskId) {
+      console.error("No se puede guardar la fecha sin un ID de tarea.");
+      return;
+    }
+
+    try {
+      const formattedDate = date ? date.toISOString().split("T")[0] : null;
+
+      await useSetTaskDate({ taskId, date: formattedDate });
+
+      if (task) {
         refetchTaskDate();
-      } catch (error) {
-        console.error("Error al guardar la fecha:", error);
       }
+
+    } catch (error) {
+      console.error("Error al guardar la fecha:", error);
     }
   };
 
-  const formattedDateText =
-    task && rawTaskDate && rawTaskDate[task.id] && rawTaskDate[task.id].length > 0
-      ? formatDateForDisplay(rawTaskDate[task.id][0].date)
-      : "Agrega una fecha!";
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+
+    if (task && task.id) {
+      handleSaveDate(task.id, date);
+    }
+  };
+
+  const formattedDateText = selectedDate
+    ? formatDateForDisplay(selectedDate)
+    : "Agrega una fecha!";
 
   return {
     selectedDate,
     handleDateChange,
     formattedDateText,
+    handleSaveDate,
   };
 };

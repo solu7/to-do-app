@@ -46,6 +46,9 @@ export async function useSetTaskDate({ taskId, date }) {
       body: JSON.stringify({ date: date }),
       credentials: "include",
     });
+    if (response.ok) {
+      "fecha guardada"
+    }
 
     if (!response.ok) {
       const errorData = await response.json();

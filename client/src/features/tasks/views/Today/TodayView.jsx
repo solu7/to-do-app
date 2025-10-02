@@ -14,10 +14,7 @@ function Today({ onTaskClick }) {
   const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
     useAddTaskModal();
   const { tasks } = useTasks();
-  const { data: tagsInTask } = useTaskData(
-    tasks,
-    getTagsInTask
-  );
+  const { data: tagsInTask } = useTaskData(tasks, getTagsInTask);
   const { data: categoriesInTask } = useTaskData(tasks, getCategoriesInTask);
   const { data: priorityInTask } = useTaskData(tasks, getTaskPriority);
   return (
@@ -39,7 +36,7 @@ function Today({ onTaskClick }) {
               onClick={() => onTaskClick(task.id)}
               tagsInTask={tagsInTask[task.id] || []}
               categoriesInTask={categoriesInTask[task.id] || []}
-              priority={priorityInTask[task.id]?.priority}
+              priority={priorityInTask[task.id]?.priority ?? 0}
             />
           ))
         ) : (

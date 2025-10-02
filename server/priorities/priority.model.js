@@ -1,7 +1,7 @@
 import pool from "../shared/db.js";
 
 export const setTaskPriority = async (userId, taskId, priority) => {
-  if (priority !== null && (priority < 1 || priority > 4)) {
+  if (priority !== null && (priority > 4)) {
     throw new Error("La prioridad debe ser entre 1 y 4.");
   }
 

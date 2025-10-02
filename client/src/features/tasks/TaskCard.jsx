@@ -9,7 +9,7 @@ function TaskCard({
   onClick,
   tagsInTask,
   categoriesInTask,
-  priority
+  priority,
 }) {
   const priorityData = TaskPrioritiesList.find((p) => p.value === priority);
   const priorityIcon = priorityData ? priorityData.icon : null;
@@ -18,11 +18,13 @@ function TaskCard({
       <section className="task__header">
         <div className="task__title">
           <p>{title}</p>
-          <img
-            className="task-priority-icon"
-            src={priorityIcon}
-            alt="Icono de prioridad de la tarea"
-          />
+          {priorityIcon && (
+            <img
+              className="task-priority-icon"
+              src={priorityIcon}
+              alt="Icono de prioridad de la tarea"
+            />
+          )}
         </div>
         <p className="task-description">{description}</p>
       </section>

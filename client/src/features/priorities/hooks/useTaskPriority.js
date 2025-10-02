@@ -21,7 +21,7 @@ export const useTaskPriority = (task) => {
   const { data: rawTaskPriority } = useTaskData(task, getTaskPriority);
 
   const priority =
-    rawTaskPriority[task?.id]?.priority || selectedPriority?.value;
+    rawTaskPriority[task?.id]?.priority ?? selectedPriority?.value ?? 0;
 
   const formattedPriorityText = priority
     ? `Prioridad ${priority}`
