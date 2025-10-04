@@ -1,25 +1,59 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-/*export async function createTask({ title, description }) {
+export async function getInboxTasks() {
   try {
     const response = await fetch(`${API_URL}/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, description }),
+      method: "GET",
       credentials: "include",
     });
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || "Error al crear tarea");
+      throw new Error(errorData.message || "Error al obtener tareas de Inbox.");
     }
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
+    console.error("Error en getInboxTasks:", error);
     throw error;
   }
-}*/
+}
+
+export async function getAllTasks() {
+  try {
+    const response = await fetch(`${API_URL}/tasks/all`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message || "Error al obtener todas las tareas."
+      );
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error en getAllTasks:", error);
+    throw error;
+  }
+}
+
+export async function getCompletedTasks() {
+  try {
+    const response = await fetch(`${API_URL}/tasks/completed`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message || "Error al obtener tareas completadas."
+      );
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error en getCompletedTasks:", error);
+    throw error;
+  }
+}
 
 export async function createTask({ title, description }) {
   try {
@@ -36,27 +70,9 @@ export async function createTask({ title, description }) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Error al crear la tarea.");
     }
-    
-    const newTaskData = await response.json(); 
-    return newTaskData;
-  } catch (error) {
-    throw error;
-  }
-}
 
-export async function getLatestTasks() {
-  try {
-    const response = await fetch(`${API_URL}/tasks`, {
-      method: "GET",
-      body: JSON.stringify(),
-      credentials: "include",
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Error al obtener tareas");
-    }
-    const data = await response.json();
-    return data;
+    const newTaskData = await response.json();
+    return newTaskData;
   } catch (error) {
     throw error;
   }
@@ -106,3 +122,29 @@ export async function deleteTask(taskId) {
     throw error;
   }
 }
+
+export const toggleTaskCompletion = async ({ taskId }) => {
+  if (typeof taskId === "object" || !taskId) {
+    console.error("Error de ID:", taskId);
+    throw new Error("ID de tarea no válido proporcionado.");
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/tasks/${taskId}/toggle`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al alternar el estado de completado de la tarea.");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error en toggleTaskCompletion:", error);
+    throw error;
+  }
+};

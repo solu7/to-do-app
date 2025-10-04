@@ -1,5 +1,7 @@
 import {
-  getLatestTasks,
+  getInboxTasks as _getInboxTasks,
+  getAllTasks as _getAllTasks,
+  getCompletedTasks as _getCompletedTasks,
   createTask as _createTask,
   findTaskById,
   updateTask as _updateTask,
@@ -8,14 +10,36 @@ import {
   toggleTaskCompletion as _toggleTaskCompletion,
 } from "./task.model.js";
 
-export const getTasks = async (req, res) => {
+export const getAllTasks = async (req, res) => {
   const userId = req.user.id;
   try {
-    const tasks = await getLatestTasks(userId);
+    const tasks = await _getAllTasks(userId);
     res.json(tasks);
   } catch (error) {
-    console.error("Error al obtener tareas del usuario:", error);
+    console.error("Error al obtener todas las tareas:", error);
+    res.status(500).json({ message: "Error al obtener todas las tareas" });
+  }
+};
+
+export const getInboxTasks = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const tasks = await _getInboxTasks(userId);
+    res.json(tasks);
+  } catch (error) {
+    console.error("Error al obtener tareas de Inbox:", error);
     res.status(500).json({ message: "Error al obtener tareas del usuario" });
+  }
+};
+
+export const getCompletedTasks = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const tasks = await _getCompletedTasks(userId);
+    res.json(tasks);
+  } catch (error) {
+    console.error("Error al obtener tareas completadas:", error);
+    res.status(500).json({ message: "Error al obtener tareas completadas" });
   }
 };
 
@@ -91,11 +115,7 @@ export const getTaskCompletionStatus = async (req, res) => {
   const taskId = req.params.id;
 
   try {
-    const status = await _getTaskCompletionStatus(
-      taskId,
-      userId,
-      "completed"
-    );
+    const status = await _getTaskCompletionStatus(taskId, userId, "completed");
 
     if (status === null) {
       return res

@@ -31,7 +31,7 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
 
-  const { fetchTasks } = useTasks();
+  const { fetchTasks, fetchAllTasks } = useTasks();
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
   const {
@@ -94,6 +94,7 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
       await Promise.allSettled(assignPromises);
 
       fetchTasks();
+      fetchAllTasks();
       closeAndResetRelations();
     } catch (error) {
       console.error("Error al crear y/o asignar la tarea:", error);

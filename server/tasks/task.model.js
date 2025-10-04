@@ -1,8 +1,24 @@
 import pool from "../shared/db.js";
 
-export const getLatestTasks = async (userId) => {
+export const getAllTasks = async (userId) => {
+  const [tasks] = await pool.query(
+    "SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC",
+    [userId]
+  );
+  return tasks;
+};
+
+export const getInboxTasks = async (userId) => {
   const [tasks] = await pool.query(
     "SELECT * FROM tasks WHERE user_id = ? AND completed = 0 ORDER BY created_at ASC LIMIT 10",
+    [userId]
+  );
+  return tasks;
+};
+
+export const getCompletedTasks = async (userId) => {
+  const [tasks] = await pool.query(
+    "SELECT * FROM tasks WHERE user_id = ? AND completed = 1 ORDER BY completed_at DESC",
     [userId]
   );
   return tasks;

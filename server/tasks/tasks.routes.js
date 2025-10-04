@@ -2,7 +2,9 @@ import { Router } from "express";
 const router = Router();
 import verifyToken from "../auth/auth.middleware.js";
 import {
-  getTasks,
+  getAllTasks,
+  getInboxTasks,
+  getCompletedTasks,
   createTask,
   updateTask,
   deleteTask,
@@ -10,15 +12,15 @@ import {
   toggleTaskCompletionStatus,
 } from "./task.controller.js";
 
-import { filterTasks } from "./filterTasks/filterTasks.controller.js";
+router.get("/", verifyToken, getInboxTasks);
 
-router.get("/", verifyToken, getTasks);
+router.get("/all", verifyToken, getAllTasks);
+
+router.get("/completed", verifyToken, getCompletedTasks); 
 
 router.get("/:id/status", verifyToken, getTaskCompletionStatus);
 
 router.post("/", verifyToken, createTask);
-
-router.post("/filter", verifyToken, filterTasks);
 
 router.patch("/:id", verifyToken, updateTask);
 

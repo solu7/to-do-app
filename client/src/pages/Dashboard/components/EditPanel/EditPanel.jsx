@@ -3,7 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper";
-import todayIcon from "../../assets/images/todayIcon.png";
+import dateIcon from "../../../../features/tasks/assets/images/SectionIcon/dateIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
 import tagIcon from "../../../../features/tasks/assets/images/SectionIcon/tagIcon.png";
 import tagItemIcon from "../../../../features/tasks/assets/images/ItemIcon/tagItemIcon.png";
@@ -26,6 +26,7 @@ import {
   assignCategoryToTask,
   removeCategoryFromTask,
 } from "../../../../features/categories/services/categoriesServices";
+import { toggleTaskCompletion } from "../../../../features/tasks/services/tasksServices";
 import { useTasks } from "../../../../context/TaskContext";
 import { useTaskDate } from "../../../../features/date/hooks/useTaskDate";
 import { useTaskData } from "../../../../features/tasks/services/useTaskData";
@@ -34,12 +35,11 @@ import useFetchAllData from "../../../../core/hooks/useFetchAllData";
 import { useTaskItemAction } from "../../../../features/tasks/hooks/useTaskItemAction";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
 import { useTaskActions } from "../../../../features/tasks/hooks/useTaskActions";
-import { setTaskPriority } from "../../../../features/priorities/services/prioritiesServices";
 import { useTaskPriority } from "../../../../features/priorities/hooks/useTaskPriority";
 import { TaskPrioritiesList } from "../../../../features/priorities/data/TaskPrioritiesList";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
-  const { fetchTasks } = useTasks();
+  const { fetchTasks, fetchAllTasks, updateTaskCompletion } = useTasks();
   const {
     panelWidth,
     titleRef,
@@ -114,15 +114,36 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
   const handleSetPriority = (selectedItem) => {
     handleSavePriority(task.id, selectedItem.value);
+    fetchAllTasks();
+  };
+
+  const handleToggleCompletion = async () => {
+    const newCompletedState = task?.completed === 0;
+
+    updateTaskCompletion(task.id, newCompletedState);
+
+    try {
+      await handleTaskItemAction({
+        task: task,
+        action: toggleTaskCompletion,
+      });
+    } catch (error) {
+      console.error("Error al alternar el estado de completado:", error);
+    }
   };
 
   const { handleSaveTask, handleDeleteTask } = useTaskActions(
     fetchTasks,
     onClose
   );
+
+  const isCompleted = task?.completed === 1;
+  const panelClasses = `edit-panel ${isOpen ? "" : "closed"}${
+    isCompleted ? "completed" : ""
+  }`;
   return (
     <div
-      className={`edit-panel ${isOpen ? "" : "closed"}`}
+      className={panelClasses}
       ref={resizeHandleRef}
       style={{ width: panelWidth + "px" }}
     >
@@ -138,7 +159,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 showOutsideDays={false}
                 customInput={
                   <DropdownWrapper
-                    buttonIcon={todayIcon}
+                    buttonIcon={dateIcon}
                     buttonText={formattedDateText}
                   />
                 }
@@ -152,6 +173,8 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 id="task-completed"
                 className="edit-panel__completed"
                 type="checkbox"
+                checked={task?.completed === 1}
+                onChange={handleToggleCompletion}
               />
               <span className="edit-panel__completed-checkmark"></span>
             </label>
@@ -221,7 +244,9 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                   id="edit-panel__task-title"
                   ref={titleRef}
                   type="text"
-                  className="edit-panel__task-title"
+                  className={`edit-panel__task-title ${
+                    isCompleted ? "text--completed" : ""
+                  }`}
                   value={title}
                   rows="1"
                   onChange={(e) => setTitle(e.target.value)}
@@ -238,8 +263,9 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 id="edit-panel__task-description"
                 ref={descriptionRef}
                 type="text"
-                className="edit-panel__task-description"
-                placeholder={description}
+                className={`edit-panel__task-description ${
+                  isCompleted ? "text--completed" : ""
+                }`}
                 rows="2"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -256,7 +282,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 ref={commentRef}
                 type="text"
                 className="edit-panel__task-comment"
-                placeholder={comment}
+                placeholder="Escribe un comentario..."
                 rows="1"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}

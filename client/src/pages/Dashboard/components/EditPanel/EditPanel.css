@@ -1,3 +1,28 @@
+.edit-panel.completed {
+  background-color: var(--opacity-grey);
+  border-left: 1px solid var(--ultra-light-grey);
+}
+.text--completed {
+  text-decoration: line-through;
+}
+.edit-panel.completed .edit-panel__option {
+  background: none;
+  border: 1px solid var(--ultra-light-grey);
+  color: var(--light-grey);
+}
+.edit-panel.completed .edit-panel__task-comment {
+  color: var(--grey);
+}
+.edit-panel.completed .edit-panel__date-container .dropdown-button__button {
+  color: var(--light-grey);
+}
+.edit-panel.completed .edit-panel__task-filters-item {
+  color: var(--grey);
+  background-color: var(--ultra-light-grey);
+}
+.edit-panel.completed .edit-panel__close-container {
+  color: var(--light-grey);
+}
 .edit-panel {
   display: flex;
   flex-direction: column;
@@ -10,6 +35,7 @@
   container-name: task-edit-panel;
   container-type: inline-size;
   min-width: 345px;
+  transition: 0.3s ease;
 }
 .edit-panel.closed {
   min-width: 80px;
@@ -46,7 +72,7 @@
   justify-content: center;
 }
 .edit-panel__date-container .react-datepicker-wrapper:hover {
-  transform: none
+  transform: none;
 }
 .edit-panel__date-container .dropdown-button__button {
   font-size: 15px;
@@ -88,7 +114,9 @@
   background-color: var(--secondary-color);
 }
 .edit-panel__completed:checked + .edit-panel__completed-checkmark {
-  background-color: var(--primary-color);
+  background-color: var(--ultra-light-grey);
+  transform: scale(0.9);
+  border: 1px solid var(--light-grey);
 }
 .edit-panel__completed:checked ~ .edit-panel__completed-checkmark::after {
   display: block;
@@ -119,6 +147,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: 5px;
 }
 .edit-panel__task-header .dropdown-button__wrapper {
   padding: 0;
@@ -137,6 +166,7 @@
   font-family: "principal-font-bold";
   outline: none;
   resize: none;
+  width: 100%;
 }
 .edit-panel__task-title::placeholder {
   color: var(--grey);
@@ -149,6 +179,7 @@
   border: none;
   font-family: "principal-font";
   resize: none;
+  width: 100%;
 }
 .edit-panel__task-description::placeholder {
   color: var(--light-grey);

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import useAutoGrowTextarea from "../../../../../core/hooks/useAutoGrowTextarea";
+import useAutosizeTextArea from "../../../../../core/hooks/useAutoGrowTextarea";
 import { useResizer } from "../../../../../core/hooks/useResizer";
 
 export const useTaskEditPanel = (task) => {
@@ -18,24 +18,24 @@ export const useTaskEditPanel = (task) => {
   const descriptionRef = useRef(null);
   const commentRef = useRef(null);
 
-  useAutoGrowTextarea(titleRef, title);
-  useAutoGrowTextarea(descriptionRef, description);
-  useAutoGrowTextarea(commentRef, comment);
+  useAutosizeTextArea(commentRef, comment);
+  useAutosizeTextArea(titleRef, title);
+  useAutosizeTextArea(descriptionRef, description);
 
   useEffect(() => {
     if (task) {
       setOriginalTask({ ...task });
       setTitle(task.title || "");
       setDescription(task.description || "");
-      setComment(task.comment || "Comentario de la tarea");
+      setComment(task.comment || "");
     }
-  }, [task?.id]);
+  }, [task]);
 
   const handleResetTask = () => {
     if (originalTask) {
       setTitle(originalTask.title || "");
       setDescription(originalTask.description || "");
-      setComment(originalTask.comment || "Comentario de la tarea");
+      setComment(originalTask.comment || "");
     }
   };
 

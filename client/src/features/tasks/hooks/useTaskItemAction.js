@@ -16,11 +16,14 @@ export const useTaskItemAction = () => {
         console.error("Task no definida.");
         return;
       }
-      await action({
+      const payload = {
         taskId: task.id,
-        [payloadKey]: payloadValue || item?.id,
-      });
-      refetch();
+      };
+      if (payloadKey) {
+        payload[payloadKey] = payloadValue || item?.id;
+      }
+      await action(payload);
+      refetch && refetch();
       fetchTasks();
     } catch (error) {
       console.error(`Error al interacturar con el item:`, error);

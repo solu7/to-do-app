@@ -7,32 +7,23 @@ import TodayView from "../../../../features/tasks/views/Today/TodayView.jsx";
 import EditPanel from "../EditPanel/EditPanel.jsx";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
-
 const API_URL = import.meta.env.VITE_API_URL;
-
 function DashboardContent() {
   const {
     dashboardSidebarIsOpen,
     openDashboardSidebar,
     closeDashboardSidebar,
   } = useDashboardSidebar();
-
   const { taskEditPanelIsOpen, openTaskEditPanel, closeTaskEditPanel } =
     useTaskEditPanel();
-
   const [username, setUsername] = useState("");
-
   const [selectedTaskId, setSelectedTaskId] = useState(null);
-
-  const { tasks } = useTasks();
-
-  const selectedTask = tasks.find((task) => task.id === selectedTaskId) || null;
-
+  const { getTaskById } = useTasks();
+  const selectedTask = selectedTaskId ? getTaskById(selectedTaskId) : null;
   const handleTaskSelection = (task) => {
     setSelectedTaskId(task);
     openTaskEditPanel();
   };
-
   const handleOpenEditPanel = () => {
     if (selectedTaskId) {
       openTaskEditPanel();
@@ -40,7 +31,6 @@ function DashboardContent() {
       closeTaskEditPanel();
     }
   };
-
   const getLoggedUsername = async () => {
     try {
       const response = await fetch(`${API_URL}/users`, {
@@ -66,28 +56,28 @@ function DashboardContent() {
     getLoggedUsername();
     openDashboardSidebar();
   }, []);
-  
+
   return (
-      <div className="dashboard">
-        <Sidebar
-          isOpen={dashboardSidebarIsOpen}
-          onClose={closeDashboardSidebar}
-          username={username}
-          openDashboardSidebar={openDashboardSidebar}
+    <div className="dashboard">
+      <Sidebar
+        isOpen={dashboardSidebarIsOpen}
+        onClose={closeDashboardSidebar}
+        username={username}
+        openDashboardSidebar={openDashboardSidebar}
+      />
+      <Routes>
+        <Route
+          path="/"
+          element={<TodayView onTaskClick={handleTaskSelection} />}
         />
-        <Routes>
-          <Route
-            path="/"
-            element={<TodayView onTaskClick={handleTaskSelection} />}
-          />
-        </Routes>
-        <EditPanel
-          isOpen={taskEditPanelIsOpen}
-          onClose={closeTaskEditPanel}
-          handleOpenEditPanel={handleOpenEditPanel}
-          task={selectedTask}
-        />
-      </div>
+      </Routes>
+      <EditPanel
+        isOpen={taskEditPanelIsOpen}
+        onClose={closeTaskEditPanel}
+        handleOpenEditPanel={handleOpenEditPanel}
+        task={selectedTask}
+      />
+    </div>
   );
 }
 
