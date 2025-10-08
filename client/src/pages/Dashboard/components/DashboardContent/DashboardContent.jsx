@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDashboardSidebar } from "../../components/Sidebar/hooks/useDashboardSidebar.js";
 import Sidebar from "../Sidebar/Sidebar.jsx";
-import TodayView from "../../../../features/tasks/views/Today/TodayView.jsx";
+import InboxView from "../../../../features/tasks/views/Inbox/InboxView.jsx";
 import EditPanel from "../EditPanel/EditPanel.jsx";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
@@ -68,7 +68,7 @@ function DashboardContent() {
       <Routes>
         <Route
           path="/"
-          element={<TodayView onTaskClick={handleTaskSelection} />}
+          element={<InboxView onTaskClick={handleTaskSelection} />}
         />
       </Routes>
       <EditPanel

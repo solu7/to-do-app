@@ -1,20 +1,30 @@
-.today-container {
+.inbox__container {
   display: flex;
   flex-direction: column;
   gap: 60px;
   padding: 80px 0px;
 }
-.today-title {
+.inbox__header {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+.inbox__header-icon {
+  height: 20px;
+  object-fit: contain;
+}
+.inbox__header-title {
   margin-left: auto;
   margin-right: auto;
   font-family: "principal-font";
   font-size: 23px;
   color: var(--dark-grey);
 }
-.today-title span {
+.inbox__header-title span {
   color: var(--primary-color);
 }
-.today-tasks {
+.inbox__tasks {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -33,7 +43,7 @@
   object-fit: contain;
 }
 @media (width < 1500px) {
-  .today {
+  .inbox {
     gap: 0px;
   }
 }

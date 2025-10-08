@@ -1,4 +1,4 @@
-import "./TodayView.css";
+import "./InboxView.css";
 import { useAddTaskModal } from "../../hooks/useAddTaskModal.js";
 import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
@@ -9,8 +9,9 @@ import { getCategoriesInTask } from "../../../categories/services/categoriesServ
 import { useTasks } from "../../../../context/TaskContext.jsx";
 import { useTaskData } from "../../services/useTaskData.js";
 import { getTaskPriority } from "../../../priorities/services/prioritiesServices.js";
+import inboxIcon from "../../../../pages/Dashboard/assets/images/inboxIcon.png"
 
-function Today({ onTaskClick }) {
+function Inbox({ onTaskClick }) {
   const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
     useAddTaskModal();
   const { tasks } = useTasks();
@@ -20,13 +21,16 @@ function Today({ onTaskClick }) {
   return (
     <div
       className={
-        tasks.length > 0 ? "today-container" : "today-container no-tasks"
+        tasks.length > 0 ? "inbox__container" : "inbox__container no-tasks"
       }
     >
-      <h3 className="today-title">
-        Lo que tienes <span>para hoy</span>
+      <section className="inbox__header">
+      <h3 className="inbox__header-title">
+        Bandeja <span>de entrada</span>
       </h3>
-      <section className="today-tasks">
+      <img className="inbox__header-icon" src={inboxIcon} alt="Icono de bandeja de entrada" />
+      </section>
+      <section className="inbox__tasks">
         {tasks.length > 0 ? (
           tasks.map((task) => (
             <TaskCard
@@ -59,4 +63,4 @@ function Today({ onTaskClick }) {
     </div>
   );
 }
-export default Today;
+export default Inbox;
