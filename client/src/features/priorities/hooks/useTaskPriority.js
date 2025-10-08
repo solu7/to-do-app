@@ -15,7 +15,7 @@ import { TaskPrioritiesList } from "../data/TaskPrioritiesList.js";
  * @returns {object} Un objeto con datos y funciones relacionadas con la prioridad.
  */
 export const useTaskPriority = (task) => {
-  const { fetchTasks } = useTasks();
+  const { fetchInboxTasks } = useTasks();
   const [selectedPriority, setSelectedPriority] = useState(null);
 
   const { data: rawTaskPriority } = useTaskData(task, getTaskPriority);
@@ -37,7 +37,7 @@ export const useTaskPriority = (task) => {
   const handleSavePriority = async (taskId, priorityValue) => {
     try {
       await setTaskPriority(taskId, priorityValue);
-      fetchTasks();
+      fetchInboxTasks();
     } catch (error) {
       console.error("Error al guardar la prioridad:", error);
     }

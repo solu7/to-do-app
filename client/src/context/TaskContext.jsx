@@ -2,12 +2,14 @@ import { createContext, useState, useEffect, useContext } from "react";
 import {
   getInboxTasks,
   getAllTasks,
+  getCompletedTasks,
 } from "../features/tasks/services/tasksServices";
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const [tasksAll, setTasksAll] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const [inboxTasks, setInboxTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
 
   const fetchAllTasks = async () => {
     try {
@@ -18,18 +20,28 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  const fetchTasks = async () => {
+  const fetchInboxTasks = async () => {
     try {
       const data = await getInboxTasks();
-      setTasks(data);
+      setInboxTasks(data);
     } catch (error) {
       console.error("Error al obtener las tareas de Inbox:", error);
     }
   };
 
+  const fetchCompletedTasks = async () => {
+    try {
+      const data = await getCompletedTasks();
+      setCompletedTasks(data);
+    } catch (error) {
+      console.error("Error al obtener las tareas completadas:", error);
+    }
+  };
+
   useEffect(() => {
     fetchAllTasks();
-    fetchTasks();
+    fetchInboxTasks();
+    fetchCompletedTasks();
   }, []);
 
   /**
@@ -53,15 +65,17 @@ export const TaskProvider = ({ children }) => {
       )
     );
 
-    setTasks((prevTasks) =>
+    setInboxTasks((prevTasks) =>
       prevTasks.filter((task) => task.id !== idToUpdate || !isCompleted)
     );
   };
 
   const value = {
-    tasks, //* Lista de tareas activas (Inbox/TodayView)
+    inboxTasks, //* Lista de tareas (Inbox)
+    completedTasks, //* Lista de tareas (Completadas)
     tasksAll, //* Lista de todas las tareas (EditPanel)
-    fetchTasks, //* Recarga la lista activa
+    fetchInboxTasks, //* Recarga la la lista de inbox
+    fetchCompletedTasks,  //* Recarga la la lista de completadas
     fetchAllTasks, //* Recarga la lista completa
     getTaskById, //* Helper para el EditPanel
     updateTaskCompletion,

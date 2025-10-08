@@ -18,7 +18,7 @@ export const getInboxTasks = async (userId) => {
 
 export const getCompletedTasks = async (userId) => {
   const [tasks] = await pool.query(
-    "SELECT * FROM tasks WHERE user_id = ? AND completed = 1 ORDER BY completed_at DESC",
+    "SELECT * FROM tasks WHERE user_id = ? AND completed = 1 ORDER BY created_at DESC",
     [userId]
   );
   return tasks;

@@ -39,7 +39,12 @@ import { useTaskPriority } from "../../../../features/priorities/hooks/useTaskPr
 import { TaskPrioritiesList } from "../../../../features/priorities/data/TaskPrioritiesList";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
-  const { fetchTasks, fetchAllTasks, updateTaskCompletion } = useTasks();
+  const {
+    fetchCompletedTasks,
+    fetchInboxTasks,
+    fetchAllTasks,
+    updateTaskCompletion,
+  } = useTasks();
   const {
     panelWidth,
     titleRef,
@@ -54,6 +59,8 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     comment,
     setComment,
   } = useTaskEditPanel(task);
+
+  const isCompleted = task?.completed === 1;
 
   const allUserTags = useFetchAllData(getAllTags);
   const allUserCategories = useFetchAllData(getAllCategories);
@@ -115,6 +122,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const handleSetPriority = (selectedItem) => {
     handleSavePriority(task.id, selectedItem.value);
     fetchAllTasks();
+    isCompleted ? fetchCompletedTasks() : fetchInboxTasks();
   };
 
   const handleToggleCompletion = async () => {
@@ -126,21 +134,20 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
       await handleTaskItemAction({
         task: task,
         action: toggleTaskCompletion,
+        refetch: fetchCompletedTasks,
       });
     } catch (error) {
       console.error("Error al alternar el estado de completado:", error);
     }
   };
-
-  const { handleSaveTask, handleDeleteTask } = useTaskActions(
-    fetchTasks,
-    onClose
-  );
-
-  const isCompleted = task?.completed === 1;
   const panelClasses = `edit-panel ${isOpen ? "" : "closed"}${
     isCompleted ? "completed" : ""
   }`;
+
+  const { handleSaveTask, handleDeleteTask } = useTaskActions(
+    isCompleted ? fetchCompletedTasks : fetchInboxTasks,
+    onClose
+  );
   return (
     <div
       className={panelClasses}

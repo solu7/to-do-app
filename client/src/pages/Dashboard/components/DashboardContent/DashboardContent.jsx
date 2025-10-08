@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { useDashboardSidebar } from "../../components/Sidebar/hooks/useDashboardSidebar.js";
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import InboxView from "../../../../features/tasks/views/Inbox/InboxView.jsx";
+import CompletedView from "../../../../features/tasks/views/Completed/CompletedView.jsx";
 import EditPanel from "../EditPanel/EditPanel.jsx";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
@@ -69,6 +70,10 @@ function DashboardContent() {
         <Route
           path="/"
           element={<InboxView onTaskClick={handleTaskSelection} />}
+        />
+        <Route
+          path="/completed"
+          element={<CompletedView onTaskClick={handleTaskSelection} />}
         />
       </Routes>
       <EditPanel

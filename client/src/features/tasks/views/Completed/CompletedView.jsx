@@ -1,45 +1,36 @@
-import "./InboxView.css";
-import { useAddTaskModal } from "../../hooks/useAddTaskModal.js";
+import "./CompletedView.css";
+import completedIcon from "../../../../pages/Dashboard/assets/images/completedIcon.png";
+import { useTasks } from "../../../../context/TaskContext.jsx";
 import TaskCard from "../../TaskCard.jsx";
-import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
-import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
 import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
+import { useTaskData } from "../../services/useTaskData.js";
 import { getTagsInTask } from "../../../tags/services/tagsServices.js";
 import { getCategoriesInTask } from "../../../categories/services/categoriesServices.js";
-import { useTasks } from "../../../../context/TaskContext.jsx";
-import { useTaskData } from "../../services/useTaskData.js";
 import { getTaskPriority } from "../../../priorities/services/prioritiesServices.js";
-import inboxIcon from "../../../../pages/Dashboard/assets/images/inboxIcon.png";
 
-function Inbox({ onTaskClick }) {
-  const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
-    useAddTaskModal();
-  const { inboxTasks } = useTasks();
-  const { data: tagsInTask } = useTaskData(inboxTasks, getTagsInTask);
+function CompletedView({ onTaskClick }) {
+  const { completedTasks } = useTasks();
+  const { data: tagsInTask } = useTaskData(completedTasks, getTagsInTask);
   const { data: categoriesInTask } = useTaskData(
-    inboxTasks,
+    completedTasks,
     getCategoriesInTask
   );
-  const { data: priorityInTask } = useTaskData(inboxTasks, getTaskPriority);
+  const { data: priorityInTask } = useTaskData(completedTasks, getTaskPriority);
   return (
-    <div
-      className={
-        inboxTasks.length > 0 ? "inbox__container" : "inbox__container no-tasks"
-      }
-    >
+    <div className="completed__container">
       <section className="inbox__header">
         <h3 className="inbox__header-title">
-          Bandeja <span>de entrada</span>
+          Tareas <span>completadas</span>
         </h3>
         <img
           className="inbox__header-icon"
-          src={inboxIcon}
-          alt="Icono de bandeja de entrada"
+          src={completedIcon}
+          alt="Icono de completado"
         />
       </section>
-      <section className="inbox__tasks">
-        {inboxTasks.length > 0 ? (
-          inboxTasks.map((task) => (
+      <section className="completed__tasks">
+        {completedTasks.length > 0 ? (
+          completedTasks.map((task) => (
             <TaskCard
               key={task.id}
               title={task.title}
@@ -61,13 +52,7 @@ function Inbox({ onTaskClick }) {
           </section>
         )}
       </section>
-      <AddTaskButton onClick={openAddTaskModal} />
-
-      <AddTaskModal
-        onClose={closeAddTaskModal}
-        AddTaskModalIsOpen={addTaskModalIsOpen}
-      />
     </div>
   );
 }
-export default Inbox;
+export default CompletedView;
