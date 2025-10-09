@@ -5,7 +5,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton.jsx";
-import { TaskPrioritiesList } from "../../../priorities/data/TaskPrioritiesList.js";
+import { TaskPrioritiesList } from "../../../filters/priorities/data/TaskPrioritiesList.js";
 import categoryIcon from "../../assets/images/SectionIcon/categoryIcon.png";
 import priorityListIcon from "../../assets/images/SectionIcon/priorityIcon.png";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
@@ -17,14 +17,14 @@ import { useTasks } from "../../../../context/TaskContext.jsx";
 import {
   getAllTags,
   assignTagToTask,
-} from "../../../tags/services/tagsServices.js";
+} from "../../../filters/tags/services/tagsServices.js";
 import {
   getAllCategories,
   assignCategoryToTask,
-} from "../../../categories/services/categoriesServices.js";
+} from "../../../filters/categories/services/categoriesServices.js";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData.js";
 import { useTaskItemRelations } from "../../hooks/useTaskItemRelations.js";
-import { useTaskPriority } from "../../../priorities/hooks/useTaskPriority.js";
+import { useTaskPriority } from "../../../filters/priorities/hooks/useTaskPriority.js";
 import { useTaskDate } from "../../../date/hooks/useTaskDate.js";
 
 const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {

@@ -4,11 +4,11 @@ import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
 import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
-import { getTagsInTask } from "../../../tags/services/tagsServices.js";
-import { getCategoriesInTask } from "../../../categories/services/categoriesServices.js";
+import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
+import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
 import { useTaskData } from "../../services/useTaskData.js";
-import { getTaskPriority } from "../../../priorities/services/prioritiesServices.js";
+import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices.js";
 import inboxIcon from "../../../../pages/Dashboard/assets/images/inboxIcon.png";
 
 function Inbox({ onTaskClick }) {

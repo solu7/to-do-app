@@ -4,9 +4,9 @@ import { useTasks } from "../../../../context/TaskContext.jsx";
 import TaskCard from "../../TaskCard.jsx";
 import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
 import { useTaskData } from "../../services/useTaskData.js";
-import { getTagsInTask } from "../../../tags/services/tagsServices.js";
-import { getCategoriesInTask } from "../../../categories/services/categoriesServices.js";
-import { getTaskPriority } from "../../../priorities/services/prioritiesServices.js";
+import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
+import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
+import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices.js";
 
 function CompletedView({ onTaskClick }) {
   const { completedTasks } = useTasks();
@@ -18,12 +18,12 @@ function CompletedView({ onTaskClick }) {
   const { data: priorityInTask } = useTaskData(completedTasks, getTaskPriority);
   return (
     <div className="completed__container">
-      <section className="inbox__header">
-        <h3 className="inbox__header-title">
+      <section className="completed__header">
+        <h3 className="completed__header-title">
           Tareas <span>completadas</span>
         </h3>
         <img
-          className="inbox__header-icon"
+          className="completed__header-icon"
           src={completedIcon}
           alt="Icono de completado"
         />

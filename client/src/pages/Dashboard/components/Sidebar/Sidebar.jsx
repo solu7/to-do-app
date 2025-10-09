@@ -1,7 +1,6 @@
 import "./Sidebar.css";
 import { useAddTaskModal } from "../../../../features/tasks/hooks/useAddTaskModal.js";
-import { AnimatePresence, motion } from "framer-motion";
-import openIcon from "../../assets/images/openIcon.png";
+import { motion } from "framer-motion";
 import userIcon from "../../assets/images/userIcon.png";
 import configIcon from "../../assets/images/configIcon.png";
 import closepanelIcon from "../../assets/images/closepanelIcon.png";
@@ -34,10 +33,10 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
     >
       {isOpen && (
         <motion.div
-        className="sidebar-content-wrapper"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { duration: 0.3 } }}
-        exit={{ opacity: 0 }}
+          className="sidebar-content-wrapper"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 0.3 } }}
+          exit={{ opacity: 0 }}
         >
           <section className="sidebar-header">
             <div className="sidebar-user">

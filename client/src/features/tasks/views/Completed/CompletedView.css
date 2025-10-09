@@ -4,3 +4,22 @@
   gap: 60px;
   padding: 80px 0px;
 }
+.completed__header {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+.completed__header-icon {
+  height: 20px;
+  object-fit: contain;
+}
+.completed__header-title {
+  font-family: "principal-font";
+  font-size: 23px;
+  color: var(--dark-grey);
+}
+.completed__header-title span {
+  color: var(--primary-color);
+}

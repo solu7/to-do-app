@@ -5,6 +5,7 @@ import { useDashboardSidebar } from "../../components/Sidebar/hooks/useDashboard
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import InboxView from "../../../../features/tasks/views/Inbox/InboxView.jsx";
 import CompletedView from "../../../../features/tasks/views/Completed/CompletedView.jsx";
+import FiltersView from "../../../../features/tasks/views/Filters/FiltersView.jsx";
 import EditPanel from "../EditPanel/EditPanel.jsx";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
@@ -75,6 +76,7 @@ function DashboardContent() {
           path="/completed"
           element={<CompletedView onTaskClick={handleTaskSelection} />}
         />
+        <Route path="/filters" element={<FiltersView />} />
       </Routes>
       <EditPanel
         isOpen={taskEditPanelIsOpen}

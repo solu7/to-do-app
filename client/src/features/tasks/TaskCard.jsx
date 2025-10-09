@@ -1,7 +1,7 @@
 import "./TaskCard.css";
 import tagIcon from "./assets/images/SectionIcon/tagIcon.png";
 import categoryIcon from "./assets/images/SectionIcon/categoryIcon.png";
-import { TaskPrioritiesList } from "../priorities/data/TaskPrioritiesList";
+import { TaskPrioritiesList } from "../filters/priorities/data/TaskPrioritiesList";
 
 function TaskCard({
   title,

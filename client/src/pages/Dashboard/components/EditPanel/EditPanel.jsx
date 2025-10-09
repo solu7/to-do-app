@@ -19,13 +19,13 @@ import {
   getTagsInTask,
   assignTagToTask,
   removeTagFromTask,
-} from "../../../../features/tags/services/tagsServices";
+} from "../../../../features/filters/tags/services/tagsServices";
 import {
   getAllCategories,
   getCategoriesInTask,
   assignCategoryToTask,
   removeCategoryFromTask,
-} from "../../../../features/categories/services/categoriesServices";
+} from "../../../../features/filters/categories/services/categoriesServices";
 import { toggleTaskCompletion } from "../../../../features/tasks/services/tasksServices";
 import { useTasks } from "../../../../context/TaskContext";
 import { useTaskDate } from "../../../../features/date/hooks/useTaskDate";
@@ -35,8 +35,8 @@ import useFetchAllData from "../../../../core/hooks/useFetchAllData";
 import { useTaskItemAction } from "../../../../features/tasks/hooks/useTaskItemAction";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
 import { useTaskActions } from "../../../../features/tasks/hooks/useTaskActions";
-import { useTaskPriority } from "../../../../features/priorities/hooks/useTaskPriority";
-import { TaskPrioritiesList } from "../../../../features/priorities/data/TaskPrioritiesList";
+import { useTaskPriority } from "../../../../features/filters/priorities/hooks/useTaskPriority";
+import { TaskPrioritiesList } from "../../../../features/filters/priorities/data/TaskPrioritiesList";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const {

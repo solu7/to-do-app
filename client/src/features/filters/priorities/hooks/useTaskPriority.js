@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useTasks } from "../../../context/TaskContext.jsx";
-import { useTaskData } from "../../tasks/services/useTaskData.js";
+import { useTasks } from "../../../../context/TaskContext.jsx";
+import { useTaskData } from "../../../tasks/services/useTaskData.js";
 import {
   getTaskPriority,
   setTaskPriority,
