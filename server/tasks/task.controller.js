@@ -8,6 +8,7 @@ import {
   deleteTask as _deleteTask,
   getTaskCompletionStatus as _getTaskCompletionStatus,
   toggleTaskCompletion as _toggleTaskCompletion,
+  getFilteredTasks as _getFilteredTasks,
 } from "./task.model.js";
 
 export const getAllTasks = async (req, res) => {
@@ -40,6 +41,34 @@ export const getCompletedTasks = async (req, res) => {
   } catch (error) {
     console.error("Error al obtener tareas completadas:", error);
     res.status(500).json({ message: "Error al obtener tareas completadas" });
+  }
+};
+
+export const getFilteredTasks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const filters = {
+      priority: req.query.priority
+        ? parseInt(req.query.priority, 10)
+        : undefined,
+      tagId: req.query.tagId ? parseInt(req.query.tagId, 10) : undefined,
+      categoryId: req.query.categoryId
+        ? parseInt(req.query.categoryId, 10)
+        : undefined,
+      isCompleted:
+        req.query.completed === "true"
+          ? true
+          : req.query.completed === "false"
+          ? false
+          : undefined,
+    };
+
+    const tasks = await _getFilteredTasks(userId, filters);
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Error del servidor" });
   }
 };
 

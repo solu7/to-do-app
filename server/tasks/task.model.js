@@ -24,6 +24,60 @@ export const getCompletedTasks = async (userId) => {
   return tasks;
 };
 
+export const getFilteredTasks = async (userId, filters = {}) => {
+  let query = `
+        SELECT 
+            t.*, 
+            GROUP_CONCAT(DISTINCT tc.category_id) AS category_ids,
+            GROUP_CONCAT(DISTINCT tt.tag_id) AS tag_ids
+        FROM tasks t
+        LEFT JOIN task_categories tc ON t.id = tc.task_id
+        LEFT JOIN task_tags tt ON t.id = tt.task_id
+        WHERE t.user_id = ?
+    `;
+  const params = [userId];
+  let havingConditions = [];
+
+  if (filters.priority !== undefined) {
+    query += " AND t.priority = ?";
+    params.push(filters.priority);
+  }
+
+  if (filters.isCompleted !== undefined) {
+    const completedValue = filters.isCompleted ? 1 : 0;
+    query += " AND t.completed = ?";
+    params.push(completedValue);
+  }
+
+  if (filters.categoryId !== undefined) {
+    havingConditions.push(
+      `FIND_IN_SET(?, GROUP_CONCAT(DISTINCT tc.category_id))`
+    );
+    params.push(filters.categoryId);
+  }
+
+  if (filters.tagId !== undefined) {
+    havingConditions.push(`FIND_IN_SET(?, GROUP_CONCAT(DISTINCT tt.tag_id))`);
+    params.push(filters.tagId);
+  }
+
+  query += " GROUP BY t.id";
+
+  if (havingConditions.length > 0) {
+    query += " HAVING " + havingConditions.join(" AND ");
+  }
+
+  query += " ORDER BY t.created_at DESC";
+
+  try {
+    const [tasks] = await pool.query(query, params);
+    return tasks;
+  } catch (error) {
+    console.error("Error al obtener tareas filtradas:", error);
+    throw error;
+  }
+};
+
 export const createTask = async (userId, title, description) => {
   const [result] = await pool.query(
     `INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)`,

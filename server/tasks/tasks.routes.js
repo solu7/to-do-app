@@ -10,13 +10,16 @@ import {
   deleteTask,
   getTaskCompletionStatus,
   toggleTaskCompletionStatus,
+  getFilteredTasks,
 } from "./task.controller.js";
 
 router.get("/", verifyToken, getInboxTasks);
 
 router.get("/all", verifyToken, getAllTasks);
 
-router.get("/completed", verifyToken, getCompletedTasks); 
+router.get("/filtered", verifyToken, getFilteredTasks);
+
+router.get("/completed", verifyToken, getCompletedTasks);
 
 router.get("/:id/status", verifyToken, getTaskCompletionStatus);
 
