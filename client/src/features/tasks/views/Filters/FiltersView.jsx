@@ -12,8 +12,8 @@ import { useNavigation } from "../../../../core/hooks/useNavigation";
 function FiltersView() {
   const { goToFilteredTasks } = useNavigation();
   const { tags, categories, isLoading, error } = useFiltersData();
-  const handleFilterClick = (filterKey, filterValue) => {
-    goToFilteredTasks(filterKey, filterValue);
+  const handleFilterClick = (filterKey, filterValue, filterName) => {
+    goToFilteredTasks(filterKey, filterValue, filterName);
   };
   const prioritiesToShow = TaskPrioritiesList.slice(1);
   if (isLoading) {
@@ -55,7 +55,9 @@ function FiltersView() {
                 key={priority.value}
                 filterName={priority.name}
                 filterIcon={priority.icon}
-                onFilterClick={() => handleFilterClick("priority", priority.value)}
+                onFilterClick={() =>
+                  handleFilterClick("priority", priority.value, priority.name)
+                }
               />
             ))}
           </section>
@@ -72,7 +74,9 @@ function FiltersView() {
                 key={category.id}
                 filterName={category.name}
                 filterIcon={categoryItemIcon}
-                onFilterClick={() => handleFilterClick("categoryId", category.id)}
+                onFilterClick={() =>
+                  handleFilterClick("categoryId", category.id, category.name)
+                }
               />
             ))}
           </section>
@@ -89,7 +93,7 @@ function FiltersView() {
                 key={tag.id}
                 filterName={tag.name}
                 filterIcon={tagItemIcon}
-                onFilterClick={() => handleFilterClick("tagId", tag.id)}
+                onFilterClick={() => handleFilterClick("tagId", tag.id, tag.name)}
               />
             ))}
           </section>

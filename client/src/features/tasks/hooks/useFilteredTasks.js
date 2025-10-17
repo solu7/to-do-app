@@ -8,12 +8,11 @@ export const useFilteredTasks = () => {
 
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState([]);
 
   useEffect(() => {
     const fetchTasks = async () => {
       setIsLoading(true);
-      setError(null);
       try {
         const data = await getFilteredTasks(filters);
         setTasks(data);

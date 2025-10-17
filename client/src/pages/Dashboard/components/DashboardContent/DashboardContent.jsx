@@ -75,10 +75,13 @@ function DashboardContent() {
         />
         <Route
           path="/completed"
-          element={<CompletedView onTaskClick= {handleTaskSelection} />}
+          element={<CompletedView onTaskClick={handleTaskSelection} />}
         />
         <Route path="/filters" element={<FiltersView />} />
-        <Route path="/filtered-tasks" element={<FilteredTasksView />} />
+        <Route
+          path="/filtered-tasks"
+          element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
+        />
       </Routes>
       <EditPanel
         isOpen={taskEditPanelIsOpen}
