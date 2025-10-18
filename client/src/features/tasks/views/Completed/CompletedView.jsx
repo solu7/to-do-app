@@ -43,12 +43,7 @@ function CompletedView({ onTaskClick }) {
           ))
         ) : (
           <section className="no-tasks__message">
-            <h2>No tenes nada para hoy</h2>
-            <img
-              className="no-tasks__icon"
-              src={cleanIcon}
-              alt="Icono de limpio"
-            />
+            <h2>No has completado ninguna tarea :(</h2>
           </section>
         )}
       </section>

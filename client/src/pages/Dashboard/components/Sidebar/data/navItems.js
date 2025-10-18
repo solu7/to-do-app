@@ -14,21 +14,31 @@ export const navItems = [
   {
     icon: inboxIcon,
     name: "Bandeja de entrada",
+    action: "inbox",
+    path: "/dashboard",
   },
   {
     icon: todayIcon,
     name: "Para hoy",
+    action: "today",
+    path: "/dashboard/today",
   },
   {
     icon: upcomingIcon,
     name: "¿Que sigue?",
+    action: "upcoming",
+    path: "/dashboard/upcoming",
   },
   {
     icon: labelsIcon,
     name: "Categorias y filtros",
+    action: "filters",
+    path: "/dashboard/filters",
   },
   {
     icon: completedIcon,
     name: "Completados",
+    action: "completed",
+    path: "/dashboard/completed",
   },
 ];

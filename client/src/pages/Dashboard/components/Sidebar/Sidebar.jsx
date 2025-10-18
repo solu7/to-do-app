@@ -7,7 +7,6 @@ import closepanelIcon from "../../assets/images/closepanelIcon.png";
 import projectsIcon from "../../assets/images/projectsIcon.png";
 import helpIcon from "../../assets/images/helpIcon.png";
 import AddTaskModal from "../../../../features/tasks/components/AddTaskModal/AddTaskModal.jsx";
-
 import NavItem from "./components/NavItem.jsx";
 import { navItems } from "./data/navItems.js";
 
