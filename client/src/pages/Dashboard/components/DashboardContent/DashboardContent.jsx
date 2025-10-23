@@ -47,8 +47,6 @@ function DashboardContent() {
       if (response.ok) {
         const data = await response.json();
         setUsername(data.username);
-      } else {
-        setUsername("Invitado");
       }
     } catch (error) {
       console.error("Error de conexión:", error);

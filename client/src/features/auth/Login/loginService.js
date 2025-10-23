@@ -23,3 +23,20 @@ export async function loginUser({ email, password }) {
     throw error;
   }
 }
+
+export async function loginAsGuest() {
+  const GUEST_EMAIL = "guest@taskapp.com";
+  const GUEST_PASSWORD = "Admin123!";
+
+  try {
+    const data = await loginUser({
+      email: GUEST_EMAIL,
+      password: GUEST_PASSWORD,
+    });
+    return data;
+  } catch (error) {
+    throw new Error(
+      "No se pudo iniciar sesión como invitado. Verifique el usuario de prueba en el backend."
+    );
+  }
+}
