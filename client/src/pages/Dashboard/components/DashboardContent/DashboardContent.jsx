@@ -66,6 +66,7 @@ function DashboardContent() {
         username={username}
         openDashboardSidebar={openDashboardSidebar}
       />
+      <div className="dashboard__view">
       <Routes>
         <Route
           path="/"
@@ -81,6 +82,7 @@ function DashboardContent() {
           element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
         />
       </Routes>
+      </div>
       <EditPanel
         isOpen={taskEditPanelIsOpen}
         onClose={closeTaskEditPanel}

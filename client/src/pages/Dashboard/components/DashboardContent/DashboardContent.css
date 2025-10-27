@@ -2,6 +2,15 @@
   display: flex;
   justify-content: space-between;
   height: 100vh;
-  overflow: auto;
-  gap: 30px;
+  overflow: hidden;
+  gap: 75px;
+}
+.dashboard__view {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  gap: 60px;
+  padding: 80px 75px;
+  scrollbar-color: var(--secondary-color) var(--light-blue);
 }

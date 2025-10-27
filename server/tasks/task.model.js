@@ -10,7 +10,7 @@ export const getAllTasks = async (userId) => {
 
 export const getInboxTasks = async (userId) => {
   const [tasks] = await pool.query(
-    "SELECT * FROM tasks WHERE user_id = ? AND completed = 0 ORDER BY created_at ASC LIMIT 10",
+    "SELECT * FROM tasks WHERE user_id = ? AND completed = 0 ORDER BY created_at DESC LIMIT 10",
     [userId]
   );
   return tasks;

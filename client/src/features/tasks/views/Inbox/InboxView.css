@@ -1,8 +1,7 @@
 .inbox__container {
   display: flex;
   flex-direction: column;
-  gap: 60px;
-  padding: 80px 0px;
+  gap: 50px;
 }
 .inbox__header {
   display: flex;
