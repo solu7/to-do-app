@@ -3,34 +3,36 @@
 @import "./styles/utility.css";
 
 :root {
-  --primary-color: rgb(50, 125, 238);
+  --primary-color: #327dee;
   --secondary-color: rgba(50, 125, 238, 0.144);
   --dark-color: #14348f;
   --black: rgb(51, 51, 51);
-  --ultra-light-blue: rgb(249 250 251);
+  --light-blue: #e3eeff;
+  --ultra-light-blue: #ebf3ff;
   /* Greys */
   --dark-grey: rgb(77, 77, 77);
   --grey: rgb(107, 107, 107);
-  --light-grey: rgb(151, 151, 151);
-  --opacity-grey: rgb(241 241 241);
+  --light-grey: #9e9d9d;
+  --ultra-light-grey: rgb(201, 201, 201);
+  --opacity-grey: rgb(149 149 149 / 8%);
 }
 
 @font-face {
   font-family: "principal-font";
-  src: url(./assets/fonts/Gontserrat-Regular.ttf) format("truetype");
+  src: url(./core/assets/fonts/Gontserrat-Regular.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "principal-font-light";
-  src: url(./assets/fonts/Gontserrat-Light.ttf) format("truetype");
+  src: url(./core/assets/fonts/Gontserrat-Light.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "principal-font-bold";
-  src: url(./assets/fonts/Gontserrat-Medium.ttf) format("truetype");
+  src: url(./core/assets/fonts/Gontserrat-Medium.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "principal-font-extra-bold";
-  src: url(./assets/fonts/Gontserrat-SemiBold.ttf) format("truetype");
+  src: url(./core/assets/fonts/Gontserrat-SemiBold.ttf) format("truetype");
 }

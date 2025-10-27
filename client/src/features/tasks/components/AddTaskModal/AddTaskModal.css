@@ -1,0 +1,242 @@
+.task-modal {
+  background-color: var(--light-blue);
+  border: solid 2px var(--primary-color);
+  display: flex;
+  gap: 25px;
+  width: 550px;
+  flex-direction: column;
+  padding: 35px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 9px rgb(109 109 109 / 16%);
+  margin-left: auto;
+  margin-right: auto;
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @media (width < 650px) {
+    width: 95%;
+  }
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.task-modal__header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.task-modal__header-date {
+  font-family: "principal-font-bold";
+  color: var(--primary-color);
+  font-size: 13px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.task-modal__header-date img {
+  height: 18px;
+  object-fit: contain;
+}
+.task-modal__header-main {
+  display: flex;
+  flex-direction: row;
+}
+.task-modal__header-secondary {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+}
+.task-modal-input {
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  background: none;
+  padding: 1px;
+  resize: none;
+}
+.task-modal-input.title {
+  font-size: clamp(1.1rem, 2.3vw, 1.25rem);
+  font-family: "principal-font-bold";
+  color: var(--primary-color);
+}
+.task-modal-input.title::placeholder {
+  color: var(--light-grey);
+}
+.task-modal-input.title:focus {
+  outline: none;
+  color: var(--primary-color);
+}
+.task-modal-priority-icon {
+  width: 24px;
+  object-fit: contain;
+}
+.task-modal-input.desc {
+  font-size: clamp(15px, 1vw, 15px);
+  font-family: "principal-font";
+  color: var(--light-grey);
+}
+.task-modal-input.desc::placeholder {
+  color: var(--ultra-light-grey);
+}
+.task-modal-input.desc:focus {
+  outline: none;
+  color: var(--light-grey);
+}
+.task-modal-filters {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  @media (width < 650px) {
+    flex-wrap: wrap;
+    gap: min(15px, 10vw);
+    @media (width < 500px) {
+      justify-content: flex-start;
+    }
+  }
+}
+.task-modal-filters-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-family: "principal-font-bold";
+  font-size: 13px;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  padding: 6px 10px;
+  border-radius: 5px;
+  align-items: center;
+}
+.task-modal-filters-item__close-icon {
+  cursor: pointer;
+}
+.task-modal-filters-item img {
+  width: 15px;
+  object-fit: contain;
+}
+.no-filters__message {
+  font-family: "principal-font";
+  color: var(--light-grey);
+  font-size: 12px;
+}
+.task-modal__select-filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.modal-filter-button {
+  padding: 5px 12px 5px 12px;
+  font-family: "principal-font-bold";
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  background: none;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+.modal-filter-button:hover {
+  border: none;
+  background-color: var(--primary-color);
+  color: white;
+}
+.modal-filter-button.date {
+  width: 60px;
+}
+.modal-filter-button.date::placeholder {
+  color: var(--primary-color);
+}
+.modal-filter-button.date:focus {
+  outline: none;
+}
+.task-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.task-modal-add-btn,
+.task-modal-second-btn {
+  padding: 10px;
+  font-family: "principal-font";
+  font-size: 11px;
+  color: white;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 10px;
+  transition: all 0.3s ease-in;
+  cursor: pointer;
+}
+.task-modal-second-btn {
+  background-color: white;
+  color: var(--primary-color);
+  font-family: "principal-font-bold";
+}
+.task-modal-add-btn:hover,
+.task-modal-second-btn:hover {
+  transform: scale(1.05);
+  font-family: "principal-font-bold";
+  background: none;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.react-datepicker {
+  font-family: "principal-font";
+  font-size: 0.72rem;
+  border: 2px solid var(--opacity-grey);
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 9px rgb(109 109 109 / 16%);
+}
+.react-datepicker__header {
+  background-color: var(--primary-color);
+  padding: 15px 15px;
+}
+h2.react-datepicker__current-month {
+  color: white;
+  text-transform: uppercase;
+}
+.react-datepicker__day-name {
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.react-datepicker__day {
+  color: var(--primary-color);
+  font-family: "principal-font-bold";
+}
+.react-datepicker__day--selected {
+  background-color: var(--primary-color);
+  color: white;
+  outline: none;
+}
+.react-datepicker__navigation-icon::before {
+  border-color: white;
+}
+.react-datepicker__triangle {
+  opacity: 0;
+}
+
+.react-datepicker__day--outside-month {
+  color: var(--ultra-light-grey);
+  font-size: 0.55rem;
+}
+.task-modal-filter {
+  position: relative;
+}

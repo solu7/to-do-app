@@ -1,7 +1,9 @@
 import {
   createCategory as _createCategory,
-  assignCategoriesToTask as _assignCategoriesToTask,
+  assignCategoryToTask as _assignCategoryToTask,
   removeCategoryFromTask as _removeCategoryFromTask,
+  getAllCategories as _getAllCategories,
+  getCategoriesInTask as _getCategoriesInTask,
 } from "./category.model.js";
 
 export const createCategory = async (req, res) => {
@@ -16,38 +18,53 @@ export const createCategory = async (req, res) => {
     const category = await _createCategory(userId, name.trim());
     res.status(201).json(category);
   } catch (error) {
-    console.error("Error creating category:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error al crear la categoría:", error);
+    res.status(500).json({ message: "Error del servidor" });
   }
 };
 
-export const assignCategoriesToTask = async (req, res) => {
+export const getCategoriesInTask = async (req, res) => {
+  const userId = req.user.id;
+  const taskId = req.params.taskId;
+
+  try {
+    const categoriesInTask = await _getCategoriesInTask(userId, taskId);
+    res.status(200).json(categoriesInTask);
+  } catch (error) {
+    console.error("Error al obtener las categorias:", error);
+    res.status(500).json({ message: "Error del servidor" });
+  }
+};
+
+export const assignCategoryToTask = async (req, res) => {
   const userId = req.user.id;
   const { taskId } = req.params;
-  const { categoryIds } = req.body;
+  const { categoryId } = req.body;
 
-  if (!Array.isArray(categoryIds) || categoryIds.length === 0) {
+  if (!categoryId) {
     return res
       .status(400)
-      .json({ message: "The categoryID must be an array." });
+      .json({ message: "El ID de la categoría es obligatorio" });
   }
 
   try {
-    await _assignCategoriesToTask(userId, taskId, categoryIds);
+    await _assignCategoryToTask(userId, taskId, categoryId);
     res
       .status(200)
-      .json({ message: "Categories correctly assigned to the task" });
+      .json({ message: "Categoría asignada correctamente a la tarea" });
   } catch (error) {
-    console.error("Error assigning categories to task:", error);
+    console.error("Error al asignar categoría a la tarea:", error);
     res.status(400).json({ message: error.message });
   }
 };
 
 export const removeCategoryFromTask = async (req, res) => {
   const userId = req.user.id;
-  const { taskId, categoryId } = req.params;
+  const { taskId } = req.params;
+  const { categoryId } = req.body;
 
   try {
+    const result = await _removeCategoryFromTask(userId, taskId, categoryId);
     const result = await _removeCategoryFromTask(userId, taskId, categoryId);
     if (result.notFound) {
       return res.status(404).json({ message: "Task not found" });
@@ -56,5 +73,16 @@ export const removeCategoryFromTask = async (req, res) => {
   } catch (error) {
     console.error("Error removing category from task:", error);
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+export const getAllCategories = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const categories = await _getAllCategories(userId);
+    res.status(200).json(categories);
+  } catch (error) {
+    console.error("Error al obtener categorias del usuario:", error);
+    res.status(500).json({ message: "Error del servidor" });
   }
 };

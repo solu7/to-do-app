@@ -1,0 +1,23 @@
+.dropdown-button__wrapper {
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 7px 10px;
+  position: relative;
+  cursor: pointer;
+}
+.dropdown-button__icon {
+  width: 18px;
+  object-fit: contain;
+}
+.dropdown-button__button {
+  font-family: "principal-font-bold";
+  font-size: 10px;
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+}

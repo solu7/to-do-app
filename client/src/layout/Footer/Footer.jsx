@@ -1,5 +1,5 @@
 import "./Footer.css";
-import userIcon from "../../assets/images/logo.png"
+import userIcon from "../../core/assets/icons/logo.png"
 
 function Footer() {
   return (

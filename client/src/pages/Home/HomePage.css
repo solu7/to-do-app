@@ -2,48 +2,65 @@
   display: flex;
   flex-direction: column;
 }
-.home-page-header {
+.home-page__header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  padding: 0px 190px 0px 190px;
+  padding: 20px 190px 0px;
 }
-.home-page-header-text {
-  width: 500px;
+.home-page__header-text {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
-.home-page-header-text h1 {
+.home-page__header-text h1 {
   font-family: "principal-font-bold", sans-serif;
-  font-size: 55px;
+  font-size: clamp(3.625rem, 1.119vw + 2.908rem, 4.25rem);
   color: var(--dark-grey);
 }
-.home-page-header-text span {
-  	background: linear-gradient(90deg, var(--primary-color), rgb(128, 201, 250), var(--primary-color)) -100%/ 200%;
-	-webkit-background-clip: text;
-	        background-clip: text;
-	color: transparent;
-	animation: shimmer 2s linear infinite
+.home-page__header-text span {
+  background: linear-gradient(
+      90deg,
+      var(--primary-color),
+      rgb(128, 201, 250),
+      var(--primary-color)
+    ) -100%/ 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 2s linear infinite;
 }
-@keyframes shimmer { to { background-position: 100% } }
+@keyframes shimmer {
+  to {
+    background-position: 100%;
+  }
+}
 
-.home-page-description {
+.home-page__description {
   font-family: "principal-font", sans-serif;
   font-size: 19px;
   line-height: 40px;
   color: var(---dark-grey);
 }
-.home-page-image {
-  height: 500px;
+.home-page__image {
+  width: min(800px, 106%);
 }
 .btn.goGitHubProject {
-  transform: scale(1.15);
   border-radius: 8px;
   width: 150px;
 }
 .btn.goGitHubProject:hover {
   transition: all 0.3s ease-in-out;
   transform: scale(1.05);
+}
+@media (width < 1500px) {
+  .home-page__header {
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px 50px 0px;
+  }
+  .home-page__description {
+    line-height: 30px;
+    font-size: 15px;
+  }
 }

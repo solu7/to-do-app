@@ -23,45 +23,36 @@ export const createCategory = async (userId, name) => {
   }
 };
 
-export const assignCategoriesToTask = async (userId, taskId, categoryIds) => {
-  const [task] = await pool.query(
-    "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
+export const getCategoriesInTask = async (userId, taskId) => {
+  const [categories] = await pool.query(
+    "SELECT c.* FROM categories c JOIN task_categories tc ON c.id = tc.category_id WHERE tc.task_id = ? AND c.user_id = ?",
     [taskId, userId]
   );
-  if (task.length === 0) {
-    throw new Error("Tarea no encontrada o no autorizada");
-  }
+  return categories;
+};
 
-  if (!Array.isArray(categoryIds) || categoryIds.length === 0) {
-    throw new Error("No se proporcionaron categorías");
-  }
-
-  const [categories] = await pool.query(
-    `SELECT id FROM categories WHERE id IN (${categoryIds
-      .map(() => "?")
-      .join(",")}) AND user_id = ?`,
-    [...categoryIds, userId]
+export const assignCategoryToTask = async (userId, taskId, categoryId) => {
+  const [validationResult] = await pool.query(
+    `
+      SELECT
+        (SELECT 1 FROM tasks WHERE id = ? AND user_id = ?) AS taskExists,
+        (SELECT 1 FROM categories WHERE id = ? AND user_id = ?) AS categoryExists
+    `,
+    [taskId, userId, categoryId, userId]
   );
-  const validCategoryIds = categories.map((cat) => cat.id);
+  const { taskExists, categoryExists } = validationResult[0];
 
-  const unauthorized = categoryIds.filter(
-    (id) => !validCategoryIds.includes(id)
+  if (!taskExists) {
+    throw new Error("Tarea no encontrada o no autorizada.");
+  }
+  if (!categoryExists) {
+    throw new Error("Categoría no encontrada o no autorizada.");
+  }
+  await pool.query(
+    `INSERT IGNORE INTO task_categories (task_id, category_id)
+      VALUES (?, ?)`,
+    [taskId, categoryId]
   );
-  if (unauthorized.length > 0) {
-    throw new Error(
-      `Categoría(s) no autorizada(s): ${unauthorized.join(", ")}`
-    );
-  }
-
-  const values = validCategoryIds.map((categoryId) => [taskId, categoryId]);
-  if (values.length > 0) {
-    await pool.query(
-      `INSERT IGNORE INTO task_categories (task_id, category_id) VALUES ${values
-        .map(() => "(?, ?)")
-        .join(", ")}`,
-      values.flat()
-    );
-  }
 };
 
 export const removeCategoryFromTask = async (userId, taskId, categoryId) => {
@@ -81,4 +72,10 @@ export const removeCategoryFromTask = async (userId, taskId, categoryId) => {
   return { notFound: false };
 };
 
-
+export const getAllCategories = async (userId) => {
+  const [categories] = await pool.query(
+    "SELECT * FROM categories WHERE user_id = ?",
+    [userId]
+  );
+  return categories;
+};

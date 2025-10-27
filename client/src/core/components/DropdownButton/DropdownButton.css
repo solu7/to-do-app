@@ -1,0 +1,50 @@
+.dropdown-button {
+  position: relative;
+  display: inline-block;
+  transition: 0.3s ease-in-out;
+}
+.dropdown-button:hover {
+  transform: scale(1.05);
+}
+.dropdown-button__menu {
+  position: absolute;
+  top: 155%;
+  left: 50%;
+  transform: translateX(-50%);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: white;
+  padding: 15px;
+  font-size: 14px;
+  font-family: "principal-font-bold";
+  border: 2px solid var(--opacity-grey);
+  border-radius: 10px;
+  color: var(--grey);
+  box-shadow: 3px 3px 9px rgb(109 109 109 / 16%);
+  width: max-content;
+}
+.dropdown-button__menu.menu-left {
+    left: -150%;
+}
+.dropdown-menu__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+.dropdown-menu__item:hover {
+  color: var(--light-grey);
+}
+.dropdown-menu__icon {
+  width: 15px;
+}
+.react-datepicker-wrapper {
+  transition: 0.3s ease-in-out;
+}
+.react-datepicker-wrapper:hover {
+  transform: scale(1.05);
+}

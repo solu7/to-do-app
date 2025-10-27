@@ -22,26 +22,41 @@ export const createTag = async (userId, name) => {
   }
 };
 
-export const assignTagToTask = async (userId, taskId, tagId) => {
-  const [task] = await pool.query(
-    "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
+export const getTagsByUserId = async (userId) => {
+  const [tags] = await pool.query("SELECT * FROM tags WHERE user_id = ?", [
+    userId,
+  ]);
+  return tags;
+};
+
+export const getTagsInTask = async (userId, taskId) => {
+  const [tags] = await pool.query(
+    "SELECT t.* FROM tags t JOIN task_tags tt ON t.id = tt.tag_id WHERE tt.task_id = ? AND t.user_id = ?",
     [taskId, userId]
   );
-  if (task.length === 0) {
-    throw new Error("Task not found or not authorized");
-  }
+  return tags;
+};
 
-  const [tag] = await pool.query(
-    "SELECT * FROM tags WHERE id = ? AND user_id = ?",
-    [tagId, userId]
+export const assignTagToTask = async (userId, taskId, tagId) => {
+  const [validationResult] = await pool.query(
+    `
+      SELECT
+        (SELECT 1 FROM tasks WHERE id = ? AND user_id = ?) AS taskExists,
+        (SELECT 1 FROM tags WHERE id = ? AND user_id = ?) AS tagExists
+    `,
+    [taskId, userId, tagId, userId]
   );
-  if (tag.length === 0) {
-    throw new Error("Tag not found or not authorized");
-  }
+  const { taskExists, tagExists } = validationResult[0];
 
+  if (!taskExists) {
+    throw new Error("Tarea no encontrada o no autorizada.");
+  }
+  if (!tagExists) {
+    throw new Error("Tag no encontrado o no autorizado.");
+  }
   await pool.query(
     `INSERT IGNORE INTO task_tags (task_id, tag_id)
-     VALUES (?, ?)`,
+      VALUES (?, ?)`,
     [taskId, tagId]
   );
 };

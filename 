@@ -1,0 +1,107 @@
+[33mcommit c53a815afc839afca06d01f34b684d84b928958c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdashboard[m[33m)[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Sat Aug 2 22:49:53 2025 -0300
+
+    Se recupera en dashboard el Username del usuario logeado, y cambio en estilos del add task modal
+
+[33mcommit f867bd612f9b0d97b599a9f68be439f159846126[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Sat Aug 2 00:05:51 2025 -0300
+
+    El login redirije al dashboard y el dashboard ya mantiene la sesion del usuario y recupera su Username
+
+[33mcommit b55358747e53a99081af28a6c11c8eccdbb72d10[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Fri Aug 1 18:00:30 2025 -0300
+
+    Mejora de estructura de carpeta y se agrego animacion de aparicion del AddTaskModal
+
+[33mcommit 29ad20c356a8d1d7c18aa2310c99512bd4d3b74c[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Thu Jul 31 19:58:32 2025 -0300
+
+    Fix de estilos en Add Task Modal y add task button, y se hizo de add task button un componente reutilizable
+
+[33mcommit c98236a6e532899476e85928854c6c8726552496[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Thu Jul 31 15:07:17 2025 -0300
+
+    Modal reutilizable para agregar tarea terminado
+
+[33mcommit c6a0897d737b6c84fa89a3c7e591b9201f797681[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Wed Jul 30 14:27:03 2025 -0300
+
+    Componente reutilizable dropdown, WIP
+
+[33mcommit 80a998ad390cbd7ec99980a65926b1bfe18014bc[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Tue Jul 29 12:16:20 2025 -0300
+
+    Fix de create task
+
+[33mcommit a908915c8716f3ed76bfb4070dd837f502b2094b[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Tue Jul 29 00:26:26 2025 -0300
+
+    Se agrego endpoint para obtener todas las categorias de un usuario
+
+[33mcommit 88c817dcc210af0b748a8f70d50ad81308539553[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Mon Jul 28 17:42:44 2025 -0300
+
+    Cambio de nombre a una carpeta y creacion del fichero CategoryPicker
+
+[33mcommit b1a740627f68c8ffca97aefcbf58d5dff0c10471[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Mon Jul 28 17:02:26 2025 -0300
+
+    me olvide el git ignore... :D
+
+[33mcommit d100d66f4ce462f59337789839199ec23b6efab5[m[33m ([m[1;31morigin/dashboard[m[33m)[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Mon Jul 28 16:37:39 2025 -0300
+
+    Dejar de seguir node_modules y package-lock.json
+
+[33mcommit be821ce0c85b06d49b7586ece3c4fb554cc63453[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Mon Jul 28 13:09:54 2025 -0300
+
+    Estilos principales del TaskModal terminados
+
+[33mcommit 2ac2969806d510b2e6e7866d154b3ccfb87c1a88[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Sun Jul 27 20:47:15 2025 -0300
+
+    Con la view de today casi finalizada, se agrego el modal para agregar una tarea.
+
+[33mcommit 89712203af1c8f30773f3387be83cf5d7160f5f0[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Sat Jul 26 22:29:45 2025 -0300
+
+    Creando las primeras views del dashboard del usuario, componente de tarjeta para las tareas, etc
+
+[33mcommit 9187a6d08aadfc36f7bcf2584118f3ae1615312a[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Fri Jul 25 23:24:05 2025 -0300
+
+    Css del dashboard terminado
+
+[33mcommit c90b16282b1b1f2d163ecdb6805afac81e14680e[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Thu Jul 24 19:34:12 2025 -0300
+
+    Se creo el componente Sidebar para el Dashboard del usuario, y se dio la estructura de con css grid
+
+[33mcommit 21a3c182687f0bf7b2b5eea48f1d124bdd328972[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Thu Jul 24 19:09:47 2025 -0300
+
+    Cree la ruta dashboardText para mostrar el Dashboard
+
+[33mcommit e56da48c85e0dedd61c7e8b055ad11508031b36a[m
+Author: sqlv <agvstin.77@gmail.com>
+Date:   Thu Jul 24 17:15:28 2025 -0300
+
+    Login completo terminado con su funcionalidad y estilos y un pequeño fix en el estilo general

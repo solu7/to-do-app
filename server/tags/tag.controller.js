@@ -1,4 +1,10 @@
-import { createTag as _createTag, assignTagToTask as _assignTagToTask, removeTagFromTask as _removeTagFromTask } from "./tag.model.js";
+import {
+  createTag as _createTag,
+  assignTagToTask as _assignTagToTask,
+  removeTagFromTask as _removeTagFromTask,
+  getTagsInTask as _getTagsInTask,
+  getTagsByUserId as _getTagsByUserId
+} from "./tag.model.js";
 
 export const createTag = async (req, res) => {
   const userId = req.user.id;
@@ -16,6 +22,31 @@ export const createTag = async (req, res) => {
   } catch (error) {
     console.error("Error creating tag:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getTagsByUserId = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const tags = await _getTagsByUserId(userId);
+    res.status(200).json(tags);
+  } catch (error) {
+    console.error("Error al obtener los tags:", error);
+    res.status(500).json({ message: "Error del servidor" });
+  }
+};
+
+export const getTagsInTask = async (req, res) => {
+  const userId = req.user.id;
+  const taskId = req.params.taskId;
+
+  try {
+    const tagsInTask = await _getTagsInTask(userId, taskId);
+    res.status(200).json(tagsInTask);
+  } catch (error) {
+    console.error("Error al obtener los tags:", error);
+    res.status(500).json({ message: "Error del servidor" });
   }
 };
 
@@ -39,7 +70,8 @@ export const assignTagToTask = async (req, res) => {
 
 export const removeTagFromTask = async (req, res) => {
   const userId = req.user.id;
-  const { taskId, tagId } = req.params;
+  const { taskId } = req.params;
+  const { tagId } = req.body;
 
   try {
     await _removeTagFromTask(userId, taskId, tagId);

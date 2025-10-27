@@ -1,0 +1,19 @@
+.nav-item {
+  font-family: "principal-font";
+  font-size: 13px;
+  color: var(--light-grey);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  transition: 0.2s ease;
+}
+.nav-icon {
+  width: 20px;
+  object-fit: contain;
+}
+.nav-item:hover {
+  transform: scale(0.98);
+  color: var(--primary-color);
+  font-family: "principal-font-bold";
+}

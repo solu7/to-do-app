@@ -1,0 +1,45 @@
+.filtered-tasks__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+.filtered-task__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.filtered-tasks__header {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+.filtered-tasks__header-title {
+  font-family: "principal-font";
+  font-size: 23px;
+  color: var(--dark-grey);
+}
+.filtered-tasks__header-icon {
+  height: 25px;
+  object-fit: contain;
+}
+
+.filtered-tasks__filter {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-family: "principal-font-bold";
+  font-size: 13px;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  padding: 6px 10px;
+  border-radius: 5px;
+  width: max-content;
+  margin-left: 5px;
+}
+.filtered-tasks__filter-icon {
+  width: 15px;
+  object-fit: contain;
+}
