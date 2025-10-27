@@ -11,9 +11,7 @@ export const createCategory = async (req, res) => {
   const { name } = req.body;
 
   if (!name || name.trim() === "") {
-    return res
-      .status(400)
-      .json({ message: "El nombre de la categoría es obligatorio" });
+    return res.status(400).json({ message: "The category name is required" });
   }
 
   try {
@@ -67,15 +65,14 @@ export const removeCategoryFromTask = async (req, res) => {
 
   try {
     const result = await _removeCategoryFromTask(userId, taskId, categoryId);
+    const result = await _removeCategoryFromTask(userId, taskId, categoryId);
     if (result.notFound) {
-      return res.status(404).json({ message: "Tarea no encontrada" });
+      return res.status(404).json({ message: "Task not found" });
     }
-    res.status(200).json({ message: "Categoría eliminada de la tarea" });
+    res.status(200).json({ message: "Category removed from task" });
   } catch (error) {
-    console.error("Error al quitar la categoría de la tarea:", error);
-    res
-      .status(500)
-      .json({ message: "Error del servidor", error: error.message });
+    console.error("Error removing category from task:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

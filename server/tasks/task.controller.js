@@ -92,7 +92,7 @@ export const updateTask = async (req, res) => {
   if (!title && !description) {
     return res
       .status(400)
-      .json({ message: "Al menos un campo debe ser actualizado" });
+      .json({ message: "There is nothing to update" });
   }
 
   try {
@@ -100,7 +100,7 @@ export const updateTask = async (req, res) => {
     if (task.length === 0) {
       return res
         .status(404)
-        .json({ message: "Tarea no encontrada o no autorizada" });
+        .json({ message: "Task not found or not authorized" });
     }
 
     const fields = [];
@@ -116,9 +116,9 @@ export const updateTask = async (req, res) => {
     }
 
     await _updateTask(taskId, userId, fields, values);
-    res.json({ message: "Tarea actualizada correctamente" });
+    res.json({ message: "Task updated successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error al actualizar tarea" });
+    res.status(500).json({ message: "Error updating task" });
   }
 };
 
@@ -131,7 +131,7 @@ export const deleteTask = async (req, res) => {
     if (result.affectedRows === 0) {
       return res
         .status(404)
-        .json({ message: "Tarea no encontrada o no autorizada" });
+        .json({ message: "Task not found or not authorized" });
     }
     res.json({ message: "Tarea eliminada correctamente" });
   } catch (error) {

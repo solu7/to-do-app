@@ -67,16 +67,15 @@ export const removeTagFromTask = async (userId, taskId, tagId) => {
     [taskId, userId]
   );
   if (task.length === 0) {
-    throw new Error("Tarea no encontrada o no autorizada");
+    throw new Error("Task not found or not authorized");
   }
 
-  // Verificar que el tag sea del usuario
   const [tag] = await pool.query(
     "SELECT * FROM tags WHERE id = ? AND user_id = ?",
     [tagId, userId]
   );
   if (tag.length === 0) {
-    throw new Error("Tag no encontrado o no autorizado");
+    throw new Error("Tag not found or not authorized");
   }
 
   const [result] = await pool.query(
@@ -85,6 +84,6 @@ export const removeTagFromTask = async (userId, taskId, tagId) => {
   );
 
   if (result.affectedRows === 0) {
-    throw new Error("El tag no estaba asignado a esta tarea");
+    throw new Error("The tag was not assigned to this task");
   }
 };
