@@ -2,8 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 35px;
-  width: 135px;
+  padding: 10px 30px;
   background-color: var(--primary-color, #327dee);
   color: white;
   font-family: "principal-font", sans-serif;

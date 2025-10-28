@@ -1,7 +1,7 @@
 import "./HomePage.css";
 import Navbar from "../../layout/NavBar/Navbar.jsx";
 import { useExternalNavigation } from "../../core/hooks/useExternalNavigation.js";
-import homeImage from "../../core/assets/images/home-principal.avif";
+import itemFondo from "../../core/assets/images/itemFondoApp.png"
 import FeaturesSection from "./Features/FeaturesSection.jsx";
 import TechUsedSection from "./TechsUsed/TechsUsedSection.jsx";
 import Footer from "../../layout/Footer/Footer.jsx";
@@ -27,9 +27,8 @@ function HomePage() {
             Codigo en GitHub
           </button>
         </div>
-        <img className="home-page__image" src={homeImage} alt="" />
+        <img className="home-page__bgItem" src={itemFondo} alt="" />
       </div>
-      <div className="imageExample"></div>
       <FeaturesSection />
       <hr />
       <TechUsedSection />

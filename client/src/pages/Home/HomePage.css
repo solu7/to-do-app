@@ -2,16 +2,25 @@
   display: flex;
   flex-direction: column;
 }
+.home-page__bgItem {
+  height: 800px;
+}
 .home-page__header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 20px 190px 0px;
+  padding: 0px 190px;
+  background-image: url("../../core/assets/images/fondoApp.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  height: 87vh;
+  margin-top: 6vh;
 }
 .home-page__header-text {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 50px;
 }
 .home-page__header-text h1 {
   font-family: "principal-font-bold", sans-serif;
@@ -22,7 +31,7 @@
   background: linear-gradient(
       90deg,
       var(--primary-color),
-      rgb(128, 201, 250),
+      rgb(174, 222, 255),
       var(--primary-color)
     ) -100%/ 200%;
   -webkit-background-clip: text;
@@ -37,17 +46,24 @@
 }
 
 .home-page__description {
-  font-family: "principal-font", sans-serif;
-  font-size: 19px;
-  line-height: 40px;
-  color: var(---dark-grey);
+  font-family: "principal-font-bold", sans-serif;
+  font-size: 15px;
+  line-height: 55px;
+  color: var(--primary-color);
+  width: 85%;
+  border: 1px solid var(--primary-color);
+  padding: 20px;
+  border-radius: 13px;
+  box-shadow: 6px 7px 15px rgb(48 102 255 / 12%);
 }
 .home-page__image {
   width: min(800px, 106%);
+  background-color: transparent;
 }
 .btn.goGitHubProject {
   border-radius: 8px;
-  width: 150px;
+  width: fit-content;
+  font-size: 14px;
 }
 .btn.goGitHubProject:hover {
   transition: all 0.3s ease-in-out;

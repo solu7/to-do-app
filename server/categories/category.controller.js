@@ -65,7 +65,6 @@ export const removeCategoryFromTask = async (req, res) => {
 
   try {
     const result = await _removeCategoryFromTask(userId, taskId, categoryId);
-    const result = await _removeCategoryFromTask(userId, taskId, categoryId);
     if (result.notFound) {
       return res.status(404).json({ message: "Task not found" });
     }
