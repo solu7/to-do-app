@@ -9,39 +9,38 @@ import TechsUsedBackArticle from "./components/techUsedBackArticle";
 import { toolsUsed } from "./assets/data/toolsUsed";
 import ToolsUsedArticle from "./components/toolsUsedArticle";
 
-
 function TechUsedSection() {
   return (
-    <div className="tech-used-section">
-      <h1 className="tech-used-section-title">
+    <div className="techs-used">
+      <h1 className="techs-used__container-title">
         <span>Tecnologias</span> usadas para el proyecto.
       </h1>
-      <section className="tech-used-section-languages">
-        <section className="tech-used-languages front">
-          <p className="languages-used-title">Frontend</p>
-          <section className="languages front">
+      <section className="techs-used__sections-wrapper">
+        <div className="techs-used__section">
+          <p className="techs-used__section-heading">Frontend</p>
+          <section className="techs-used__list">
             {techsUsedFront.map((item, idx) => (
               <TechsUsedFrontArticle key={idx} {...item} />
             ))}
           </section>
-        </section>
-        <section className="tech-used-languages back">
-          <p className="languages-used-title">Backend</p>
-          <section className="languages back">
+        </div>
+        <div className="techs-used__section">
+          <p className="techs-used__section-heading">Backend</p>
+          <section className="techs-used__list">
             {techsUsedBack.map((item, idx) => (
               <TechsUsedBackArticle key={idx} {...item} />
             ))}
           </section>
-        </section>
-      </section>
-      <section className="tech-used-section-tools">
-        <p className="tech-used-section-tools-title">
-          Herramientas y librerias.
-        </p>
-        <section className="tech-used-tools">
+        </div>
+        <section className="techs-used__section">
+          <p className="techs-used__section-heading">
+            Herramientas y librerias.
+          </p>
+          <section className="techs-used__list">
             {toolsUsed.map((item, idx) => (
               <ToolsUsedArticle key={idx} {...item} />
             ))}
+          </section>
         </section>
       </section>
     </div>

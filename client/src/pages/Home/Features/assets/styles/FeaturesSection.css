@@ -18,23 +18,15 @@
 }
 .features-title {
   font-family: "principal-font", sans-serif;
-  font-size: clamp(1.5rem, 1.6rem, 2.18rem);
-  color: var(--light-blue);
+  font-size: 30px;
+  color: var(--dark-grey);
+  margin-top: 70px;
   text-align: center;
   letter-spacing: 0.5px;
   width: 100%;
-  background-color: var(--primary-color);
-  height: 7vh;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 .features-title span {
   color: var(--primary-color);
-  background-color: var(--light-blue);
-    padding: 4px 10px;
-    border-radius: 8px;
 }
 .footer-about-project {
   display: flex;

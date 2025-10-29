@@ -1,7 +1,7 @@
-import reactIcon from "../images/reactIcon.svg";
-import cssIcon from "../images/cssIcon.svg";
-import htmlIcon from "../images/htmlIcon.svg";
-import jsIcon from "../images/jsIcon.svg";
+import reactIcon from "../images/reactIcon.png";
+import cssIcon from "../images/cssIcon.png";
+import htmlIcon from "../images/htmlIcon.png";
+import jsIcon from "../images/jsIcon.png";
 
 export const techsUsedFront = [
     {

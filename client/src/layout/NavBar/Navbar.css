@@ -5,10 +5,11 @@
   align-items: center;
   border-bottom: 1px solid #0000000f;
   background-color: white;
-  height: 6vh;
+  height: 8vh;
   position: fixed;
   width: 100%;
   z-index: 10;
+  box-shadow: 15px 2px 6px rgb(61 61 61 / 10%);
 }
 
 .navbar__logo {

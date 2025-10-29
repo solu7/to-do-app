@@ -1,89 +1,63 @@
 /* * Seccion entera de tecnologias usadas */
 
-.tech-used-section {
+.techs-used {
   /* Contenedor de la seccion entera */
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 100px;
+  padding: 0px 190px;
   @media (width <= 1100px) {
     padding: 0px 50px;
   }
 }
-.tech-used-section-title {
+.techs-used__container-title {
   /* Titulo de toda la seccion */
   font-family: "principal-font", sans-serif;
   font-size: 30px;
   color: var(--dark-grey);
   text-align: center;
 }
-.tech-used-section-title span {
+.techs-used__container-title span {
   color: var(--primary-color);
 }
 
 /* * Seccion de lenguajes usados */
 
-.tech-used-section-languages {
-  /* Contenedor de la Seccion de lenguajes (Back y Front) */
+.techs-used__sections-wrapper {
+  /* Contenedor de las Secciones */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 100px;
+}
+.techs-used__section {
+  /* Seccion individual */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 50px;
-  margin-top: 50px;
+  width: 100%;
 }
-.tech-used-languages {
-  /* Contenedor de las secciones Back y Front */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-}
-.languages-used-title {
+.techs-used__section-heading {
   /* Titulo de las secciones de lenguajes (Back y Front) */
   font-family: "principal-font-bold", sans-serif;
-  font-size: 14px;
-  color: var(--light-grey);
+  font-size: 12px;
+  color: var(--primary-color);
   margin-bottom: 30px;
-  background-color: var(--opacity-grey);
-  padding: 8px 16px;
+  background-color: var(--secondary-color);
+  padding: 5px 12px;
   border-radius: 6px;
 }
-.languages {
+.techs-used__list {
   /* Contenedor de todos los lenguajes de la seccion */
   display: flex;
   flex-direction: row;
-  gap: 150px;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
   @media (width <= 1100px) {
     gap: 70px;
   }
-}
-
-/* * Seccion de herramientas usadas */
-
-.tech-used-section-tools {
-  /* Contenedor de la Seccion de Herramientas */
-  display: flex;
-  flex-direction: column;
-  margin-top: 90px;
-  align-items: center;
-}
-.tech-used-section-tools-title {
-  /* Titulo de la Seccion de Herramientas */
-  font-family: "principal-font-bold", sans-serif;
-  font-size: 14px;
-  color: var(--light-grey);
-  background-color: var(--opacity-grey);
-  padding: 8px 16px;
-  border-radius: 6px;
-}
-.tech-used-tools {
-  /* Contenedor de las herramientas */
-  margin-top: 80px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 50px;
-  flex-wrap: wrap;
 }
