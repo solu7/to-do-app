@@ -1,10 +1,10 @@
 import "./Footer.css";
-import userIcon from "../../core/assets/icons/logo.png"
+import userIcon from "../../core/assets/icons/logo.png";
 
 function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-about-project"> 
+      <div className="footer-about-project">
         <div className="footer-header">
           <img
             className="footer-user-icon"
@@ -21,29 +21,7 @@ function Footer() {
           organizar tareas mediante etiquetas personalizadas, categorías y
           filtros.
         </p>
-        <div className="footer-learned">
-          <p className="footer-list-title learned">
-            ¿Que aprendi con el desarrollo de esta <span>app</span>?
-          </p>
-          <div className="footer-list learned">
-            <ul>
-            <li>Diseñar e implementar una API RESTful</li>
-            <li>Autenticar seguramente un usuario</li>
-            <li>Diseñar de una base de datos relacional escalable</li>
-            <li>
-              Armar una buena arquitectura de carpetas y estructura de codigo
-            </li>
-            </ul>
-            <ul>
-            <li>Como documentar una API</li>
-            <li>Implementar seguridad y validación de datos</li>
-            <li>Desplegar mis proyectos en la web</li>
-            <li>Me familiarize mas con el testing e2e</li>
-            </ul>
-          </div>
-        </div>
       </div>
-
       <div className="footer-section features">
         <p className="footer-list-title features">Caracteristicas</p>
         <ul className="footer-list features">
@@ -79,9 +57,7 @@ function Footer() {
       </div>
 
       <div className="footer-section more-info">
-        <p className="footer-list-title more-Info">
-          Mas sobre este proyecto.
-        </p>
+        <p className="footer-list-title more-Info">Mas sobre este proyecto.</p>
         <ul className="footer-list more-info">
           <li>Documentacion API</li>
           <li>Repositorio de Git Hub</li>

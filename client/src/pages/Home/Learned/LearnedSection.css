@@ -1,0 +1,21 @@
+.learned {
+  padding: 0px 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+.learned__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-family: "principal-font";
+  font-size: 14px;
+}
+.learned__list ul {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-left: 10px;
+  margin: 0;
+  color: var(--grey);
+}

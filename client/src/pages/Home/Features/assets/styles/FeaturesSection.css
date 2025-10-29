@@ -17,16 +17,7 @@
   flex-wrap: wrap;
 }
 .features-title {
-  font-family: "principal-font", sans-serif;
-  font-size: 30px;
-  color: var(--dark-grey);
   margin-top: 70px;
-  text-align: center;
-  letter-spacing: 0.5px;
-  width: 100%;
-}
-.features-title span {
-  color: var(--primary-color);
 }
 .footer-about-project {
   display: flex;
