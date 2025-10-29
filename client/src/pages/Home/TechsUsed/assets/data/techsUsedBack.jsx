@@ -1,6 +1,6 @@
-import nodeIcon from "../images/nodejsIcon.svg";
-import expressIcon from "../images/expressjsIcon.svg";
-import mysqlIcon from "../images/mysqlIcon.svg";
+import nodeIcon from "../images/nodeIcon.png";
+import expressIcon from "../images/expressIcon.png";
+import mysqlIcon from "../images/mysqlIcon.png";
 
 export const techsUsedBack = [
   {
