@@ -1,5 +1,3 @@
-/* * Seccion entera de tecnologias usadas */
-
 .techs-used {
   /* Contenedor de la seccion entera */
   display: flex;
@@ -11,18 +9,6 @@
     padding: 0px 50px;
   }
 }
-.techs-used__container-title {
-  /* Titulo de toda la seccion */
-  font-family: "principal-font", sans-serif;
-  font-size: 30px;
-  color: var(--dark-grey);
-  text-align: center;
-}
-.techs-used__container-title span {
-  color: var(--primary-color);
-}
-
-/* * Seccion de lenguajes usados */
 
 .techs-used__sections-wrapper {
   /* Contenedor de las Secciones */

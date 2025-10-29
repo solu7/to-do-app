@@ -80,3 +80,15 @@
     font-size: 15px;
   }
 }
+
+.hp__section-title {
+  font-family: "principal-font", sans-serif;
+  font-size: 30px;
+  color: var(--dark-grey);
+  text-align: center;
+  letter-spacing: 0.5px;
+  width: 100%;
+}
+.hp__section-title span {
+  color: var(--primary-color);
+}

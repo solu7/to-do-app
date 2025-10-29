@@ -33,25 +33,11 @@
   list-style: none;
   cursor: pointer;
 }
-.footer-list.learned {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  letter-spacing: 0.3px;
-  cursor: initial;
-}
 .footer-list.features {
   cursor: initial;
 }
 .footer-list.contact {
   cursor: initial;
-}
-.footer-list.learned ul {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding-left: 10px;
-  margin: 0;
 }
 .footer-header {
   display: flex;
@@ -69,12 +55,6 @@
   font-family: "principal-font", sans-serif;
   font-size: 22px;
   color: var(--black);
-}
-.footer-list-title.learned {
-  margin-bottom: 35px;
-}
-.footer-list-title.learned span {
-  color: var(--primary-color);
 }
 .footer-header-title span {
   color: var(--primary-color);

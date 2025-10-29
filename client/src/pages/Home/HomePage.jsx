@@ -1,9 +1,10 @@
 import "./HomePage.css";
 import Navbar from "../../layout/NavBar/Navbar.jsx";
 import { useExternalNavigation } from "../../core/hooks/useExternalNavigation.js";
-import itemFondo from "../../core/assets/images/itemFondoApp.png"
+import itemFondo from "../../core/assets/images/itemFondoApp.png";
 import FeaturesSection from "./Features/FeaturesSection.jsx";
 import TechUsedSection from "./TechsUsed/TechsUsedSection.jsx";
+import LearnedSection from "./Learned/LearnedSection.jsx";
 import Footer from "../../layout/Footer/Footer.jsx";
 
 function HomePage() {
@@ -32,6 +33,8 @@ function HomePage() {
       <FeaturesSection />
       <hr />
       <TechUsedSection />
+      <hr />
+      <LearnedSection />
       <hr />
       <Footer />
     </div>
