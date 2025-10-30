@@ -54,7 +54,7 @@ function Navbar() {
         id="navbar__menu"
       >
         <Link>Inicio</Link>
-        <Link>Sobre mi</Link>
+        <Link to="/about-me">Sobre mi</Link>
         <Link>Sobre el proyecto</Link>
         <Link onClick={handleGuestLogin} disabled={isLoggingIn}>
           {isLoggingIn ? "Iniciando..." : "Iniciar como invitado"}

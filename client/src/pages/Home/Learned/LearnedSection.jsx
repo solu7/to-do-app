@@ -3,7 +3,7 @@ import "./LearnedSection.css";
 function LearnedSection() {
   return (
     <div className="learned">
-      <h2 className="hp__section-title learned__title">
+      <h2 className="section-title learned__title">
         ¿Que aprendi con el <span>desarrollo de esta app</span>?
       </h2>
       <div className="learned__list">
