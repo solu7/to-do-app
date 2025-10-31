@@ -7,13 +7,17 @@ import dbIcon from "./assets/images/database.png";
 import phoneIcon from "./assets/images/phone.png";
 import emailIcon from "./assets/images/email.png";
 import decorationImg from "./assets/images/decoration.png";
+import githubIcon from "./assets/images/github.png";
+import linkedinIcon from "./assets/images/linkedin.png";
+import downloadIcon from "./assets/images/download.png";
+import pfpDeco from "./assets/images/pfpDeco.png";
 function AboutMe() {
   return (
     <div className="about-me">
       <Navbar />
       <section className="about-me__introduction">
         <h4 className="about-me__heading">
-          {" --- { "} ¡ Hola ! {" } "}
+          {" --- { "} ¡ Hola, un gusto ! {" } "}
         </h4>
         <h2 className="section-title about-me__heading-title">
           Soy <span>Agustin Salva</span>
@@ -38,7 +42,7 @@ function AboutMe() {
             <p className="about-me__paragraph">
               Mi mayor enfoque es la arquitectura y la escalabilidad, buscando
               siempre un código limpio y mantenible. Buscando hacer un buen
-              trabajo de control de versiones (Git) y usar buenas prácticas de
+              trabajo de control de versiones y usar buenas prácticas de
               desarrollo.
             </p>
           </section>
@@ -48,6 +52,7 @@ function AboutMe() {
             equipo de desarrollo profesional.
           </p>
         </section>
+        <img className="about-me__pfp" src={pfpDeco} alt="Profile Picture" />
         <section className="about-me__column-meta">
           <section className="about-me__techs-learned-container">
             <div className="about-me__techs-learned about-me__techs-learned--frontend">
@@ -97,8 +102,39 @@ function AboutMe() {
             </div>
           </section>
         </section>
-        <img className="bg-deco" src={decorationImg} alt="Background Decoration" />
+        <img
+          className="bg-deco"
+          src={decorationImg}
+          alt="Background Decoration"
+        />
       </div>
+      <section className="about-me__cta-links">
+        <section className="about-me__cta-main">
+          <div className="about-me__cta-button">
+            <p>Portafolio</p>
+          </div>
+          <div className="about-me__cta-socials">
+            <img
+              className="about-me__cta-icon"
+              src={githubIcon}
+              alt="GitHub Logo"
+            />
+            <img
+              className="about-me__cta-icon"
+              src={linkedinIcon}
+              alt="LinkedIn Logo"
+            />
+          </div>
+        </section>
+        <section className="about-me__download-cv">
+          <p className="about-me__download-button">Descargar CV</p>
+          <img
+            className="about-me__download-icon"
+            src={downloadIcon}
+            alt="Download Icon"
+          />
+        </section>
+      </section>
     </div>
   );
 }
