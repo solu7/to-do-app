@@ -12,7 +12,7 @@ import ToolsUsedArticle from "./components/toolsUsedArticle";
 function TechUsedSection() {
   return (
     <div className="techs-used">
-      <h1 className="hp__section-title techs-used__container-title">
+      <h1 className="section-title techs-used__container-title">
         <span>Tecnologias</span> usadas para el proyecto.
       </h1>
       <section className="techs-used__sections-wrapper">

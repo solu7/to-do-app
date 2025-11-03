@@ -5,7 +5,7 @@ import { featureList } from "./assets/data/featureList";
 const FeaturesSection = () => {
   return (
     <section className="features-container">
-      <h2 className="hp__section-title features-title">¿Qué podés hacer con esta <span>app?</span></h2>
+      <h2 className="section-title features-title">¿Qué podés hacer con esta <span>app?</span></h2>
       <div className="features-list">
       {featureList.map((item, idx) => (
         <FeatureCard key={idx} {...item} />
