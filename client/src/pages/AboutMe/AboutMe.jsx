@@ -11,7 +11,9 @@ import githubIcon from "./assets/images/github.png";
 import linkedinIcon from "./assets/images/linkedin.png";
 import downloadIcon from "./assets/images/download.png";
 import pfpDeco from "./assets/images/pfpDeco.png";
+import { useNavigation } from "../../core/hooks/useNavigation.js";
 function AboutMe() {
+  const { goToExternalLink } = useNavigation();
   return (
     <div className="about-me">
       <Navbar />
@@ -116,12 +118,16 @@ function AboutMe() {
           <div className="about-me__cta-socials">
             <img
               className="about-me__cta-icon"
+              role="button"
               src={githubIcon}
+              onClick={() => goToExternalLink('https://github.com/solu7')}
               alt="GitHub Logo"
             />
             <img
               className="about-me__cta-icon"
+              role="button"
               src={linkedinIcon}
+              onClick={() => goToExternalLink('https://www.linkedin.com/in/emiliano-agustin-salva-563b2a300')}
               alt="LinkedIn Logo"
             />
           </div>
