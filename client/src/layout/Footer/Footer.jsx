@@ -1,5 +1,18 @@
 import "./Footer.css";
 import userIcon from "../../core/assets/icons/logo.png";
+import featuresIcon from "./assets/images/features.png";
+import aboutmeIcon from "./assets/images/aboutme.png";
+import contactIcon from "./assets/images/contact.png";
+import resourcesIcon from "./assets/images/resources.png";
+import phoneIcon from "./assets/images/phone.png";
+import emailIcon from "./assets/images/email.png";
+import githubIcon from "./assets/images/github.png";
+import linkedinIcon from "./assets/images/linkedin.png";
+import moreproyectsIcon from "./assets/images/moreproyects.png";
+import portfolioIcon from "./assets/images/portfolio.png";
+import downloadIcon from "./assets/images/download.png";
+import documentationIcon from "./assets/images/documentation.png";
+import seecodeIcon from "./assets/images/seecode.png";
 
 function Footer() {
   return (
@@ -22,46 +35,135 @@ function Footer() {
           filtros.
         </p>
       </div>
-      <div className="footer-section features">
-        <p className="footer-list-title features">Caracteristicas</p>
-        <ul className="footer-list features">
-          <li>Crear, editar y eliminar tareas</li>
+      <div className="footer-section footer-section-features">
+        <section className="footer-section-header footer-features-section-header">
+          <p className="footer-list-title features">Caracteristicas</p>
+          <img
+            className="footer-section-header-icon"
+            src={featuresIcon}
+            alt="Features Icon"
+          />
+        </section>
+        <ul className="footer-list footer-list-features">
+          <li>Crear, editar y eliminar tareas (CRUD)</li>
           <li>Establecer categorias y tags</li>
-          <li>Filtrar tareas de distintas formas</li>
-          <li>Autenticacion de usuario</li>
-          <li>Validaciones de datos</li>
+          <li>Diferentes tipo de filtrado de tareas</li>
+          <li>Autenticacion de usuario (JWT/Sesión)</li>
+          <li>Validaciones de datos (Back & Front)</li>
         </ul>
       </div>
 
-      <div className="footer-section about-me">
-        <p className="footer-list-title about-me">Acerca de mi</p>
-        <ul className="footer-list about-me">
+      <div className="footer-section footer-about-section">
+        <section className="footer-section-header footer-about-section-header">
+          <p className="footer-list-title footer-about-list-title">
+            Acerca de mi
+          </p>
+          <img
+            className="footer-section-header-icon"
+            src={aboutmeIcon}
+            alt="About me Icon"
+          />
+        </section>
+        <ul className="footer-list footer-about-list">
           <li>Acerca del desarrolador</li>
-          <li>Otros proyectos.</li>
-          <li>Portafolio</li>
-          <li>Descargar CV</li>
+          <li className="footer-list-item footer-about-list-item">
+            Otros proyectos
+            <img
+              className="list-item-icon"
+              src={moreproyectsIcon}
+              alt="More proyects icon"
+            />
+          </li>
+          <li className="footer-list-item footer-about-list-item">
+            Portafolio
+            <img
+              className="list-item-icon"
+              src={portfolioIcon}
+              alt="Portfolio icon"
+            />
+          </li>
+          <li className="footer-list-item footer-about-list-item">
+            Descargar CV
+            <img
+              className="list-item-icon"
+              src={downloadIcon}
+              alt="Download icon"
+            />
+          </li>
         </ul>
       </div>
 
-      <div className="footer-section contact">
-        <p className="footer-list-title contact">Contacto</p>
-        <ul className="footer-list contact">
-          <li>+54 387 6136 086</li>
-          <li>salvaagustin03@gmail.com</li>
+      <div className="footer-section footer-contact-section">
+        <section className="footer-section-header footer--contact-section-header">
+          <p className="footer-list-title footer-contact-list-title">
+            Contacto
+          </p>
+          <img
+            className="footer-section-header-icon"
+            src={contactIcon}
+            alt="Contact Icon"
+          />
+        </section>
+        <ul className="footer-list footer-list-contact">
+          <li className="footer-list-item footer-contact-list-item">
+            +54 387 6136 086
+            <img className="list-item-icon" src={phoneIcon} alt="Phone Icon" />
+          </li>
+          <li className="footer-list-item footer-contact-list-item">
+            salvaagustin03@gmail.com
+            <img className="list-item-icon" src={emailIcon} alt="Email Icon" />
+          </li>
         </ul>
-        <p className="footer-list-title social">Redes</p>
-        <ul className="footer-list social">
-          <li>GitHub</li>
-          <li>LinkedIn</li>
+        <p className="footer-list-title footer-social-list-title">Redes</p>
+        <ul className="footer-list footer-social-list">
+          <li className="footer-list-item footer-contact-list-item">
+            GitHub
+            <img
+              className="list-item-icon"
+              src={githubIcon}
+              alt="Github Icon"
+            />
+          </li>
+          <li className="footer-list-item footer-contact-list-item">
+            LinkedIn
+            <img
+              className="list-item-icon"
+              src={linkedinIcon}
+              alt="LinkedIn Icon"
+            />
+          </li>
         </ul>
       </div>
 
-      <div className="footer-section more-info">
-        <p className="footer-list-title more-Info">Mas sobre este proyecto.</p>
-        <ul className="footer-list more-info">
-          <li>Documentacion API</li>
-          <li>Repositorio de Git Hub</li>
-          <li>Preguntas Frecuentes</li>
+      <div className="footer-section footer-more-info-section">
+        <section className="footer-section-header footer-more-info-section-header">
+          <p className="footer-list-title footer-more-info-list-title">
+            Recursos Técnicos
+          </p>
+          <img
+            className="footer-section-header-icon"
+            src={resourcesIcon}
+            alt="Resources Icon"
+          />
+        </section>
+        <ul className="footer-list footer-more-info-list">
+          <li className="footer-list-item footer-more-info-list-item">
+            Documentacion API{" "}
+            <img
+              className="list-item-icon"
+              src={documentationIcon}
+              alt="Decoumentation icon"
+            />
+          </li>
+          <li  className="footer-list-item footer-more-info-list-item">
+            Ver Código Fuente{" "}
+            <img
+              className="list-item-icon"
+              src={seecodeIcon}
+              alt="See code icon"
+            />
+          </li>
+          <li>Tecnologías Usadas </li>
         </ul>
       </div>
       <p className="codedBy">To-do App coded by: Solu</p>

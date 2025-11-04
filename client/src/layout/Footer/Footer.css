@@ -1,11 +1,11 @@
 .footer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-between;
   padding: 0px 190px;
   position: relative;
   flex-wrap: wrap;
+  font-family: "principal-font", sans-serif;
   @media (width <= 1100px) {
     padding: 0px 50px;
   }
@@ -15,29 +15,34 @@
 }
 .footer-list-title {
   font-family: "principal-font-bold", sans-serif;
-  font-size: 16px;
-  color: var(--black);
-  margin-bottom: 50px;
+  font-size: 14px;
+  color: var(--grey);
+  margin-bottom: 45px;
 }
-.footer-list-title.social {
+.footer-social-list-title {
   margin-top: 40px;
 }
 
 .footer-list {
-  font-family: "principal-font", sans-serif;
   font-size: 11px;
-  color: var(--grey);
+  color: var(--light-grey);
   display: flex;
   flex-direction: column;
   gap: 45px;
   list-style: none;
   cursor: pointer;
 }
-.footer-list.features {
+.footer-list-features {
   cursor: initial;
 }
-.footer-list.contact {
+.footer-list-contact {
   cursor: initial;
+}
+.footer-list-item {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
 }
 .footer-header {
   display: flex;
@@ -45,14 +50,13 @@
   align-items: center;
   gap: 10px;
   width: fit-content;
-  border: 1px solid var(--opacity-grey);
+  border: 2px solid var(--opacity-grey);
   padding: 8px 15px 8px 15px;
   border-radius: 10px 5px;
   box-shadow: 3px 3px 9px rgba(85, 85, 85, 0.096);
   background-color: white;
 }
 .footer-header-title {
-  font-family: "principal-font", sans-serif;
   font-size: 22px;
   color: var(--black);
 }
@@ -60,25 +64,34 @@
   color: var(--primary-color);
 }
 .footer-project-description {
-  font-family: "principal-font-bold", sans-serif;
-  font-size: 16px;
-  color: var(--black);
-  margin-top: 15px;
-  margin-bottom: 45px;
+  font-size: 11px;
+  color: var(--light-grey);
   line-height: 40px;
 }
 .footer-about-project {
   display: flex;
   flex-direction: column;
-  width: 600px;
+  width: 25%;
+  gap: 12px;
 }
 .footer-section {
-  width: fit-content;
-  padding: 20px 20px 40px;
-  border-radius: 7px;
-  border-bottom: 1px solid var(--light-grey);
-  flex: 1;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--ultra-light-grey);
 }
+.footer-section-header {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+.footer-section-header-icon {
+  height: 18px;
+  object-fit: contain;
+}
+.list-item-icon {
+  height: 13px;
+  object-fit: contain;
+}
+
 .codedBy {
   position: absolute;
   bottom: -90px;
@@ -87,4 +100,5 @@
   color: var(--light-grey);
   text-align: center;
   padding-bottom: 15px;
+  left: 46%;
 }

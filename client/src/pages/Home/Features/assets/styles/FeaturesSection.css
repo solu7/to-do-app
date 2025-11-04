@@ -19,10 +19,6 @@
 .features-title {
   margin-top: 70px;
 }
-.footer-about-project {
-  display: flex;
-  flex-direction: column;
-}
 /*@media (width <= 1500px) {
     .features-list {
       flex-direction: column;
