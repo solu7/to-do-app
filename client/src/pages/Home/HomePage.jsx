@@ -21,7 +21,7 @@ function HomePage() {
             Este es un proyecto full-stack construido con React, Node.js,
             Express y MySQL, pensada para gestionar tus tareas. Más allá de la
             funcionalidad, el foco estuvo en la calidad del código, buscando
-            implementar buenas prácticas, estructura de carpetas .medidas de
+            implementar buenas prácticas, estructura de carpetas y medidas de
             seguridad para un resultado confiable y escalable.
           </p>
           <button className="btn goGitHubProject" onClick={goToGitHubProject}>

@@ -55,7 +55,7 @@ function Navbar() {
       >
         <Link to="/">Inicio</Link>
         <Link to="/about-me">Sobre mi</Link>
-        <Link to="/about-proyect">Sobre el proyecto</Link>
+        <Link to="/about-project">Sobre el proyecto</Link>
         <Link onClick={handleGuestLogin} disabled={isLoggingIn}>
           {isLoggingIn ? "Iniciando..." : "Iniciar como invitado"}
         </Link>
