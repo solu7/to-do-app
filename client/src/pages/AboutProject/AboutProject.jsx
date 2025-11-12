@@ -1,5 +1,10 @@
 import "./AboutProject.css";
 import Navbar from "../../layout/NavBar/Navbar.jsx";
+import backendIcon from "./assets/images/backend.png";
+import frontendIcon from "./assets/images/frontend.png";
+import clientServerIcon from "./assets/images/client-server.png";
+import funcionalityIcon from "./assets/images/functionality.png";
+import questionIcon from "./assets/images/question.png";
 function AboutProject() {
   return (
     <div className="about-project">
@@ -9,151 +14,343 @@ function AboutProject() {
         <h4>Coded by Agustin Salva.</h4>
       </div>
       <section className="about-project__structure">
-        <h2 className="about-project__section-title">
+        <h2 className="about-project__structure-section-title">
           Estructura del proyecto
         </h2>
-        <section className="about-project__project-structure">
-          <h2 className="about-project__structure-title">
-            Modelo: Client-Server Distribuido
-          </h2>
-          <p>
-            La aplicación emplea un diseño Full-Stack modular, utilizando
-            tecnologias como React, Node, Express y Mysql, proporcionándole una
-            buena escalabilidad y separación de responsabilidades (SoC).
-          </p>
-          <div>
-            <p>
-              Cliente / Frontend (React): Se encarga de la UI y la presentación.
+        <section className="about-project__structure-content">
+          <section className="about-project__structure-item">
+            <section className="about-project__structure-item-heading">
+              <h2 className="about-project__structure-title">
+                Frontend: Módulos y Lógica
+              </h2>
+              <img
+                className="about-project__structure-item-icon"
+                src={frontendIcon}
+                alt="Web design icon"
+              />
+            </section>
+            <p className="about-project__structure-item-info">
+              El cliente está organizado para maximizar la reutilización de
+              código y la separación de intereses mediante dos principios clave:
             </p>
-            <p>
-              Servidor / Backend (Node/Express): Maneja la lógica de negocio,
-              autenticación y base de datos.
+            <section className="about-project__structure-item-main-content">
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Arquitectura por Features:
+                </p>
+                <p className="about-project__structure-subItem-desc  theme-primary">
+                  El código está dividido por funcionalidades (auth, tasks,
+                  filters), permitiendo que cada módulo sea independiente y
+                  fácil de mantener.
+                </p>
+              </div>
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Custom Hooks:
+                </p>
+                <p className="about-project__structure-subItem-desc  theme-secondary">
+                  La lógica de negocio y las llamadas a la API se extraen a
+                  Hooks personalizados. Esto asegura que los componentes de la
+                  UI permanezcan "tontos" (dumb), enfocados únicamente en la
+                  presentación y el estado local.
+                </p>
+              </div>
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Enrutamiento y formularios
+                </p>
+                <p className="about-project__structure-subItem-desc theme-primary">
+                  Se utiliza react-router-dom para la gestión de rutas y
+                  react-hook-form con @hookform/resolvers para manejar
+                  formularios y validaciones complejas de manera eficiente.
+                </p>
+              </div>
+            </section>
+          </section>
+          <section className="about-project__structure-item">
+            <section className="about-project__structure-item-heading">
+              <h2 className="about-project__structure-title">
+                Modelo: Client-Server Distribuido
+              </h2>
+              <img
+                className="about-project__structure-item-icon"
+                src={clientServerIcon}
+                alt="Client-server Icon"
+              />
+            </section>
+            <p className="about-project__structure-item-info">
+              La aplicación emplea un diseño Full-Stack modular, utilizando
+              tecnologias como React, Node, Express y Mysql, proporcionándole
+              una buena escalabilidad y separación de responsabilidades (SoC).
             </p>
-          </div>
-          <p>
-            La comunicación entre ambos es puramente RESTful (peticiones HTTP),
-            con la autenticación de sesiones gestionada mediante JSON Web Tokens
-            (JWT). El código se divide en módulos por dominio para simplificar
-            el mantenimiento.
-          </p>
-        </section>
-        <section className="about-project__frontend-structure">
-          <h2 className="about-project__structure-title">
-            Frontend: Módulos de Componentes y Lógica
-          </h2>
-          <p>
-            El cliente está organizado para maximizar la reutilización de código
-            y la separación de intereses mediante dos principios clave:
-          </p>
-          <div>
-            <p>
-              Arquitectura por Features: El código está dividido por
-              funcionalidades (auth, tasks, filters), permitiendo que cada
-              módulo sea independiente y fácil de mantener.
+            <section className="about-project__structure-item-main-content">
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Cliente / Frontend (React):
+                </p>
+                <p className="about-project__structure-subItem-desc theme-primary">
+                  Se encarga de la UI y la presentación.
+                </p>
+              </div>
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Servidor / Backend (Node/Express):
+                </p>
+                <p className="about-project__structure-subItem-desc theme-secondary">
+                  Maneja la lógica de negocio, autenticación y base de datos.
+                </p>
+              </div>
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Como se comunican
+                </p>
+                <p className="about-project__structure-subItem-desc theme-primary">
+                  La comunicación entre ambos es puramente RESTful (peticiones
+                  HTTP), con la autenticación de sesiones gestionada mediante
+                  JSON Web Tokens (JWT). El código se divide en módulos por
+                  dominio para simplificar el mantenimiento.
+                </p>
+              </div>
+            </section>
+          </section>
+          <section className="about-project__structure-item">
+            <section className="about-project__structure-item-heading">
+              <h2 className="about-project__structure-title">
+                Backend: Patrón MVC y Módulos
+              </h2>
+              <img
+                className="about-project__structure-item-icon"
+                src={backendIcon}
+                alt="Server icon"
+              />
+            </section>
+            <p className="about-project__structure-item-info">
+              El servidor está estrictamente organizado mediante un Patrón MVC
+              (Modelo-Vista-Controlador) implícito, con una división de código
+              por dominio de negocio (auth, tasks, users, etc.).
             </p>
-            <p>
-              Custom Hooks: La lógica de negocio y las llamadas a la API se
-              extraen a Hooks personalizados. Esto asegura que los componentes
-              de la UI permanezcan "tontos" (dumb), enfocados únicamente en la
-              presentación y el estado local.
-            </p>
-          </div>
-          <p>
-            Se utiliza react-router-dom para la gestión de rutas y
-            react-hook-form con @hookform/resolvers para manejar formularios y
-            validaciones complejas de manera eficiente.
-          </p>
-        </section>
-        <section className="about-project__backend-structure">
-          <h2 className="about-project__structure-title">
-            Backend: Patrón MVC y Módulos
-          </h2>
-          <p>
-            El servidor está estrictamente organizado mediante un Patrón MVC
-            (Modelo-Vista-Controlador) implícito, con una división de código por
-            dominio de negocio (auth, tasks, users, etc.).
-          </p>
-          <div>
-            <p>
-              Rutas (.routes.js): Definen los endpoints y aplican middlewares de
-              seguridad.
-            </p>
-            <p>
-              Controladores (.controller.js): Encargados de la Lógica de Negocio
-              y el manejo de la petición/respuesta, como la validación inicial
-              de datos y el manejo de errores HTTP (ej. 409 Conflict).
-            </p>
-            <p>
-              Modelos (.model.js): Responsabilidad única de la capa de
-              persistencia (MySQL/PostgreSQL), donde se ejecutan todas las
-              consultas SQL.
-            </p>
-          </div>
-          <p>
-            Esta estructura se complementa con herramientas de seguridad
-            esenciales como bcrypt para hashing de contraseñas y
-            express-validator para la validación de inputs.
-          </p>
+            <section className="about-project__structure-item-main-content">
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Rutas (.routes.js):
+                </p>
+                <p className="about-project__structure-subItem-desc theme-primary">
+                  Definen los endpoints y aplican middlewares de seguridad.
+                </p>
+              </div>
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Controladores (.controller.js):
+                </p>
+                <p className="about-project__structure-subItem-desc theme-secondary">
+                  Encargados de la Lógica de Negocio y el manejo de la
+                  petición/respuesta, como la validación inicial de datos y el
+                  manejo de errores HTTP (ej. 409 Conflict).
+                </p>
+              </div>
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Modelos (.model.js):
+                </p>
+                <p className="about-project__structure-subItem-desc theme-primary">
+                  Responsabilidad única de la capa de persistencia
+                  (MySQL/PostgreSQL), donde se ejecutan todas las consultas SQL.
+                </p>
+              </div>
+              <div className="about-project__structure-subItem">
+                <p className="about-project__structure-subItem-title">
+                  Complementos y extras:
+                </p>
+                <p className="about-project__structure-subItem-desc theme-secondary">
+                  Esta estructura se complementa con herramientas de seguridad
+                  esenciales como bcrypt para hashing de contraseñas y
+                  express-validator para la validación de inputs.
+                </p>
+              </div>
+              <p></p>
+            </section>
+          </section>
         </section>
       </section>
+      <hr />
       <section className="about-project__functionality">
-        <h2 className="about-project__section-title">
-          Funcionalidad y lógica de negocio
-        </h2>
-        <div className="about-project__functionality-content">
-          <section className="about-project__funcionality-item">
-            <h2 className="about-project__funcionality-title">
-              Gestión Total de Recursos (CRUD Completo)
-            </h2>
+        <section
+          className="about-project__functionality-heading"
+          style={{ gridArea: "title" }}
+        >
+          <div className="about-project__functionality-section-title">
+            <h2>Funcionalidad y lógica de negocio</h2>
+            <img
+              className="about-project__functionality-section-title-icon"
+              src={funcionalityIcon}
+              alt="Funcionality icon"
+            />
+          </div>
 
-            <p className="about-project__funcionality-desc">
-              La aplicación cuenta con funcionalidad CRUD en todos los elementos
-              principales del sistema: Tareas, Tags, Categorías y Usuarios. El
-              sistema permite la manipulación y edición en tiempo real de estos
-              desde el panel de control, permitiendo al usuario establecer
-              tareas con múltiples estados. Ademas de poder modificar la
-              informacion del usuario.
+          <div className="about-project__functionality-heading-extra">
+            <p className="about-project__functionality-question">
+              Aqui va una pregunta?
             </p>
-          </section>
-          <section className="about-project__funcionality-item">
-            <h2 className="about-project__funcionality-title">
-              Modelado Relacional N:M y Robustez de IDs
-            </h2>
-            <p className="about-project__funcionality-desc">
-              El sistema soporta relaciones Muchos-a-Muchos (N:M) para vincular
-              Tareas con múltiples Tags y Categorías a través de tablas pivote.
-              Se emplea la librería nanoid para generar identificadores
-              alfanuméricos únicos en lugar de IDs autoincrementales, lo que
-              aumenta la robustez del sistema y elimina dependencias
-              secuenciales.
-            </p>
-          </section>
-          <section className="about-project__funcionality-item">
-            <h2 className="about-project__funcionality-title">
-              Filtrado Dinámico de Consultas SQL
-            </h2>
-            <p className="about-project__funcionality-desc">
-              La función getFilteredTasks demuestra un manejo avanzado de
-              consultas. El backend construye la consulta SQL dinámicamente con
-              los parámetros proporcionados (priority, tagId, isCompleted,
-              etc.). Se utilizan las cláusulas LEFT JOIN y HAVING con
-              FIND_IN_SET para filtrar eficientemente las tareas basadas en sus
-              múltiples Tags o Categorías.
-            </p>
-          </section>
-          <section className="about-project__funcionality-item">
-            <h2 className="about-project__funcionality-title">
-              Flujos de Trabajo Inteligentes
-            </h2>
-            <p className="about-project__funcionality-desc">
-              El Dashboard presenta flujos de trabajo clave, centralizando la
-              gestión de las tareas basadas en su estado y fecha. Esto incluye
-              la bandeja de Inbox (para tareas rápidas sin fecha, no
-              completadas) y las secciones dedicadas a "Today" y "Upcoming"
-              (asumiendo su existencia), ofreciendo una navegación guiada por
-              prioridad.
-            </p>
-          </section>
+            <img
+              className="about-project-functionality-question-icon"
+              src={questionIcon}
+              alt="Question icon"
+            />
+          </div>
+        </section>
+        <div
+          className="about-project__funcionality-item"
+          style={{ gridArea: "item2" }}
+        >
+          <h2 className="about-project__funcionality-title">
+            Gestión Total de Recursos (CRUD Completo)
+          </h2>
+
+          <p className="about-project__funcionality-desc">
+            La aplicación cuenta con funcionalidad CRUD en todos los elementos
+            principales del sistema: Tareas, Tags, Categorías y Usuarios. El
+            sistema permite la manipulación y edición en tiempo real de estos
+            desde el panel de control, permitiendo al usuario establecer tareas
+            con múltiples estados. Ademas de poder modificar la informacion del
+            usuario.
+          </p>
+        </div>
+        <div
+          className="about-project__funcionality-item"
+          style={{ gridArea: "item3" }}
+        >
+          <h2 className="about-project__funcionality-title">
+            Modelado Relacional N:M y Robustez de IDs
+          </h2>
+          <p className="about-project__funcionality-desc">
+            El sistema soporta relaciones Muchos-a-Muchos (N:M) para vincular
+            Tareas con múltiples Tags y Categorías a través de tablas pivote. Se
+            emplea la librería nanoid para generar identificadores alfanuméricos
+            únicos en lugar de IDs autoincrementales, lo que aumenta la robustez
+            del sistema y elimina dependencias secuenciales.
+          </p>
+        </div>
+        <div
+          className="about-project__funcionality-item"
+          style={{ gridArea: "item4" }}
+        >
+          <h2 className="about-project__funcionality-title">
+            Filtrado Dinámico de Consultas SQL
+          </h2>
+          <p className="about-project__funcionality-desc">
+            La función getFilteredTasks demuestra un manejo avanzado de
+            consultas. El backend construye la consulta SQL dinámicamente con
+            los parámetros proporcionados (priority, tagId, isCompleted, etc.).
+            Se utilizan las cláusulas LEFT JOIN y HAVING con FIND_IN_SET para
+            filtrar eficientemente las tareas basadas en sus múltiples Tags o
+            Categorías.
+          </p>
+        </div>
+        <div
+          className="about-project__funcionality-item"
+          style={{ gridArea: "item5" }}
+        >
+          <h2 className="about-project__funcionality-title">
+            Flujos de Trabajo Inteligentes
+          </h2>
+          <p className="about-project__funcionality-desc">
+            El Dashboard presenta flujos de trabajo clave, centralizando la
+            gestión de las tareas basadas en su estado y fecha. Esto incluye la
+            bandeja de Inbox (para tareas rápidas sin fecha, no completadas) y
+            las secciones dedicadas a "Today" y "Upcoming" (asumiendo su
+            existencia), ofreciendo una navegación guiada por prioridad.
+          </p>
+        </div>
+      </section>
+      <section className="about-project__security">
+        <h2 className="about-project__section-title">
+          Seguridad y Buenas Prácticas
+        </h2>
+        <div className="about-project__security-item">
+          <h2 className="about-project__security-title">
+            Autenticación y Cookies
+          </h2>
+          <p className="about-project__security-info">
+            El sistema de autenticación usa JSON Web Tokens (JWT) con un tiempo
+            de expiración definido. La seguridad se maximiza mediante:
+          </p>
+          <ul className="about-project__security-desc">
+            <li>
+              Almacenamiento del token en cookies con el flag HttpOnly. Esto
+              mitiga el riesgo de Cross-Site Scripting (XSS).
+            </li>
+            <li>
+              Configuración SameSite=Strict en las cookies, protegiendo contra
+              la mayoría de los ataques Cross-Site Request Forgery (CSRF).
+            </li>
+            <li>
+              Uso de bcrypt para el hashing de contraseñas, nunca almacenando
+              claves en texto plano.
+            </li>
+          </ul>
+        </div>
+        <div className="about-project__security-item">
+          <h2 className="about-project__security-title">
+            Prevención de Ataques de Inyección
+          </h2>
+          <p className="about-project__security-info">
+            La API se protege de vulnerabilidades comunes mediante una defensa
+            de múltiples capas:
+          </p>
+          <ul className="about-project__security-desc">
+            <li>
+              Todas las interacciones con la base de datos (MySQL) se realizan
+              exclusivamente con Consultas Parametrizadas. Esto garantiza que
+              los inputs del usuario siempre se traten como datos y no como
+              comandos SQL, previniendo la inyección SQL.
+            </li>
+            <li>
+              Uso de express-validator para aplicar un esquema de validación
+              estricta de inputs en el registro y en todas las operaciones
+              críticas, asegurando la integridad y el formato de los datos.
+            </li>
+          </ul>
+        </div>
+        <div className="about-project__security-item">
+          <h2 className="about-project__security-title">
+            Gestión de Entorno y CORS
+          </h2>
+          <p className="about-project__security-info">
+            Se implementó una configuración de entorno profesional para la
+            gestión de secretos:
+          </p>
+          <ul className="about-project__security-desc">
+            <li>
+              Todas las variables sensibles (claves de JWT, credenciales de DB)
+              se gestionan a través de la librería dotenv y se excluyen del
+              repositorio público mediante .gitignore.
+            </li>
+            <li>
+              Las políticas CORS se restringen explícitamente al origen de
+              desarrollo (localhost), evitando peticiones maliciosas de otros
+              dominios.
+            </li>
+          </ul>
+        </div>
+        <div className="about-project__security-item">
+          <h2 className="about-project__security-title">
+            Mantenibilidad y Control de Versiones
+          </h2>
+          <p className="about-project__security-info">
+            Se aplica una filosofía de desarrollo para la alta mantenibilidad y
+            colaboración:
+          </p>
+          <ul className="about-project__security-desc">
+            <li>
+              Separación de Intereses (SoC): Estructura estricta de MVC modular
+              en el Backend y separación de Lógica/Vista en el Frontend.
+            </li>
+            <li>
+              Control de Versiones: Uso disciplinado de Git con ramas por
+              feature y mensajes de commit estandarizados para un historial
+              limpio.
+            </li>
+          </ul>
         </div>
       </section>
     </div>

@@ -12,10 +12,12 @@
   margin-right: auto;
   color: var(--grey);
 }
-.success-message,.error-message span {
+.success-message,
+.error-message span {
   color: var(--primary-color);
 }
-.success-message-hr,.error-message-hr {
+.success-message-hr,
+.error-message-hr {
   margin: 15px 0px 0px;
 }
 .section-title {
@@ -27,5 +29,14 @@
   width: 100%;
 }
 .section-title span {
+  color: var(--primary-color);
+}
+
+.theme-primary {
+  background-color: var(--primary-color);
+  color: var(--light-blue);
+}
+.theme-secondary {
+  background-color: var(--secondary-color);
   color: var(--primary-color);
 }
