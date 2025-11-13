@@ -5,6 +5,12 @@ import frontendIcon from "./assets/images/frontend.png";
 import clientServerIcon from "./assets/images/client-server.png";
 import funcionalityIcon from "./assets/images/functionality.png";
 import questionIcon from "./assets/images/question.png";
+import authIcon from "./assets/images/auth.png";
+import inyectionIcon from "./assets/images/inyection.png";
+import enviromentIcon from "./assets/images/enviroment.png";
+import versionIcon from "./assets/images/version.png";
+import securityIcon from "./assets/images/security.png";
+
 function AboutProject() {
   return (
     <div className="about-project">
@@ -262,96 +268,121 @@ function AboutProject() {
           </p>
         </div>
       </section>
+      <hr />
       <section className="about-project__security">
-        <h2 className="about-project__section-title">
-          Seguridad y Buenas Prácticas
-        </h2>
-        <div className="about-project__security-item">
-          <h2 className="about-project__security-title">
-            Autenticación y Cookies
-          </h2>
-          <p className="about-project__security-info">
-            El sistema de autenticación usa JSON Web Tokens (JWT) con un tiempo
-            de expiración definido. La seguridad se maximiza mediante:
-          </p>
-          <ul className="about-project__security-desc">
-            <li>
-              Almacenamiento del token en cookies con el flag HttpOnly. Esto
-              mitiga el riesgo de Cross-Site Scripting (XSS).
-            </li>
-            <li>
-              Configuración SameSite=Strict en las cookies, protegiendo contra
-              la mayoría de los ataques Cross-Site Request Forgery (CSRF).
-            </li>
-            <li>
-              Uso de bcrypt para el hashing de contraseñas, nunca almacenando
-              claves en texto plano.
-            </li>
-          </ul>
+        <div className="about-project__security-section-title">
+          <h2><span>Seguridad</span> y Buenas Prácticas</h2>
+          <img className="about-project__security-section-title-icon" src={securityIcon} alt="Security icon" />
         </div>
-        <div className="about-project__security-item">
-          <h2 className="about-project__security-title">
-            Prevención de Ataques de Inyección
-          </h2>
-          <p className="about-project__security-info">
-            La API se protege de vulnerabilidades comunes mediante una defensa
-            de múltiples capas:
-          </p>
-          <ul className="about-project__security-desc">
-            <li>
-              Todas las interacciones con la base de datos (MySQL) se realizan
-              exclusivamente con Consultas Parametrizadas. Esto garantiza que
-              los inputs del usuario siempre se traten como datos y no como
-              comandos SQL, previniendo la inyección SQL.
-            </li>
-            <li>
-              Uso de express-validator para aplicar un esquema de validación
-              estricta de inputs en el registro y en todas las operaciones
-              críticas, asegurando la integridad y el formato de los datos.
-            </li>
-          </ul>
-        </div>
-        <div className="about-project__security-item">
-          <h2 className="about-project__security-title">
-            Gestión de Entorno y CORS
-          </h2>
-          <p className="about-project__security-info">
-            Se implementó una configuración de entorno profesional para la
-            gestión de secretos:
-          </p>
-          <ul className="about-project__security-desc">
-            <li>
-              Todas las variables sensibles (claves de JWT, credenciales de DB)
-              se gestionan a través de la librería dotenv y se excluyen del
-              repositorio público mediante .gitignore.
-            </li>
-            <li>
-              Las políticas CORS se restringen explícitamente al origen de
-              desarrollo (localhost), evitando peticiones maliciosas de otros
-              dominios.
-            </li>
-          </ul>
-        </div>
-        <div className="about-project__security-item">
-          <h2 className="about-project__security-title">
-            Mantenibilidad y Control de Versiones
-          </h2>
-          <p className="about-project__security-info">
-            Se aplica una filosofía de desarrollo para la alta mantenibilidad y
-            colaboración:
-          </p>
-          <ul className="about-project__security-desc">
-            <li>
-              Separación de Intereses (SoC): Estructura estricta de MVC modular
-              en el Backend y separación de Lógica/Vista en el Frontend.
-            </li>
-            <li>
-              Control de Versiones: Uso disciplinado de Git con ramas por
-              feature y mensajes de commit estandarizados para un historial
-              limpio.
-            </li>
-          </ul>
-        </div>
+        <section className="about-project__security-content">
+          <div className="about-project__security-item">
+            <img
+              className="about-project__security-item-icon"
+              src={authIcon}
+              alt="Auth icon"
+            />
+            <h2 className="about-project__security-item-title">
+              Autenticación y Cookies
+            </h2>
+            <p className="about-project__security-item-info">
+              El sistema de autenticación usa JSON Web Tokens (JWT) con un
+              tiempo de expiración definido. La seguridad se maximiza mediante:
+            </p>
+            <ul className="about-project__security-item-desc">
+              <li>
+                Almacenamiento del token en cookies con el flag HttpOnly. Esto
+                mitiga el riesgo de Cross-Site Scripting (XSS).
+              </li>
+              <li>
+                Configuración SameSite=Strict en las cookies, protegiendo contra
+                la mayoría de los ataques Cross-Site Request Forgery (CSRF).
+              </li>
+              <li>
+                Uso de bcrypt para el hashing de contraseñas, nunca almacenando
+                claves en texto plano.
+              </li>
+            </ul>
+          </div>
+          <div className="about-project__security-item">
+            <img
+              className="about-project__security-item-icon"
+              src={inyectionIcon}
+              alt="SQL Inyection icon"
+            />
+            <h2 className="about-project__security-item-title">
+              Prevención de Ataques de Inyección
+            </h2>
+            <p className="about-project__security-item-info">
+              La API se protege de vulnerabilidades comunes mediante una defensa
+              de múltiples capas:
+            </p>
+            <ul className="about-project__security-item-desc">
+              <li>
+                Todas las interacciones con la base de datos (MySQL) se realizan
+                exclusivamente con Consultas Parametrizadas. Esto garantiza que
+                los inputs del usuario siempre se traten como datos y no como
+                comandos SQL, previniendo la inyección SQL.
+              </li>
+              <li>
+                Uso de express-validator para aplicar un esquema de validación
+                estricta de inputs en el registro y en todas las operaciones
+                críticas, asegurando la integridad y el formato de los datos.
+              </li>
+            </ul>
+          </div>
+          <div className="about-project__security-item">
+            <img
+              className="about-project__security-item-icon"
+              src={enviromentIcon}
+              alt="Development enviroment icon"
+            />
+            <h2 className="about-project__security-item-title">
+              Gestión de Entorno y CORS
+            </h2>
+            <p className="about-project__security-item-info">
+              Se implementó una configuración de entorno profesional para la
+              gestión de secretos:
+            </p>
+            <ul className="about-project__security-item-desc">
+              <li>
+                Todas las variables sensibles (claves de JWT, credenciales de
+                DB) se gestionan a través de la librería dotenv y se excluyen
+                del repositorio público mediante .gitignore.
+              </li>
+              <li>
+                Las políticas CORS se restringen explícitamente al origen de
+                desarrollo (localhost), evitando peticiones maliciosas de otros
+                dominios.
+              </li>
+            </ul>
+          </div>
+          <div className="about-project__security-item">
+            <img
+              className="about-project__security-item-icon"
+              src={versionIcon}
+              alt="Version control icon"
+            />
+            <h2 className="about-project__security-item-title">
+              Mantenibilidad y Control de Versiones
+            </h2>
+            <p className="about-project__security-item-info">
+              Se aplica una filosofía de desarrollo para la alta mantenibilidad
+              y colaboración:
+            </p>
+            <ul className="about-project__security-item-desc">
+              <li>
+                Separación de Intereses (SoC): Estructura estricta de MVC
+                modular en el Backend y separación de Lógica/Vista en el
+                Frontend.
+              </li>
+              <li>
+                Control de Versiones: Uso disciplinado de Git con ramas por
+                feature y mensajes de commit estandarizados para un historial
+                limpio.
+              </li>
+            </ul>
+          </div>
+        </section>
       </section>
     </div>
   );

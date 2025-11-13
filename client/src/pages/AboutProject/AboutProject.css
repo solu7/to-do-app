@@ -87,7 +87,6 @@
   display: grid;
   grid-template-columns: 0.6fr 1fr 1fr;
   grid-template-rows: repeat(2, 1fr);
-  margin: 40px 0px;
   gap: 40px;
   grid-template-areas:
     "title item2 item3"
@@ -149,4 +148,62 @@
   font-size: 11px;
   line-height: 22px;
   color: var(--dark-color);
+}
+
+.about-project__security {
+  padding: 0px 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  font-family: "principal-font";
+}
+.about-project__security-section-title {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  font-size: 18px;
+  color: var(--dark-grey);
+}
+.about-project__security-section-title span {
+  color: var(--primary-color);
+}
+.about-project__security-section-title-icon {
+  height: 40px;
+  object-fit: contain;
+}
+.about-project__security-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.about-project__security-item {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 340px;
+  padding: 20px;
+  background-color: var(--opacity-grey);
+  border-radius: 10px;
+  border: 1px solid var(--ultra-light-grey);
+}
+
+.about-project__security-item-icon {
+  width: 40px;
+  object-fit: contain;
+}
+.about-project__security-item-title {
+  font-size: 15px;
+  color: var(--grey);
+}
+.about-project__security-item-info {
+  font-size: 11px;
+  color: var(--light-grey);
+}
+.about-project__security-item-desc {
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: var(--light-grey);
+  padding-left: 24px;
 }
