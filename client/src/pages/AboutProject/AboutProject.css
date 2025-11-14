@@ -207,3 +207,118 @@
   color: var(--light-grey);
   padding-left: 24px;
 }
+
+.about-project__resources {
+  padding: 0px 190px;
+  font-family: "principal-font";
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+.about-project__resources-links {
+  display: grid;
+  grid-template-areas:
+    "title title"
+    "box1 box2";
+  row-gap: 70px;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+}
+.about-project__resources-links-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-grey);
+}
+.about-project__resources-links-item {
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  width: 60%;
+}
+.about-project__links-item-title {
+  color: var(--primary-color);
+  font-family: "principal-font-bold";
+  font-size: 18px;
+}
+.about-project__resources-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+.about-project__links-item-paragraph {
+  color: var(--dark-grey);
+  font-size: 13px;
+}
+.about-project__links-button {
+  background-color: var(--primary-color);
+  padding: 8px 16px;
+  color: var(--light-blue);
+  border-radius: 5px;
+  font-family: "principal-font-bold";
+}
+
+.about-project__expansion {
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+  align-items: center;
+}
+.about-project__expansion-title {
+  color: var(--dark-grey);
+}
+.about-project__expansion-content {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid var(--primary-color);
+  padding-top: 40px;
+  justify-content: space-between;
+}
+.about-project__expansion-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 25%;
+}
+.about-project__expansion-item-heading {
+  display: flex;
+  justify-content: center;
+}
+.about-project__expansion-item-icon {
+  height: 40px;
+  position: absolute;
+  top: -60px;
+  left: 46%;
+}
+.about-project__expansion-item-title {
+  color: var(--grey);
+  font-family: "principal-font-bold";
+}
+.about-project__expansion-item-title span {
+  color: var(--primary-color);
+}
+.about-project__expansion-item-desc {
+  font-size: 12px;
+  color: var(--light-grey);
+  text-align: center;
+}
+.bar-line {
+  height: 2px;
+  width: 100%;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    #327dee 20%,
+    #327dee 80%,
+    transparent
+  );
+  border: none;
+}

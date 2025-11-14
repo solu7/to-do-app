@@ -10,6 +10,9 @@ import inyectionIcon from "./assets/images/inyection.png";
 import enviromentIcon from "./assets/images/enviroment.png";
 import versionIcon from "./assets/images/version.png";
 import securityIcon from "./assets/images/security.png";
+import projectsIcon from "./assets/images/projects.png";
+import uxIcon from "./assets/images/ux.png";
+import optimizationIcon from "./assets/images/optimization.png";
 
 function AboutProject() {
   return (
@@ -271,8 +274,14 @@ function AboutProject() {
       <hr />
       <section className="about-project__security">
         <div className="about-project__security-section-title">
-          <h2><span>Seguridad</span> y Buenas Prácticas</h2>
-          <img className="about-project__security-section-title-icon" src={securityIcon} alt="Security icon" />
+          <h2>
+            <span>Seguridad</span> y Buenas Prácticas
+          </h2>
+          <img
+            className="about-project__security-section-title-icon"
+            src={securityIcon}
+            alt="Security icon"
+          />
         </div>
         <section className="about-project__security-content">
           <div className="about-project__security-item">
@@ -381,6 +390,101 @@ function AboutProject() {
                 limpio.
               </li>
             </ul>
+          </div>
+        </section>
+      </section>
+      <hr />
+      <section className="about-project__resources">
+        <section className="about-project__resources-links">
+          <h2
+            className="about-project__resources-links-title"
+            style={{ gridArea: "title" }}
+          >
+            Código Fuente y Recursos
+          </h2>
+          <div
+            className="about-project__resources-links-item"
+            style={{ gridArea: "box1" }}
+          >
+            <p className="about-project__links-item-title">
+              Repositorio Público:
+            </p>
+            <div className="about-project__resources-item-info">
+              <p className="about-project__links-item-paragraph">
+                El proyecto completo está disponible en GitHub.
+              </p>
+              <p className="about-project__links-button">Link aqui</p>
+            </div>
+          </div>
+          <div
+            className="about-project__resources-links-item"
+            style={{ gridArea: "box2" }}
+          >
+            <p className="about-project__links-item-title">Demo</p>
+            <div className="about-project__resources-item-info">
+              <p className="about-project__links-item-paragraph">
+                Este proyecto está diseñado para ser desplegado en un entorno de
+                producción.
+              </p>
+              <p className="about-project__links-button">Link aqui</p>
+            </div>
+          </div>
+        </section>
+        <section className="about-project__expansion">
+          <h2 className="about-project__expansion-title">Visión futura</h2>
+          <div className="bar-line"></div>
+          <div className="about-project__expansion-content">
+            <div className="about-project__expansion-item">
+              <section className="about-project__expansion-item-heading">
+                <img
+                  className="about-project__expansion-item-icon"
+                  src={projectsIcon}
+                  alt="Projects icon"
+                />
+                <p className="about-project__expansion-item-title">
+                  Sistema de <span>proyectos</span>
+                </p>
+              </section>
+              <p className="about-project__expansion-item-desc">
+                Implementación de entornos de "Proyectos" separados. Esto
+                permitirá agrupar tareas bajo contextos específicos, ofreciendo
+                un nivel superior de organización al usuario.
+              </p>
+            </div>
+            <div className="about-project__expansion-item">
+              <section className="about-project__expansion-item-heading">
+                <img
+                  className="about-project__expansion-item-icon"
+                  src={uxIcon}
+                  alt="UX Icon"
+                />
+                <p className="about-project__expansion-item-title">
+                  Vistas <span>Dinámicas</span>
+                </p>
+              </section>
+              <p className="about-project__expansion-item-desc">
+                Desarrollo de una Vista de Panel para las secciones que incluyen
+                tareas. Esto le brinda al usuario a un flujo visual mucho mas
+                intuitivo, mejorando la gestión y el manejo del proyecto.
+              </p>
+            </div>
+            <div className="about-project__expansion-item">
+              <section className="about-project__expansion-item-heading">
+                <img
+                  className="about-project__expansion-item-icon"
+                  src={optimizationIcon}
+                  alt="Optimization icon"
+                />
+                <p className="about-project__expansion-item-title">
+                  Refactorización y <span>Rendimiento</span>
+                </p>
+              </section>
+              <p className="about-project__expansion-item-desc">
+                Continuar refactorizando código para mejorar la legibilidad.
+                Ademas de optimización del rendimiento de la aplicación, para
+                tiempos de carga y respuesta más rápidos.
+              </p>
+            </div>
           </div>
         </section>
       </section>
