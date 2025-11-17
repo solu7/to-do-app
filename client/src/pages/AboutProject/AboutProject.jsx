@@ -19,11 +19,15 @@ function AboutProject() {
     <div className="about-project">
       <Navbar />
       <div className="about-project__heading">
-        <h1>To-Do App</h1>
-        <h4>Coded by Agustin Salva.</h4>
+        <h1>
+          <span>To-Do</span> App
+        </h1>
+        <h4>
+          Coded by <span>Agustin Salva.</span>
+        </h4>
       </div>
       <section className="about-project__structure">
-        <h2 className="about-project__structure-section-title">
+        <h2 className="about-project__section-title">
           Estructura del proyecto
         </h2>
         <section className="about-project__structure-content">
@@ -397,7 +401,7 @@ function AboutProject() {
       <section className="about-project__resources">
         <section className="about-project__resources-links">
           <h2
-            className="about-project__resources-links-title"
+            className="about-project__section-title"
             style={{ gridArea: "title" }}
           >
             Código Fuente y Recursos
@@ -413,7 +417,7 @@ function AboutProject() {
               <p className="about-project__links-item-paragraph">
                 El proyecto completo está disponible en GitHub.
               </p>
-              <p className="about-project__links-button">Link aqui</p>
+              <p className="about-project__links-button btn">Aqui</p>
             </div>
           </div>
           <div
@@ -426,12 +430,12 @@ function AboutProject() {
                 Este proyecto está diseñado para ser desplegado en un entorno de
                 producción.
               </p>
-              <p className="about-project__links-button">Link aqui</p>
+              <p className="about-project__links-button btn">Aqui</p>
             </div>
           </div>
         </section>
         <section className="about-project__expansion">
-          <h2 className="about-project__expansion-title">Visión futura</h2>
+          <h2 className="about-project__section-title">Visión futura</h2>
           <div className="bar-line"></div>
           <div className="about-project__expansion-content">
             <div className="about-project__expansion-item">
