@@ -13,8 +13,10 @@ import securityIcon from "./assets/images/security.png";
 import projectsIcon from "./assets/images/projects.png";
 import uxIcon from "./assets/images/ux.png";
 import optimizationIcon from "./assets/images/optimization.png";
+import { useExternalNavigation } from "../../core/hooks/useExternalNavigation.js";
 
 function AboutProject() {
+  const { goToGitHubProject } = useExternalNavigation();
   return (
     <div className="about-project">
       <Navbar />
@@ -43,8 +45,8 @@ function AboutProject() {
               />
             </section>
             <p className="about-project__structure-item-info">
-              El cliente está organizado para maximizar la reutilización de
-              código y la separación de intereses mediante dos principios clave:
+              El cliente se organiza bajo dos principios clave para maximizar la
+              reutilización de código y la separación de intereses.
             </p>
             <section className="about-project__structure-item-main-content">
               <div className="about-project__structure-subItem">
@@ -52,9 +54,9 @@ function AboutProject() {
                   Arquitectura por Features:
                 </p>
                 <p className="about-project__structure-subItem-desc  theme-primary">
-                  El código está dividido por funcionalidades (auth, tasks,
-                  filters), permitiendo que cada módulo sea independiente y
-                  fácil de mantener.
+                  El código se organiza por funcionalidades (auth, tasks,
+                  filters), asegurando que cada módulo sea independiente y fácil
+                  de mantener.
                 </p>
               </div>
               <div className="about-project__structure-subItem">
@@ -62,10 +64,11 @@ function AboutProject() {
                   Custom Hooks:
                 </p>
                 <p className="about-project__structure-subItem-desc  theme-secondary">
-                  La lógica de negocio y las llamadas a la API se extraen a
-                  Hooks personalizados. Esto asegura que los componentes de la
-                  UI permanezcan "tontos" (dumb), enfocados únicamente en la
-                  presentación y el estado local.
+                  La lógica de negocio se aísla en Hooks Personalizados haciendo
+                  que esta lógica sea completamente reutilizable a través de
+                  diferentes componentes. Los componentes de UI se dedican solo
+                  a la presentación visual, mejorando la legibilidad y
+                  escalabilidad del Frontend.
                 </p>
               </div>
               <div className="about-project__structure-subItem">
@@ -73,9 +76,9 @@ function AboutProject() {
                   Enrutamiento y formularios
                 </p>
                 <p className="about-project__structure-subItem-desc theme-primary">
-                  Se utiliza react-router-dom para la gestión de rutas y
-                  react-hook-form con @hookform/resolvers para manejar
-                  formularios y validaciones complejas de manera eficiente.
+                  Para la gestión de rutas se usa react-router-dom, y los
+                  formularios y validaciones complejas se manejan con
+                  react-hook-form junto a @hookform/resolvers.
                 </p>
               </div>
             </section>
@@ -119,9 +122,9 @@ function AboutProject() {
                 </p>
                 <p className="about-project__structure-subItem-desc theme-primary">
                   La comunicación entre ambos es puramente RESTful (peticiones
-                  HTTP), con la autenticación de sesiones gestionada mediante
-                  JSON Web Tokens (JWT). El código se divide en módulos por
-                  dominio para simplificar el mantenimiento.
+                  HTTP), con la autenticación de sesiones gestionada con JSON
+                  Web Tokens (JWT). El código se divide en módulos por dominio
+                  para simplificar el mantenimiento.
                 </p>
               </div>
             </section>
@@ -220,12 +223,10 @@ function AboutProject() {
           </h2>
 
           <p className="about-project__funcionality-desc">
-            La aplicación cuenta con funcionalidad CRUD en todos los elementos
-            principales del sistema: Tareas, Tags, Categorías y Usuarios. El
-            sistema permite la manipulación y edición en tiempo real de estos
-            desde el panel de control, permitiendo al usuario establecer tareas
-            con múltiples estados. Ademas de poder modificar la informacion del
-            usuario.
+            La aplicación ofrece operaciones CRUD para todos sus elementos
+            principales: Tareas, Tags, Categorías y Usuarios. El usuario puede
+            manipular y editar estos elementos en tiempo real desde el panel de
+            control.
           </p>
         </div>
         <div
@@ -236,11 +237,9 @@ function AboutProject() {
             Modelado Relacional N:M y Robustez de IDs
           </h2>
           <p className="about-project__funcionality-desc">
-            El sistema soporta relaciones Muchos-a-Muchos (N:M) para vincular
-            Tareas con múltiples Tags y Categorías a través de tablas pivote. Se
-            emplea la librería nanoid para generar identificadores alfanuméricos
-            únicos en lugar de IDs autoincrementales, lo que aumenta la robustez
-            del sistema y elimina dependencias secuenciales.
+            El sistema gestiona relaciones Muchos-a-Muchos (N:M) usando tablas
+            pivote. Tambien se utiliza nanoid para generar IDs alfanuméricos
+            únicos en lugar de IDs autoincrementales, lo que mejora la robustez.
           </p>
         </div>
         <div
@@ -251,12 +250,9 @@ function AboutProject() {
             Filtrado Dinámico de Consultas SQL
           </h2>
           <p className="about-project__funcionality-desc">
-            La función getFilteredTasks demuestra un manejo avanzado de
-            consultas. El backend construye la consulta SQL dinámicamente con
-            los parámetros proporcionados (priority, tagId, isCompleted, etc.).
-            Se utilizan las cláusulas LEFT JOIN y HAVING con FIND_IN_SET para
-            filtrar eficientemente las tareas basadas en sus múltiples Tags o
-            Categorías.
+            Se construye la consulta SQL dinámicamente con diversos parámetros.
+            Para un filtrado eficiente basado en múltiples Tags o Categorías, se
+            emplean las cláusulas LEFT JOIN y HAVING junto con FIND_IN_SET.
           </p>
         </div>
         <div
@@ -267,11 +263,10 @@ function AboutProject() {
             Flujos de Trabajo Inteligentes
           </h2>
           <p className="about-project__funcionality-desc">
-            El Dashboard presenta flujos de trabajo clave, centralizando la
-            gestión de las tareas basadas en su estado y fecha. Esto incluye la
-            bandeja de Inbox (para tareas rápidas sin fecha, no completadas) y
-            las secciones dedicadas a "Today" y "Upcoming" (asumiendo su
-            existencia), ofreciendo una navegación guiada por prioridad.
+            El Dashboard centraliza la gestión de tareas clave, organizándolas
+            por estado y fecha para guiar la navegación. Esto incluye la bandeja
+            Inbox (para tareas rápidas) y las secciones "Today" y
+            "Upcoming" , lo que facilita el flujo de trabajo.
           </p>
         </div>
       </section>
@@ -298,21 +293,20 @@ function AboutProject() {
               Autenticación y Cookies
             </h2>
             <p className="about-project__security-item-info">
-              El sistema de autenticación usa JSON Web Tokens (JWT) con un
-              tiempo de expiración definido. La seguridad se maximiza mediante:
+              El sistema de autenticación utiliza JSON Web Tokens (JWT) y
+              maximiza la seguridad con tres medidas clave:
             </p>
             <ul className="about-project__security-item-desc">
               <li>
-                Almacenamiento del token en cookies con el flag HttpOnly. Esto
-                mitiga el riesgo de Cross-Site Scripting (XSS).
+                Almacenamiento en cookies HttpOnly. Para mitigar el riesgo de
+                Cross-Site Scripting (XSS).
               </li>
               <li>
                 Configuración SameSite=Strict en las cookies, protegiendo contra
                 la mayoría de los ataques Cross-Site Request Forgery (CSRF).
               </li>
               <li>
-                Uso de bcrypt para el hashing de contraseñas, nunca almacenando
-                claves en texto plano.
+                Uso de la libreria bcrypt para el hashing de las contraseñas.
               </li>
             </ul>
           </div>
@@ -331,15 +325,14 @@ function AboutProject() {
             </p>
             <ul className="about-project__security-item-desc">
               <li>
-                Todas las interacciones con la base de datos (MySQL) se realizan
-                exclusivamente con Consultas Parametrizadas. Esto garantiza que
-                los inputs del usuario siempre se traten como datos y no como
-                comandos SQL, previniendo la inyección SQL.
+                Todas las interacciones con la base de datos se realizan
+                exclusivamente con Consultas Parametrizadas. Esto permite que
+                los inputs del usuario se traten como datos y no como comandos
+                SQL, previniendo la inyección SQL.
               </li>
               <li>
                 Uso de express-validator para aplicar un esquema de validación
-                estricta de inputs en el registro y en todas las operaciones
-                críticas, asegurando la integridad y el formato de los datos.
+                de inputs, asegurando la integridad y el formato de los datos.
               </li>
             </ul>
           </div>
@@ -359,8 +352,8 @@ function AboutProject() {
             <ul className="about-project__security-item-desc">
               <li>
                 Todas las variables sensibles (claves de JWT, credenciales de
-                DB) se gestionan a través de la librería dotenv y se excluyen
-                del repositorio público mediante .gitignore.
+                DB) se gestionan con dotenv y se excluyen del repositorio
+                público con .gitignore.
               </li>
               <li>
                 Las políticas CORS se restringen explícitamente al origen de
@@ -417,7 +410,13 @@ function AboutProject() {
               <p className="about-project__links-item-paragraph">
                 El proyecto completo está disponible en GitHub.
               </p>
-              <p className="about-project__links-button btn">Aqui</p>
+              <p
+                role="button"
+                onClick={goToGitHubProject}
+                className="about-project__links-button btn"
+              >
+                Aqui
+              </p>
             </div>
           </div>
           <div
@@ -430,7 +429,13 @@ function AboutProject() {
                 Este proyecto está diseñado para ser desplegado en un entorno de
                 producción.
               </p>
-              <p className="about-project__links-button btn">Aqui</p>
+              <p
+                role="button"
+                onClick={goToGitHubProject}
+                className="about-project__links-button btn"
+              >
+                Aqui
+              </p>
             </div>
           </div>
         </section>
