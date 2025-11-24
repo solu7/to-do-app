@@ -1,0 +1,61 @@
+.user-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 3px solid var(--secondary-color);
+  border-radius: 10px;
+  gap: 25px;
+  padding: 35px;
+}
+
+.user-panel__heading {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 15px;
+}
+.user-panel__user-pfp {
+  height: 125px;
+}
+.user-panel__hello-msg {
+  font-size: 25px;
+  color: var(--dark-grey);
+}
+.user-panel__hello-msg span {
+  color: var(--primary-color);
+}
+
+.user-panel__editable-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.user-panel__editable-item-title {
+  color: var(--dark-grey);
+}
+.user-panel__editable-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.user-panel__editable-item-paragraph {
+  font-size: 10px;
+  color: var(--light-grey);
+  font-family: "principal-font";
+}
+.user-panel__editable-item-actions-button {
+  font-size: 12px;
+}
+.user-panel__editable-item-actions-button,
+.user-panel__editable-item-actions-input {
+  width: fit-content;
+  padding: 7px 14px;
+}
+.user-panel__editable-item-actions-input {
+  border: 1px solid var(--ultra-light-grey);
+  border-radius: 5px;
+  font-family: "principal-font";
+  font-size: 13px;
+  outline: none;
+  color: var(--grey);
+}

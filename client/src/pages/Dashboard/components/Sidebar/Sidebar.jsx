@@ -9,6 +9,7 @@ import helpIcon from "../../assets/images/helpIcon.png";
 import AddTaskModal from "../../../../features/tasks/components/AddTaskModal/AddTaskModal.jsx";
 import NavItem from "./components/NavItem.jsx";
 import { navItems } from "./data/navItems.js";
+import UserPanel from "../../../../features/user/components/UserPanel.jsx";
 
 function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
   const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
@@ -94,6 +95,7 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
           animate={isOpen ? "open" : "closed"}
         />
       </div>
+      <UserPanel />
     </motion.nav>
   );
 }

@@ -10,12 +10,12 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid var(--primary-color);
 }
 .btn:hover {
-  transition: all 0.25s ease-in-out;
+  transition: all 0.2s ease-in-out;
   transform: scale(0.95);
   background: none;
-  border: 1px solid var(--primary-color);
   color: var(--primary-color);
   font-family: "principal-font-bold", sans-serif;
   box-shadow: 3px 3px 9px rgba(56, 56, 56, 0.1);
