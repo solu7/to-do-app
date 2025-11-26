@@ -4,7 +4,7 @@
   background-color: white;
   border: 3px solid var(--secondary-color);
   border-radius: 10px;
-  gap: 25px;
+  gap: 40px;
   padding: 35px;
 }
 
@@ -12,10 +12,16 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 15px;
+  gap: 25px;
 }
-.user-panel__user-pfp {
+.user-panel__heading-pfp {
   height: 125px;
+}
+.user-panel__heading-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }
 .user-panel__hello-msg {
   font-size: 25px;
@@ -23,6 +29,13 @@
 }
 .user-panel__hello-msg span {
   color: var(--primary-color);
+  font-style: italic;
+}
+.user-panel__heading-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
 }
 
 .user-panel__editable-item {
@@ -30,8 +43,18 @@
   flex-direction: column;
   gap: 10px;
 }
+.user-panel__editable-item-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
 .user-panel__editable-item-title {
   color: var(--dark-grey);
+}
+.user-panel__editable-item-icon {
+  height: 18px;
+  object-fit: contain;
 }
 .user-panel__editable-item-actions {
   display: flex;
@@ -43,13 +66,12 @@
   color: var(--light-grey);
   font-family: "principal-font";
 }
-.user-panel__editable-item-actions-button {
-  font-size: 12px;
-}
 .user-panel__editable-item-actions-button,
-.user-panel__editable-item-actions-input {
+.user-panel__editable-item-actions-input,
+.user-panel__heading-actions-button {
   width: fit-content;
   padding: 7px 14px;
+  font-size: 12px;
 }
 .user-panel__editable-item-actions-input {
   border: 1px solid var(--ultra-light-grey);
@@ -58,4 +80,5 @@
   font-size: 13px;
   outline: none;
   color: var(--grey);
+  width: 50%;
 }
