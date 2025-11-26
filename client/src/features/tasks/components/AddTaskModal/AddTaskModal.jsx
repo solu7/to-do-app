@@ -27,7 +27,7 @@ import { useTaskItemRelations } from "../../hooks/useTaskItemRelations.js";
 import { useTaskPriority } from "../../../filters/priorities/hooks/useTaskPriority.js";
 import { useTaskDate } from "../../../date/hooks/useTaskDate.js";
 
-const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
+const AddTaskModal = ({ onClose, isOpen }) => {
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
 
@@ -102,7 +102,7 @@ const AddTaskModal = ({ onClose, AddTaskModalIsOpen }) => {
   };
   return (
     <AnimatePresence>
-      {!!AddTaskModalIsOpen && (
+      {!!isOpen && (
         <motion.div
           className="modal-overlay"
           initial={{ opacity: 0 }}

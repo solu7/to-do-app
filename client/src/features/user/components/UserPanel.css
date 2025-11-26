@@ -7,6 +7,30 @@
   gap: 40px;
   padding: 35px;
 }
+.user-panel hr {
+  margin: -20px 0px 0px;
+}
+
+.user-panel__modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-panel__modal-header-title {
+  color: var(--ultra-light-grey);
+  font-family: "principal-font";
+  font-size: 12px;
+}
+.user-panel__close-icon {
+  height: 20px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+.user-panel__close-icon:hover {
+  transform: scale(1.1);
+}
 
 .user-panel__heading {
   display: flex;

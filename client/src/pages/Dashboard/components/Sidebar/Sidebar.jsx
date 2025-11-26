@@ -1,5 +1,5 @@
 import "./Sidebar.css";
-import { useAddTaskModal } from "../../../../features/tasks/hooks/useAddTaskModal.js";
+import { useModal } from "../../../../features/tasks/hooks/useModal.js";
 import { motion } from "framer-motion";
 import userIcon from "../../assets/images/userIcon.png";
 import configIcon from "../../assets/images/configIcon.png";
@@ -12,8 +12,8 @@ import { navItems } from "./data/navItems.js";
 import UserPanel from "../../../../features/user/components/UserPanel.jsx";
 
 function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
-  const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
-    useAddTaskModal();
+  const addTaskModal = useModal();
+  const userPanelModal = useModal();
 
   const sidebarVariants = {
     open: { transition: { duration: 0.8 } },
@@ -55,14 +55,14 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
                 key={idx}
                 {...item}
                 onClick={
-                  item.action === "addTask" ? openAddTaskModal : undefined
+                  item.action === "addTask" ? addTaskModal.open : undefined
                 }
               />
             ))}
           </ul>
           <AddTaskModal
-            onClose={closeAddTaskModal}
-            AddTaskModalIsOpen={addTaskModalIsOpen}
+            onClose={addTaskModal.close}
+            isOpen={addTaskModal.isOpen}
           />
 
           <section className="my-projects">
@@ -84,6 +84,8 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
           className="sidebar-config__icon"
           src={configIcon}
           alt="Config icon"
+          role="button"
+          onClick={userPanelModal.open}
         />
         <motion.img
           className="sidebar-config__icon"
@@ -95,7 +97,10 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
           animate={isOpen ? "open" : "closed"}
         />
       </div>
-      <UserPanel />
+      <UserPanel
+        isOpen={userPanelModal.isOpen}
+        onClose={userPanelModal.close}
+      />
     </motion.nav>
   );
 }

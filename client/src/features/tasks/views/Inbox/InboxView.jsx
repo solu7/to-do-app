@@ -1,5 +1,5 @@
 import "./InboxView.css";
-import { useAddTaskModal } from "../../hooks/useAddTaskModal.js";
+import { useModal } from "../../hooks/useModal.js";
 import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
@@ -12,8 +12,7 @@ import { getTaskPriority } from "../../../filters/priorities/services/priorities
 import inboxIcon from "../../../../pages/Dashboard/assets/images/inboxIcon.png";
 
 function Inbox({ onTaskClick }) {
-  const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
-    useAddTaskModal();
+  const addTaskModal = useModal();
   const { inboxTasks } = useTasks();
   const { data: tagsInTask } = useTaskData(inboxTasks, getTagsInTask);
   const { data: categoriesInTask } = useTaskData(
@@ -61,11 +60,11 @@ function Inbox({ onTaskClick }) {
           </section>
         )}
       </section>
-      <AddTaskButton onClick={openAddTaskModal} />
+      <AddTaskButton onClick={addTaskModal.open} />
 
       <AddTaskModal
-        onClose={closeAddTaskModal}
-        AddTaskModalIsOpen={addTaskModalIsOpen}
+        onClose={addTaskModal.close}
+        AddTaskModalIsOpen={addTaskModal.isOpen}
       />
     </div>
   );
