@@ -10,8 +10,10 @@ import FilteredTasksView from "../../../../features/tasks/views/Filtered/Filtere
 import EditPanel from "../EditPanel/EditPanel.jsx";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
-const API_URL = import.meta.env.VITE_API_URL;
+import { useUser } from "../../../../context/UserContext.jsx";
+
 function DashboardContent() {
+  const { userData } = useUser();
   const {
     dashboardSidebarIsOpen,
     openDashboardSidebar,
@@ -19,7 +21,6 @@ function DashboardContent() {
   } = useDashboardSidebar();
   const { taskEditPanelIsOpen, openTaskEditPanel, closeTaskEditPanel } =
     useTaskEditPanel();
-  const [username, setUsername] = useState("");
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const { getTaskById } = useTasks();
   const selectedTask = selectedTaskId ? getTaskById(selectedTaskId) : null;
@@ -34,27 +35,7 @@ function DashboardContent() {
       closeTaskEditPanel();
     }
   };
-  const getLoggedUsername = async () => {
-    try {
-      const response = await fetch(`${API_URL}/users`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUsername(data.username);
-      }
-    } catch (error) {
-      console.error("Error de conexión:", error);
-      setUsername("Invitado");
-    }
-  };
   useEffect(() => {
-    getLoggedUsername();
     openDashboardSidebar();
   }, []);
 
@@ -63,25 +44,25 @@ function DashboardContent() {
       <Sidebar
         isOpen={dashboardSidebarIsOpen}
         onClose={closeDashboardSidebar}
-        username={username}
+        username={userData?.username || "Invitado"}
         openDashboardSidebar={openDashboardSidebar}
       />
       <div className="dashboard__view">
-      <Routes>
-        <Route
-          path="/"
-          element={<InboxView onTaskClick={handleTaskSelection} />}
-        />
-        <Route
-          path="/completed"
-          element={<CompletedView onTaskClick={handleTaskSelection} />}
-        />
-        <Route path="/filters" element={<FiltersView />} />
-        <Route
-          path="/filtered-tasks"
-          element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
-        />
-      </Routes>
+        <Routes>
+          <Route
+            path="/"
+            element={<InboxView onTaskClick={handleTaskSelection} />}
+          />
+          <Route
+            path="/completed"
+            element={<CompletedView onTaskClick={handleTaskSelection} />}
+          />
+          <Route path="/filters" element={<FiltersView />} />
+          <Route
+            path="/filtered-tasks"
+            element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
+          />
+        </Routes>
       </div>
       <EditPanel
         isOpen={taskEditPanelIsOpen}

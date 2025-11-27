@@ -6,10 +6,46 @@ import emailIcon from "../assets/images/email.png";
 import passIcon from "../assets/images/pass.png";
 import deleteIcon from "../assets/images/delete.png";
 import closeIcon from "../assets/images/close.png";
+import { useUser } from "../../../context/UserContext";
+import { useState, useEffect } from "react";
+import { useUserActions } from "../hooks/useUserActions";
+import ChangePassModal from "../../auth/components/ChangePassModal/ChangePassModal.jsx";
+import { useModal } from "../../tasks/hooks/useModal.js";
 
 function UserPanel({ isOpen, onClose }) {
-  const email = "correo@usercorreo.com";
-  const name = "Nombre";
+  const changePassModal = useModal();
+  const { userData } = useUser();
+  const {
+    updateUsername,
+    isLoading,
+    error,
+    successMessage,
+    setError,
+    setSuccessMessage,
+  } = useUserActions();
+
+  const initialUsername = userData?.username || "";
+  const initialEmail = userData?.email || "";
+
+  const [newUsername, setNewUsername] = useState(initialUsername);
+
+  useEffect(() => {
+    setNewUsername(initialUsername);
+  }, [initialUsername, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setError(null);
+      setSuccessMessage(null);
+    }
+  }, [isOpen, setError, setSuccessMessage]);
+
+  const handleUpdateUsernameClick = async () => {
+    setError(null);
+    setSuccessMessage(null);
+
+    await updateUsername(initialUsername, newUsername);
+  };
 
   return (
     <AnimatePresence>
@@ -41,7 +77,7 @@ function UserPanel({ isOpen, onClose }) {
               />
               <div className="user-panel__heading-content">
                 <p className="user-panel__hello-msg">
-                  Hola <span>Nombre!</span>
+                  Hola <span>{newUsername}</span>
                 </p>
                 <section className="user-panel__heading-actions">
                   <button className="user-panel__heading-actions-button btn">
@@ -65,10 +101,20 @@ function UserPanel({ isOpen, onClose }) {
               <input
                 className="user-panel__editable-item-actions-input"
                 type="text"
-                value={name}
+                value={newUsername}
+                onChange={(e) => setNewUsername(e.target.value)}
+                disabled={isLoading}
               />
-              <button className="user-panel__editable-item-actions-button btn">
-                Cambiar nombre
+              {error && <p className="error-message">{error}</p>}
+              {successMessage && (
+                <p className="success-message">{successMessage}</p>
+              )}
+              <button
+                className="user-panel__editable-item-actions-button btn"
+                onClick={handleUpdateUsernameClick}
+                disabled={isLoading}
+              >
+                {isLoading ? "Cambiando..." : "Cambiar nombre"}
               </button>
             </div>
             <div className="user-panel__editable-item">
@@ -84,8 +130,12 @@ function UserPanel({ isOpen, onClose }) {
                 <input
                   className="user-panel__editable-item-actions-input"
                   type="email"
-                  value={email}
+                  value={initialEmail}
+                  readOnly
                 />
+                <p className="error-message">
+                  El e-mail no puede ser modificado de momento.
+                </p>
                 <button className="user-panel__editable-item-actions-button btn-secondary">
                   Cambiar email
                 </button>
@@ -100,9 +150,16 @@ function UserPanel({ isOpen, onClose }) {
                   alt="Icono de password"
                 />
               </section>
-              <button className="user-panel__editable-item-actions-button btn">
+              <button
+                onClick={changePassModal.open}
+                className="user-panel__editable-item-actions-button btn"
+              >
                 Cambiar contraseña
               </button>
+              <ChangePassModal
+                isOpen={changePassModal.isOpen}
+                onClose={changePassModal.close}
+              />
             </div>
             <div className="user-panel__editable-item user-panel__editable-item--delete-acount">
               <section className="user-panel__editable-item-heading">

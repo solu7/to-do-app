@@ -1,3 +1,7 @@
+.user-panel .error-message, .user-panel .success-message {
+  margin: 0;
+  font-size: 12px;
+}
 .user-panel {
   display: flex;
   flex-direction: column;

@@ -1,0 +1,28 @@
+.change-pass-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.change-pass-modal__input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: none;
+  color: var(--dark-grey);
+}
+.change-pass-modal__input-container input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--ultra-light-grey);
+  color: var(--grey);
+}
+.change-pass-modal__input-container input:focus {
+  border: 2px solid var(--primary-color);
+  outline: none;
+}
+.change-pass-modal .btn {
+  padding: 8px;
+}

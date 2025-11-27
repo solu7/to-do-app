@@ -1,10 +1,13 @@
 import { TaskProvider } from "../../context/TaskContext";
+import { UserProvider } from "../../context/UserContext";
 import DashboardContent from "./components/DashboardContent/DashboardContent";
 
 function Dashboard() {
   return (
     <TaskProvider>
-      <DashboardContent />
+      <UserProvider>
+        <DashboardContent />
+      </UserProvider>
     </TaskProvider>
   );
 }

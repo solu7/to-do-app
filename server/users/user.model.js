@@ -15,6 +15,14 @@ export async function findUserByUsername(username) {
   return rows;
 }
 
+export async function updateUsername(userId, newUsername) {
+  const [result] = await pool.query(
+    "UPDATE users SET username = ? WHERE id = ?",
+    [newUsername, userId]
+  );
+  return result.affectedRows === 1;
+}
+
 export async function createUser(username, email, hashedPassword) {
   const id = nanoid(10);
   const [result] = await pool.query(
@@ -24,11 +32,10 @@ export async function createUser(username, email, hashedPassword) {
   return result;
 }
 
-export const getUsernameByUserId = async (userId) => {
-  const [result] = await pool.query("SELECT username FROM users WHERE id = ?", [
-    userId,
-  ]);
-  if (result.length > 0) {
-    return result[0].username;
-  }
+export const findUserById = async (userId) => {
+  const [result] = await pool.query(
+    "SELECT id, username, email FROM users WHERE id = ?",
+    [userId]
+  );
+  return result[0];
 };
