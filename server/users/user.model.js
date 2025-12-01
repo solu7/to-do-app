@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import pool from "../shared/db.js";
+import { hash } from "bcrypt";
 
 export async function findUserByEmail(email) {
   const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
@@ -38,4 +39,23 @@ export const findUserById = async (userId) => {
     [userId]
   );
   return result[0];
+};
+
+export const findUserPasswordById = async (userId) => {
+  const [result] = await pool.query(
+    "SELECT id, username, email, password FROM users WHERE id = ?",
+    [userId]
+  );
+  return result[0];
+};
+
+export const updatePassword = async (userId, newPlainPassword) => {
+  const hashedNewPassword = await hash(newPlainPassword, 10);
+
+  const [result] = await pool.query(
+    "UPDATE users SET password = ? WHERE id = ?",
+    [hashedNewPassword, userId]
+  );
+
+  return result.affectedRows === 1;
 };

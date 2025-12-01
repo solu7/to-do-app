@@ -1,7 +1,10 @@
 import {
   findUserById,
   updateUsername as __updateUsername,
+  findUserPasswordById,
+  updatePassword as __updatePassword,
 } from "./user.model.js";
+import { compare } from "bcrypt";
 
 export const getUserData = async (req, res) => {
   const userId = req.user.id;
@@ -57,6 +60,52 @@ export const updateUsername = async (req, res) => {
     }
   } catch (error) {
     console.error("Error al actualizar el username:", error);
+    res.status(500).json({ message: "Error interno en el servidor." });
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  const userId = req.user.id;
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword || !newPassword) {
+    return res
+      .status(400)
+      .json({ message: "La contraseña actual y la nueva son requeridas." });
+  }
+
+  try {
+    const user = await findUserPasswordById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado." });
+    }
+
+    const isMatch = await compare(currentPassword, user.password);
+
+    if (!isMatch) {
+      return res
+        .status(401)
+        .json({ message: "La contraseña actual es incorrecta." });
+    }
+
+    if (await compare(newPassword, user.password)) {
+      return res.status(400).json({
+        message: "La nueva contraseña debe ser diferente a la que ya tienes.",
+      });
+    }
+
+    const updated = await __updatePassword(userId, newPassword);
+
+    if (updated) {
+      res.status(200).json({
+        message: "La contraseña se actualizó correctamente.",
+      });
+    } else {
+      res.status(500).json({ message: "Error al actualizar la contraseña." });
+    }
+  } catch (error) {
+    console.error("Error al actualizar la contraseña:", error);
     res.status(500).json({ message: "Error interno en el servidor." });
   }
 };

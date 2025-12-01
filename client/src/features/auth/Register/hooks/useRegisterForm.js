@@ -4,7 +4,7 @@ import { registerUser } from "../registerService.js";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "../validationSchema.js";
+import { registerSchema } from "../../validation/authSchemas.js";
 
 export const useRegisterForm = () => {
   const { goLoginPage } = useNavigation();

@@ -24,3 +24,28 @@ export async function updateUsernameService(newUsername) {
     return { success: false, error: "Error de conexión con el servidor." };
   }
 }
+
+export async function updatePasswordService({ currentPassword, newPassword }) {
+  try {
+    const response = await fetch(`${API_URL}/users/password`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ currentPassword, newPassword }),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      return { success: true, data: result };
+    } else {
+      return {
+        success: false,
+        error: result.message || "Error al procesar la solicitud.",
+      };
+    }
+  } catch (error) {
+    console.error("Error de conexión en updatePasswordService:", error);
+    return { success: false, error: "Error de conexión con el servidor." };
+  }
+}
