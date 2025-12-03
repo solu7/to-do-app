@@ -40,3 +40,7 @@ export const changePasswordSchema = z
     message: "La nueva contraseña debe ser diferente a la actual.",
     path: ["newPassword"],
   });
+
+export const deleteAccountSchema = z.object({
+  password: z.string().min(1, "Debe ingresar su contraseña para confirmar."),
+});

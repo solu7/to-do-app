@@ -10,10 +10,12 @@ import { useUser } from "../../../context/UserContext";
 import { useState, useEffect } from "react";
 import { useUserActions } from "../hooks/useUserActions";
 import ChangePassModal from "../../auth/components/ChangePassModal/ChangePassModal.jsx";
+import DeleteAccountModal from "../../auth/components/DeleteAccountModal/DeleteAccountModal.jsx";
 import { useModal } from "../../tasks/hooks/useModal.js";
 
 function UserPanel({ isOpen, onClose }) {
   const changePassModal = useModal();
+  const deleteAccountModal = useModal();
   const { userData } = useUser();
   const {
     updateUsername,
@@ -176,9 +178,16 @@ function UserPanel({ isOpen, onClose }) {
                 La eliminación de tu cuenta es algo permanente. Perderás el
                 acceso a toda tu información enseguida.
               </p>
-              <button className="user-panel__editable-item-actions-button btn-secondary">
+              <button
+                className="user-panel__editable-item-actions-button btn-secondary"
+                onClick={deleteAccountModal.open}
+              >
                 Eliminar cuenta
               </button>
+              <DeleteAccountModal
+                isOpen={deleteAccountModal.isOpen}
+                onClose={deleteAccountModal.close}
+              />
             </div>
           </div>
         </motion.div>

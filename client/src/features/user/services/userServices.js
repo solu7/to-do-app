@@ -49,3 +49,27 @@ export async function updatePasswordService({ currentPassword, newPassword }) {
     return { success: false, error: "Error de conexión con el servidor." };
   }
 }
+
+export async function deleteAccountService(password) {
+  try {
+    const response = await fetch(`${API_URL}/users/account`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ password }),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      return { success: true, data: result };
+    } else {
+      return {
+        success: false,
+        error: result.message || "Error al eliminar la cuenta.",
+      };
+    }
+  } catch (error) {
+    return { success: false, error: "Error de conexión con el servidor." };
+  }
+}

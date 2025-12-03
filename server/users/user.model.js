@@ -59,3 +59,8 @@ export const updatePassword = async (userId, newPlainPassword) => {
 
   return result.affectedRows === 1;
 };
+
+export async function deleteUser(userId) {
+  const [result] = await pool.query("DELETE FROM users WHERE id = ?", [userId]);
+  return result.affectedRows === 1;
+}

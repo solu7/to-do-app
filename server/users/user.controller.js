@@ -3,6 +3,7 @@ import {
   updateUsername as __updateUsername,
   findUserPasswordById,
   updatePassword as __updatePassword,
+  deleteUser as __deleteUser,
 } from "./user.model.js";
 import { compare } from "bcrypt";
 
@@ -106,6 +107,49 @@ export const updatePassword = async (req, res) => {
     }
   } catch (error) {
     console.error("Error al actualizar la contraseña:", error);
+    res.status(500).json({ message: "Error interno en el servidor." });
+  }
+};
+
+export const deleteAccount = async (req, res) => {
+  const userId = req.user.id;
+  const { password } = req.body;
+
+  if (!password) {
+    return res.status(400).json({
+      message:
+        "La contraseña es requerida para confirmar la eliminación de la cuenta.",
+    });
+  }
+
+  try {
+    const user = await findUserPasswordById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado." });
+    }
+
+    const isMatch = await compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "La contraseña es incorrecta. No se puede eliminar la cuenta.",
+      });
+    }
+
+    const deleted = await __deleteUser(userId);
+
+    if (deleted) {
+      res.status(200).json({
+        message: "Cuenta eliminada exitosamente.",
+      });
+    } else {
+      res
+        .status(500)
+        .json({ message: "Error al intentar eliminar la cuenta." });
+    }
+  } catch (error) {
+    console.error("Error al eliminar la cuenta:", error);
     res.status(500).json({ message: "Error interno en el servidor." });
   }
 };
