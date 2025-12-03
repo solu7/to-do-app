@@ -64,7 +64,7 @@ function Inbox({ onTaskClick }) {
 
       <AddTaskModal
         onClose={addTaskModal.close}
-        AddTaskModalIsOpen={addTaskModal.isOpen}
+        isOpen={addTaskModal.isOpen}
       />
     </div>
   );
