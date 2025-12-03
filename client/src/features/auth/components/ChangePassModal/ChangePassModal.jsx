@@ -4,6 +4,7 @@ import { useChangePassword } from "../../hooks/useChangePassword";
 import { InputField } from "../../../../core/components/InputField/InputField";
 import passIcon from "../../../user/assets/images/pass.png";
 import closeIcon from "../../../user/assets/images/close.png";
+import { useUser } from "../../../../context/UserContext.jsx";
 
 const AUTO_CLOSE_TIME_MS = 2500;
 
@@ -17,6 +18,8 @@ function ChangePassModal({ isOpen, onClose }) {
     cleanState,
     resetForm,
   } = useChangePassword();
+
+  const { userData } = useUser();
 
   useEffect(() => {
     if (!isOpen) {
@@ -66,44 +69,53 @@ function ChangePassModal({ isOpen, onClose }) {
             />
           </section>
           <hr />
-          {apiError && <p className="error-message">{apiError}</p>}
-          {successMessage && (
-            <p className="success-message">{successMessage}</p>
+          {!userData?.username === "Invitado" && (
+            <>
+              {apiError && <p className="error-message">{apiError}</p>}
+              {successMessage && (
+                <p className="success-message">{successMessage}</p>
+              )}
+              <InputField
+                inputIcon={passIcon}
+                inputTitle="Contraseña Actual"
+                type="password"
+                inputName="currentPassword"
+                placeholder="Ingrese su contraseña actual"
+                register={register}
+                errors={errors}
+              />
+              <InputField
+                inputIcon={passIcon}
+                inputTitle="Nueva Contraseña"
+                type="password"
+                inputName="newPassword"
+                placeholder="Cree una nueva contraseña segura"
+                register={register}
+                errors={errors}
+              />
+              <InputField
+                inputIcon={passIcon}
+                inputTitle="Confirma la nueva contraseña"
+                type="password"
+                inputName="confirmNewPassword"
+                placeholder="Confirme la nueva contraseña"
+                register={register}
+                errors={errors}
+              />
+              <button
+                className="btn"
+                type="submit"
+                disabled={isLoading || successMessage}
+              >
+                {isLoading ? "Guardando..." : "Cambiar la contraseña"}
+              </button>
+            </>
           )}
-          <InputField
-            inputIcon={passIcon}
-            inputTitle="Contraseña Actual"
-            type="password"
-            inputName="currentPassword"
-            placeholder="Ingrese su contraseña actual"
-            register={register}
-            errors={errors}
-          />
-          <InputField
-            inputIcon={passIcon}
-            inputTitle="Nueva Contraseña"
-            type="password"
-            inputName="newPassword"
-            placeholder="Cree una nueva contraseña segura"
-            register={register}
-            errors={errors}
-          />
-          <InputField
-            inputIcon={passIcon}
-            inputTitle="Confirma la nueva contraseña"
-            type="password"
-            inputName="confirmNewPassword"
-            placeholder="Confirme la nueva contraseña"
-            register={register}
-            errors={errors}
-          />
-          <button
-            className="btn"
-            type="submit"
-            disabled={isLoading || successMessage}
-          >
-            {isLoading ? "Guardando..." : "Cambiar la contraseña"}
-          </button>
+          {userData?.username === "Invitado" && (
+            <p className="success-message">
+              No puedes cambiar la contraseña de la cuenta de invitado.
+            </p>
+          )}
         </form>
       </div>
     )
