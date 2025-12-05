@@ -1,9 +1,9 @@
 import { Router } from "express";
 const router = Router();
-import verifyToken from "../auth/auth.middleware.js";
+import { verifyOnlyToken } from "../auth/auth.middleware.js";
 import { setTaskDate, getTaskDate } from "./date.controller.js";
 
-router.get("/:taskId", verifyToken, getTaskDate);
-router.post("/:taskId", verifyToken, setTaskDate);
+router.get("/:taskId", verifyOnlyToken, getTaskDate);
+router.post("/:taskId", verifyOnlyToken, setTaskDate);
 
 export default router;

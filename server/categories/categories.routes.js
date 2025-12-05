@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import verifyToken from "../auth/auth.middleware.js";
+import { verifyOnlyToken } from "../auth/auth.middleware.js";
 import {
   createCategory,
   assignCategoryToTask,
@@ -9,14 +9,14 @@ import {
   getCategoriesInTask
 } from "./category.controller.js";
 
-router.get("/", verifyToken, getAllCategories);
+router.get("/", verifyOnlyToken, getAllCategories);
 
-router.get("/:taskId", verifyToken, getCategoriesInTask);
+router.get("/:taskId", verifyOnlyToken, getCategoriesInTask);
 
-router.post("/", verifyToken, createCategory);
+router.post("/", verifyOnlyToken, createCategory);
 
-router.post("/:taskId", verifyToken, assignCategoryToTask);
+router.post("/:taskId", verifyOnlyToken, assignCategoryToTask);
 
-router.delete("/:taskId", verifyToken, removeCategoryFromTask);
+router.delete("/:taskId", verifyOnlyToken, removeCategoryFromTask);
 
 export default router;

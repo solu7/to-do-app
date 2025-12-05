@@ -5,20 +5,21 @@ import {
   findUserByUsername,
   findUserByEmail,
   createUser,
+  createGuestUser,
 } from "../users/user.model.js";
 
 export async function register(req, res) {
   const { username, email, password } = req.body;
   if (!email || !password || !username) {
-    return res
-      .status(400)
-      .json({ message: "All fields are required." });
+    return res.status(400).json({ message: "All fields are required." });
   }
 
   try {
     const existingUser = await findUserByEmail(email);
     if (existingUser.length > 0) {
-      return res.status(409).json({ message: "The email is already registered" });
+      return res
+        .status(409)
+        .json({ message: "The email is already registered" });
     }
 
     const existingUsername = await findUserByUsername(username);
@@ -41,9 +42,7 @@ export async function register(req, res) {
 export async function login(req, res) {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "Email and password are required" });
+    return res.status(400).json({ message: "Email and password are required" });
   }
 
   try {
@@ -78,5 +77,38 @@ export async function login(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+}
+
+export async function loginAsGuest(req, res) {
+  try {
+    const userId = await createGuestUser();
+    const user = await findUserById(userId);
+
+    const token = sign(
+      { id: userId, isGuest: user.is_guest, username: user.username },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "2h",
+      }
+    );
+
+    const maxAgeMs = 7200000;
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: maxAgeMs,
+    });
+
+    res.status(200).json({
+      message: "Inicio de sesión como invitado exitoso.",
+    });
+  } catch (error) {
+    console.error("Error al iniciar sesión como invitado:", error);
+    res
+      .status(500)
+      .json({ message: "Server error al crear sesión de invitado" });
   }
 }

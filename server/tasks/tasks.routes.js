@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import verifyToken from "../auth/auth.middleware.js";
+import { verifyOnlyToken } from "../auth/auth.middleware.js";
 import {
   getAllTasks,
   getInboxTasks,
@@ -13,22 +13,22 @@ import {
   getFilteredTasks,
 } from "./task.controller.js";
 
-router.get("/", verifyToken, getInboxTasks);
+router.get("/", verifyOnlyToken, getInboxTasks);
 
-router.get("/all", verifyToken, getAllTasks);
+router.get("/all", verifyOnlyToken, getAllTasks);
 
-router.get("/filtered", verifyToken, getFilteredTasks);
+router.get("/filtered", verifyOnlyToken, getFilteredTasks);
 
-router.get("/completed", verifyToken, getCompletedTasks);
+router.get("/completed", verifyOnlyToken, getCompletedTasks);
 
-router.get("/:id/status", verifyToken, getTaskCompletionStatus);
+router.get("/:id/status", verifyOnlyToken, getTaskCompletionStatus);
 
-router.post("/", verifyToken, createTask);
+router.post("/", verifyOnlyToken, createTask);
 
-router.patch("/:id", verifyToken, updateTask);
+router.patch("/:id", verifyOnlyToken, updateTask);
 
-router.patch("/:id/toggle", verifyToken, toggleTaskCompletionStatus);
+router.patch("/:id/toggle", verifyOnlyToken, toggleTaskCompletionStatus);
 
-router.delete("/:id", verifyToken, deleteTask);
+router.delete("/:id", verifyOnlyToken, deleteTask);
 
 export default router;

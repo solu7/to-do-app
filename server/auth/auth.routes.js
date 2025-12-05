@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import { login, register } from "../auth/auth.controller.js";
+import { login, register, loginAsGuest } from "../auth/auth.controller.js";
 import { registerValidator } from "./auth.validator.js";
 import { validationResult } from "express-validator";
 
@@ -17,5 +17,6 @@ router.post(
   register
 );
 router.post("/login", login);
+router.post("/guest", loginAsGuest);
 
 export default router;

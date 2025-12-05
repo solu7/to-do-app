@@ -33,9 +33,29 @@ export async function createUser(username, email, hashedPassword) {
   return result;
 }
 
+export async function createGuestUser() {
+  const id = nanoid(10);
+
+  const guestUsername = `Invitado_${nanoid(6)}`;
+  const guestEmail = `guest_${id}@temp.com`;
+  const tempPassword = await hash(nanoid(20), 10);
+
+  try {
+    const [result] = await pool.query(
+      "INSERT INTO users (id, username, email, password, is_guest) VALUES (?, ?, ?, ?, TRUE)",
+      [id, guestUsername, guestEmail, tempPassword]
+    );
+
+    return id;
+  } catch (error) {
+    console.error("Error al crear usuario invitado:", error);
+    throw new Error("Fallo al crear el usuario invitado en la base de datos.");
+  }
+}
+
 export const findUserById = async (userId) => {
   const [result] = await pool.query(
-    "SELECT id, username, email FROM users WHERE id = ?",
+    "SELECT id, username, email, is_guest FROM users WHERE id = ?",
     [userId]
   );
   return result[0];
