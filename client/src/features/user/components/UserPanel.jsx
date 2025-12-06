@@ -26,8 +26,12 @@ function UserPanel({ isOpen, onClose }) {
     setSuccessMessage,
   } = useUserActions();
 
+  const isGuest = userData?.is_guest;
   const initialUsername = userData?.username || "";
   const initialEmail = userData?.email || "";
+  const displayedEmail = isGuest
+    ? "No Aplica (Sesión de Invitado)"
+    : initialEmail;
 
   const [newUsername, setNewUsername] = useState(initialUsername);
 
@@ -132,15 +136,24 @@ function UserPanel({ isOpen, onClose }) {
                 <input
                   className="user-panel__editable-item-actions-input"
                   type="email"
-                  value={initialEmail}
+                  value={displayedEmail}
                   readOnly
                 />
-                <p className="error-message">
-                  El e-mail no puede ser modificado de momento.
-                </p>
-                <button className="user-panel__editable-item-actions-button btn-secondary">
-                  Cambiar email
-                </button>
+                {isGuest ? (
+                  <p className="success-message">
+                    Inicia sesión con una cuenta real para ver y modificar tu
+                    email.
+                  </p>
+                ) : (
+                  <>
+                    <p className="error-message">
+                      El e-mail no puede ser modificado de momento.
+                    </p>
+                    <button className="user-panel__editable-item-actions-button btn-secondary">
+                      Cambiar email
+                    </button>
+                  </>
+                )}
               </section>
             </div>
             <div className="user-panel__editable-item">

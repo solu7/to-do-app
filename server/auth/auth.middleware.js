@@ -10,6 +10,7 @@ export async function authenticateUser(req, res, next) {
 
   try {
     const decoded = verify(token, process.env.JWT_SECRET);
+    req.tokenExp = decoded.exp;
 
     const user = await findUserById(decoded.id);
 

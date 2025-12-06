@@ -1,6 +1,6 @@
 import "./Sidebar.css";
 import { useModal } from "../../../../features/tasks/hooks/useModal.js";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import userIcon from "../../assets/images/userIcon.png";
 import configIcon from "../../assets/images/configIcon.png";
 import closepanelIcon from "../../assets/images/closepanelIcon.png";
@@ -10,75 +10,97 @@ import AddTaskModal from "../../../../features/tasks/components/AddTaskModal/Add
 import NavItem from "./components/NavItem.jsx";
 import { navItems } from "./data/navItems.js";
 import UserPanel from "../../../../features/user/components/UserPanel.jsx";
+import { useUser } from "../../../../context/UserContext.jsx";
+
+const formatTime = (totalSeconds) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const pad = (num) => String(num).padStart(2, "0");
+
+  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+};
 
 function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
+  const { userData, sessionTimeRemaining } = useUser();
+  const isGuest = userData?.is_guest;
   const addTaskModal = useModal();
   const userPanelModal = useModal();
 
-  const sidebarVariants = {
-    open: { transition: { duration: 0.8 } },
-    closed: { transition: { duration: 0.8 } },
+  const contentVariants = {
+    open: { opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.3 } },
+    closed: { opacity: 0, x: -50, transition: { duration: 0.2 } },
   };
+
   const arrowVariants = {
-    open: { rotate: 0, transition: { duration: 0.02 } },
-    closed: { rotate: 180, transition: { duration: 0.02 } },
+    open: { rotate: 0, transition: { duration: 0.2 } },
+    closed: { rotate: 180, transition: { duration: 0.2 } },
   };
   return (
     <motion.nav
       className="sidebar"
-      variants={sidebarVariants}
-      initial={isOpen ? "open" : "closed"}
+      layout
+      initial={false}
       animate={isOpen ? "open" : "closed"}
-      exit="closed"
     >
-      {isOpen && (
-        <motion.div
-          className="sidebar-content-wrapper"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.3 } }}
-          exit={{ opacity: 0 }}
-        >
-          <section className="sidebar-header">
-            <div className="sidebar-user">
-              <img
-                className="sidebar-header-img"
-                src={userIcon}
-                alt="User icon"
-              />
-              <p>{username}</p>
-            </div>
-          </section>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="sidebar-content-wrapper"
+            variants={contentVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+          >
+            {isGuest && sessionTimeRemaining > 0 && (
+              <p className="sidebar__guest-timer">
+                Sesión de invitado expira en:{" "}
+                <span>{formatTime(sessionTimeRemaining)}</span>
+              </p>
+            )}
+            <section className="sidebar-header">
+              <div className="sidebar-user">
+                <img
+                  className="sidebar-header-img"
+                  src={userIcon}
+                  alt="User icon"
+                />
+                <p>{username}</p>
+              </div>
+            </section>
 
-          <ul className="principal-nav">
-            {navItems.map((item, idx) => (
-              <NavItem
-                key={idx}
-                {...item}
-                onClick={
-                  item.action === "addTask" ? addTaskModal.open : undefined
-                }
-              />
-            ))}
-          </ul>
-          <AddTaskModal
-            onClose={addTaskModal.close}
-            isOpen={addTaskModal.isOpen}
-          />
+            <ul className="principal-nav">
+              {navItems.map((item, idx) => (
+                <NavItem
+                  key={idx}
+                  {...item}
+                  onClick={
+                    item.action === "addTask" ? addTaskModal.open : undefined
+                  }
+                />
+              ))}
+            </ul>
+            <AddTaskModal
+              onClose={addTaskModal.close}
+              isOpen={addTaskModal.isOpen}
+            />
 
-          <section className="my-projects">
-            <p>Mis proyectos</p>
-            <div className="project">
-              <img src={projectsIcon} alt="Project icon" />
-              <p>Proyecto</p>
-            </div>
-          </section>
+            <section className="my-projects">
+              <p>Mis proyectos</p>
+              <div className="project">
+                <img src={projectsIcon} alt="Project icon" />
+                <p>Proyecto</p>
+              </div>
+            </section>
 
-          <section className="sidebar-help">
-            <img src={helpIcon} alt="Help icon" />
-            <p>Mas</p>
-          </section>
-        </motion.div>
-      )}
+            <section className="sidebar-help">
+              <img src={helpIcon} alt="Help icon" />
+              <p>Mas</p>
+            </section>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="sidebar-config">
         <img
           className="sidebar-config__icon"

@@ -14,14 +14,6 @@ export const useUserActions = () => {
     setError(null);
     setSuccessMessage(null);
 
-    if (currentUsername === "Invitado") {
-      setError(
-        "Acceso denegado: El usuario invitado no puede cambiar su nombre."
-      );
-      setIsLoading(false);
-      return false;
-    }
-
     if (trimmedUsername === currentUsername || trimmedUsername === "") {
       setError(
         "El nuevo nombre debe ser diferente al actual y no puede estar vacío."

@@ -4,6 +4,7 @@ const { sign } = jsonwebtoken;
 import {
   findUserByUsername,
   findUserByEmail,
+  findUserById,
   createUser,
   createGuestUser,
 } from "../users/user.model.js";

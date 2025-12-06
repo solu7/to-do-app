@@ -20,6 +20,7 @@ function ChangePassModal({ isOpen, onClose }) {
   } = useChangePassword();
 
   const { userData } = useUser();
+  const isGuest = userData?.is_guest;
 
   useEffect(() => {
     if (!isOpen) {
@@ -69,7 +70,7 @@ function ChangePassModal({ isOpen, onClose }) {
             />
           </section>
           <hr />
-          {!userData?.username === "Invitado" && (
+          {!isGuest ? (
             <>
               {apiError && <p className="error-message">{apiError}</p>}
               {successMessage && (
@@ -110,8 +111,7 @@ function ChangePassModal({ isOpen, onClose }) {
                 {isLoading ? "Guardando..." : "Cambiar la contraseña"}
               </button>
             </>
-          )}
-          {userData?.username === "Invitado" && (
+          ) : (
             <p className="success-message">
               No puedes cambiar la contraseña de la cuenta de invitado.
             </p>

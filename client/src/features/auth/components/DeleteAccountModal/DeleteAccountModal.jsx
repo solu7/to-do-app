@@ -12,6 +12,7 @@ const REDIRECTION_DELAY_MS = 3000;
 function DeleteAccountModal({ isOpen, onClose }) {
   const { goToHome } = useNavigation();
   const { userData } = useUser();
+  const isGuest = userData?.is_guest;
   const { form, onSubmit, isLoading, apiError, successMessage } =
     useDeleteAccount();
 
@@ -54,7 +55,7 @@ function DeleteAccountModal({ isOpen, onClose }) {
             />
           </section>
           <hr />
-          {!userData?.username === "Invitado" && (
+          {!isGuest ? (
             <>
               <div className="delete-account-modal__info">
                 <p>
@@ -85,17 +86,16 @@ function DeleteAccountModal({ isOpen, onClose }) {
                 {isLoading ? "Eliminando..." : "Eliminar cuenta"}
               </button>
             </>
+          ) : (
+            <p className="success-message">
+              No puedes eliminar la cuenta de invitado.
+            </p>
           )}
           {successMessage && (
             <p className="success-message">{successMessage}</p>
           )}
           {isLoading && <p className="success-message">{isLoading}</p>}
           {apiError && <p className="error-message">{apiError}</p>}
-          {userData?.username === "Invitado" && (
-            <p className="success-message">
-              No puedes eliminar la cuenta de invitado.
-            </p>
-          )}
         </form>
       </div>
     )
