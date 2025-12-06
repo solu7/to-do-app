@@ -84,3 +84,16 @@ export async function deleteUser(userId) {
   const [result] = await pool.query("DELETE FROM users WHERE id = ?", [userId]);
   return result.affectedRows === 1;
 }
+
+export async function deleteExpiredGuestUsers() {
+  const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
+
+  const [result] = await pool.query(
+    `DELETE FROM users 
+         WHERE is_guest = TRUE 
+         AND created_at < ?`,
+    [twoHoursAgo]
+  );
+
+  return result.affectedRows;
+}
