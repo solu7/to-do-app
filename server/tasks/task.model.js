@@ -1,4 +1,9 @@
 import pool from "../shared/db.js";
+import {
+  defaultCategories,
+  defaultTags,
+  defaultTasks,
+} from "../shared/defaultData.js";
 
 export const getAllTasks = async (userId) => {
   const [tasks] = await pool.query(
@@ -134,3 +139,74 @@ export const toggleTaskCompletion = async (taskId, userId, completedStatus) => {
     throw new Error("Tarea no encontrada o no autorizada para el usuario.");
   }
 };
+
+export async function initializeUserData(userId) {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    await connection.beginTransaction();
+
+    const categoryMap = {};
+    const tagMap = {};
+
+    for (const cat of defaultCategories) {
+      const [result] = await connection.query(
+        `INSERT INTO categories (user_id, name) VALUES (?, ?)`,
+        [userId, cat.name]
+      );
+      categoryMap[cat.name] = result.insertId;
+    }
+
+    // 2. CREAR ETIQUETAS (tags)
+    for (const tag of defaultTags) {
+      const [result] = await connection.query(
+        `INSERT INTO tags (user_id, name) VALUES (?, ?)`,
+        [userId, tag.name]
+      );
+      tagMap[tag.name] = result.insertId;
+    }
+
+    for (const task of defaultTasks) {
+      const categoryId = categoryMap[task.categoryName];
+
+      const [taskResult] = await connection.query(
+        `INSERT INTO tasks (user_id, title, description, priority) VALUES (?, ?, ?, ?)`,
+        [userId, task.title, task.description, task.priority]
+      );
+      const taskId = taskResult.insertId;
+
+      if (categoryId) {
+        await connection.query(
+          `INSERT IGNORE INTO task_categories (task_id, category_id) VALUES (?, ?)`,
+          [taskId, categoryId]
+        );
+      }
+
+      for (const tagName of task.tagNames) {
+        const tagId = tagMap[tagName];
+        if (tagId) {
+          await connection.query(
+            `INSERT IGNORE INTO task_tags (task_id, tag_id) VALUES (?, ?)`,
+            [taskId, tagId]
+          );
+        }
+      }
+    }
+
+    await connection.commit();
+    console.log(`Datos iniciales cargados para el usuario: ${userId}`);
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+    console.error(
+      `Error al inicializar datos para el usuario ${userId}:`,
+      error
+    );
+    throw error;
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+}

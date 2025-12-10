@@ -9,6 +9,8 @@ import {
   createGuestUser,
 } from "../users/user.model.js";
 
+import { initializeUserData } from "../tasks/task.model.js";
+
 export async function register(req, res) {
   const { username, email, password } = req.body;
   if (!email || !password || !username) {
@@ -31,7 +33,8 @@ export async function register(req, res) {
     }
 
     const hashedPassword = await hash(password, 10);
-    await createUser(username, email, hashedPassword);
+    const userId = await createUser(username, email, hashedPassword);
+    await initializeUserData(userId);
 
     res.status(201).json({ message: "Successfully registered user" });
   } catch (error) {
@@ -84,6 +87,7 @@ export async function login(req, res) {
 export async function loginAsGuest(req, res) {
   try {
     const userId = await createGuestUser();
+    await initializeUserData(userId);
     const user = await findUserById(userId);
 
     const token = sign(
