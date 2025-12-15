@@ -11,6 +11,8 @@ import {
   getTaskCompletionStatus,
   toggleTaskCompletionStatus,
   getFilteredTasks,
+  setTaskDueDate,
+  getTaskDueDate,
 } from "./task.controller.js";
 
 router.get("/", verifyOnlyToken, getInboxTasks);
@@ -23,7 +25,11 @@ router.get("/completed", verifyOnlyToken, getCompletedTasks);
 
 router.get("/:id/status", verifyOnlyToken, getTaskCompletionStatus);
 
+router.get("/:taskId/date", verifyOnlyToken, getTaskDueDate);
+
 router.post("/", verifyOnlyToken, createTask);
+
+router.post("/:taskId/date", verifyOnlyToken, setTaskDueDate);
 
 router.patch("/:id", verifyOnlyToken, updateTask);
 

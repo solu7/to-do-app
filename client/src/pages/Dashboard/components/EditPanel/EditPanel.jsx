@@ -28,7 +28,7 @@ import {
 } from "../../../../features/filters/categories/services/categoriesServices";
 import { toggleTaskCompletion } from "../../../../features/tasks/services/tasksServices";
 import { useTasks } from "../../../../context/TaskContext";
-import { useTaskDate } from "../../../../features/date/hooks/useTaskDate";
+import { useTaskDueDate } from "../../../../features/tasks/date/hooks/useTaskDueDate";
 import { useTaskData } from "../../../../features/tasks/services/useTaskData";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
@@ -114,8 +114,8 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     });
   };
 
-  const { selectedDate, handleDateChange, formattedDateText } =
-    useTaskDate(task);
+  const { selectedDueDate, handleDueDateChange, formattedDateText } =
+    useTaskDueDate(task);
 
   const { priorityIcon, handleSavePriority } = useTaskPriority(task);
 
@@ -159,8 +159,8 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
           <section className="edit-panel__items">
             <div className="edit-panel__date-container">
               <DatePicker
-                selected={selectedDate}
-                onChange={handleDateChange}
+                selected={selectedDueDate}
+                onChange={handleDueDateChange}
                 locale={es}
                 dateFormat="dd/MM/yyyy"
                 showOutsideDays={false}

@@ -9,6 +9,9 @@ import {
   getTaskCompletionStatus as _getTaskCompletionStatus,
   toggleTaskCompletion as _toggleTaskCompletion,
   getFilteredTasks as _getFilteredTasks,
+  getTaskDueDate as _getTaskDueDate,
+  setTaskDueDate as _setTaskDueDate,
+  removeTaskDueDate as _removeTaskDueDate,
 } from "./task.model.js";
 
 export const getAllTasks = async (req, res) => {
@@ -195,5 +198,57 @@ export const toggleTaskCompletionStatus = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error del servidor al actualizar la tarea." });
+  }
+};
+
+export const getTaskDueDate = async (req, res) => {
+  const userId = req.user.id;
+  const { taskId } = req.params;
+
+  try {
+    const taskDueDate = await _getTaskDueDate(userId, taskId);
+
+    if (taskDueDate === null) {
+      return res
+        .status(200)
+        .json({ due_date: null, message: "No se le asigno una fecha." });
+    }
+
+    res.status(200).json({ due_date: taskDueDate });
+  } catch (error) {
+    console.error("Error al obtener la fecha de vencimiento:", error);
+    if (error.message.includes("no autorizada")) {
+      return res.status(403).json({ message: error.message });
+    }
+    res.status(404).json({ message: "Tarea no encontrada." });
+  }
+};
+
+export const setTaskDueDate = async (req, res) => {
+  const userId = req.user.id;
+  const { taskId } = req.params;
+  const { date } = req.body;
+
+  try {
+    if (!date) {
+      await _removeTaskDueDate(userId, taskId);
+      return res
+        .status(200)
+        .json({ message: "Fecha de la tarea eliminada correctamente." });
+    }
+
+    const dateObject = new Date(date);
+    const formattedDate = dateObject.toISOString().split("T")[0];
+
+    await _setTaskDueDate(userId, taskId, formattedDate);
+    res
+      .status(200)
+      .json({ message: "Fecha de la tarea guardada correctamente." });
+  } catch (error) {
+    console.error("Error al guardar/eliminar la fecha:", error);
+    if (error.message.includes("no autorizada")) {
+      return res.status(403).json({ message: error.message });
+    }
+    res.status(404).json({ message: "Tarea no encontrada." });
   }
 };

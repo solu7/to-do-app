@@ -5,12 +5,53 @@ import {
   defaultTasks,
 } from "../shared/defaultData.js";
 
+/*
+ * CRUD principal de las tareas
+ */
+export const createTask = async (userId, title, description) => {
+  const [result] = await pool.query(
+    `INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)`,
+    [userId, title, description]
+  );
+  const [newTask] = await pool.query("SELECT * FROM tasks WHERE id = ?", [
+    result.insertId,
+  ]);
+  return newTask[0];
+};
+
 export const getAllTasks = async (userId) => {
   const [tasks] = await pool.query(
     "SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC",
     [userId]
   );
   return tasks;
+};
+
+export const updateTask = async (taskId, userId, fields, values) => {
+  const sql = `UPDATE tasks SET ${fields.join(
+    ", "
+  )} WHERE id = ? AND user_id = ?`;
+  values.push(taskId, userId);
+  return pool.query(sql, values);
+};
+
+export const deleteTask = async (taskId, userId) => {
+  const [result] = await pool.query(
+    "DELETE FROM tasks WHERE id = ? AND user_id = ?",
+    [taskId, userId]
+  );
+  return result;
+};
+
+/*
+ * Obtener tareas FILTRADAS
+ */
+export const findTaskById = async (taskId, userId) => {
+  const [rows] = await pool.query(
+    "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
+    [taskId, userId]
+  );
+  return rows;
 };
 
 export const getInboxTasks = async (userId) => {
@@ -83,41 +124,9 @@ export const getFilteredTasks = async (userId, filters = {}) => {
   }
 };
 
-export const createTask = async (userId, title, description) => {
-  const [result] = await pool.query(
-    `INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)`,
-    [userId, title, description]
-  );
-  const [newTask] = await pool.query("SELECT * FROM tasks WHERE id = ?", [
-    result.insertId,
-  ]);
-  return newTask[0];
-};
-
-export const updateTask = async (taskId, userId, fields, values) => {
-  const sql = `UPDATE tasks SET ${fields.join(
-    ", "
-  )} WHERE id = ? AND user_id = ?`;
-  values.push(taskId, userId);
-  return pool.query(sql, values);
-};
-
-export const findTaskById = async (taskId, userId) => {
-  const [rows] = await pool.query(
-    "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
-    [taskId, userId]
-  );
-  return rows;
-};
-
-export const deleteTask = async (taskId, userId) => {
-  const [result] = await pool.query(
-    "DELETE FROM tasks WHERE id = ? AND user_id = ?",
-    [taskId, userId]
-  );
-  return result;
-};
-
+/*
+ * ESTO DE COMPLETADO en las tareas
+ */
 export const getTaskCompletionStatus = async (taskId, userId, column) => {
   const [tasks] = await pool.query(
     `SELECT ${column} FROM tasks WHERE id = ? AND user_id = ?`,
@@ -140,6 +149,48 @@ export const toggleTaskCompletion = async (taskId, userId, completedStatus) => {
   }
 };
 
+/*
+ * FECHAS en las tareas
+ */
+export const getTaskDueDate = async (userId, taskId) => {
+  const [rows] = await pool.query(
+    "SELECT due_date FROM tasks WHERE id = ? AND user_id = ?",
+    [taskId, userId]
+  );
+
+  if (rows.length === 0) {
+    throw new Error("Tarea no encontrada o no autorizada.");
+  }
+  return rows[0].due_date;
+};
+
+export const setTaskDueDate = async (userId, taskId, date) => {
+  const [result] = await pool.query(
+    "UPDATE tasks SET due_date = ? WHERE id = ? AND user_id = ?",
+    [date, taskId, userId]
+  );
+
+  if (result.affectedRows === 0) {
+    throw new Error("Tarea no encontrada o no autorizada.");
+  }
+  return result;
+};
+
+export const removeTaskDueDate = async (userId, taskId) => {
+  const [result] = await pool.query(
+    "UPDATE tasks SET due_date = NULL WHERE id = ? AND user_id = ?",
+    [taskId, userId]
+  );
+
+  if (result.affectedRows === 0) {
+    throw new Error("Tarea no encontrada o no autorizada.");
+  }
+  return result;
+};
+
+/*
+ * CARGA LAS TAREAS, TAGS Y CATEGORIAS POR DEFECTO
+ */
 export async function initializeUserData(userId) {
   let connection;
   try {
@@ -157,7 +208,6 @@ export async function initializeUserData(userId) {
       categoryMap[cat.name] = result.insertId;
     }
 
-    // 2. CREAR ETIQUETAS (tags)
     for (const tag of defaultTags) {
       const [result] = await connection.query(
         `INSERT INTO tags (user_id, name) VALUES (?, ?)`,

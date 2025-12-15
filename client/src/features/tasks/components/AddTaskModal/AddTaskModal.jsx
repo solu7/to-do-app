@@ -25,7 +25,7 @@ import {
 import useFetchAllData from "../../../../core/hooks/useFetchAllData.js";
 import { useTaskItemRelations } from "../../hooks/useTaskItemRelations.js";
 import { useTaskPriority } from "../../../filters/priorities/hooks/useTaskPriority.js";
-import { useTaskDate } from "../../../date/hooks/useTaskDate.js";
+import { useTaskDueDate } from "../../date/hooks/useTaskDueDate.js";
 
 const AddTaskModal = ({ onClose, isOpen }) => {
   const [title, setTitle] = useState("Titulo de la tarea");
@@ -40,8 +40,12 @@ const AddTaskModal = ({ onClose, isOpen }) => {
     handleSavePriority,
     priorityIcon,
   } = useTaskPriority();
-  const { selectedDate, handleDateChange, formattedDateText, handleSaveDate } =
-    useTaskDate();
+  const {
+    selectedDueDate,
+    handleDueDateChange,
+    formattedDateText,
+    handleSaveDueDate,
+  } = useTaskDueDate();
 
   const {
     selectedTags,
@@ -63,7 +67,7 @@ const AddTaskModal = ({ onClose, isOpen }) => {
   const closeAndResetRelations = () => {
     resetRelations();
     handleSetPriority(null);
-    handleDateChange(null);
+    handleDueDateChange(null);
     setTitle("Titulo de la tarea");
     setDescription("Descripcion de la tarea.");
     onClose();
@@ -87,8 +91,8 @@ const AddTaskModal = ({ onClose, isOpen }) => {
       if (selectedPriority) {
         assignPromises.push(handleSavePriority(taskId, selectedPriority.value));
       }
-      if (selectedDate) {
-        assignPromises.push(handleSaveDate(taskId, selectedDate));
+      if (selectedDueDate) {
+        assignPromises.push(handleSaveDueDate(taskId, selectedDueDate));
       }
 
       await Promise.allSettled(assignPromises);
@@ -178,8 +182,8 @@ const AddTaskModal = ({ onClose, isOpen }) => {
             </section>
             <section className="task-modal__select-filters">
               <DatePicker
-                selected={selectedDate}
-                onChange={handleDateChange}
+                selected={selectedDueDate}
+                onChange={handleDueDateChange}
                 locale={es}
                 dateFormat="dd/MM/yyyy"
                 showOutsideDays={false}
