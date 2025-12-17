@@ -1,7 +1,5 @@
 import "./EditPanel.css";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
-import es from "date-fns/locale/es";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper";
 import dateIcon from "../../../../features/tasks/assets/images/SectionIcon/dateIcon.png";
 import commentIcon from "../../assets/images/commentIcon.png";
@@ -28,7 +26,6 @@ import {
 } from "../../../../features/filters/categories/services/categoriesServices";
 import { toggleTaskCompletion } from "../../../../features/tasks/services/tasksServices";
 import { useTasks } from "../../../../context/TaskContext";
-import { useTaskDueDate } from "../../../../features/tasks/date/hooks/useTaskDueDate";
 import { useTaskData } from "../../../../features/tasks/services/useTaskData";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
 import useFetchAllData from "../../../../core/hooks/useFetchAllData";
@@ -37,8 +34,12 @@ import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
 import { useTaskActions } from "../../../../features/tasks/hooks/useTaskActions";
 import { useTaskPriority } from "../../../../features/filters/priorities/hooks/useTaskPriority";
 import { TaskPrioritiesList } from "../../../../features/filters/priorities/data/TaskPrioritiesList";
+import AddDueDateModal from "../../../../features/tasks/components/AddDueDateModal/AddDueDateModal";
+import { useModal } from "../../../../features/tasks/hooks/useModal";
+import { useTaskDueDate } from "../../../../features/tasks/date/hooks/useTaskDueDate";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
+  const addDueDateModal = useModal();
   const {
     fetchCompletedTasks,
     fetchInboxTasks,
@@ -114,9 +115,6 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     });
   };
 
-  const { selectedDueDate, handleDueDateChange, formattedDateText } =
-    useTaskDueDate(task);
-
   const { priorityIcon, handleSavePriority } = useTaskPriority(task);
 
   const handleSetPriority = (selectedItem) => {
@@ -148,6 +146,9 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     isCompleted ? fetchCompletedTasks : fetchInboxTasks,
     onClose
   );
+
+  const { selectedDueDate, handleDueDateChange, formattedDateText } =
+    useTaskDueDate(task);
   return (
     <div
       className={panelClasses}
@@ -158,18 +159,18 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
         <div className="edit-panel__content-wrapper">
           <section className="edit-panel__items">
             <div className="edit-panel__date-container">
-              <DatePicker
-                selected={selectedDueDate}
-                onChange={handleDueDateChange}
-                locale={es}
-                dateFormat="dd/MM/yyyy"
-                showOutsideDays={false}
-                customInput={
-                  <DropdownWrapper
-                    buttonIcon={dateIcon}
-                    buttonText={formattedDateText}
-                  />
-                }
+              <DropdownWrapper
+                buttonIcon={dateIcon}
+                buttonText={formattedDateText}
+                onClick={addDueDateModal.open}
+              />
+              <AddDueDateModal
+                task={task}
+                onClose={addDueDateModal.close}
+                isOpen={addDueDateModal.isOpen}
+                selectedDueDate={selectedDueDate}
+                handleDueDateChange={handleDueDateChange}
+                formattedDateText={formattedDateText}
               />
             </div>
             <label

@@ -1,4 +1,6 @@
 import "./DashboardContent.css";
+import "react-datepicker/dist/react-datepicker.css";
+import "../../../../styles/utility.css";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDashboardSidebar } from "../../components/Sidebar/hooks/useDashboardSidebar.js";
