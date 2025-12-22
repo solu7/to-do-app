@@ -1,8 +1,6 @@
-import "./CompletedView.css";
 import completedIcon from "../../../../pages/Dashboard/assets/images/completedIcon.png";
 import { useTasks } from "../../../../context/TaskContext.jsx";
 import TaskCard from "../../TaskCard.jsx";
-import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
 import { useTaskData } from "../../services/useTaskData.js";
 import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
 import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
@@ -17,18 +15,18 @@ function CompletedView({ onTaskClick }) {
   );
   const { data: priorityInTask } = useTaskData(completedTasks, getTaskPriority);
   return (
-    <div className="completed__container">
-      <section className="completed__header">
-        <h3 className="completed__header-title">
+    <div className="task-view__container">
+      <section className="task-view__header">
+        <h3 className="task-view__header-title">
           Tareas <span>completadas</span>
         </h3>
         <img
-          className="completed__header-icon"
+          className="task-view__header-icon"
           src={completedIcon}
           alt="Icono de completado"
         />
       </section>
-      <section className="completed__tasks">
+      <section className="task-view__tasks">
         {completedTasks.length > 0 ? (
           completedTasks.map((task) => (
             <TaskCard

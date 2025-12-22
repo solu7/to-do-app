@@ -3,6 +3,7 @@ import {
   getInboxTasks,
   getAllTasks,
   getCompletedTasks,
+  getTodayTasks,
 } from "../features/tasks/services/tasksServices";
 const TaskContext = createContext();
 
@@ -10,6 +11,7 @@ export const TaskProvider = ({ children }) => {
   const [tasksAll, setTasksAll] = useState([]);
   const [inboxTasks, setInboxTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
+  const [todayTasks, setTodayTasks] = useState([]);
 
   const fetchAllTasks = async () => {
     try {
@@ -29,6 +31,15 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
+  const fetchTodayTasks = async () => {
+    try {
+      const data = await getTodayTasks();
+      setTodayTasks(data);
+    } catch (error) {
+      console.error("Error al obtener las tareas de hoy:", error);
+    }
+  };
+
   const fetchCompletedTasks = async () => {
     try {
       const data = await getCompletedTasks();
@@ -42,6 +53,7 @@ export const TaskProvider = ({ children }) => {
     fetchAllTasks();
     fetchInboxTasks();
     fetchCompletedTasks();
+    fetchTodayTasks();
   }, []);
 
   /**
@@ -65,17 +77,23 @@ export const TaskProvider = ({ children }) => {
       )
     );
 
+    setTodayTasks((prevTasks) =>
+      prevTasks.filter((task) => task.id !== idToUpdate || !isCompleted)
+    );
+
     setInboxTasks((prevTasks) =>
       prevTasks.filter((task) => task.id !== idToUpdate || !isCompleted)
     );
   };
 
   const value = {
+    todayTasks, //* Lista de tareas (Hoy)
     inboxTasks, //* Lista de tareas (Inbox)
     completedTasks, //* Lista de tareas (Completadas)
     tasksAll, //* Lista de todas las tareas (EditPanel)
+    fetchTodayTasks, //* Recarga la la lista de hoy
     fetchInboxTasks, //* Recarga la la lista de inbox
-    fetchCompletedTasks,  //* Recarga la la lista de completadas
+    fetchCompletedTasks, //* Recarga la la lista de completadas
     fetchAllTasks, //* Recarga la lista completa
     getTaskById, //* Helper para el EditPanel
     updateTaskCompletion,

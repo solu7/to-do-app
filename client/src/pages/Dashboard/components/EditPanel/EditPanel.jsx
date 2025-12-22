@@ -44,6 +44,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     fetchCompletedTasks,
     fetchInboxTasks,
     fetchAllTasks,
+    fetchTodayTasks,
     updateTaskCompletion,
   } = useTasks();
   const {
@@ -149,6 +150,14 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
   const { selectedDueDate, handleDueDateChange, formattedDateText } =
     useTaskDueDate(task);
+
+  const onDueDateChangeAndRefresh = async (date) => {
+    await handleDueDateChange(date);
+
+    fetchTodayTasks();
+    fetchInboxTasks();
+    fetchAllTasks();
+  };
   return (
     <div
       className={panelClasses}
@@ -169,7 +178,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 onClose={addDueDateModal.close}
                 isOpen={addDueDateModal.isOpen}
                 selectedDueDate={selectedDueDate}
-                handleDueDateChange={handleDueDateChange}
+                handleDueDateChange={onDueDateChangeAndRefresh}
                 formattedDateText={formattedDateText}
               />
             </div>

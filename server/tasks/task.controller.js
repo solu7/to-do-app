@@ -12,6 +12,7 @@ import {
   getTaskDueDate as _getTaskDueDate,
   setTaskDueDate as _setTaskDueDate,
   removeTaskDueDate as _removeTaskDueDate,
+  getTasksByDateRange as _getTasksByDateRange,
 } from "./task.model.js";
 
 export const getAllTasks = async (req, res) => {
@@ -33,6 +34,25 @@ export const getInboxTasks = async (req, res) => {
   } catch (error) {
     console.error("Error al obtener tareas de Inbox:", error);
     res.status(500).json({ message: "Error al obtener tareas del usuario" });
+  }
+};
+
+export const getTodayTasks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+
+    const tasks = await _getTasksByDateRange(userId, start, end);
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener las tareas de hoy" });
   }
 };
 

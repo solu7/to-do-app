@@ -36,6 +36,20 @@ export async function getAllTasks() {
   }
 }
 
+export const getTodayTasks = async () => {
+  try {
+    const response = await fetch(`${API_URL}/tasks/today`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) throw new Error("Error al obtener tareas de hoy");
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export async function getCompletedTasks() {
   try {
     const response = await fetch(`${API_URL}/tasks/completed`, {

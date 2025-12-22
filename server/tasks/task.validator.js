@@ -10,11 +10,9 @@ export const createTaskValidator = [
     .optional()
     .isLength({ max: 200 })
     .withMessage("The description can't be that long."),
-  body("category").optional().withMessage("Invalid category."),
 ];
 
 export const updateTaskValidator = [
   body("title").optional().isLength({ max: 100 }),
   body("description").optional().isLength({ max: 500 }),
-  body("category").optional(),
 ];

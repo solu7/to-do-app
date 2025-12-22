@@ -32,13 +32,14 @@ function FiltersView() {
     );
   }
   return (
-    <div className="filters-section__container">
-      <section className="filters-section__header">
-        <h3 className="filters-section__header-title">
-          Tus <span>filtros</span>
+    <div className="task-view__container">
+      <section className="task-view__header">
+        <h3 className="task-view__header-title">
+          Tus{" "}
+          <span className="task-view__header-title--highlight">filtros</span>
         </h3>
         <img
-          className="filters__header-icon"
+          className="task-view__header-icon"
           src={tagIcon}
           alt="Icono de bandeja de entrada"
         />
@@ -93,7 +94,9 @@ function FiltersView() {
                 key={tag.id}
                 filterName={tag.name}
                 filterIcon={tagItemIcon}
-                onFilterClick={() => handleFilterClick("tagId", tag.id, tag.name)}
+                onFilterClick={() =>
+                  handleFilterClick("tagId", tag.id, tag.name)
+                }
               />
             ))}
           </section>

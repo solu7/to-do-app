@@ -26,17 +26,17 @@ function FilteredTasksView({ onTaskClick }) {
   const filterName = filters.name ? decodeURIComponent(filters.name) : null;
   const displayIcon = filterKey ? ICON_MAP[filterKey] : null;
   return (
-    <div className="filtered-tasks__container">
-      <section className="filtered-tasks__header">
-        <h3 className="filtered-tasks__header-title">
+    <div className="task-view__container">
+      <section className="task-view__header">
+        <h3 className="task-view__header-title">
           Tus <span>tareas</span>
         </h3>
         <img
-          className="filtered-tasks__header-icon"
+          className="task-view__header-icon"
           src={taskIcon}
           alt="Icono de bandeja de entrada"
         />
-        <h3 className="filtered-tasks__header-title">con</h3>
+        <h3 className="task-view__header-title">con</h3>
         {filterName && displayIcon && (
           <div className="filtered-tasks__filter">
             <img
@@ -51,7 +51,7 @@ function FilteredTasksView({ onTaskClick }) {
       {tasks.length === 0 ? (
         <p>No se encontraron tareas con estos filtros.</p>
       ) : (
-        <section className="filtered-task__list">
+        <section className="task-view__tasks">
           {tasks.map((task) => (
             <TaskCard
               key={task.id}

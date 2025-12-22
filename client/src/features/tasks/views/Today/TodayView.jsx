@@ -1,44 +1,40 @@
+import { useTasks } from "../../../../context/TaskContext";
+import { useTaskData } from "../../services/useTaskData";
+import { getTagsInTask } from "../../../filters/tags/services/tagsServices";
+import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices";
+import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices";
+import TaskCard from "../../TaskCard";
+import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
+import todayIcon from "../../../../pages/Dashboard/assets/images/todayIcon.png";
 import { useModal } from "../../hooks/useModal.js";
-import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
-import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
-import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
-import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
-import { useTasks } from "../../../../context/TaskContext.jsx";
-import { useTaskData } from "../../services/useTaskData.js";
-import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices.js";
-import inboxIcon from "../../../../pages/Dashboard/assets/images/inboxIcon.png";
 
-function Inbox({ onTaskClick }) {
+function TodayView({ onTaskClick }) {
   const addTaskModal = useModal();
-  const { inboxTasks } = useTasks();
-  const { data: tagsInTask } = useTaskData(inboxTasks, getTagsInTask);
+  const { todayTasks } = useTasks();
+  const { data: tagsInTask } = useTaskData(todayTasks, getTagsInTask);
   const { data: categoriesInTask } = useTaskData(
-    inboxTasks,
+    todayTasks,
     getCategoriesInTask
   );
-  const { data: priorityInTask } = useTaskData(inboxTasks, getTaskPriority);
+  const { data: priorityInTask } = useTaskData(todayTasks, getTaskPriority);
   return (
-    <div
-      className={
-        inboxTasks.length > 0 ? "inbox__container" : "inbox__container no-tasks"
-      }
-    >
+    <div className="task-view__container">
       <section className="task-view__header">
         <h3 className="task-view__header-title">
-          Bandeja{" "}
-          <span className="task-view__header-title--highlight">de entrada</span>
+          Lo que tienes para{" "}
+          <span className="task-view__header-title--highlight">hoy</span>
         </h3>
         <img
           className="task-view__header-icon"
-          src={inboxIcon}
+          src={todayIcon}
           alt="Icono de bandeja de entrada"
         />
       </section>
       <section className="task-view__tasks">
-        {inboxTasks.length > 0 ? (
-          inboxTasks.map((task) => (
+        {todayTasks.length > 0 ? (
+          todayTasks.map((task) => (
             <TaskCard
               key={task.id}
               title={task.title}
@@ -51,7 +47,7 @@ function Inbox({ onTaskClick }) {
           ))
         ) : (
           <section className="no-tasks__message">
-            <h2>No tienes tareas disponibles</h2>
+            <h2>No tienes tareas para hoy</h2>
             <img
               className="no-tasks__icon"
               src={cleanIcon}
@@ -66,4 +62,4 @@ function Inbox({ onTaskClick }) {
     </div>
   );
 }
-export default Inbox;
+export default TodayView;
