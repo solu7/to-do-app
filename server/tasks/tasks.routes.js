@@ -13,7 +13,8 @@ import {
   getFilteredTasks,
   setTaskDueDate,
   getTaskDueDate,
-  getTodayTasks
+  getTodayTasks,
+  getUpcomingTasks,
 } from "./task.controller.js";
 
 router.get("/", verifyOnlyToken, getInboxTasks);
@@ -21,6 +22,8 @@ router.get("/", verifyOnlyToken, getInboxTasks);
 router.get("/all", verifyOnlyToken, getAllTasks);
 
 router.get("/today", verifyOnlyToken, getTodayTasks);
+
+router.get("/upcoming", verifyOnlyToken, getUpcomingTasks);
 
 router.get("/filtered", verifyOnlyToken, getFilteredTasks);
 

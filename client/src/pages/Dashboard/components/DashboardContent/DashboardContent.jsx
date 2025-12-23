@@ -1,13 +1,14 @@
 import "./DashboardContent.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../../../styles/utility.css";
-import "../../../../features/tasks/styles/TaskViewLayout.css"
+import "../../../../features/tasks/styles/TaskViewLayout.css";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDashboardSidebar } from "../../components/Sidebar/hooks/useDashboardSidebar.js";
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import InboxView from "../../../../features/tasks/views/Inbox/InboxView.jsx";
 import TodayView from "../../../../features/tasks/views/Today/TodayView.jsx";
+import UpcomingView from "../../../../features/tasks/views/Upcoming/Upcoming.jsx";
 import CompletedView from "../../../../features/tasks/views/Completed/CompletedView.jsx";
 import FiltersView from "../../../../features/tasks/views/Filters/FiltersView.jsx";
 import FilteredTasksView from "../../../../features/tasks/views/Filtered/FilteredTasksView.jsx";
@@ -60,6 +61,10 @@ function DashboardContent() {
           <Route
             path="/today"
             element={<TodayView onTaskClick={handleTaskSelection} />}
+          />
+          <Route
+            path="/upcoming"
+            element={<UpcomingView onTaskClick={handleTaskSelection} />}
           />
           <Route
             path="/completed"

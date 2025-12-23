@@ -4,6 +4,7 @@ import {
   getAllTasks,
   getCompletedTasks,
   getTodayTasks,
+  getUpcomingTasks,
 } from "../features/tasks/services/tasksServices";
 const TaskContext = createContext();
 
@@ -12,6 +13,7 @@ export const TaskProvider = ({ children }) => {
   const [inboxTasks, setInboxTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [todayTasks, setTodayTasks] = useState([]);
+  const [upcomingTasks, setUpcomingTasks] = useState([]);
 
   const fetchAllTasks = async () => {
     try {
@@ -37,6 +39,15 @@ export const TaskProvider = ({ children }) => {
       setTodayTasks(data);
     } catch (error) {
       console.error("Error al obtener las tareas de hoy:", error);
+    }
+  };
+
+  const fetchUpcomingTasks = async () => {
+    try {
+      const data = await getUpcomingTasks();
+      setUpcomingTasks(data);
+    } catch (error) {
+      console.error("Error al obtener las tareas próximas:", error);
     }
   };
 
@@ -76,21 +87,15 @@ export const TaskProvider = ({ children }) => {
           : task
       )
     );
-
-    setTodayTasks((prevTasks) =>
-      prevTasks.filter((task) => task.id !== idToUpdate || !isCompleted)
-    );
-
-    setInboxTasks((prevTasks) =>
-      prevTasks.filter((task) => task.id !== idToUpdate || !isCompleted)
-    );
   };
 
   const value = {
+    upcomingTasks, //* Lista de tareas (Proximas)
     todayTasks, //* Lista de tareas (Hoy)
     inboxTasks, //* Lista de tareas (Inbox)
     completedTasks, //* Lista de tareas (Completadas)
     tasksAll, //* Lista de todas las tareas (EditPanel)
+    fetchUpcomingTasks, //* Recarga la la lista de las proximas tareas
     fetchTodayTasks, //* Recarga la la lista de hoy
     fetchInboxTasks, //* Recarga la la lista de inbox
     fetchCompletedTasks, //* Recarga la la lista de completadas

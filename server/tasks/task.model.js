@@ -54,14 +54,6 @@ export const findTaskById = async (taskId, userId) => {
   return rows;
 };
 
-export const getTodayTasks = async (userId) => {
-  const [tasks] = await pool.query(
-    "SELECT * FROM tasks WHERE user_id = ? AND completed = 0 ORDER BY created_at DESC LIMIT 10",
-    [userId]
-  );
-  return tasks;
-};
-
 export const getInboxTasks = async (userId) => {
   const [tasks] = await pool.query(
     "SELECT * FROM tasks WHERE user_id = ? AND completed = 0 ORDER BY created_at DESC LIMIT 10",
@@ -76,6 +68,7 @@ export const getTasksByDateRange = async (userId, startOfDay, endOfDay) => {
     WHERE user_id = ? 
     AND due_date >= ? 
     AND due_date <= ?
+    AND completed = 0
     ORDER BY priority DESC, created_at ASC
   `;
   const [rows] = await pool.query(query, [userId, startOfDay, endOfDay]);

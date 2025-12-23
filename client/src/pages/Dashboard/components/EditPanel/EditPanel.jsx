@@ -45,6 +45,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     fetchInboxTasks,
     fetchAllTasks,
     fetchTodayTasks,
+    fetchUpcomingTasks,
     updateTaskCompletion,
   } = useTasks();
   const {
@@ -135,6 +136,10 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
         action: toggleTaskCompletion,
         refetch: fetchCompletedTasks,
       });
+      fetchTodayTasks();
+      fetchInboxTasks();
+      fetchUpcomingTasks();
+      fetchAllTasks();
     } catch (error) {
       console.error("Error al alternar el estado de completado:", error);
     }
@@ -156,6 +161,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
     fetchTodayTasks();
     fetchInboxTasks();
+    fetchUpcomingTasks();
     fetchAllTasks();
   };
   return (

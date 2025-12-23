@@ -50,6 +50,20 @@ export const getTodayTasks = async () => {
   }
 };
 
+export const getUpcomingTasks = async () => {
+  try {
+    const response = await fetch(`${API_URL}/tasks/upcoming`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) throw new Error("Error al obtener tareas próximas");
+    return await response.json();
+  } catch (error) {
+    console.error("Error en getUpcomingTasks:", error);
+    throw error;
+  }
+};
+
 export async function getCompletedTasks() {
   try {
     const response = await fetch(`${API_URL}/tasks/completed`, {

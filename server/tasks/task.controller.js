@@ -56,6 +56,31 @@ export const getTodayTasks = async (req, res) => {
   }
 };
 
+export const getUpcomingTasks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const start = new Date();
+    start.setDate(start.getDate() + 1);
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date();
+    const currentDay = end.getDay();
+
+    const daysUntilSunday = currentDay === 0 ? 0 : 7 - currentDay;
+
+    end.setDate(end.getDate() + daysUntilSunday);
+    end.setHours(23, 59, 59, 999);
+
+    const tasks = await _getTasksByDateRange(userId, start, end);
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.error("Error en getUpcomingTasks:", error);
+    res.status(500).json({ message: "Error al obtener las tareas próximas" });
+  }
+};
+
 export const getCompletedTasks = async (req, res) => {
   const userId = req.user.id;
   try {

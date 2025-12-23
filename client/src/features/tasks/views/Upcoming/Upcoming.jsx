@@ -1,44 +1,37 @@
+import { useTasks } from "../../../../context/TaskContext";
+import { useTaskData } from "../../services/useTaskData";
+import { getTagsInTask } from "../../../filters/tags/services/tagsServices";
+import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices";
+import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices";
+import TaskCard from "../../TaskCard";
+import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
+import upcomingIcon from "../../../../pages/Dashboard/assets/images/upcomingIcon.png";
 import { useModal } from "../../hooks/useModal.js";
-import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
-import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
-import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
-import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
-import { useTasks } from "../../../../context/TaskContext.jsx";
-import { useTaskData } from "../../services/useTaskData.js";
-import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices.js";
-import inboxIcon from "../../../../pages/Dashboard/assets/images/inboxIcon.png";
 
-function Inbox({ onTaskClick }) {
+function UpcomingView({ onTaskClick }) {
   const addTaskModal = useModal();
-  const { inboxTasks } = useTasks();
-  const { data: tagsInTask } = useTaskData(inboxTasks, getTagsInTask);
+  const { upcomingTasks } = useTasks();
+  const { data: tagsInTask } = useTaskData(upcomingTasks, getTagsInTask);
   const { data: categoriesInTask } = useTaskData(
-    inboxTasks,
+    upcomingTasks,
     getCategoriesInTask
   );
-  const { data: priorityInTask } = useTaskData(inboxTasks, getTaskPriority);
+  const { data: priorityInTask } = useTaskData(upcomingTasks, getTaskPriority);
   return (
-    <div
-      className={
-        inboxTasks.length > 0 ? "task-view__container" : "inbox__container no-tasks"
-      }
-    >
+    <div className="task-view__container">
       <section className="task-view__header">
-        <h3 className="task-view__header-title">
-          Bandeja{" "}
-          <span className="task-view__header-title--highlight">de entrada</span>
-        </h3>
+        <h3 className="task-view__header-title">Proximo</h3>
         <img
           className="task-view__header-icon"
-          src={inboxIcon}
+          src={upcomingIcon}
           alt="Icono de bandeja de entrada"
         />
       </section>
       <section className="task-view__tasks">
-        {inboxTasks.length > 0 ? (
-          inboxTasks.map((task) => (
+        {upcomingTasks.length > 0 ? (
+          upcomingTasks.map((task) => (
             <TaskCard
               key={task.id}
               title={task.title}
@@ -51,7 +44,7 @@ function Inbox({ onTaskClick }) {
           ))
         ) : (
           <section className="no-tasks__message">
-            <h2>No tienes tareas disponibles</h2>
+            <h2>No tienes tareas proximas</h2>
             <img
               className="no-tasks__icon"
               src={cleanIcon}
@@ -66,4 +59,4 @@ function Inbox({ onTaskClick }) {
     </div>
   );
 }
-export default Inbox;
+export default UpcomingView;

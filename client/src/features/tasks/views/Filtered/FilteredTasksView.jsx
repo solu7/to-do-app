@@ -9,6 +9,7 @@ import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
 import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
 import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices.js";
 import taskIcon from "../../assets/images/SectionIcon/taskIcon.png";
+import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
 
 function FilteredTasksView({ onTaskClick }) {
   const ICON_MAP = {
@@ -49,7 +50,14 @@ function FilteredTasksView({ onTaskClick }) {
         )}
       </section>
       {tasks.length === 0 ? (
-        <p>No se encontraron tareas con estos filtros.</p>
+        <section className="no-tasks__message">
+          <h2>No se encontraron tareas con estos filtros.</h2>
+          <img
+            className="no-tasks__icon"
+            src={cleanIcon}
+            alt="Icono de limpio"
+          />
+        </section>
       ) : (
         <section className="task-view__tasks">
           {tasks.map((task) => (
