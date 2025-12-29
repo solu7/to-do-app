@@ -36,7 +36,7 @@ import { useTaskPriority } from "../../../../features/filters/priorities/hooks/u
 import { TaskPrioritiesList } from "../../../../features/filters/priorities/data/TaskPrioritiesList";
 import AddDueDateModal from "../../../../features/tasks/components/AddDueDateModal/AddDueDateModal";
 import { useModal } from "../../../../features/tasks/hooks/useModal";
-import { useTaskDueDate } from "../../../../features/tasks/date/hooks/useTaskDueDate";
+import { useTaskDueDate } from "../../../../features/tasks/hooks/useTaskDueDate";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const addDueDateModal = useModal();

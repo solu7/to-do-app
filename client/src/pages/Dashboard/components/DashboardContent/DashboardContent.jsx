@@ -1,6 +1,7 @@
 import "./DashboardContent.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../../../styles/utility.css";
+import "../../../../styles/modals.css";
 import "../../../../features/tasks/styles/TaskViewLayout.css";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";

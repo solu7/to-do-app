@@ -5,7 +5,7 @@ export const useModal = (initialState = false) => {
 
   const open = () => setIsOpen(true);
   const close = () => setIsOpen(false);
-  const toggle = () => setIsOpen(!modalIsOpen);
+  const toggle = () => setIsOpen(!isOpen);
 
   return {
     isOpen,

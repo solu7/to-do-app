@@ -2,9 +2,8 @@ import "./Register.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useRegisterForm } from "./hooks/useRegisterForm.js";
-
+import { useNavigation } from "../../../core/hooks/useNavigation.js";
 import { InputField } from "../../../core/components/InputField/InputField.jsx";
-
 import logo from "../../../core/assets/icons/logo.png";
 import userIcon from "../../assets/images/userIcon.png";
 import passIcon from "../../assets/images/passIcon.png";
@@ -14,6 +13,7 @@ import homeIcon from "../../../core/assets/icons/homeIcon.svg";
 function Register() {
   const { handleSubmit, generalError, success, register, errors } =
     useRegisterForm();
+  const { goLoginPage, goToHome } = useNavigation();
   return (
     <div className="register">
       <div className="register-header">
@@ -115,19 +115,19 @@ function Register() {
           <button type="submit" className="btn register-btn">
             Create account
           </button>
-          <Link to="/login">
-            <button className="btn-secondary register-btn-sec">
-              Already have an account? Log in
-            </button>
-          </Link>
+          <button
+            className="btn-secondary register-btn-sec"
+            role="button"
+            onClick={goLoginPage}
+          >
+            Already have an account? Log in
+          </button>
         </div>
       </form>
-      <Link to="/">
-        <div className="register-back-home">
-          <img src={homeIcon} alt="Icono de HomePage" />
-          <p>Back to Homepage</p>
-        </div>
-      </Link>
+      <div className="register-back-home" role="button" onClick={goToHome}>
+        <img src={homeIcon} alt="Icono de HomePage" />
+        <p>Back to Homepage</p>
+      </div>
     </div>
   );
 }

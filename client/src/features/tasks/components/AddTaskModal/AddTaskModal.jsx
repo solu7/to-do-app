@@ -25,7 +25,7 @@ import {
 import useFetchAllData from "../../../../core/hooks/useFetchAllData.js";
 import { useTaskItemRelations } from "../../hooks/useTaskItemRelations.js";
 import { useTaskPriority } from "../../../filters/priorities/hooks/useTaskPriority.js";
-import { useTaskDueDate } from "../../date/hooks/useTaskDueDate.js";
+import { useTaskDueDate } from "../../hooks/useTaskDueDate.js";
 
 const AddTaskModal = ({ onClose, isOpen }) => {
   const [title, setTitle] = useState("Titulo de la tarea");

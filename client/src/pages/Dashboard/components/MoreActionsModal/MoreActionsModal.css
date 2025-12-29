@@ -1,0 +1,29 @@
+.more-actions-modal__container {
+  position: absolute;
+  bottom: 50px;
+  background-color: var(--ultra-light-blue);
+  padding: 20px;
+  border-radius: 10px;
+  border: 3px solid var(--opacity-grey);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: var(--light-grey);
+  z-index: 999;
+}
+
+.more-actions-modal__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  gap: 10px;
+  transition: 0.3s ease;
+}
+.more-actions-modal__item:hover {
+  transform: scale(0.98);
+  color: var(--grey);
+}
+.more-actions-modal__item img {
+  width: 20px;
+}

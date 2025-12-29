@@ -1,5 +1,6 @@
 import "./AddDueDateModal.css";
 import "react-datepicker/dist/react-datepicker.css";
+import { AnimatePresence, motion } from "framer-motion";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import addDays from "date-fns/addDays";
@@ -13,7 +14,6 @@ import nextWeekIcon from "../../assets/images/ItemIcon/nextWeek.png";
 import noDateIcon from "../../assets/images/ItemIcon/noDate.png";
 
 function AddDueDateModal({
-  task,
   isOpen,
   onClose,
   selectedDueDate,
@@ -44,74 +44,97 @@ function AddDueDateModal({
   const thisWeekend = nextSaturday(today);
   const nextWeekStart = nextMonday(today);
   return (
-    isOpen && (
-      <div className="add-dd-modal">
-        <section className="add-dd-modal__selected-date">
-          <p>
-            {selectedDueDate ? `${formattedDateText}` : "Agrega una fecha !"}
-          </p>
-        </section>
-        <hr />
-        <ul className="add-dd-modal__date-filters-list">
-          <li
-            className="add-dd-modal__date-filter-item"
-            onClick={() => onSelectDate(tomorrow)}
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            className="modal__overlay--invisible"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          <motion.div
+            className="add-dd-modal__container"
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            transition={{ duration: 0.15 }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <img src={tomorrowIcon} alt="Icono de un amanecer" />
-            <div className="add-dd-modal__filter-date">
-              <span>Mañana</span>
-              <span>{getDynamicLabel(tomorrow)}</span>
-            </div>
-          </li>
-          <li
-            className="add-dd-modal__date-filter-item"
-            onClick={() => onSelectDate(afterTomorrow)}
-          >
-            <img src={laterThisWeekIcon} alt="Icono de calendario" />
-            <div className="add-dd-modal__filter-date">
-              <span>Pasado mañana</span>
-              <span>{getDynamicLabel(afterTomorrow)}</span>
-            </div>
-          </li>
-          <li
-            className="add-dd-modal__date-filter-item"
-            onClick={() => onSelectDate(thisWeekend)}
-          >
-            <img src={thisWeekendIcon} alt="Icono de un sofa" />
-            <div className="add-dd-modal__filter-date">
-              <span>Este fin de semana</span>
-              <span>{getDynamicLabel(thisWeekend)}</span>
-            </div>
-          </li>
-          <li
-            className="add-dd-modal__date-filter-item"
-            onClick={() => onSelectDate(nextWeekStart)}
-          >
-            <img src={nextWeekIcon} alt="Icono de un calendario adelantado" />
-            <div className="add-dd-modal__filter-date">
-              <span>Proxima semana</span>
-              <span>{getDynamicLabel(nextWeekStart)}</span>
-            </div>
-          </li>
-          <li
-            className="add-dd-modal__date-filter-item"
-            onClick={() => onSelectDate(null)}
-          >
-            <img src={noDateIcon} alt="Icono de quitar" />
-            <span>Sin fecha</span>
-          </li>
-        </ul>
-        <hr />
-        <DatePicker
-          selected={selectedDueDate}
-          onChange={onSelectDate}
-          locale={es}
-          dateFormat="dd/MM/yyyy"
-          showOutsideDays={false}
-          inline
-        />
-      </div>
-    )
+            <section className="add-dd-modal__selected-date">
+              <p>
+                {selectedDueDate
+                  ? `${formattedDateText}`
+                  : "Agrega una fecha !"}
+              </p>
+            </section>
+            <hr />
+            <ul className="add-dd-modal__date-filters-list">
+              <li
+                className="add-dd-modal__date-filter-item"
+                onClick={() => onSelectDate(tomorrow)}
+              >
+                <img src={tomorrowIcon} alt="Icono de un amanecer" />
+                <div className="add-dd-modal__filter-date">
+                  <span>Mañana</span>
+                  <span>{getDynamicLabel(tomorrow)}</span>
+                </div>
+              </li>
+              <li
+                className="add-dd-modal__date-filter-item"
+                onClick={() => onSelectDate(afterTomorrow)}
+              >
+                <img src={laterThisWeekIcon} alt="Icono de calendario" />
+                <div className="add-dd-modal__filter-date">
+                  <span>Pasado mañana</span>
+                  <span>{getDynamicLabel(afterTomorrow)}</span>
+                </div>
+              </li>
+              <li
+                className="add-dd-modal__date-filter-item"
+                onClick={() => onSelectDate(thisWeekend)}
+              >
+                <img src={thisWeekendIcon} alt="Icono de un sofa" />
+                <div className="add-dd-modal__filter-date">
+                  <span>Este fin de semana</span>
+                  <span>{getDynamicLabel(thisWeekend)}</span>
+                </div>
+              </li>
+              <li
+                className="add-dd-modal__date-filter-item"
+                onClick={() => onSelectDate(nextWeekStart)}
+              >
+                <img
+                  src={nextWeekIcon}
+                  alt="Icono de un calendario adelantado"
+                />
+                <div className="add-dd-modal__filter-date">
+                  <span>Proxima semana</span>
+                  <span>{getDynamicLabel(nextWeekStart)}</span>
+                </div>
+              </li>
+              <li
+                className="add-dd-modal__date-filter-item"
+                onClick={() => onSelectDate(null)}
+              >
+                <img src={noDateIcon} alt="Icono de quitar" />
+                <span>Sin fecha</span>
+              </li>
+            </ul>
+            <hr />
+            <DatePicker
+              selected={selectedDueDate}
+              onChange={onSelectDate}
+              locale={es}
+              dateFormat="dd/MM/yyyy"
+              showOutsideDays={false}
+              inline
+            />
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }
 export default AddDueDateModal;

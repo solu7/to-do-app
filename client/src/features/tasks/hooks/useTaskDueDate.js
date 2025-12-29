@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useTaskData } from "../../services/useTaskData";
+import { useTaskData } from "../services/useTaskData";
 import {
   useGetTaskDueDate,
   useSetTaskDueDate,
   formatDateForDisplay,
-} from "../services/taskDueDateServices";
+} from "./taskDueDateServices";
 
 export const useTaskDueDate = (task) => {
   const { data: taskDueDateString, refetch: refetchTaskDate } = useTaskData(

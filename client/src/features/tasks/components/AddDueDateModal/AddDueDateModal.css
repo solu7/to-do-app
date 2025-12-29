@@ -1,4 +1,4 @@
-.add-dd-modal {
+.add-dd-modal__container {
   background-color: var(--ultra-light-blue);
   padding: 20px;
   border-radius: 10px;
@@ -8,7 +8,7 @@
   flex-direction: column;
   gap: 20px;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   top: 50px;
 }
 
@@ -57,6 +57,6 @@
   color: var(--light-grey);
 }
 
-.add-dd-modal hr {
+.add-dd-modal__container hr {
   margin: 0px;
 }

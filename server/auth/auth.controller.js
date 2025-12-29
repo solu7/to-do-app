@@ -117,3 +117,13 @@ export async function loginAsGuest(req, res) {
       .json({ message: "Server error al crear sesión de invitado" });
   }
 }
+
+export async function logout(req, res) {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.status(200).json({ message: "Sesión cerrada correctamente" });
+}

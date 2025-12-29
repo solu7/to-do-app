@@ -76,6 +76,7 @@
   margin-top: auto;
   font-size: 13px;
   cursor: pointer;
+  position: relative;
 }
 .sidebar-help img {
   width: 25px;
