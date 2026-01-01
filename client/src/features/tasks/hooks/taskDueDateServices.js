@@ -1,18 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export function formatDateForDisplay(dateString) {
-  if (!dateString) {
-    return "Fecha para la tarea";
-  }
-
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = date.toLocaleString("es-ES", { month: "short" });
-  const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
-
-  return `${capitalizedMonth} ${day}`;
-}
-
 export async function useGetTaskDueDate({ taskId }) {
   try {
     const response = await fetch(`${API_URL}/tasks/${taskId}/date`, {

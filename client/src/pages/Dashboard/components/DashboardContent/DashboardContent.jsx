@@ -9,7 +9,7 @@ import { useDashboardSidebar } from "../../components/Sidebar/hooks/useDashboard
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import InboxView from "../../../../features/tasks/views/Inbox/InboxView.jsx";
 import TodayView from "../../../../features/tasks/views/Today/TodayView.jsx";
-import UpcomingView from "../../../../features/tasks/views/Upcoming/Upcoming.jsx";
+import UpcomingView from "../../../../features/tasks/views/Upcoming/UpcomingView.jsx";
 import CompletedView from "../../../../features/tasks/views/Completed/CompletedView.jsx";
 import FiltersView from "../../../../features/tasks/views/Filters/FiltersView.jsx";
 import FilteredTasksView from "../../../../features/tasks/views/Filtered/FilteredTasksView.jsx";

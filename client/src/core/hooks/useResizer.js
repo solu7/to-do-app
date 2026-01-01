@@ -1,53 +1,44 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
-export const useResizer = (initialWidth, maxWidthPercentage) => {
+export const useResizer = (initialWidth = 400, maxWidthPercentage = 0.9) => {
   const [elementWidth, setElementWidth] = useState(initialWidth);
+  const [isResizing, setIsResizing] = useState(false);
   const elementRef = useRef(null);
-  const isResizing = useRef(false);
+
+  const handleMouseDown = useCallback((e) => {
+    const rect = elementRef.current.getBoundingClientRect();
+    if (Math.abs(e.clientX - rect.left) < 10) {
+      setIsResizing(true);
+      e.preventDefault();
+    }
+  }, []);
 
   useEffect(() => {
-    const handleMouseDown = (e) => {
-      if (!elementRef.current) return;
-      const rect = elementRef.current.getBoundingClientRect();
-      if (Math.abs(e.clientX - rect.left) < 10) {
-        isResizing.current = true;
-        document.body.style.cursor = "ew-resize";
-      }
-    };
-
-    const handleMouseUp = () => {
-      isResizing.current = false;
-      document.body.style.cursor = "default";
-    };
+    if (!isResizing) return;
 
     const handleMouseMove = (e) => {
-      if (!elementRef.current) return;
-      const rect = elementRef.current.getBoundingClientRect();
-      if (Math.abs(e.clientX - rect.left) < 10) {
-        document.body.style.cursor = "ew-resize";
-      } else if (!isResizing.current) {
-        document.body.style.cursor = "default";
-      }
-
-      if (isResizing.current) {
-        const newWidth = window.innerWidth - e.clientX;
-        const maxWidth = window.innerWidth * maxWidthPercentage;
-
-        if (newWidth <= maxWidth) {
-          setElementWidth(newWidth);
-        }
+      const newWidth = window.innerWidth - e.clientX;
+      const maxWidth = window.innerWidth * maxWidthPercentage;
+      
+      if (newWidth > 300 && newWidth < maxWidth) {
+        setElementWidth(newWidth);
       }
     };
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mouseup", handleMouseUp);
+
+    const handleMouseUp = () => setIsResizing(false);
+
     document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+    document.body.style.userSelect = "none";
+    document.body.style.cursor = "ew-resize";
 
     return () => {
-      document.removeEventListener("mousedown", handleMouseDown);
-      document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.body.style.userSelect = "auto";
+      document.body.style.cursor = "default";
     };
-  }, [maxWidthPercentage]);
+  }, [isResizing, maxWidthPercentage]);
 
-  return { elementWidth, elementRef };
+  return { elementWidth, elementRef, isResizing, handleMouseDown };
 };

@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTaskData } from "../services/useTaskData";
-import {
-  useGetTaskDueDate,
-  useSetTaskDueDate,
-  formatDateForDisplay,
-} from "./taskDueDateServices";
+import { useGetTaskDueDate, useSetTaskDueDate } from "./taskDueDateServices";
+
+import { formatEditPanelHeader } from "../utils/taskDateFormatter";
 
 export const useTaskDueDate = (task) => {
   const { data: taskDueDateString, refetch: refetchTaskDate } = useTaskData(
@@ -61,9 +59,9 @@ export const useTaskDueDate = (task) => {
     await refetchTaskDate();
   };
 
-  const formattedDateText = selectedDueDate
-    ? formatDateForDisplay(selectedDueDate)
-    : "Agrega una fecha!";
+  const formattedDateText = useMemo(() => {
+    return formatEditPanelHeader(selectedDueDate);
+  }, [selectedDueDate]);
 
   return {
     selectedDueDate,

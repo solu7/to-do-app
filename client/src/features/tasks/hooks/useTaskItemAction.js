@@ -1,7 +1,7 @@
 import { useTasks } from "../../../context/TaskContext";
 
 export const useTaskItemAction = () => {
-  const { fetchInboxTasks } = useTasks();
+  const { refreshAllLists } = useTasks();
 
   const handleTaskItemAction = async ({
     task,
@@ -24,7 +24,7 @@ export const useTaskItemAction = () => {
       }
       await action(payload);
       refetch && refetch();
-      fetchInboxTasks();
+      refreshAllLists;
     } catch (error) {
       console.error(`Error al interacturar con el item:`, error);
     }

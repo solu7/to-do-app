@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import useAutosizeTextArea from "../../../../../core/hooks/useAutoGrowTextarea";
-import { useResizer } from "../../../../../core/hooks/useResizer";
+import { useState, useEffect, useRef, useCallback } from "react";
+import useAutoGrowTextArea from "../../../../../core/hooks/useAutoGrowTextarea";
 
 export const useTaskEditPanel = (task) => {
   const [taskEditPanelIsOpen, setTaskEditPanelIsOpen] = useState(false);
@@ -8,19 +7,19 @@ export const useTaskEditPanel = (task) => {
   const [description, setDescription] = useState("");
   const [comment, setComment] = useState("");
   const [originalTask, setOriginalTask] = useState(null);
-
-  const { elementWidth: panelWidth, elementRef: resizeHandleRef } = useResizer(
-    0,
-    0.98
-  );
+  const adjustHeight = useAutoGrowTextArea();
 
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const commentRef = useRef(null);
 
-  useAutosizeTextArea(commentRef, comment);
-  useAutosizeTextArea(titleRef, title);
-  useAutosizeTextArea(descriptionRef, description);
+  const adjustAllHeights = useCallback(() => {
+    requestAnimationFrame(() => {
+      adjustHeight(titleRef.current);
+      adjustHeight(descriptionRef.current);
+      adjustHeight(commentRef.current);
+    });
+  }, [adjustHeight]);
 
   useEffect(() => {
     if (task) {
@@ -29,13 +28,32 @@ export const useTaskEditPanel = (task) => {
       setDescription(task.description || "");
       setComment(task.comment || "");
     }
-  }, [task]);
+  }, [task?.id]);
+
+  useEffect(() => {
+    if (!task) return;
+    adjustAllHeights();
+
+    const timeoutId = setTimeout(adjustAllHeights, 50);
+    const secondaryTimeout = setTimeout(adjustAllHeights, 200);
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearTimeout(secondaryTimeout);
+    };
+  }, [task?.id, title, description, comment, adjustAllHeights]);
+
+  const handleInputChange = (setter, ref) => (e) => {
+    setter(e.target.value);
+    adjustHeight(ref.current);
+  };
 
   const handleResetTask = () => {
     if (originalTask) {
       setTitle(originalTask.title || "");
       setDescription(originalTask.description || "");
       setComment(originalTask.comment || "");
+      setTimeout(adjustAllHeights, 0);
     }
   };
 
@@ -49,11 +67,9 @@ export const useTaskEditPanel = (task) => {
     openTaskEditPanel,
     closeTaskEditPanel,
     toggleTaskEditPanel,
-    panelWidth,
     titleRef,
     descriptionRef,
     commentRef,
-    resizeHandleRef,
     handleResetTask,
     title,
     setTitle,
@@ -61,5 +77,7 @@ export const useTaskEditPanel = (task) => {
     setDescription,
     comment,
     setComment,
+    handleInputChange,
+    adjustAllHeights,
   };
 };

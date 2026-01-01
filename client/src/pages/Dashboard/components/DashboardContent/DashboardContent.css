@@ -3,7 +3,7 @@
   justify-content: space-between;
   height: 100vh;
   overflow: hidden;
-  gap: 75px;
+  gap: 50px;
 }
 .dashboard__view {
   display: flex;
@@ -11,6 +11,6 @@
   flex-grow: 1;
   overflow-y: auto;
   gap: 60px;
-  padding: 80px 75px;
+  padding: 80px 0px;
   scrollbar-width: none;
 }

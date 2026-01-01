@@ -2,13 +2,12 @@ import "./AddDueDateModal.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { AnimatePresence, motion } from "framer-motion";
 import DatePicker from "react-datepicker";
-import es from "date-fns/locale/es";
-import addDays from "date-fns/addDays";
-import nextSaturday from "date-fns/nextSaturday";
-import nextMonday from "date-fns/nextMonday";
-import { format, isSameWeek } from "date-fns";
+import { formatModalDynamicLabel } from "../../utils/taskDateFormatter";
+import { addDays, nextSaturday, nextMonday } from "date-fns";
+import { es } from "date-fns/locale";
+import todayIcon from "../../assets/images/ItemIcon/today.png";
 import tomorrowIcon from "../../assets/images/ItemIcon/tomorrow.png";
-import laterThisWeekIcon from "../../assets/images/ItemIcon/laterThisWeek.png";
+import afterTomorrowIcon from "../../assets/images/ItemIcon/afterTomorrow.png";
 import thisWeekendIcon from "../../assets/images/ItemIcon/thisWeekend.png";
 import nextWeekIcon from "../../assets/images/ItemIcon/nextWeek.png";
 import noDateIcon from "../../assets/images/ItemIcon/noDate.png";
@@ -21,18 +20,6 @@ function AddDueDateModal({
   formattedDateText,
 }) {
   const today = new Date();
-
-  const getDynamicLabel = (date) => {
-    if (!date) return "";
-
-    const sameWeek = isSameWeek(date, today, { weekStartsOn: 1 });
-
-    if (sameWeek) {
-      return format(date, "eee", { locale: es });
-    } else {
-      return format(date, "eee d MMM", { locale: es });
-    }
-  };
 
   const onSelectDate = (date) => {
     handleDueDateChange(date);
@@ -73,22 +60,32 @@ function AddDueDateModal({
             <ul className="add-dd-modal__date-filters-list">
               <li
                 className="add-dd-modal__date-filter-item"
+                onClick={() => onSelectDate(today)}
+              >
+                <img src={todayIcon} alt="Icono de calendario" />
+                <div className="add-dd-modal__filter-date">
+                  <span>Hoy</span>
+                  <span>{formatModalDynamicLabel(today)}</span>
+                </div>
+              </li>
+              <li
+                className="add-dd-modal__date-filter-item"
                 onClick={() => onSelectDate(tomorrow)}
               >
                 <img src={tomorrowIcon} alt="Icono de un amanecer" />
                 <div className="add-dd-modal__filter-date">
                   <span>Mañana</span>
-                  <span>{getDynamicLabel(tomorrow)}</span>
+                  <span>{formatModalDynamicLabel(tomorrow)}</span>
                 </div>
               </li>
               <li
                 className="add-dd-modal__date-filter-item"
                 onClick={() => onSelectDate(afterTomorrow)}
               >
-                <img src={laterThisWeekIcon} alt="Icono de calendario" />
+                <img src={afterTomorrowIcon} alt="Icono de calendario 2" />
                 <div className="add-dd-modal__filter-date">
                   <span>Pasado mañana</span>
-                  <span>{getDynamicLabel(afterTomorrow)}</span>
+                  <span>{formatModalDynamicLabel(afterTomorrow)}</span>
                 </div>
               </li>
               <li
@@ -98,7 +95,7 @@ function AddDueDateModal({
                 <img src={thisWeekendIcon} alt="Icono de un sofa" />
                 <div className="add-dd-modal__filter-date">
                   <span>Este fin de semana</span>
-                  <span>{getDynamicLabel(thisWeekend)}</span>
+                  <span>{formatModalDynamicLabel(thisWeekend)}</span>
                 </div>
               </li>
               <li
@@ -111,7 +108,7 @@ function AddDueDateModal({
                 />
                 <div className="add-dd-modal__filter-date">
                   <span>Proxima semana</span>
-                  <span>{getDynamicLabel(nextWeekStart)}</span>
+                  <span>{formatModalDynamicLabel(nextWeekStart)}</span>
                 </div>
               </li>
               <li

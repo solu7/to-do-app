@@ -5,6 +5,20 @@ import {
   defaultTasks,
 } from "../shared/defaultData.js";
 
+const TASK_QUERY_BASE = `
+  SELECT 
+    t.*, 
+    GROUP_CONCAT(DISTINCT c.name) AS category_names,
+    GROUP_CONCAT(DISTINCT c.id) AS category_ids,
+    GROUP_CONCAT(DISTINCT tg.name) AS tag_names,
+    GROUP_CONCAT(DISTINCT tg.id) AS tag_ids
+  FROM tasks t
+  LEFT JOIN task_categories tc ON t.id = tc.task_id
+  LEFT JOIN categories c ON tc.category_id = c.id
+  LEFT JOIN task_tags tt ON t.id = tt.task_id
+  LEFT JOIN tags tg ON tt.tag_id = tg.id
+`;
+
 /*
  * CRUD principal de las tareas
  */
@@ -20,10 +34,8 @@ export const createTask = async (userId, title, description) => {
 };
 
 export const getAllTasks = async (userId) => {
-  const [tasks] = await pool.query(
-    "SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC",
-    [userId]
-  );
+  const query = `${TASK_QUERY_BASE} WHERE t.user_id = ? GROUP BY t.id ORDER BY t.created_at DESC`;
+  const [tasks] = await pool.query(query, [userId]);
   return tasks;
 };
 
@@ -47,39 +59,36 @@ export const deleteTask = async (taskId, userId) => {
  * Obtener tareas FILTRADAS
  */
 export const findTaskById = async (taskId, userId) => {
-  const [rows] = await pool.query(
-    "SELECT * FROM tasks WHERE id = ? AND user_id = ?",
-    [taskId, userId]
-  );
+  const query = `${TASK_QUERY_BASE} WHERE t.id = ? AND t.user_id = ? GROUP BY t.id`;
+  const [rows] = await pool.query(query, [taskId, userId]);
   return rows;
 };
 
 export const getInboxTasks = async (userId) => {
-  const [tasks] = await pool.query(
-    "SELECT * FROM tasks WHERE user_id = ? AND completed = 0 ORDER BY created_at DESC LIMIT 10",
-    [userId]
-  );
+  const query = `${TASK_QUERY_BASE} 
+    WHERE t.user_id = ? AND t.completed = 0 
+    GROUP BY t.id 
+    ORDER BY t.created_at DESC 
+    LIMIT 10`;
+  const [tasks] = await pool.query(query, [userId]);
   return tasks;
 };
 
 export const getTasksByDateRange = async (userId, startOfDay, endOfDay) => {
-  const query = `
-    SELECT * FROM tasks 
-    WHERE user_id = ? 
-    AND due_date >= ? 
-    AND due_date <= ?
-    AND completed = 0
-    ORDER BY priority DESC, created_at ASC
-  `;
+  const query = `${TASK_QUERY_BASE} 
+    WHERE t.user_id = ? AND t.due_date >= ? AND t.due_date <= ? AND t.completed = 0
+    GROUP BY t.id
+    ORDER BY t.priority DESC, t.created_at ASC`;
   const [rows] = await pool.query(query, [userId, startOfDay, endOfDay]);
   return rows;
 };
 
 export const getCompletedTasks = async (userId) => {
-  const [tasks] = await pool.query(
-    "SELECT * FROM tasks WHERE user_id = ? AND completed = 1 ORDER BY created_at DESC",
-    [userId]
-  );
+  const query = `${TASK_QUERY_BASE} 
+    WHERE t.user_id = ? AND t.completed = 1 
+    GROUP BY t.id 
+    ORDER BY t.created_at DESC`;
+  const [tasks] = await pool.query(query, [userId]);
   return tasks;
 };
 
@@ -87,11 +96,15 @@ export const getFilteredTasks = async (userId, filters = {}) => {
   let query = `
         SELECT 
             t.*, 
-            GROUP_CONCAT(DISTINCT tc.category_id) AS category_ids,
-            GROUP_CONCAT(DISTINCT tt.tag_id) AS tag_ids
+            GROUP_CONCAT(DISTINCT c.name) AS category_names,
+            GROUP_CONCAT(DISTINCT c.id) AS category_ids,
+            GROUP_CONCAT(DISTINCT tg.name) AS tag_names,
+            GROUP_CONCAT(DISTINCT tg.id) AS tag_ids
         FROM tasks t
         LEFT JOIN task_categories tc ON t.id = tc.task_id
+        LEFT JOIN categories c ON tc.category_id = c.id
         LEFT JOIN task_tags tt ON t.id = tt.task_id
+        LEFT JOIN tags tg ON tt.tag_id = tg.id
         WHERE t.user_id = ?
     `;
   const params = [userId];

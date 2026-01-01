@@ -3,29 +3,35 @@
   flex-direction: column;
   gap: 15px;
   cursor: pointer;
+  container-type: inline-size;
+  container-name: task-card;
 }
+
 .task__header {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-direction: row;
+  gap: 25px;
   font-family: "principal-font-bold";
   font-size: 15px;
   color: var(--dark-grey);
 }
-.task__title {
+.task__title-wrapper {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 10px;
 }
-.task-priority-icon {
+.task__priority-icon {
   width: 18px;
   object-fit: contain;
 }
+
 .task-description {
   font-family: "principal-font";
   font-size: 11px;
   color: var(--light-grey);
 }
+
 .task__filters {
   display: flex;
   flex-direction: row;
@@ -49,6 +55,43 @@
   object-fit: contain;
   width: 13px;
 }
+
+.task__date-badge {
+  font-family: "principal-font-bold";
+  color: var(--ultra-light-blue);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  background-color: var(--primary-color);
+  padding: 6px 8px;
+  width: fit-content;
+  border-radius: 8px;
+  margin-left: 20px;
+  text-transform: capitalize;
+}
+.task__date-badge img {
+  width: 14px;
+  object-fit: contain;
+}
+
 .task-card__hr {
   margin: 10px 0px;
+}
+@container task-card (width < 500px) {
+  .task__header {
+    flex-direction: column;
+    gap: 15px;
+  }    
+  
+  .task__title-wrapper {
+    align-items: flex-start;
+    gap: 0px;
+  }
+
+  .task__date-badge {
+    margin-left: 0;
+    margin-top: 5px;
+  }
 }

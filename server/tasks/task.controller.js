@@ -15,11 +15,45 @@ import {
   getTasksByDateRange as _getTasksByDateRange,
 } from "./task.model.js";
 
+const formatTaskMetadata = (tasks) => {
+  const isArray = Array.isArray(tasks);
+  const taskList = isArray ? tasks : [tasks];
+
+  const formatted = taskList.map((task) => {
+    const tags = task.tag_ids
+      ? task.tag_ids.split(",").map((id, index) => ({
+          id: parseInt(id),
+          name: task.tag_names.split(",")[index],
+        }))
+      : [];
+
+    const categories = task.category_ids
+      ? task.category_ids.split(",").map((id, index) => ({
+          id: parseInt(id),
+          name: task.category_names.split(",")[index],
+        }))
+      : [];
+
+    return {
+      ...task,
+      priority: task.priority ?? 0,
+      tags,
+      categories,
+      tag_ids: undefined,
+      tag_names: undefined,
+      category_ids: undefined,
+      category_names: undefined,
+    };
+  });
+
+  return isArray ? formatted : formatted[0];
+};
+
 export const getAllTasks = async (req, res) => {
   const userId = req.user.id;
   try {
     const tasks = await _getAllTasks(userId);
-    res.json(tasks);
+    res.status(200).json(formatTaskMetadata(tasks));
   } catch (error) {
     console.error("Error al obtener todas las tareas:", error);
     res.status(500).json({ message: "Error al obtener todas las tareas" });
@@ -30,7 +64,7 @@ export const getInboxTasks = async (req, res) => {
   const userId = req.user.id;
   try {
     const tasks = await _getInboxTasks(userId);
-    res.json(tasks);
+    res.status(200).json(formatTaskMetadata(tasks));
   } catch (error) {
     console.error("Error al obtener tareas de Inbox:", error);
     res.status(500).json({ message: "Error al obtener tareas del usuario" });
@@ -49,7 +83,7 @@ export const getTodayTasks = async (req, res) => {
 
     const tasks = await _getTasksByDateRange(userId, start, end);
 
-    res.status(200).json(tasks);
+    res.status(200).json(formatTaskMetadata(tasks));
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error al obtener las tareas de hoy" });
@@ -74,7 +108,7 @@ export const getUpcomingTasks = async (req, res) => {
 
     const tasks = await _getTasksByDateRange(userId, start, end);
 
-    res.status(200).json(tasks);
+    res.status(200).json(formatTaskMetadata(tasks));
   } catch (error) {
     console.error("Error en getUpcomingTasks:", error);
     res.status(500).json({ message: "Error al obtener las tareas próximas" });
@@ -85,7 +119,7 @@ export const getCompletedTasks = async (req, res) => {
   const userId = req.user.id;
   try {
     const tasks = await _getCompletedTasks(userId);
-    res.json(tasks);
+    res.status(200).json(formatTaskMetadata(tasks));
   } catch (error) {
     console.error("Error al obtener tareas completadas:", error);
     res.status(500).json({ message: "Error al obtener tareas completadas" });
@@ -111,10 +145,8 @@ export const getFilteredTasks = async (req, res) => {
           ? false
           : undefined,
     };
-
     const tasks = await _getFilteredTasks(userId, filters);
-
-    res.status(200).json(tasks);
+    res.status(200).json(formatTaskMetadata(tasks));
   } catch (error) {
     res.status(500).json({ message: "Error del servidor" });
   }
