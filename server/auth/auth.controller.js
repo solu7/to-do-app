@@ -99,7 +99,7 @@ export async function loginAsGuest(req, res) {
       { id: userId, isGuest: user.is_guest, username: user.username },
       process.env.JWT_SECRET,
       {
-        expiresIn: "20s",
+        expiresIn: "2h",
       }
     );
 
@@ -129,7 +129,7 @@ export async function refreshSession(req, res) {
       ? { id, isGuest, username }
       : { id, isGuest: false, email };
 
-    const expiresIn = isGuest ? "20s" : "1d";
+    const expiresIn = isGuest ? "2h" : "1d";
     const maxAge = isGuest
       ? SESION_2HS_MS + GRACE_10MIN_MS
       : SESION_24HS_MS + GRACE_10MIN_MS;
