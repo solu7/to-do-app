@@ -10,7 +10,6 @@ import {
   deleteTask,
   getTaskCompletionStatus,
   toggleTaskCompletionStatus,
-  getFilteredTasks,
   setTaskDueDate,
   getTaskDueDate,
   getTodayTasks,
@@ -25,7 +24,10 @@ router.get("/today", verifyOnlyToken, getTodayTasks);
 
 router.get("/upcoming", verifyOnlyToken, getUpcomingTasks);
 
+/*
+! NOT IN USE
 router.get("/filtered", verifyOnlyToken, getFilteredTasks);
+*/
 
 router.get("/completed", verifyOnlyToken, getCompletedTasks);
 

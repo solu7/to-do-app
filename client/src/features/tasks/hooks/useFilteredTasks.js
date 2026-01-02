@@ -1,31 +1,46 @@
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getFilteredTasks } from "../services/tasksServices";
+import { useTasks } from "../../../context/TaskContext";
 
 export const useFilteredTasks = () => {
   const [searchParams] = useSearchParams();
+  const { tasksAll, isLoading, error } = useTasks();
   const filters = Object.fromEntries(searchParams.entries());
 
-  const [tasks, setTasks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState([]);
+  const tasks = useMemo(() => {
+    const filterKey = Object.keys(filters).find((key) => key !== "name");
+    const filterValue = filters[filterKey];
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getFilteredTasks(filters);
-        setTasks(data);
-      } catch (err) {
-        setError("Error al cargar las tareas con los filtros seleccionados.");
-        console.error(err);
-        setTasks([]);
-      } finally {
-        setIsLoading(false);
+    if (!filterKey || !filterValue) return tasksAll;
+
+    return tasksAll.filter((task) => {
+      const isPending = !task.completed;
+      const value = filterValue.toString();
+      let matchesFilter = false;
+
+      switch (filterKey) {
+        case "priority":
+          matchesFilter = task.priority?.toString() === value;
+          break;
+        case "categoryId":
+          matchesFilter = task.categories?.some(
+            (cat) => cat.id.toString() === value
+          );
+          break;
+        case "tagId":
+          matchesFilter = task.tags?.some((tag) => tag.id.toString() === value);
+          break;
+        default:
+          matchesFilter = true;
       }
-    };
-    fetchTasks();
-  }, [searchParams]);
+      return isPending && matchesFilter;
+    });
+  }, [tasksAll, searchParams]);
 
-  return { tasks, isLoading, error, filters };
+  return {
+    tasks,
+    isLoading,
+    error,
+    filters,
+  };
 };

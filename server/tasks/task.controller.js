@@ -8,7 +8,6 @@ import {
   deleteTask as _deleteTask,
   getTaskCompletionStatus as _getTaskCompletionStatus,
   toggleTaskCompletion as _toggleTaskCompletion,
-  getFilteredTasks as _getFilteredTasks,
   getTaskDueDate as _getTaskDueDate,
   setTaskDueDate as _setTaskDueDate,
   removeTaskDueDate as _removeTaskDueDate,
@@ -126,6 +125,8 @@ export const getCompletedTasks = async (req, res) => {
   }
 };
 
+/* 
+! NOT IN USE
 export const getFilteredTasks = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -151,6 +152,8 @@ export const getFilteredTasks = async (req, res) => {
     res.status(500).json({ message: "Error del servidor" });
   }
 };
+
+*/
 
 export const createTask = async (req, res) => {
   const userId = req.user.id;

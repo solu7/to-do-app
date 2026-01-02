@@ -92,6 +92,8 @@ export const getCompletedTasks = async (userId) => {
   return tasks;
 };
 
+/* 
+! NOT IN USE
 export const getFilteredTasks = async (userId, filters = {}) => {
   let query = `
         SELECT 
@@ -149,6 +151,7 @@ export const getFilteredTasks = async (userId, filters = {}) => {
     throw error;
   }
 };
+/*
 
 /*
  * ESTO DE COMPLETADO en las tareas
