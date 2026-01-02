@@ -10,6 +10,7 @@ import {
 } from "../users/user.model.js";
 
 import { initializeUserData } from "../tasks/task.model.js";
+
 const TEST_MS = 20000;
 const SESION_24HS_MS = 86400000;
 const SESION_2HS_MS = 7200000;
@@ -106,7 +107,7 @@ export async function loginAsGuest(req, res) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: TEST_MS + GRACE_10MIN_MS,
+      maxAge: SESION_2HS_MS + GRACE_10MIN_MS,
     });
 
     res.status(200).json({
@@ -130,7 +131,7 @@ export async function refreshSession(req, res) {
 
     const expiresIn = isGuest ? "20s" : "1d";
     const maxAge = isGuest
-      ? TEST_MS + GRACE_10MIN_MS
+      ? SESION_2HS_MS + GRACE_10MIN_MS
       : SESION_24HS_MS + GRACE_10MIN_MS;
 
     const newToken = sign(payload, process.env.JWT_SECRET, { expiresIn });
