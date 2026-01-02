@@ -10,6 +10,10 @@ import {
 } from "../users/user.model.js";
 
 import { initializeUserData } from "../tasks/task.model.js";
+const TEST_MS = 20000;
+const SESION_24HS_MS = 86400000;
+const SESION_2HS_MS = 7200000;
+const GRACE_10MIN_MS = 600000;
 
 export async function register(req, res) {
   const { username, email, password } = req.body;
@@ -67,14 +71,14 @@ export async function login(req, res) {
     const token = sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "2h" }
+      { expiresIn: "1d" }
     );
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 7200000,
+      maxAge: SESION_24HS_MS + GRACE_10MIN_MS,
     });
 
     res.status(200).json({ message: "Inicio de sesión exitoso" });
@@ -94,17 +98,15 @@ export async function loginAsGuest(req, res) {
       { id: userId, isGuest: user.is_guest, username: user.username },
       process.env.JWT_SECRET,
       {
-        expiresIn: "2h",
+        expiresIn: "20s",
       }
     );
-
-    const maxAgeMs = 7200000;
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: maxAgeMs,
+      maxAge: TEST_MS + GRACE_10MIN_MS,
     });
 
     res.status(200).json({
@@ -115,6 +117,34 @@ export async function loginAsGuest(req, res) {
     res
       .status(500)
       .json({ message: "Server error al crear sesión de invitado" });
+  }
+}
+
+export async function refreshSession(req, res) {
+  try {
+    const { id, isGuest, username, email } = req.user;
+
+    const payload = isGuest
+      ? { id, isGuest, username }
+      : { id, isGuest: false, email };
+
+    const expiresIn = isGuest ? "20s" : "1d";
+    const maxAge = isGuest
+      ? TEST_MS + GRACE_10MIN_MS
+      : SESION_24HS_MS + GRACE_10MIN_MS;
+
+    const newToken = sign(payload, process.env.JWT_SECRET, { expiresIn });
+
+    res.cookie("token", newToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: maxAge,
+    });
+
+    res.status(200).json({ message: "Sesión renovada" });
+  } catch (error) {
+    res.status(500).json({ message: "Error al renovar sesión" });
   }
 }
 

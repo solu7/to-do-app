@@ -1,8 +1,15 @@
 import { Router } from "express";
 const router = Router();
-import { login, register, loginAsGuest, logout } from "../auth/auth.controller.js";
+import {
+  login,
+  register,
+  loginAsGuest,
+  refreshSession,
+  logout,
+} from "../auth/auth.controller.js";
 import { registerValidator } from "./auth.validator.js";
 import { validationResult } from "express-validator";
+import { verifyRefreshableToken} from "./auth.middleware.js";
 
 router.post(
   "/register",
@@ -18,6 +25,7 @@ router.post(
 );
 router.post("/login", login);
 router.post("/guest", loginAsGuest);
+router.post("/refresh", verifyRefreshableToken, refreshSession);
 router.post("/logout", logout);
 
 export default router;
