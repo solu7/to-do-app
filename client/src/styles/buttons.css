@@ -1,5 +1,6 @@
 .btn,
-.btn-secondary {
+.btn-secondary,
+.add-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,10 +10,10 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 .btn:hover,
 .btn-secondary:hover {
-  transition: all 0.2s ease-in-out;
   transform: scale(0.95);
   font-family: "principal-font-bold", sans-serif;
   box-shadow: 3px 3px 9px rgba(56, 56, 56, 0.1);
@@ -35,4 +36,20 @@
 .btn-secondary:hover {
   background-color: white;
   border: 1px solid var(--primary-color);
+}
+
+.add-btn {
+  padding: 0px 8px;
+  font-family: "principal-font-bold";
+  font-size: 18px;
+  background-color: var(--opacity-grey);
+  color: var(--light-grey);
+  border: 1px solid var(--opacity-grey);
+}
+.add-btn:hover {
+  transform: scale(0.9);
+  box-shadow: 3px 3px 9px rgba(56, 56, 56, 0.1);
+  border: 1px solid var(--primary-color);
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
 }

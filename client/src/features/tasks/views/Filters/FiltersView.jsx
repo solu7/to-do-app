@@ -1,4 +1,5 @@
 import "./FiltersView.css";
+import { useState } from "react";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
 import tagItemIcon from "../../assets/images/ItemIcon/tagItemIcon.png";
 import categoriesIcon from "../../assets/images/SectionIcon/categoryIcon.png";
@@ -8,10 +9,48 @@ import { useFiltersData } from "../../../filters/hooks/useFiltersData";
 import { TaskPrioritiesList } from "../../../filters/priorities/data/TaskPrioritiesList";
 import FilterCard from "../../../filters/components/FilterCard/FilterCard";
 import { useNavigation } from "../../../../core/hooks/useNavigation";
+import CreateFilterModal from "../../../filters/components/CreateFilterModal/CreateFilterModal";
+import { createCategory } from "../../../filters/categories/services/categoriesServices";
+import { createTag } from "../../../filters/tags/services/tagsServices";
 
 function FiltersView() {
   const { goToFilteredTasks } = useNavigation();
-  const { tags, categories, isLoading, error } = useFiltersData();
+  const { tags, categories, isLoading, error, refreshFilters } =
+    useFiltersData();
+
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    title: "",
+    placeholder: "",
+    type: "",
+  });
+
+  const openModal = (type) => {
+    const config =
+      type === "category"
+        ? {
+            title: "nueva categoría",
+            placeholder: "Ej: Trabajo, Estudio...",
+            type,
+          }
+        : { title: "nuevo tag", placeholder: "Ej: Urgente, Revisar...", type };
+
+    setModalConfig({ ...config, isOpen: true });
+  };
+
+  const handleCreateFilter = async (name) => {
+    try {
+      if (modalConfig.type === "category") {
+        await createCategory({ name });
+      } else {
+        await createTag({ name });
+      }
+      await refreshFilters();
+    } catch (error) {
+      console.error("Error al crear:", error.message);
+    }
+  };
+
   const handleFilterClick = (filterKey, filterValue, filterName) => {
     goToFilteredTasks(filterKey, filterValue, filterName);
   };
@@ -45,12 +84,12 @@ function FiltersView() {
         />
       </section>
       <div className="filters-content__container">
-        <section className="filters__content priorities">
-          <div className="filters__content__header priorities">
+        <section className="filter__content">
+          <div className="filter__header-title">
             <h4>Prioridades</h4>
             <img src={priotiesListIcon} alt="Icono de prioridad" />
           </div>
-          <section className="filters__content__list priorities">
+          <section className="filters__content__list">
             {prioritiesToShow.map((priority) => (
               <FilterCard
                 key={priority.value}
@@ -64,12 +103,17 @@ function FiltersView() {
           </section>
         </section>
         <hr className="filter-card__hr" />
-        <section className="filters__content categories">
-          <div className="filters__content__header categories">
-            <h4>Categorias ({categories.length})</h4>
-            <img src={categoriesIcon} alt="Icono de categoria" />
-          </div>
-          <section className="filters__content__list categories">
+        <section className="filter__content">
+          <header className="filters__content__header">
+            <div className="filter__header-title">
+              <h4>Categorias ({categories.length})</h4>
+              <img src={categoriesIcon} alt="Icono de categoria" />
+            </div>
+            <button className="add-btn" onClick={() => openModal("category")}>
+              +
+            </button>
+          </header>
+          <section className="filters__content__list">
             {categories.map((category) => (
               <FilterCard
                 key={category.id}
@@ -83,12 +127,17 @@ function FiltersView() {
           </section>
         </section>
         <hr className="filter-card__hr" />
-        <section className="filters__content tags">
-          <div className="filters__content__header tags">
-            <h4>Tags ({tags.length})</h4>
-            <img src={tagIcon} alt="Icono de tags" />
-          </div>
-          <section className="filters__content__list tags">
+        <section className="filter__content">
+          <header className="filters__content__header">
+            <div className="filter__header-title">
+              <h4>Tags ({tags.length})</h4>
+              <img src={tagIcon} alt="Icono de tags" />
+            </div>
+            <button className="add-btn" onClick={() => openModal("tag")}>
+              +
+            </button>
+          </header>
+          <section className="filters__content__list">
             {tags.map((tag) => (
               <FilterCard
                 key={tag.id}
@@ -101,6 +150,13 @@ function FiltersView() {
             ))}
           </section>
         </section>
+        <CreateFilterModal
+          isOpen={modalConfig.isOpen}
+          title={modalConfig.title}
+          placeholder={modalConfig.placeholder}
+          onClose={() => setModalConfig({ ...modalConfig, isOpen: false })}
+          onSubmit={handleCreateFilter}
+        />
       </div>
     </div>
   );

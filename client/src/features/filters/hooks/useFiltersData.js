@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getAllTags } from "../tags/services/tagsServices";
 import { getAllCategories } from "../categories/services/categoriesServices";
 
@@ -8,27 +8,27 @@ export const useFiltersData = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [tagsData, categoriesData] = await Promise.all([
-          getAllTags(),
-          getAllCategories(),
-        ]);
+  const refreshFilters = useCallback(async () => {
+    try {
+      const [tagsData, categoriesData] = await Promise.all([
+        getAllTags(),
+        getAllCategories(),
+      ]);
 
-        setTags(tagsData);
-        setCategories(categoriesData);
-        setError(null);
-      } catch (err) {
-        setError("Error al cargar los filtros. Por favor, inténtalo de nuevo.");
-        console.error("Filtros error:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
+      setTags(tagsData);
+      setCategories(categoriesData);
+      setError(null);
+    } catch (err) {
+      setError("Error al actualizar los filtros.");
+      console.error("Filtros error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  return { tags, categories, isLoading, error };
+  useEffect(() => {
+    refreshFilters();
+  }, [refreshFilters]);
+
+  return { tags, categories, isLoading, error, refreshFilters };
 };

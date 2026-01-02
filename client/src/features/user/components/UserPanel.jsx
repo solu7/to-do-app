@@ -5,7 +5,7 @@ import nameIcon from "../assets/images/name.png";
 import emailIcon from "../assets/images/email.png";
 import passIcon from "../assets/images/pass.png";
 import deleteIcon from "../assets/images/delete.png";
-import closeIcon from "../assets/images/close.png";
+import closeIcon from "../../assets/images/close.png"
 import { useUser } from "../../../context/UserContext";
 import { useState, useEffect } from "react";
 import { useUserActions } from "../hooks/useUserActions";
