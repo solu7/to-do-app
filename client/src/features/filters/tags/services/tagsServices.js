@@ -24,6 +24,27 @@ export async function createTag({ name }) {
   }
 }
 
+export async function deleteTag(tagId) {
+  try {
+    const response = await fetch(`${API_URL}/tags/resource/${tagId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message || "Error al eliminar el tag permanentemente."
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error en deleteTag service:", error);
+    throw error;
+  }
+}
+
 export async function getAllTags() {
   try {
     const response = await fetch(`${API_URL}/tags`, {

@@ -2,8 +2,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { AnimatePresence, motion } from "framer-motion";
 import "./AddTaskModal.css";
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import es from "date-fns/locale/es";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton.jsx";
 import { TaskPrioritiesList } from "../../../filters/priorities/data/TaskPrioritiesList.js";
 import categoryIcon from "../../assets/images/SectionIcon/categoryIcon.png";
@@ -12,28 +10,37 @@ import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
 import dateIcon from "../../assets/images/SectionIcon/dateIcon.png";
 import closeIcon from "../../assets/images/SectionIcon/closeIcon.png";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper.jsx";
+import AddDueDateModal from "../AddDueDateModal/AddDueDateModal.jsx";
+import { useModal } from "../../hooks/useModal.js";
 import { createTask } from "../../services/tasksServices.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
-import {
-  getAllTags,
-  assignTagToTask,
-} from "../../../filters/tags/services/tagsServices.js";
-import {
-  getAllCategories,
-  assignCategoryToTask,
-} from "../../../filters/categories/services/categoriesServices.js";
-import useFetchAllData from "../../../../core/hooks/useFetchAllData.js";
+import { assignTagToTask } from "../../../filters/tags/services/tagsServices.js";
+import { assignCategoryToTask } from "../../../filters/categories/services/categoriesServices.js";
 import { useTaskItemRelations } from "../../hooks/useTaskItemRelations.js";
 import { useTaskPriority } from "../../../filters/priorities/hooks/useTaskPriority.js";
 import { useTaskDueDate } from "../../hooks/useTaskDueDate.js";
+import { useCreateFilter } from "../../../filters/hooks/useCreateFilter.js";
+import { useFilters } from "../../../../context/FilterContext.jsx";
+import CreateFilterModal from "../../../filters/components/CreateFilterModal/CreateFilterModal.jsx";
 
 const AddTaskModal = ({ onClose, isOpen }) => {
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
+  const addDueDateModal = useModal();
 
-  const { fetchInboxTasks, fetchAllTasks } = useTasks();
-  const allUserTags = useFetchAllData(getAllTags);
-  const allUserCategories = useFetchAllData(getAllCategories);
+  const {
+    tags: allUserTags,
+    categories: allUserCategories,
+    removeTag,
+    removeCategory,
+    refreshFilters,
+  } = useFilters();
+
+  const { modalConfig, openModal, closeModal, handleCreate } =
+    useCreateFilter(refreshFilters);
+
+  const { refreshAllLists } = useTasks();
+
   const {
     selectedPriority,
     handleSetPriority,
@@ -44,6 +51,7 @@ const AddTaskModal = ({ onClose, isOpen }) => {
     selectedDueDate,
     handleDueDateChange,
     formattedDateText,
+    formattedDateModalText,
     handleSaveDueDate,
   } = useTaskDueDate();
 
@@ -96,10 +104,9 @@ const AddTaskModal = ({ onClose, isOpen }) => {
       }
 
       await Promise.allSettled(assignPromises);
-
-      fetchInboxTasks();
-      fetchAllTasks();
+      refreshAllLists();
       closeAndResetRelations();
+      onClose();
     } catch (error) {
       console.error("Error al crear y/o asignar la tarea:", error);
     }
@@ -181,15 +188,17 @@ const AddTaskModal = ({ onClose, isOpen }) => {
               />
             </section>
             <section className="task-modal__select-filters">
-              <DatePicker
-                selected={selectedDueDate}
-                onChange={handleDueDateChange}
-                locale={es}
-                dateFormat="dd/MM/yyyy"
-                showOutsideDays={false}
-                customInput={
-                  <DropdownWrapper buttonIcon={dateIcon} buttonText="Fecha" />
-                }
+              <DropdownWrapper
+                buttonIcon={dateIcon}
+                buttonText={formattedDateModalText}
+                onClick={addDueDateModal.open}
+              />
+              <AddDueDateModal
+                onClose={addDueDateModal.close}
+                isOpen={addDueDateModal.isOpen}
+                selectedDueDate={selectedDueDate}
+                handleDueDateChange={handleDueDateChange}
+                formattedDateText={formattedDateText}
               />
               <DropdownButton
                 buttonText="Prioridad"
@@ -203,6 +212,9 @@ const AddTaskModal = ({ onClose, isOpen }) => {
                 itemList={allUserCategories}
                 itemListIcon={categoryIcon}
                 onItemClick={handleAssignCategory}
+                onAddClick={(e) => openModal("category", e)}
+                onRemoveClick={removeCategory}
+                keepOpen={modalConfig.isOpen && modalConfig.type === "category"}
               />
               <DropdownButton
                 buttonText="Tags"
@@ -210,6 +222,14 @@ const AddTaskModal = ({ onClose, isOpen }) => {
                 itemList={allUserTags}
                 itemListIcon={tagIcon}
                 onItemClick={handleAssignTag}
+                onAddClick={(e) => openModal("tag", e)}
+                onRemoveClick={removeTag}
+                keepOpen={modalConfig.isOpen && modalConfig.type === "tag"}
+              />
+              <CreateFilterModal
+                {...modalConfig}
+                onClose={closeModal}
+                onClick={handleCreate}
               />
             </section>
             <section className="task-modal-buttons">

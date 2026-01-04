@@ -2,6 +2,7 @@ import "./DropdownButton.css";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DropdownWrapper from "../DropdownWrapper/DropdownWrapper.jsx";
+import closeIcon from "../../../features/assets/images/close.png";
 
 function DropdownButton({
   buttonText,
@@ -9,6 +10,9 @@ function DropdownButton({
   itemList,
   itemListIcon,
   onItemClick,
+  onAddClick,
+  onRemoveClick,
+  keepOpen = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,6 +22,7 @@ function DropdownButton({
 
   useEffect(() => {
     const handleClickOutside = (event) => {
+      if (keepOpen) return;
       if (
         isOpen &&
         dropdownRef.current &&
@@ -32,7 +37,11 @@ function DropdownButton({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen, setIsOpen]);
+  }, [isOpen, keepOpen]);
+
+  useEffect(() => {
+    if (keepOpen) setIsOpen(true);
+  }, [keepOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -48,6 +57,7 @@ function DropdownButton({
   }, [isOpen]);
 
   const handleToggle = () => {
+    if (keepOpen) return;
     setIsOpen((prev) => !prev);
   };
 
@@ -71,26 +81,49 @@ function DropdownButton({
           >
             {itemList.map((item, idx) => (
               <li
-                className="dropdown-menu__item"
+                className="dropdown-menu__item item-to-remove"
                 key={idx}
-                onClick={() => {
-                  if (onItemClick) {
-                    onItemClick(item);
-                  } else {
-                    setIsOpen(false);
-                  }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onItemClick?.(item);
+                  setIsOpen(false);
                 }}
               >
-                {(itemListIcon || item.icon) && (
+                <div className="dropdown-menu__item-header">
+                  {(itemListIcon || item.icon) && (
+                    <img
+                      className="dropdown-menu__item-icon"
+                      src={item.icon || itemListIcon}
+                      alt={`Icono de ${item.name}`}
+                    />
+                  )}
+                  {item.name}
+                </div>
+                {onRemoveClick && (
                   <img
-                    className="dropdown-menu__icon"
-                    src={item.icon || itemListIcon}
-                    alt={`Icono de ${item.name}`}
+                    className="remove-button"
+                    src={closeIcon}
+                    alt="Icono de cerrar"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onRemoveClick(item.id);
+                    }}
                   />
                 )}
-                {item.name}
               </li>
             ))}
+            {onAddClick && (
+              <li
+                className="add-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAddClick(e);
+                }}
+              >
+                <span>+</span>
+                <p>Crear</p>
+              </li>
+            )}
           </motion.ul>
         )}
       </AnimatePresence>

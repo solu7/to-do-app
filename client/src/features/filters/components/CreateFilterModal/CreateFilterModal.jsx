@@ -1,34 +1,42 @@
 import "./CreateFilterModal.css";
+import ReactDOM from "react-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import closeIcon from "../../../assets/images/close.png";
 
-function CreateFilterModal({ isOpen, onClose, onSubmit, title, placeholder }) {
+function CreateFilterModal({
+  isOpen,
+  onClose,
+  onClick,
+  title,
+  placeholder,
+  position,
+}) {
   const [inputValue, setInputValue] = useState("");
 
   const handleConfirm = () => {
     if (inputValue.trim()) {
-      onSubmit(inputValue.trim());
+      onClick(inputValue.trim());
       setInputValue("");
       onClose();
     }
   };
 
-  return (
+  return ReactDOM.createPortal(
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          className="modal-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
+        <motion.div className="modal__overlay--invisible" onClick={onClose}>
           <motion.div
             className="create-filter-modal__container"
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0.9 }}
+            style={{
+              position: "fixed",
+              top: `${position.top}px`,
+              left: `${position.left}px`,
+            }}
+            initial={{ opacity: 0, scale: 0.9, x: "-50%", y: "10%" }}
+            animate={{ opacity: 1, scale: 1, x: "-50%", y: "20%" }}
+            exit={{ opacity: 0, scale: 0.9, x: "-50%", y: "10%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
             onClick={(e) => e.stopPropagation()}
           >
             <section className="create-filter-modal__header">
@@ -66,8 +74,8 @@ function CreateFilterModal({ isOpen, onClose, onSubmit, title, placeholder }) {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
-
 export default CreateFilterModal;

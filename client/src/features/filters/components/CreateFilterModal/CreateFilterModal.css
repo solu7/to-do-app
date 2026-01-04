@@ -1,6 +1,6 @@
 .create-filter-modal__container {
-  position: absolute;
-  width: 450px;
+  z-index: 9999;
+  width: 350px;
   background-color: var(--light-blue);
   border: solid 2px var(--primary-color);
   display: flex;
@@ -9,6 +9,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 3px 3px 9px rgb(109 109 109 / 16%);
+  transform: translate(-50%, -50%);
 }
 
 .create-filter-modal__header {
@@ -66,5 +67,5 @@
   outline: none;
 }
 .create-filter-modal__input:focus {
-    border: 1px solid var(--primary-color);
+  border: 1px solid var(--primary-color);
 }

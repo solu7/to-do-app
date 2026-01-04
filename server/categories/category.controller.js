@@ -1,5 +1,6 @@
 import {
   createCategory as _createCategory,
+  deleteCategory as _deleteCategory,
   assignCategoryToTask as _assignCategoryToTask,
   removeCategoryFromTask as _removeCategoryFromTask,
   getAllCategories as _getAllCategories,
@@ -20,6 +21,19 @@ export const createCategory = async (req, res) => {
   } catch (error) {
     console.error("Error al crear la categoría:", error);
     res.status(500).json({ message: "Error del servidor" });
+  }
+};
+
+export const deleteCategory = async (req, res) => {
+  const userId = req.user.id;
+  const { categoryId } = req.params;
+
+  try {
+    await _deleteCategory(userId, categoryId);
+    res.status(200).json({ message: "Category deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting category:", error);
+    res.status(400).json({ message: error.message });
   }
 };
 

@@ -24,6 +24,31 @@ export async function createCategory({ name }) {
   }
 }
 
+export async function deleteCategory(categoryId) {
+  try {
+    const response = await fetch(
+      `${API_URL}/categories/resource/${categoryId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message || "Error al eliminar la categoría permanentemente."
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en deleteCategory service:", error);
+    throw error;
+  }
+}
+
 export async function getAllCategories() {
   try {
     const response = await fetch(`${API_URL}/categories`, {

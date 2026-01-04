@@ -12,12 +12,12 @@ import closeIcon from "../../../../features/tasks/assets/images/SectionIcon/clos
 import openIcon from "../../assets/images/openIcon.png";
 import saveIcon from "../../assets/images/saveIcon.png";
 import resetIcon from "../../assets/images/resetIcon.png";
-import { getAllTags } from "../../../../features/filters/tags/services/tagsServices";
-import { getAllCategories } from "../../../../features/filters/categories/services/categoriesServices";
 import { useEditPanelActions } from "../../../../features/tasks/hooks/useEditPanelActions";
 import { useTasks } from "../../../../context/TaskContext";
 import DropdownButton from "../../../../core/components/DropdownButton/DropdownButton";
-import useFetchAllData from "../../../../core/hooks/useFetchAllData";
+import { useFilters } from "../../../../context/FilterContext";
+import { useCreateFilter } from "../../../../features/filters/hooks/useCreateFilter";
+import CreateFilterModal from "../../../../features/filters/components/CreateFilterModal/CreateFilterModal";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel";
 import { useTaskActions } from "../../../../features/tasks/hooks/useTaskActions";
 import { useTaskPriority } from "../../../../features/filters/priorities/hooks/useTaskPriority";
@@ -26,7 +26,6 @@ import AddDueDateModal from "../../../../features/tasks/components/AddDueDateMod
 import { useModal } from "../../../../features/tasks/hooks/useModal";
 import { useTaskDueDate } from "../../../../features/tasks/hooks/useTaskDueDate";
 import { useResizer } from "../../../../core/hooks/useResizer";
-import { useEffect } from "react";
 
 function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
   const addDueDateModal = useModal();
@@ -45,8 +44,17 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
     handleInputChange,
   } = useTaskEditPanel(task);
 
-  const allUserTags = useFetchAllData(getAllTags);
-  const allUserCategories = useFetchAllData(getAllCategories);
+  const {
+    tags: allUserTags,
+    categories: allUserCategories,
+    removeTag,
+    removeCategory,
+    refreshFilters,
+  } = useFilters();
+
+  const { modalConfig, openModal, closeModal, handleCreate } =
+    useCreateFilter(refreshFilters);
+
   const tagsInTask = task?.tags || [];
   const categoriesInTask = task?.categories || [];
 
@@ -170,6 +178,9 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                   itemList={allUserTags}
                   itemListIcon={tagItemIcon}
                   onItemClick={actions.assignTag}
+                  onAddClick={(e) => openModal("tag", e)}
+                  onRemoveClick={removeTag}
+                  keepOpen={modalConfig.isOpen && modalConfig.type === "tag"}
                 />
                 <span className="edit-panel__add-filter-separator"></span>
                 <DropdownButton
@@ -178,6 +189,16 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                   itemList={allUserCategories}
                   itemListIcon={categoryItemIcon}
                   onItemClick={actions.assignCategory}
+                  onAddClick={(e) => openModal("category", e)}
+                  onRemoveClick={removeCategory}
+                  keepOpen={
+                    modalConfig.isOpen && modalConfig.type === "category"
+                  }
+                />
+                <CreateFilterModal
+                  {...modalConfig}
+                  onClose={closeModal}
+                  onClick={handleCreate}
                 />
               </section>
             </section>

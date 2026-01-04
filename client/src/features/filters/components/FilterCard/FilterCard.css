@@ -2,20 +2,27 @@
   display: flex;
   flex-direction: row;
   gap: 15px;
+}
+
+.filter-card__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
   padding: 6px 10px;
   border-radius: 6px 0px;
   color: var(--light-grey);
   font-family: "principal-font-bold";
   cursor: pointer;
   border: 1px solid var(--ultra-light-grey);
-  width: max-content;
   transition: 0.2s ease;
 }
+
 .filter-card__icon {
   height: 15px;
   object-fit: contain;
 }
-.filter-card:hover {
+.filter-card__header:hover {
   transform: scale(0.98);
   box-shadow: 3px 3px 9px rgb(149 149 149 / 25%);
   border-color: var(--primary-color);

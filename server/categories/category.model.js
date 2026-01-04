@@ -23,6 +23,18 @@ export const createCategory = async (userId, name) => {
   }
 };
 
+export const deleteCategory = async (userId, categoryId) => {
+  const [result] = await pool.query(
+    "DELETE FROM categories WHERE id = ? AND user_id = ?",
+    [categoryId, userId]
+  );
+
+  if (result.affectedRows === 0) {
+    throw new Error("Category not found or not authorized to delete");
+  }
+  return result;
+};
+
 export const getCategoriesInTask = async (userId, taskId) => {
   const [categories] = await pool.query(
     "SELECT c.* FROM categories c JOIN task_categories tc ON c.id = tc.category_id WHERE tc.task_id = ? AND c.user_id = ?",
