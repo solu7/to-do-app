@@ -5,7 +5,10 @@
   overflow: hidden;
   gap: 50px;
 }
-.dashboard__view {
+.dashboard__view-container {
+  container-type: inline-size;
+  container-name: view-container;
+  min-width: 8vw;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -13,4 +16,14 @@
   gap: 60px;
   padding: 80px 0px;
   scrollbar-width: none;
+}
+@container view-container (width >= 500px) {
+  .dashboard__view {
+    padding: 0px 80px;
+  }
+}
+@container view-container (width >= 950px) {
+  .dashboard__view {
+    padding: 0px 200px;
+  }
 }

@@ -83,11 +83,10 @@
   .task__header {
     flex-direction: column;
     gap: 15px;
-  }    
-  
+  }
+
   .task__title-wrapper {
     align-items: flex-start;
-    gap: 0px;
   }
 
   .task__date-badge {

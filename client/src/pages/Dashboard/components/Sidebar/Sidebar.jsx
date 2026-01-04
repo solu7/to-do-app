@@ -56,10 +56,10 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
             exit="closed"
           >
             {isGuest && sessionTimeRemaining > 0 && (
-              <p className="sidebar__guest-timer">
-                Sesión de invitado expira en:{" "}
+              <div className="sidebar__guest-timer">
+                <p>Sesión de invitado expira en: </p>
                 <span>{formatTime(sessionTimeRemaining)}</span>
-              </p>
+              </div>
             )}
             <section className="sidebar-header">
               <div className="sidebar-user">

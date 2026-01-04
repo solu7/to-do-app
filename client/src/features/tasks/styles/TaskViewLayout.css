@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
+  container-type: inline-size;
+  container-name: task-view-container;
 }
 .task-view__header {
   display: flex;
@@ -43,5 +45,16 @@
 @media (width < 1500px) {
   .inbox {
     gap: 0px;
+  }
+}
+@container task-view-container (width <= 500px) {
+  .task-view__header {
+    gap: 10px;
+  }
+  .task-view__header-title--completed {
+    font-size: 17px;
+  }
+  .no-tasks__message {
+    font-size: 12px;
   }
 }

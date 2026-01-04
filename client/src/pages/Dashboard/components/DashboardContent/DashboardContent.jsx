@@ -53,30 +53,32 @@ function DashboardContent() {
         username={userData?.username || "Invitado"}
         openDashboardSidebar={openDashboardSidebar}
       />
-      <div className="dashboard__view">
-        <Routes>
-          <Route
-            path="/"
-            element={<InboxView onTaskClick={handleTaskSelection} />}
-          />
-          <Route
-            path="/today"
-            element={<TodayView onTaskClick={handleTaskSelection} />}
-          />
-          <Route
-            path="/upcoming"
-            element={<UpcomingView onTaskClick={handleTaskSelection} />}
-          />
-          <Route
-            path="/completed"
-            element={<CompletedView onTaskClick={handleTaskSelection} />}
-          />
-          <Route path="/filters" element={<FiltersView />} />
-          <Route
-            path="/filtered-tasks"
-            element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
-          />
-        </Routes>
+      <div className="dashboard__view-container">
+        <div className="dashboard__view">
+          <Routes>
+            <Route
+              path="/"
+              element={<InboxView onTaskClick={handleTaskSelection} />}
+            />
+            <Route
+              path="/today"
+              element={<TodayView onTaskClick={handleTaskSelection} />}
+            />
+            <Route
+              path="/upcoming"
+              element={<UpcomingView onTaskClick={handleTaskSelection} />}
+            />
+            <Route
+              path="/completed"
+              element={<CompletedView onTaskClick={handleTaskSelection} />}
+            />
+            <Route path="/filters" element={<FiltersView />} />
+            <Route
+              path="/filtered-tasks"
+              element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
+            />
+          </Routes>
+        </div>
       </div>
       <EditPanel
         isOpen={taskEditPanelIsOpen}

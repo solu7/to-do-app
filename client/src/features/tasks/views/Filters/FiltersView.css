@@ -1,7 +1,7 @@
 .filters-content__container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 60px;
   font-family: "principal-font";
 }
 .filter__content {
@@ -18,8 +18,10 @@
 .filters__content__header {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 .filter__header-title {
   display: flex;

@@ -7,7 +7,7 @@ function CompletedView({ onTaskClick }) {
   return (
     <div className="task-view__container">
       <section className="task-view__header">
-        <h3 className="task-view__header-title">
+        <h3 className="task-view__header-title task-view__header-title--completed">
           Tareas <span>completadas</span>
         </h3>
         <img
