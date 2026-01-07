@@ -3,23 +3,6 @@
   height: 350px;
   background-color: var(--primary-color);
 }
-
-.success-message,
-.error-message {
-  font-family: "principal-font-bold";
-  font-size: 16px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--grey);
-}
-.success-message,
-.error-message span {
-  color: var(--primary-color);
-}
-.success-message-hr,
-.error-message-hr {
-  margin: 15px 0px 0px;
-}
 .section-title {
   font-family: "principal-font", sans-serif;
   font-size: 30px;

@@ -26,6 +26,11 @@ export const registerSchema = z
     path: ["confirmPassword"],
   });
 
+export const loginSchema = z.object({
+  email: z.string().email("¡Formato de correo electrónico inválido!"),
+  password: z.string().min(1, "La contraseña es requerida"),
+});
+
 export const changePasswordSchema = z
   .object({
     currentPassword: z.string().min(1, "La contraseña actual es requerida."),

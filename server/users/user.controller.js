@@ -39,6 +39,12 @@ export const updateUsername = async (req, res) => {
     return res.status(400).json({ message: "The new username is required." });
   }
 
+  if (newUsername.trim().length > 20) {
+    return res.status(400).json({
+      message: "El nombre de usuario no puede tener más de 20 caracteres.",
+    });
+  }
+
   try {
     const currentUserData = await findUserById(userId);
     if (!currentUserData) {

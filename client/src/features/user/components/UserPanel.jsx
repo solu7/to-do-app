@@ -5,13 +5,14 @@ import nameIcon from "../assets/images/name.png";
 import emailIcon from "../assets/images/email.png";
 import passIcon from "../assets/images/pass.png";
 import deleteIcon from "../assets/images/delete.png";
-import closeIcon from "../../assets/images/close.png"
+import closeIcon from "../../assets/images/close.png";
 import { useUser } from "../../../context/UserContext";
 import { useState, useEffect } from "react";
 import { useUserActions } from "../hooks/useUserActions";
+import { useModal } from "../../tasks/hooks/useModal.js";
 import ChangePassModal from "../../auth/components/ChangePassModal/ChangePassModal.jsx";
 import DeleteAccountModal from "../../auth/components/DeleteAccountModal/DeleteAccountModal.jsx";
-import { useModal } from "../../tasks/hooks/useModal.js";
+import StatusMessage from "../../../core/components/StatusMessage/StatusMessage.jsx";
 
 function UserPanel({ isOpen, onClose }) {
   const changePassModal = useModal();
@@ -35,6 +36,8 @@ function UserPanel({ isOpen, onClose }) {
 
   const [newUsername, setNewUsername] = useState(initialUsername);
 
+  const [charError, setCharError] = useState(null);
+
   useEffect(() => {
     setNewUsername(initialUsername);
   }, [initialUsername, isOpen]);
@@ -43,13 +46,26 @@ function UserPanel({ isOpen, onClose }) {
     if (!isOpen) {
       setError(null);
       setSuccessMessage(null);
+      setCharError(null);
     }
   }, [isOpen, setError, setSuccessMessage]);
+
+  const onUsernameInputChange = (e) => {
+    const value = e.target.value;
+
+    if (value.length <= 20) {
+      setNewUsername(value);
+      setCharError(null);
+      if (error) setError(null);
+    } else {
+      setCharError("Máximo 20 caracteres alcanzado");
+      setTimeout(() => setCharError(null), 1500);
+    }
+  };
 
   const handleUpdateUsernameClick = async () => {
     setError(null);
     setSuccessMessage(null);
-
     await updateUsername(initialUsername, newUsername);
   };
 
@@ -108,13 +124,12 @@ function UserPanel({ isOpen, onClose }) {
                 className="user-panel__editable-item-actions-input"
                 type="text"
                 value={newUsername}
-                onChange={(e) => setNewUsername(e.target.value)}
+                onChange={onUsernameInputChange}
                 disabled={isLoading}
               />
-              {error && <p className="error-message">{error}</p>}
-              {successMessage && (
-                <p className="success-message">{successMessage}</p>
-              )}
+              <StatusMessage message={charError} type="error" />
+              <StatusMessage message={error} type="error" />
+              <StatusMessage message={successMessage} type="success" />
               <button
                 className="user-panel__editable-item-actions-button btn"
                 onClick={handleUpdateUsernameClick}

@@ -5,6 +5,7 @@ import { InputField } from "../../../../core/components/InputField/InputField";
 import passIcon from "../../../user/assets/images/pass.png";
 import closeIcon from "../../../user/assets/images/close.png";
 import { useUser } from "../../../../context/UserContext.jsx";
+import StatusMessage from "../../../../core/components/StatusMessage/StatusMessage.jsx";
 
 const AUTO_CLOSE_TIME_MS = 2500;
 
@@ -72,10 +73,8 @@ function ChangePassModal({ isOpen, onClose }) {
           <hr />
           {!isGuest ? (
             <>
-              {apiError && <p className="error-message">{apiError}</p>}
-              {successMessage && (
-                <p className="success-message">{successMessage}</p>
-              )}
+              <StatusMessage message={apiError} type="error" />
+              <StatusMessage message={successMessage} type="success" />
               <InputField
                 inputIcon={passIcon}
                 inputTitle="Contraseña Actual"

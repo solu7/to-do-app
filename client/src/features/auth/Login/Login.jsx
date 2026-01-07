@@ -1,11 +1,12 @@
 import "./Login.css";
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { InputField } from "../../../core/components/InputField/InputField.jsx";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "../validation/authSchemas.js";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "../../../core/hooks/useNavigation.js";
 import { loginUser } from "./loginService.js";
-
+import StatusMessage from "../../../core/components/StatusMessage/StatusMessage.jsx";
 import logo from "../../../core/assets/icons/logo.png";
 import passIcon from "../../assets/images/passIcon.png";
 import emailIcon from "../../assets/images/emailIcon.svg";
@@ -13,8 +14,8 @@ import homeIcon from "../../../core/assets/icons/homeIcon.svg";
 
 function Login() {
   const { goToDashboard, goToHome } = useNavigation();
-  const [generalError, setGeneralError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const {
     register,
     handleSubmit,
@@ -22,11 +23,12 @@ function Login() {
     setError: setFormError,
     formState: { errors },
   } = useForm({
+    resolver: zodResolver(loginSchema),
     mode: "onTouched",
   });
 
   const onSubmit = async (data) => {
-    setGeneralError("");
+    setError("");
 
     try {
       const response = await loginUser({
@@ -35,19 +37,14 @@ function Login() {
       });
 
       console.log("Login exitoso:", response);
-      setSuccess("¡Usuario logeado correctamente!");
+      setSuccessMsg("¡Usuario logeado correctamente!");
       reset();
       setTimeout(() => {
         goToDashboard();
       }, 2500);
     } catch (err) {
       console.error("Error al logear el usuario:", err);
-
-      if (
-        err.details &&
-        err.details.errors &&
-        Array.isArray(err.details.errors)
-      ) {
+      if (err.details?.errors && Array.isArray(err.details.errors)) {
         err.details.errors.forEach((backendError) => {
           if (backendError.path) {
             setFormError(backendError.path, {
@@ -55,15 +52,13 @@ function Login() {
               message: backendError.msg,
             });
           } else {
-            setFormError(backendError.msg);
+            setError(backendError.msg);
           }
         });
       } else if (err.message) {
-        setGeneralError(err.message);
+        setError(err.message);
       } else {
-        setGeneralError(
-          "Ocurrió un error inesperado al intentar logear el usuario."
-        );
+        setError("Ocurrió un error inesperado al intentar logear el usuario.");
       }
     }
   };
@@ -95,58 +90,18 @@ function Login() {
           register={register}
           errors={errors}
         />
-
-        <AnimatePresence>
-          {!!generalError && (
-            <motion.div
-              className="error-message"
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-                height: 0,
-                marginTop: 0,
-                padding: "0 10px",
-              }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-            >
-              <p>
-                Email o contraseña <span>incorrectos</span>
-              </p>
-              <hr className="error-message-hr" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {!!success && (
-            <motion.div
-              className="success-message"
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-                height: 0,
-                marginTop: 0,
-                padding: "0 10px",
-              }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-            >
-              <p>
-                ¡Usuario logeado <span>correctamente!</span>
-              </p>
-              <hr className="success-message-hr" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+        {error && (
+          <div className="login__status-msg">
+            <StatusMessage message={error} type="error" />
+            <hr className="error-message-hr" />
+          </div>
+        )}
+        {successMsg && (
+          <div className="login__status-msg">
+            <StatusMessage message={successMsg} type="success" />
+            <hr className="success-message-hr" />
+          </div>
+        )}
         <div className="login-buttons">
           <button type="submit" className="btn login-btn">
             Log in

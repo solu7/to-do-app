@@ -1,6 +1,6 @@
 import "./Register.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import StatusMessage from "../../../core/components/StatusMessage/StatusMessage.jsx";
 import { useRegisterForm } from "./hooks/useRegisterForm.js";
 import { useNavigation } from "../../../core/hooks/useNavigation.js";
 import { InputField } from "../../../core/components/InputField/InputField.jsx";
@@ -61,56 +61,8 @@ function Register() {
           register={register}
           errors={errors}
         />
-
-        <AnimatePresence>
-          {!!generalError && (
-            <motion.div
-              className="error-message"
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-                height: 0,
-                marginTop: 0,
-                padding: "0 10px",
-              }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-            >
-              <p>{generalError}</p>
-              <hr className="error-message-hr" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {!!success && (
-            <motion.div
-              className="success-message"
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-                height: 0,
-                marginTop: 0,
-                padding: "0 10px",
-              }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-            >
-              <p>
-                ¡Usuario registrado <span>correctamente!</span>
-              </p>
-              <hr className="success-message-hr" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+        <StatusMessage message={generalError} type="error" />
+        <StatusMessage message={success} type="success" />
         <div className="register-buttons">
           <button type="submit" className="btn register-btn">
             Create account

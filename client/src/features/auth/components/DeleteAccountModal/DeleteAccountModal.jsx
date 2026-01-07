@@ -6,6 +6,7 @@ import passIcon from "../../../user/assets/images/pass.png";
 import closeIcon from "../../../user/assets/images/close.png";
 import { useNavigation } from "../../../../core/hooks/useNavigation.js";
 import { useUser } from "../../../../context/UserContext.jsx";
+import StatusMessage from "../../../../core/components/StatusMessage/StatusMessage.jsx";
 
 const REDIRECTION_DELAY_MS = 3000;
 
@@ -91,11 +92,9 @@ function DeleteAccountModal({ isOpen, onClose }) {
               No puedes eliminar la cuenta de invitado.
             </p>
           )}
-          {successMessage && (
-            <p className="success-message">{successMessage}</p>
-          )}
-          {isLoading && <p className="success-message">{isLoading}</p>}
-          {apiError && <p className="error-message">{apiError}</p>}
+          <StatusMessage message={apiError} type="error" />
+          <StatusMessage message={successMessage} type="success" />
+          <StatusMessage message={isLoading} type="success" />
         </form>
       </div>
     )

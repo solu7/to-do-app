@@ -1,9 +1,13 @@
-.user-panel .error-message,
-.user-panel .success-message {
-  margin: 0;
+.user-panel .success-message-container,
+.user-panel .error-message-container {
+  justify-content: left;
+}
+.user-panel .success-message,
+.user-panel .error-message {
   font-size: 12px;
 }
 .user-panel {
+  font-family: "principal-font-bold";
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -78,6 +82,7 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  font-size: 12px;
 }
 .user-panel__editable-item-title {
   color: var(--dark-grey);
@@ -110,6 +115,7 @@
   font-size: 13px;
   outline: none;
   color: var(--grey);
+  max-width: 75%;
   width: 60%;
 }
 

@@ -30,7 +30,7 @@ export async function createUser(username, email, hashedPassword) {
     "INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)",
     [id, username, email, hashedPassword]
   );
-  return result.insertId;
+  return id;
 }
 
 export async function createGuestUser() {
