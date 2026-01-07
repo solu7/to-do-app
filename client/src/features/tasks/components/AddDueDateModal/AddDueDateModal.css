@@ -60,3 +60,9 @@
 .add-dd-modal__container hr {
   margin: 0px;
 }
+@media (max-width: 768px) {
+  .add-dd-modal__container {
+    top: 0;
+    left: 0;
+  }
+}

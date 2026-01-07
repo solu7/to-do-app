@@ -54,3 +54,9 @@
 .change-pass-modal .btn {
   padding: 8px;
 }
+
+@media (max-width: 768px) {
+  .change-pass-modal {
+    width: 75%;
+  }
+}

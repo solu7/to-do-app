@@ -44,14 +44,19 @@ function DropdownButton({
   }, [keepOpen]);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && dropdownRef.current) {
       const rect = dropdownRef.current.getBoundingClientRect();
-      const spaceRight = window.innerWidth - rect.right;
+      const windowWidth = window.innerWidth;
 
-      if (spaceRight < 30) {
-        setPositionClass("menu-left");
+      const spaceRight = windowWidth - rect.right;
+      const spaceLeft = rect.left;
+
+      if (spaceRight < 50) {
+        setPositionClass("menu-align-right");
+      } else if (spaceLeft < 50) {
+        setPositionClass("menu-align-left");
       } else {
-        setPositionClass("");
+        setPositionClass("menu-align-center");
       }
     }
   }, [isOpen]);

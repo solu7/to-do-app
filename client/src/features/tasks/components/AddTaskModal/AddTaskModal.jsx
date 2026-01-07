@@ -11,6 +11,7 @@ import dateIcon from "../../assets/images/SectionIcon/dateIcon.png";
 import closeIcon from "../../assets/images/SectionIcon/closeIcon.png";
 import DropdownWrapper from "../../../../core/components/DropdownWrapper/DropdownWrapper.jsx";
 import AddDueDateModal from "../AddDueDateModal/AddDueDateModal.jsx";
+import useAutoGrowTextArea from "../../../../core/hooks/useAutoGrowTextarea.js";
 import { useModal } from "../../hooks/useModal.js";
 import { createTask } from "../../services/tasksServices.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
@@ -27,6 +28,9 @@ const AddTaskModal = ({ onClose, isOpen }) => {
   const [title, setTitle] = useState("Titulo de la tarea");
   const [description, setDescription] = useState("Descripcion de la tarea.");
   const addDueDateModal = useModal();
+
+  const titleGrow = useAutoGrowTextArea([title, isOpen]);
+  const descGrow = useAutoGrowTextArea([description, isOpen]);
 
   const {
     tags: allUserTags,
@@ -165,6 +169,7 @@ const AddTaskModal = ({ onClose, isOpen }) => {
               </div>
               <div className="task-modal__header-main">
                 <textarea
+                  ref={titleGrow.textareaRef}
                   className="task-modal-input title"
                   onChange={handleTitleChange}
                   value={title}
@@ -180,6 +185,7 @@ const AddTaskModal = ({ onClose, isOpen }) => {
                 )}
               </div>
               <textarea
+                ref={descGrow.textareaRef}
                 className="task-modal-input desc"
                 onChange={handleDescriptionChange}
                 value={description}

@@ -8,11 +8,10 @@ export const useCreateFilter = (onSuccess) => {
     title: "",
     placeholder: "",
     type: "",
+    anchorRect: null,
   });
 
   const openModal = (type, e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-
     const config =
       type === "category"
         ? { title: "nueva categoría", placeholder: "Ej: Trabajo...", type }
@@ -21,10 +20,6 @@ export const useCreateFilter = (onSuccess) => {
     setModalConfig({
       ...config,
       isOpen: true,
-      position: {
-        top: rect.top + window.scrollY - 10,
-        left: rect.left + window.scrollX + rect.width / 2,
-      },
     });
   };
 

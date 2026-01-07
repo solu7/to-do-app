@@ -1,46 +1,47 @@
 import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useTasks } from "../../../context/TaskContext";
+import { useFilters } from "../../../context/FilterContext";
 
 export const useFilteredTasks = () => {
-  const [searchParams] = useSearchParams();
   const { tasksAll, isLoading, error } = useTasks();
-  const filters = Object.fromEntries(searchParams.entries());
+  const { activeFilter } = useFilters();
 
   const tasks = useMemo(() => {
-    const filterKey = Object.keys(filters).find((key) => key !== "name");
-    const filterValue = filters[filterKey];
-
-    if (!filterKey || !filterValue) return tasksAll;
+    if (!activeFilter.type || !activeFilter.value) {
+      return tasksAll.filter((task) => !task.completed);
+    }
+    const filterKey = activeFilter.type;
+    const filterValue = activeFilter.value.toString();
 
     return tasksAll.filter((task) => {
       const isPending = !task.completed;
-      const value = filterValue.toString();
       let matchesFilter = false;
 
       switch (filterKey) {
         case "priority":
-          matchesFilter = task.priority?.toString() === value;
+          matchesFilter = task.priority?.toString() === filterValue;
           break;
         case "categoryId":
           matchesFilter = task.categories?.some(
-            (cat) => cat.id.toString() === value
+            (cat) => cat.id.toString() === filterValue
           );
           break;
         case "tagId":
-          matchesFilter = task.tags?.some((tag) => tag.id.toString() === value);
+          matchesFilter = task.tags?.some(
+            (tag) => tag.id.toString() === filterValue
+          );
           break;
         default:
           matchesFilter = true;
       }
       return isPending && matchesFilter;
     });
-  }, [tasksAll, searchParams]);
+  }, [tasksAll, activeFilter]);
 
   return {
     tasks,
     isLoading,
     error,
-    filters,
+    filters: activeFilter,
   };
 };

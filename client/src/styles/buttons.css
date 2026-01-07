@@ -88,3 +88,10 @@
 .item-to-remove:hover .remove-button {
   opacity: 1;
 }
+
+@media (max-width: 768px) {
+  .remove-button {
+    opacity: 1;
+  }
+}
+

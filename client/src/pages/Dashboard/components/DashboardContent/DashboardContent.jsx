@@ -44,9 +44,22 @@ function DashboardContent() {
   useEffect(() => {
     openDashboardSidebar();
   }, []);
-
+  const isMobile = window.innerWidth <= 1024;
   return (
-    <div className="dashboard">
+    <div
+      className={`dashboard ${dashboardSidebarIsOpen ? "sidebar-open" : ""} ${
+        taskEditPanelIsOpen ? "panel-open" : ""
+      }`}
+    >
+      {isMobile && (dashboardSidebarIsOpen || taskEditPanelIsOpen) && (
+        <div
+          className="dashboard__overlay"
+          onClick={() => {
+            closeDashboardSidebar();
+            closeTaskEditPanel();
+          }}
+        />
+      )}
       <Sidebar
         isOpen={dashboardSidebarIsOpen}
         onClose={closeDashboardSidebar}
@@ -54,31 +67,29 @@ function DashboardContent() {
         openDashboardSidebar={openDashboardSidebar}
       />
       <div className="dashboard__view-container">
-        <div className="dashboard__view">
-          <Routes>
-            <Route
-              path="/"
-              element={<InboxView onTaskClick={handleTaskSelection} />}
-            />
-            <Route
-              path="/today"
-              element={<TodayView onTaskClick={handleTaskSelection} />}
-            />
-            <Route
-              path="/upcoming"
-              element={<UpcomingView onTaskClick={handleTaskSelection} />}
-            />
-            <Route
-              path="/completed"
-              element={<CompletedView onTaskClick={handleTaskSelection} />}
-            />
-            <Route path="/filters" element={<FiltersView />} />
-            <Route
-              path="/filtered-tasks"
-              element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
-            />
-          </Routes>
-        </div>
+        <Routes>
+          <Route
+            path="/"
+            element={<InboxView onTaskClick={handleTaskSelection} />}
+          />
+          <Route
+            path="/today"
+            element={<TodayView onTaskClick={handleTaskSelection} />}
+          />
+          <Route
+            path="/upcoming"
+            element={<UpcomingView onTaskClick={handleTaskSelection} />}
+          />
+          <Route
+            path="/completed"
+            element={<CompletedView onTaskClick={handleTaskSelection} />}
+          />
+          <Route path="/filters" element={<FiltersView />} />
+          <Route
+            path="/filtered-tasks"
+            element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
+          />
+        </Routes>
       </div>
       <EditPanel
         isOpen={taskEditPanelIsOpen}

@@ -4,6 +4,8 @@
   gap: 50px;
   container-type: inline-size;
   container-name: task-view-container;
+  width: 100%;
+  max-width: 900px;
 }
 .task-view__header {
   display: flex;
@@ -42,9 +44,14 @@
   width: 35px;
   object-fit: contain;
 }
-@media (width < 1500px) {
-  .inbox {
-    gap: 0px;
+@media screen and (width <= 1024px) {
+  .task-view__container {
+    width: 70%;
+  }
+}
+@media screen and (width <= 768px) {
+  .task-view__container {
+    width: 61%;
   }
 }
 @container task-view-container (width <= 500px) {

@@ -53,6 +53,7 @@
   background: none;
   padding: 1px;
   resize: none;
+  max-height: 13vh;
 }
 .task-modal-input.title {
   font-size: clamp(1.1rem, 2.3vw, 1.25rem);
@@ -126,6 +127,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
+  z-index: 1;
 }
 
 .modal-filter-button {

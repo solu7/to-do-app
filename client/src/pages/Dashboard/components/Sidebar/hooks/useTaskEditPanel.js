@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import useAutoGrowTextArea from "../../../../../core/hooks/useAutoGrowTextarea";
 
 export const useTaskEditPanel = (task) => {
@@ -7,19 +7,18 @@ export const useTaskEditPanel = (task) => {
   const [description, setDescription] = useState("");
   const [comment, setComment] = useState("");
   const [originalTask, setOriginalTask] = useState(null);
-  const adjustHeight = useAutoGrowTextArea();
 
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const commentRef = useRef(null);
-
-  const adjustAllHeights = useCallback(() => {
-    requestAnimationFrame(() => {
-      adjustHeight(titleRef.current);
-      adjustHeight(descriptionRef.current);
-      adjustHeight(commentRef.current);
-    });
-  }, [adjustHeight]);
+  const titleGrow = useAutoGrowTextArea([title, task?.id, taskEditPanelIsOpen]);
+  const descGrow = useAutoGrowTextArea([
+    description,
+    task?.id,
+    taskEditPanelIsOpen,
+  ]);
+  const commentGrow = useAutoGrowTextArea([
+    comment,
+    task?.id,
+    taskEditPanelIsOpen,
+  ]);
 
   useEffect(() => {
     if (task) {
@@ -30,22 +29,8 @@ export const useTaskEditPanel = (task) => {
     }
   }, [task?.id]);
 
-  useEffect(() => {
-    if (!task) return;
-    adjustAllHeights();
-
-    const timeoutId = setTimeout(adjustAllHeights, 50);
-    const secondaryTimeout = setTimeout(adjustAllHeights, 200);
-
-    return () => {
-      clearTimeout(timeoutId);
-      clearTimeout(secondaryTimeout);
-    };
-  }, [task?.id, title, description, comment, adjustAllHeights]);
-
-  const handleInputChange = (setter, ref) => (e) => {
+  const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
-    adjustHeight(ref.current);
   };
 
   const handleResetTask = () => {
@@ -53,7 +38,6 @@ export const useTaskEditPanel = (task) => {
       setTitle(originalTask.title || "");
       setDescription(originalTask.description || "");
       setComment(originalTask.comment || "");
-      setTimeout(adjustAllHeights, 0);
     }
   };
 
@@ -67,9 +51,9 @@ export const useTaskEditPanel = (task) => {
     openTaskEditPanel,
     closeTaskEditPanel,
     toggleTaskEditPanel,
-    titleRef,
-    descriptionRef,
-    commentRef,
+    titleRef: titleGrow.textareaRef,
+    descriptionRef: descGrow.textareaRef,
+    commentRef: commentGrow.textareaRef,
     handleResetTask,
     title,
     setTitle,
@@ -78,6 +62,5 @@ export const useTaskEditPanel = (task) => {
     comment,
     setComment,
     handleInputChange,
-    adjustAllHeights,
   };
 };

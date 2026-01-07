@@ -7,7 +7,7 @@ function FilterCard({ filterName, filterIcon, onFilterClick, onRemoveClick }) {
       className="filter-card item-to-remove"
       onClick={(e) => {
         e.stopPropagation();
-        onFilterClick;
+        onFilterClick();
       }}
     >
       <div className="filter-card__header">
@@ -23,7 +23,10 @@ function FilterCard({ filterName, filterIcon, onFilterClick, onRemoveClick }) {
           className="remove-button"
           src={closeIcon}
           alt="Icono de cerrar"
-          onClick={onRemoveClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemoveClick();
+          }}
         />
       )}
     </div>

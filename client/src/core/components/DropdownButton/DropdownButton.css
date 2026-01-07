@@ -24,10 +24,22 @@
   color: var(--grey);
   box-shadow: 3px 3px 9px rgb(109 109 109 / 16%);
   width: max-content;
+  z-index: 1;
 }
-.dropdown-button__menu.menu-left {
-  left: -150%;
+.dropdown-button__menu.menu-align-right {
+  left: auto;
+  right: 0;
+  transform: none;
 }
+.dropdown-button__menu.menu-align-left {
+  left: 0;
+  transform: none;
+}
+.dropdown-button__menu.menu-align-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .dropdown-menu__item {
   display: flex;
   flex-direction: row;

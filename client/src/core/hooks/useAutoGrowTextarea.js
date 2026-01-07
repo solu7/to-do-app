@@ -1,10 +1,12 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-const useAutoGrowTextArea = () => {
-  const adjustHeight = useCallback((element) => {
+const useAutoGrowTextArea = (dependencies = []) => {
+  const textareaRef = useRef(null);
+
+  const adjustHeight = useCallback(() => {
+    const element = textareaRef.current;
     if (element) {
       element.style.setProperty("height", "auto", "important");
-
       const newHeight = element.scrollHeight;
       if (newHeight > 0) {
         element.style.height = `${newHeight}px`;
@@ -12,7 +14,19 @@ const useAutoGrowTextArea = () => {
     }
   }, []);
 
-  return adjustHeight;
+  useEffect(() => {
+    adjustHeight();
+    const rafId = requestAnimationFrame(adjustHeight);
+    const timeout1 = setTimeout(adjustHeight, 50);
+    const timeout2 = setTimeout(adjustHeight, 200);
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+    };
+  }, [adjustHeight, ...dependencies]);
+
+  return { textareaRef, adjustHeight };
 };
 
 export default useAutoGrowTextArea;

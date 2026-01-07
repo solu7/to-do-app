@@ -1,4 +1,5 @@
-.user-panel .error-message, .user-panel .success-message {
+.user-panel .error-message,
+.user-panel .success-message {
   margin: 0;
   font-size: 12px;
 }
@@ -13,6 +14,7 @@
 }
 .user-panel hr {
   margin: -20px 0px 0px;
+  z-index: 1;
 }
 
 .user-panel__modal-header {
@@ -61,7 +63,7 @@
 }
 .user-panel__heading-actions {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   gap: 20px;
   width: 100%;
 }
@@ -108,5 +110,41 @@
   font-size: 13px;
   outline: none;
   color: var(--grey);
-  width: 50%;
+  width: 60%;
+}
+
+@media (max-width: 768px) {
+  .user-panel {
+    width: 75vw;
+    padding: 20px;
+  }
+  .user-panel__heading-pfp {
+    height: 80px;
+  }
+  .user-panel__hello-msg {
+    font-size: 18px;
+  }
+  .user-panel__editable-item-actions-input {
+    width: 100%;
+  }
+}
+@media (width <= 500px) {
+  .user-panel {
+    width: 90vw;
+    padding: 15px;
+    gap: 20px;
+  }
+  .user-panel hr {
+    margin: -5px 0px 0px;
+  }
+  .user-panel__editable-item-heading {
+    font-size: 12px;
+  }
+  .user-panel__editable-item-actions-button,
+  .user-panel__editable-item-actions-input,
+  .user-panel__heading-actions-button,
+  .user-panel .error-message,
+  .user-panel .success-message {
+    font-size: 10px;
+  }
 }

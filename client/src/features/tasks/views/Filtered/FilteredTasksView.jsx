@@ -1,4 +1,5 @@
 import "./FilteredTasksView.css";
+import { useFilters } from "../../../../context/FilterContext.jsx";
 import { useFilteredTasks } from "../../hooks/useFilteredTasks";
 import TaskCard from "../../TaskCard.jsx";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
@@ -13,11 +14,10 @@ function FilteredTasksView({ onTaskClick }) {
     tagId: tagIcon,
     priority: priorityIcon,
   };
-  const { tasks, filters } = useFilteredTasks();
 
-  const filterKey = Object.keys(filters).find((key) => key !== "name");
-  const filterName = filters.name ? decodeURIComponent(filters.name) : null;
-  const displayIcon = filterKey ? ICON_MAP[filterKey] : null;
+  const { activeFilter } = useFilters();
+
+  const { tasks, filters } = useFilteredTasks();
   return (
     <div className="task-view__container">
       <section className="task-view__header">
@@ -30,14 +30,14 @@ function FilteredTasksView({ onTaskClick }) {
           alt="Icono de bandeja de entrada"
         />
         <h3 className="task-view__header-title">con</h3>
-        {filterName && displayIcon && (
+        {activeFilter.type && (
           <div className="filtered-tasks__filter">
             <img
               className="filtered-tasks__filter-icon"
-              src={displayIcon}
+              src={ICON_MAP[activeFilter.type]}
               alt="Icono de filtro"
             />
-            <p>{filterName}</p>
+            <p>{activeFilter.name}</p>
           </div>
         )}
       </section>
@@ -58,9 +58,9 @@ function FilteredTasksView({ onTaskClick }) {
               title={task.title}
               description={task.description}
               onClick={() => onTaskClick(task.id)}
-              tagsInTask={task.tags || []}
-              categoriesInTask={task.categories || []}
-              priority={task.priority ?? 0}
+              tagsInTask={task.tags}
+              categoriesInTask={task.categories}
+              priority={task.priority}
               dueDate={task.due_date}
             />
           ))}

@@ -1,4 +1,10 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import { logoutUser } from "../features/auth/services/authServices";
 import SessionExpiryModal from "../core/components/SessionExpiryModal/SessionExpiryModal";
 const UserContext = createContext();
@@ -23,18 +29,34 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const calculateTimeRemaining = (expTimestamp) => {
-    if (!expTimestamp) return null;
-    const expirationMs = expTimestamp * 1000;
-    const nowMs = Date.now();
-    const remainingMs = expirationMs - nowMs;
+  const authorizedFetch = useCallback(
+    async (url, options = {}) => {
+      const response = await fetch(url, { ...options, credentials: "include" });
+      if (response.status === 401) {
+        handleLogout();
+      }
+      return response;
+    },
+    [handleLogout]
+  );
 
-    return Math.max(0, Math.floor(remainingMs / 1000));
-  };
+  const refreshTimer = useCallback(() => {
+    if (!userData?.tokenExp) return;
+    const remaining = Math.floor(
+      (userData.tokenExp * 1000 - Date.now()) / 1000
+    );
+    setSessionTimeRemaining(remaining);
+    if (remaining <= 30 && remaining > 0 && !isExpiryModalOpen) {
+      setIsExpiryModalOpen(true);
+    }
+    if (remaining <= -600) {
+      handleLogout();
+    }
+  }, [userData, isExpiryModalOpen, handleLogout]);
 
   const extendSession = async () => {
     try {
-      const response = await fetch(`${API_URL}/auth/refresh`, {
+      const response = await authorizedFetch(`${API_URL}/auth/refresh`, {
         method: "POST",
         credentials: "include",
       });
@@ -50,24 +72,12 @@ export const UserProvider = ({ children }) => {
   const fetchUserData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/users`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      if (response.ok) {
+      const response = await authorizedFetch(`${API_URL}/users`);
+      if (response && response.ok) {
         const data = await response.json();
         setUserData(data);
-        if (data.tokenExp) {
-          setSessionTimeRemaining(calculateTimeRemaining(data.tokenExp));
-        } else {
-          setSessionTimeRemaining(null);
-        }
       } else {
-        setUserData({ username: "Invitado", email: "" });
+        setUserData({ username: "Invitado", email: "", is_guest: true });
       }
     } catch (error) {
       console.error("Error de conexión:", error);
@@ -78,24 +88,16 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    let timer;
-    if (userData && sessionTimeRemaining !== null) {
-      timer = setInterval(() => {
-        setSessionTimeRemaining((prev) => {
-          if (prev <= 30 && !isExpiryModalOpen && prev > 0) {
-            setIsExpiryModalOpen(true);
-          }
-          if (prev <= -600) {
-            clearInterval(timer);
-            handleLogout();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [userData, sessionTimeRemaining, isExpiryModalOpen]);
+    if (!userData?.tokenExp) return;
+
+    window.addEventListener("focus", refreshTimer);
+    const interval = setInterval(refreshTimer, 1000);
+
+    return () => {
+      window.removeEventListener("focus", refreshTimer);
+      clearInterval(interval);
+    };
+  }, [userData?.tokenExp, refreshTimer]);
 
   useEffect(() => {
     fetchUserData();

@@ -73,9 +73,9 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
             </section>
 
             <ul className="principal-nav">
-              {navItems.map((item, idx) => (
+              {navItems.map((item) => (
                 <NavItem
-                  key={idx}
+                  key={item.name}
                   {...item}
                   onClick={
                     item.action === "addTask" ? addTaskModal.open : undefined

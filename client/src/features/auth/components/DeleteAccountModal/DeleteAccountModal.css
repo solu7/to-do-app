@@ -61,3 +61,9 @@
   color: var(--light-grey);
   font-family: "principal-font";
 }
+
+@media (max-width: 768px) {
+  .delete-account-modal {
+    width: 75%;
+  }
+}

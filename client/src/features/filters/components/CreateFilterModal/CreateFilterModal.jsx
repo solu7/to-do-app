@@ -2,17 +2,13 @@ import "./CreateFilterModal.css";
 import ReactDOM from "react-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSmartPosition } from "../../../../core/hooks/useSmartPosition";
 import closeIcon from "../../../assets/images/close.png";
 
-function CreateFilterModal({
-  isOpen,
-  onClose,
-  onClick,
-  title,
-  placeholder,
-  position,
-}) {
+function CreateFilterModal({ isOpen, onClose, onClick, title, placeholder }) {
   const [inputValue, setInputValue] = useState("");
+
+  const { elementRef, getStyles, animationProps } = useSmartPosition(isOpen);
 
   const handleConfirm = () => {
     if (inputValue.trim()) {
@@ -21,22 +17,15 @@ function CreateFilterModal({
       onClose();
     }
   };
-
   return ReactDOM.createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div className="modal__overlay--invisible" onClick={onClose}>
           <motion.div
+            ref={elementRef}
             className="create-filter-modal__container"
-            style={{
-              position: "fixed",
-              top: `${position.top}px`,
-              left: `${position.left}px`,
-            }}
-            initial={{ opacity: 0, scale: 0.9, x: "-50%", y: "10%" }}
-            animate={{ opacity: 1, scale: 1, x: "-50%", y: "20%" }}
-            exit={{ opacity: 0, scale: 0.9, x: "-50%", y: "10%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            style={getStyles()}
+            {...animationProps}
             onClick={(e) => e.stopPropagation()}
           >
             <section className="create-filter-modal__header">

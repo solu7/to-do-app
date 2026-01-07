@@ -1,10 +1,12 @@
 import "./AddDueDateModal.css";
+import ReactDOM from "react-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { AnimatePresence, motion } from "framer-motion";
 import DatePicker from "react-datepicker";
 import { formatModalDynamicLabel } from "../../utils/taskDateFormatter";
 import { addDays, nextSaturday, nextMonday } from "date-fns";
 import { es } from "date-fns/locale";
+import { useSmartPosition } from "../../../../core/hooks/useSmartPosition";
 import todayIcon from "../../assets/images/ItemIcon/today.png";
 import tomorrowIcon from "../../assets/images/ItemIcon/tomorrow.png";
 import afterTomorrowIcon from "../../assets/images/ItemIcon/afterTomorrow.png";
@@ -21,6 +23,8 @@ function AddDueDateModal({
 }) {
   const today = new Date();
 
+  const { elementRef, getStyles, animationProps } = useSmartPosition(isOpen);
+
   const onSelectDate = (date) => {
     handleDueDateChange(date);
     onClose();
@@ -30,7 +34,8 @@ function AddDueDateModal({
   const afterTomorrow = addDays(today, 2);
   const thisWeekend = nextSaturday(today);
   const nextWeekStart = nextMonday(today);
-  return (
+
+  return ReactDOM.createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -42,11 +47,10 @@ function AddDueDateModal({
             onClick={onClose}
           />
           <motion.div
+            ref={elementRef}
             className="add-dd-modal__container"
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            transition={{ duration: 0.15 }}
+            style={getStyles()}
+            {...animationProps}
             onClick={(e) => e.stopPropagation()}
           >
             <section className="add-dd-modal__selected-date">
@@ -131,7 +135,8 @@ function AddDueDateModal({
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
 export default AddDueDateModal;

@@ -4,7 +4,9 @@ import {
   useState,
   useEffect,
   useCallback,
+  useMemo,
 } from "react";
+import { useLocation } from "react-router-dom";
 import {
   getAllTags,
   deleteTag,
@@ -21,6 +23,28 @@ export const FilterProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const location = useLocation();
+
+  const activeFilter = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    const priority = params.get("priority");
+    const categoryId = params.get("categoryId");
+    const tagId = params.get("tagId");
+    const name = params.get("name");
+
+    return {
+      type: priority
+        ? "priority"
+        : categoryId
+        ? "categoryId"
+        : tagId
+        ? "tagId"
+        : null,
+      value: priority || categoryId || tagId || null,
+      name: name || "Filtro",
+    };
+  }, [location.search]);
+
   const refreshFilters = useCallback(async () => {
     try {
       const [tagsData, categoriesData] = await Promise.all([
@@ -36,19 +60,18 @@ export const FilterProvider = ({ children }) => {
     }
   }, []);
 
-  const removeTag = async (tagId) => {
-    await deleteTag(tagId);
-    await refreshFilters();
-  };
-
-  const removeCategory = async (categoryId) => {
-    await deleteCategory(categoryId);
-    await refreshFilters();
-  };
-
   useEffect(() => {
     refreshFilters();
   }, [refreshFilters]);
+
+  const removeTag = async (id) => {
+    await deleteTag(id);
+    refreshFilters();
+  };
+  const removeCategory = async (id) => {
+    await deleteCategory(id);
+    refreshFilters();
+  };
 
   return (
     <FilterContext.Provider
@@ -59,6 +82,7 @@ export const FilterProvider = ({ children }) => {
         removeCategory,
         isLoading,
         refreshFilters,
+        activeFilter,
       }}
     >
       {children}
