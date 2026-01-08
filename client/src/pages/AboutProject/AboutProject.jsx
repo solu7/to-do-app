@@ -265,8 +265,8 @@ function AboutProject() {
           <p className="about-project__funcionality-desc">
             El Dashboard centraliza la gestión de tareas clave, organizándolas
             por estado y fecha para guiar la navegación. Esto incluye la bandeja
-            Inbox (para tareas rápidas) y las secciones "Today" y
-            "Upcoming" , lo que facilita el flujo de trabajo.
+            Inbox (para tareas rápidas) y las secciones "Today" y "Upcoming" ,
+            lo que facilita el flujo de trabajo.
           </p>
         </div>
       </section>
@@ -410,13 +410,12 @@ function AboutProject() {
               <p className="about-project__links-item-paragraph">
                 El proyecto completo está disponible en GitHub.
               </p>
-              <p
-                role="button"
+              <button
                 onClick={goToGitHubProject}
                 className="about-project__links-button btn"
               >
                 Aqui
-              </p>
+              </button>
             </div>
           </div>
           <div
@@ -429,12 +428,9 @@ function AboutProject() {
                 Este proyecto está diseñado para ser desplegado en un entorno de
                 producción.
               </p>
-              <p
-                role="button"
-                onClick={goToGitHubProject}
-                className="about-project__links-button btn"
-              >
-                Aqui
+              <button className="about-project__links-button btn">Aqui</button>
+              <p className="success-message">
+                Todavia no a sido desplegado en la web.
               </p>
             </div>
           </div>

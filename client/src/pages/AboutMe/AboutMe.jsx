@@ -9,11 +9,13 @@ import emailIcon from "./assets/images/email.png";
 import decorationImg from "./assets/images/decoration.png";
 import githubIcon from "./assets/images/github.png";
 import linkedinIcon from "./assets/images/linkedin.png";
-import downloadIcon from "./assets/images/download.png";
 import pfpDeco from "./assets/images/pfpDeco.png";
 import { useExternalNavigation } from "../../core/hooks/useExternalNavigation.js";
+import DownloadCV from "../../core/components/DownloadCV/DownloadCV.jsx";
+
 function AboutMe() {
-  const { goToGitHubProfile, goToLinkedIn } = useExternalNavigation();
+  const { goToGitHubProfile, goToLinkedIn, goToGitHubRepos } =
+    useExternalNavigation();
   return (
     <div className="about-me">
       <Navbar />
@@ -112,7 +114,7 @@ function AboutMe() {
       </div>
       <section className="about-me__cta-links">
         <section className="about-me__cta-main">
-          <div className="about-me__cta-button">
+          <div className="about-me__cta-button" onClick={goToGitHubRepos}>
             <p>Portafolio</p>
           </div>
           <div className="about-me__cta-socials">
@@ -132,14 +134,7 @@ function AboutMe() {
             />
           </div>
         </section>
-        <section className="about-me__download-cv">
-          <p className="about-me__download-button">Descargar CV</p>
-          <img
-            className="about-me__download-icon"
-            src={downloadIcon}
-            alt="Download Icon"
-          />
-        </section>
+        <DownloadCV />
       </section>
     </div>
   );

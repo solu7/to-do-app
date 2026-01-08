@@ -1,7 +1,8 @@
 const EXTERNAL_LINKS = {
-  githubProject: "https://github.com/solu7/to-do-app",
-  githubProfile: "https://github.com/solu7",
-  linkedin: "https://www.linkedin.com/in/solu7/",
+  githubProject: "https://github.com/agustin-salva-dev/to-do-app",
+  githubProfile: "https://github.com/agustin-salva-dev",
+  githubRepos: "https://github.com/agustin-salva-dev?tab=repositories",
+  linkedin: "https://www.linkedin.com/in/agustin-salva-dev/",
 };
 
 export const useExternalNavigation = () => {
@@ -12,6 +13,7 @@ export const useExternalNavigation = () => {
   return {
     goToGitHubProject: () => openLink(EXTERNAL_LINKS.githubProject),
     goToGitHubProfile: () => openLink(EXTERNAL_LINKS.githubProfile),
+    goToGitHubRepos: () => openLink(EXTERNAL_LINKS.githubRepos),
     goToLinkedIn: () => openLink(EXTERNAL_LINKS.linkedin),
     openCustomLink: (url) => openLink(url),
   };
