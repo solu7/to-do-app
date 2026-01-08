@@ -6,9 +6,6 @@
   position: relative;
   flex-wrap: wrap;
   font-family: "principal-font", sans-serif;
-  @media (width <= 1100px) {
-    padding: 0px 50px;
-  }
 }
 .footer-user-icon {
   width: 40px;
@@ -117,4 +114,17 @@
   text-align: center;
   padding-bottom: 15px;
   left: 46%;
+}
+@media (width <= 1024px) {
+  .footer {
+    padding: 0px 50px;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .footer-about-project {
+    width: auto;
+  }
+  .codedBy {
+    position: static;
+  }
 }
