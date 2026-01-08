@@ -13,7 +13,7 @@ import downloadIcon from "./assets/images/download.png";
 import pfpDeco from "./assets/images/pfpDeco.png";
 import { useExternalNavigation } from "../../core/hooks/useExternalNavigation.js";
 function AboutMe() {
-  const { goToGitHubProfile, goToLinkedIn } = useExternalNavigation();
+  const { goToGitHubProfile, goToLinkedIn, goToGitHubRepos } = useExternalNavigation();
   return (
     <div className="about-me">
       <Navbar />
@@ -112,7 +112,7 @@ function AboutMe() {
       </div>
       <section className="about-me__cta-links">
         <section className="about-me__cta-main">
-          <div className="about-me__cta-button">
+          <div className="about-me__cta-button" onClick={goToGitHubRepos}>
             <p>Portafolio</p>
           </div>
           <div className="about-me__cta-socials">

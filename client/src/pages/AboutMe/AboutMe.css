@@ -228,11 +228,11 @@
   color: var(--ultra-light-blue);
   transition: 0.3s ease;
   cursor: pointer;
+  border: 1px solid var(--primary-color);
 }
 .about-me__cta-button:hover {
   transform: scale(0.9);
   background-color: var(--light-blue);
-  border: 1px solid var(--primary-color);
   color: var(--primary-color);
 }
 .about-me__cta-button p {
@@ -244,6 +244,10 @@
   height: 38px;
   object-fit: contain;
   cursor: pointer;
+  transition: 0.2s;
+}
+.about-me__cta-icon:hover {
+  transform: scale(0.92);
 }
 .about-me__cta-socials {
   display: flex;
@@ -257,6 +261,10 @@
   gap: 10px;
   align-items: center;
   cursor: pointer;
+  transition: 0.25s;
+}
+.about-me__download-cv:hover {
+  transform: scale(0.95);
 }
 .about-me__download-button {
   color: var(--light-grey);

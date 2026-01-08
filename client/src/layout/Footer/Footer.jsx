@@ -9,12 +9,15 @@ import emailIcon from "./assets/images/email.png";
 import githubIcon from "./assets/images/github.png";
 import linkedinIcon from "./assets/images/linkedin.png";
 import moreproyectsIcon from "./assets/images/moreproyects.png";
-import portfolioIcon from "./assets/images/portfolio.png";
 import downloadIcon from "./assets/images/download.png";
 import documentationIcon from "./assets/images/documentation.png";
 import seecodeIcon from "./assets/images/seecode.png";
+import { useNavigation } from "../../core/hooks/useNavigation";
+import { useExternalNavigation } from "../../core/hooks/useExternalNavigation";
 
 function Footer() {
+  const { goToAboutMe } = useNavigation();
+  const { goToGitHubProfile, goToLinkedIn, goToGitHubRepos } = useExternalNavigation();
   return (
     <footer className="footer">
       <div className="footer-about-project">
@@ -65,21 +68,16 @@ function Footer() {
           />
         </section>
         <ul className="footer-list footer-about-list">
-          <li>Acerca del desarrolador</li>
-          <li className="footer-list-item footer-about-list-item">
+          <li onClick={goToAboutMe}>Acerca del desarrolador</li>
+          <li
+            className="footer-list-item footer-about-list-item"
+            onClick={goToGitHubRepos}
+          >
             Otros proyectos
             <img
               className="list-item-icon"
               src={moreproyectsIcon}
               alt="More proyects icon"
-            />
-          </li>
-          <li className="footer-list-item footer-about-list-item">
-            Portafolio
-            <img
-              className="list-item-icon"
-              src={portfolioIcon}
-              alt="Portfolio icon"
             />
           </li>
           <li className="footer-list-item footer-about-list-item">
@@ -116,7 +114,7 @@ function Footer() {
         </ul>
         <p className="footer-list-title footer-social-list-title">Redes</p>
         <ul className="footer-list footer-social-list">
-          <li className="footer-list-item footer-contact-list-item">
+          <li className="footer-list-item footer-contact-list-item" onClick={goToGitHubProfile}>
             GitHub
             <img
               className="list-item-icon"
@@ -124,7 +122,7 @@ function Footer() {
               alt="Github Icon"
             />
           </li>
-          <li className="footer-list-item footer-contact-list-item">
+          <li className="footer-list-item footer-contact-list-item" onClick={goToLinkedIn}>
             LinkedIn
             <img
               className="list-item-icon"
@@ -132,38 +130,6 @@ function Footer() {
               alt="LinkedIn Icon"
             />
           </li>
-        </ul>
-      </div>
-
-      <div className="footer-section footer-more-info-section">
-        <section className="footer-section-header footer-more-info-section-header">
-          <p className="footer-list-title footer-more-info-list-title">
-            Recursos Técnicos
-          </p>
-          <img
-            className="footer-section-header-icon"
-            src={resourcesIcon}
-            alt="Resources Icon"
-          />
-        </section>
-        <ul className="footer-list footer-more-info-list">
-          <li className="footer-list-item footer-more-info-list-item">
-            Documentacion API{" "}
-            <img
-              className="list-item-icon"
-              src={documentationIcon}
-              alt="Decoumentation icon"
-            />
-          </li>
-          <li  className="footer-list-item footer-more-info-list-item">
-            Ver Código Fuente{" "}
-            <img
-              className="list-item-icon"
-              src={seecodeIcon}
-              alt="See code icon"
-            />
-          </li>
-          <li>Tecnologías Usadas </li>
         </ul>
       </div>
       <p className="codedBy">To-do App coded by: Solu</p>
