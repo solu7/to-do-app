@@ -8,6 +8,7 @@
   padding: 7px 10px;
   position: relative;
   cursor: pointer;
+  z-index: -1;
 }
 .dropdown-button__icon {
   width: 18px;

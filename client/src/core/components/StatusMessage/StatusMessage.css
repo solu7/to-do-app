@@ -1,0 +1,20 @@
+.success-message-container,
+.error-message-container {
+  display: flex;
+  justify-content: center;
+}
+
+.success-message,
+.error-message {
+  font-family: "principal-font-bold";
+  font-size: 15px;
+  color: var(--grey);
+}
+.success-message,
+.error-message span {
+  color: var(--primary-color);
+}
+.success-message-hr,
+.error-message-hr {
+  margin: 15px 0px 0px;
+}

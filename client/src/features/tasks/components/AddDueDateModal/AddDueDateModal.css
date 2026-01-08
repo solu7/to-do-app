@@ -1,0 +1,68 @@
+.add-dd-modal__container {
+  background-color: var(--ultra-light-blue);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid var(--secondary-color);
+  box-shadow: 2px 2px 16px rgb(0 0 0 / 20%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: absolute;
+  z-index: 999;
+  top: 50px;
+}
+
+.add-dd-modal__selected-date {
+  font-size: 16px;
+  font-family: "principal-font-bold";
+  color: var(--primary-color);
+  font-family: "principal-font-extra-bold";
+}
+
+.add-dd-modal__date-filters-list {
+  list-style-type: none;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.add-dd-modal__date-filter-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  font-family: "principal-font-bold";
+  color: var(--grey);
+  transition: 0.2s ease;
+}
+.add-dd-modal__date-filter-item img {
+  width: 20px;
+}
+.add-dd-modal__date-filter-item:hover {
+  transform: scale(0.99);
+  color: var(--primary-color);
+  font-family: "principal-font-bold";
+}
+
+.add-dd-modal__filter-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.add-dd-modal__filter-date span:last-child {
+  font-family: "principal-font";
+  color: var(--light-grey);
+}
+
+.add-dd-modal__container hr {
+  margin: 0px;
+}
+@media (max-width: 768px) {
+  .add-dd-modal__container {
+    top: 0;
+    left: 0;
+  }
+}

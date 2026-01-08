@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import useAutosizeTextArea from "../../../../../core/hooks/useAutoGrowTextarea";
-import { useResizer } from "../../../../../core/hooks/useResizer";
+import { useState, useEffect, useCallback } from "react";
+import useAutoGrowTextArea from "../../../../../core/hooks/useAutoGrowTextarea";
 
 export const useTaskEditPanel = (task) => {
   const [taskEditPanelIsOpen, setTaskEditPanelIsOpen] = useState(false);
@@ -9,18 +8,17 @@ export const useTaskEditPanel = (task) => {
   const [comment, setComment] = useState("");
   const [originalTask, setOriginalTask] = useState(null);
 
-  const { elementWidth: panelWidth, elementRef: resizeHandleRef } = useResizer(
-    0,
-    0.98
-  );
-
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const commentRef = useRef(null);
-
-  useAutosizeTextArea(commentRef, comment);
-  useAutosizeTextArea(titleRef, title);
-  useAutosizeTextArea(descriptionRef, description);
+  const titleGrow = useAutoGrowTextArea([title, task?.id, taskEditPanelIsOpen]);
+  const descGrow = useAutoGrowTextArea([
+    description,
+    task?.id,
+    taskEditPanelIsOpen,
+  ]);
+  const commentGrow = useAutoGrowTextArea([
+    comment,
+    task?.id,
+    taskEditPanelIsOpen,
+  ]);
 
   useEffect(() => {
     if (task) {
@@ -29,7 +27,11 @@ export const useTaskEditPanel = (task) => {
       setDescription(task.description || "");
       setComment(task.comment || "");
     }
-  }, [task]);
+  }, [task?.id]);
+
+  const handleInputChange = (setter) => (e) => {
+    setter(e.target.value);
+  };
 
   const handleResetTask = () => {
     if (originalTask) {
@@ -49,11 +51,9 @@ export const useTaskEditPanel = (task) => {
     openTaskEditPanel,
     closeTaskEditPanel,
     toggleTaskEditPanel,
-    panelWidth,
-    titleRef,
-    descriptionRef,
-    commentRef,
-    resizeHandleRef,
+    titleRef: titleGrow.textareaRef,
+    descriptionRef: descGrow.textareaRef,
+    commentRef: commentGrow.textareaRef,
     handleResetTask,
     title,
     setTitle,
@@ -61,5 +61,6 @@ export const useTaskEditPanel = (task) => {
     setDescription,
     comment,
     setComment,
+    handleInputChange,
   };
 };

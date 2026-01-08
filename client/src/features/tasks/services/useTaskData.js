@@ -6,13 +6,17 @@ import { useState, useEffect } from "react";
  * @param {Function} fetchFunction - Funcion que llama a la API.
  * @returns {Object} Un objeto con los datos, donde la clave es el ID de la tarea y el valor es la data obtenida.
  */
-export const useTaskData = (tasks, fetchFunction) => {
+export const useTaskData = (tasks, fetchFunction, externalTrigger = null) => {
   const [dataByTaskId, setDataByTaskId] = useState({});
   const [refetchTrigger, setRefetchTrigger] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!tasks || tasks.length === 0 || !fetchFunction) {
+      if (
+        !tasks ||
+        (Array.isArray(tasks) && tasks.length === 0) ||
+        !fetchFunction
+      ) {
         return;
       }
 
@@ -31,7 +35,7 @@ export const useTaskData = (tasks, fetchFunction) => {
     };
 
     fetchData();
-  }, [tasks, fetchFunction, refetchTrigger]);
+  }, [tasks, fetchFunction, refetchTrigger, externalTrigger]);
   const refetch = () => setRefetchTrigger((prev) => prev + 1);
 
   return { data: dataByTaskId, refetch };

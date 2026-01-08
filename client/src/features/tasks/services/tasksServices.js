@@ -36,6 +36,34 @@ export async function getAllTasks() {
   }
 }
 
+export const getTodayTasks = async () => {
+  try {
+    const response = await fetch(`${API_URL}/tasks/today`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) throw new Error("Error al obtener tareas de hoy");
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getUpcomingTasks = async () => {
+  try {
+    const response = await fetch(`${API_URL}/tasks/upcoming`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) throw new Error("Error al obtener tareas próximas");
+    return await response.json();
+  } catch (error) {
+    console.error("Error en getUpcomingTasks:", error);
+    throw error;
+  }
+};
+
 export async function getCompletedTasks() {
   try {
     const response = await fetch(`${API_URL}/tasks/completed`, {
@@ -51,38 +79,6 @@ export async function getCompletedTasks() {
     return await response.json();
   } catch (error) {
     console.error("Error en getCompletedTasks:", error);
-    throw error;
-  }
-}
-
-export async function getFilteredTasks(filters) {
-  const queryParams = new URLSearchParams();
-  for (const key in filters) {
-    if (filters[key] !== undefined && filters[key] !== null) {
-      queryParams.append(key, filters[key]);
-    }
-  }
-
-  const queryString = queryParams.toString();
-  const url = `${API_URL}/tasks/filtered${
-    queryString ? "?" + queryString : ""
-  }`;
-
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.message || "Error al obtener las tareas filtradas."
-      );
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
     throw error;
   }
 }

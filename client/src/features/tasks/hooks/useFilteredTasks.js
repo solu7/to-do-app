@@ -1,31 +1,47 @@
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { getFilteredTasks } from "../services/tasksServices";
+import { useMemo } from "react";
+import { useTasks } from "../../../context/TaskContext";
+import { useFilters } from "../../../context/FilterContext";
 
 export const useFilteredTasks = () => {
-  const [searchParams] = useSearchParams();
-  const filters = Object.fromEntries(searchParams.entries());
+  const { tasksAll, isLoading, error } = useTasks();
+  const { activeFilter } = useFilters();
 
-  const [tasks, setTasks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState([]);
+  const tasks = useMemo(() => {
+    if (!activeFilter.type || !activeFilter.value) {
+      return tasksAll.filter((task) => !task.completed);
+    }
+    const filterKey = activeFilter.type;
+    const filterValue = activeFilter.value.toString();
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getFilteredTasks(filters);
-        setTasks(data);
-      } catch (err) {
-        setError("Error al cargar las tareas con los filtros seleccionados.");
-        console.error(err);
-        setTasks([]);
-      } finally {
-        setIsLoading(false);
+    return tasksAll.filter((task) => {
+      const isPending = !task.completed;
+      let matchesFilter = false;
+
+      switch (filterKey) {
+        case "priority":
+          matchesFilter = task.priority?.toString() === filterValue;
+          break;
+        case "categoryId":
+          matchesFilter = task.categories?.some(
+            (cat) => cat.id.toString() === filterValue
+          );
+          break;
+        case "tagId":
+          matchesFilter = task.tags?.some(
+            (tag) => tag.id.toString() === filterValue
+          );
+          break;
+        default:
+          matchesFilter = true;
       }
-    };
-    fetchTasks();
-  }, [searchParams]);
+      return isPending && matchesFilter;
+    });
+  }, [tasksAll, activeFilter]);
 
-  return { tasks, isLoading, error, filters };
+  return {
+    tasks,
+    isLoading,
+    error,
+    filters: activeFilter,
+  };
 };

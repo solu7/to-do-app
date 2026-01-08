@@ -29,4 +29,5 @@ hr {
   background: linear-gradient(to right, transparent, var(--grey), transparent);
   margin: 70px 0px 70px;
   opacity: 15%;
+  z-index: -1;
 }

@@ -2,28 +2,33 @@
   background-color: var(--opacity-grey);
   border-left: 1px solid var(--ultra-light-grey);
 }
-.text--completed {
+.edit-panel.completed .text--completed {
   text-decoration: line-through;
 }
-.edit-panel.completed .edit-panel__option {
+.edit-panel.completed .edit-panel__option,
+.edit-panel.completed .edit-panel__task-filters-item {
   background: none;
   border: 1px solid var(--ultra-light-grey);
   color: var(--light-grey);
 }
 .edit-panel.completed .edit-panel__task-comment {
-  color: var(--grey);
+  color: var(--light-grey);
 }
 .edit-panel.completed .edit-panel__date-container .dropdown-button__button {
   color: var(--light-grey);
 }
-.edit-panel.completed .edit-panel__task-filters-item {
-  color: var(--grey);
-  background-color: var(--ultra-light-grey);
-}
-.edit-panel.completed .edit-panel__close-container {
+.edit-panel.completed .edit-panel__task-comment::placeholder {
   color: var(--light-grey);
 }
+.edit-panel.completed.resizing {
+  border-left: 1px solid var(--light-grey);
+}
+.edit-panel.completed .edit-panel__items {
+  border-bottom: 1px solid var(--ultra-light-grey);
+}
+
 .edit-panel {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -34,10 +39,29 @@
   container-name: task-edit-panel;
   container-type: inline-size;
   min-width: 345px;
-  transition: 0.3s ease;
+  transition: 0.3s;
+}
+.edit-panel.open {
+  width: var(--panel-width);
+  min-width: 300px;
 }
 .edit-panel.closed {
   min-width: 80px;
+  width: 80px;
+  transition: width 0.2s ease-in;
+}
+.edit-panel.resizing {
+  transition: none !important;
+  border-left: 1px solid var(--primary-color);
+}
+.edit-panel.open::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  cursor: ew-resize;
+  background: transparent;
 }
 .edit-panel__content-wrapper {
   display: flex;
@@ -57,6 +81,7 @@
 .edit-panel__date-container {
   display: flex;
   justify-content: center;
+  z-index: 1;
 }
 .edit-panel__date-icon {
   width: 18px;
@@ -79,6 +104,7 @@
 .edit-panel__date-container .dropdown-button__icon {
   width: 20px;
 }
+
 .edit-panel__completed-container {
   display: block;
   position: relative;
@@ -144,7 +170,7 @@
 .edit-panel__task-header {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   gap: 5px;
 }
@@ -186,6 +212,7 @@
 .edit-panel__task-comment-container {
   display: flex;
   flex-direction: row;
+  align-items: start;
   gap: 10px;
   cursor: pointer;
 }
@@ -216,7 +243,11 @@
   transform: rotate(45deg);
   pointer-events: none;
 }
-
+.edit-panel__task-title,
+.edit-panel__task-description,
+.edit-panel__task-comment {
+  max-height: 13vh;
+}
 .edit-panel__filters {
   display: flex;
   flex-direction: column;
@@ -268,6 +299,10 @@
   flex-direction: row;
   align-items: center;
   gap: 25px;
+  z-index: 1;
+}
+.edit-panel .dropdown-button {
+  z-index: 1;
 }
 .edit-panel__add-filter-container .dropdown-button__wrapper {
   padding: 0;
@@ -361,9 +396,88 @@
   .edit-panel__option {
     gap: 35px;
   }
+  .edit-panel__task-filters {
+    gap: 20px 100px;
+  }
 }
 @container task-edit-panel (width >= 850px) {
   .edit-panel__option {
     gap: 65px;
+  }
+  .edit-panel__task-filters {
+    gap: 20px 130px;
+  }
+}
+@container task-edit-panel (width <= 300px) {
+  .edit-panel__content-wrapper,
+  .edit-panel__task,
+  .edit-panel__filter,
+  .edit-panel__task-main,
+  .edit-panel__filters,
+  .edit-panel__options-container {
+    gap: 15px;
+  }
+  .edit-panel__task-filters {
+    gap: 5px 35px;
+  }
+  .edit-panel__task-filters-item {
+    padding: 5px 8px;
+  }
+  .edit-panel__task-title,
+  .edit-panel__task-description,
+  .edit-panel__task-comment {
+    max-height: 20vh;
+  }
+  .edit-panel__date-container .dropdown-button__icon {
+    width: 15px;
+  }
+  .edit-panel__date-container .dropdown-button__button {
+    font-size: 13px;
+  }
+  .edit-panel__completed-container {
+    width: 18px;
+    height: 18px;
+  }
+  .edit-panel__task-filters-item,
+  .edit-panel__option,
+  .edit-panel__task-filters-item,
+  .edit-panel__add-filter-container .dropdown-button__button {
+    font-size: 10px;
+  }
+  .edit-panel__option-icon,
+  .edit-panel__task-filters-item img,
+  .dropdown-button__icon {
+    width: 13px;
+  }
+  .edit-panel__add-filter-container .dropdown-button__wrapper {
+    gap: 10px;
+  }
+  .edit-panel__completed-container .edit-panel__completed-checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 9px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .edit-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    border-left: none;
+  }
+
+  .edit-panel.open {
+    transform: translateX(0);
+    width: 100vw;
+  }
+
+  .edit-panel__task-filters-item__close-icon {
+    opacity: 1;
   }
 }

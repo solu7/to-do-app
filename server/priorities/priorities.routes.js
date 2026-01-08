@@ -1,13 +1,13 @@
 import { Router } from "express";
-import verifyToken from "../auth/auth.middleware.js";
+import { verifyOnlyToken } from "../auth/auth.middleware.js";
 import { getTaskPriority, setTaskPriority, deleteTaskPriority } from "./priority.controller.js";
 
 const router = Router();
 
-router.get("/:taskId", verifyToken, getTaskPriority);
+router.get("/:taskId", verifyOnlyToken, getTaskPriority);
 
-router.post("/:taskId", verifyToken, setTaskPriority);
+router.post("/:taskId", verifyOnlyToken, setTaskPriority);
 
-router.delete("/:taskId", verifyToken, deleteTaskPriority);
+router.delete("/:taskId", verifyOnlyToken, deleteTaskPriority);
 
 export default router;

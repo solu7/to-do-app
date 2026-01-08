@@ -1,34 +1,22 @@
-import "./CompletedView.css";
 import completedIcon from "../../../../pages/Dashboard/assets/images/completedIcon.png";
 import { useTasks } from "../../../../context/TaskContext.jsx";
 import TaskCard from "../../TaskCard.jsx";
-import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
-import { useTaskData } from "../../services/useTaskData.js";
-import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
-import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
-import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices.js";
 
 function CompletedView({ onTaskClick }) {
   const { completedTasks } = useTasks();
-  const { data: tagsInTask } = useTaskData(completedTasks, getTagsInTask);
-  const { data: categoriesInTask } = useTaskData(
-    completedTasks,
-    getCategoriesInTask
-  );
-  const { data: priorityInTask } = useTaskData(completedTasks, getTaskPriority);
   return (
-    <div className="completed__container">
-      <section className="completed__header">
-        <h3 className="completed__header-title">
+    <div className="task-view__container">
+      <section className="task-view__header">
+        <h3 className="task-view__header-title task-view__header-title--completed">
           Tareas <span>completadas</span>
         </h3>
         <img
-          className="completed__header-icon"
+          className="task-view__header-icon"
           src={completedIcon}
           alt="Icono de completado"
         />
       </section>
-      <section className="completed__tasks">
+      <section className="task-view__tasks">
         {completedTasks.length > 0 ? (
           completedTasks.map((task) => (
             <TaskCard
@@ -36,9 +24,10 @@ function CompletedView({ onTaskClick }) {
               title={task.title}
               description={task.description}
               onClick={() => onTaskClick(task.id)}
-              tagsInTask={tagsInTask[task.id] || []}
-              categoriesInTask={categoriesInTask[task.id] || []}
-              priority={priorityInTask[task.id]?.priority ?? 0}
+              tagsInTask={task.tags}
+              categoriesInTask={task.categories}
+              priority={task.priority}
+              dueDate={task.due_date}
             />
           ))
         ) : (

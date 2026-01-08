@@ -1,19 +1,32 @@
-// useAutosizeTextArea.js
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
-const useAutosizeTextArea = (textAreaRef, value) => {
-  useEffect(() => {
-    // 1. Nos aseguramos de que el elemento existe y hay un valor
-    if (textAreaRef.current) {
-      const textArea = textAreaRef.current;
+const useAutoGrowTextArea = (dependencies = []) => {
+  const textareaRef = useRef(null);
 
-      // 2. Resetea la altura
-      textArea.style.height = "auto";
-
-      // 3. Establece la altura al 'scrollHeight'
-      textArea.style.height = `${textArea.scrollHeight}px`;
+  const adjustHeight = useCallback(() => {
+    const element = textareaRef.current;
+    if (element) {
+      element.style.setProperty("height", "auto", "important");
+      const newHeight = element.scrollHeight;
+      if (newHeight > 0) {
+        element.style.height = `${newHeight}px`;
+      }
     }
-  }, [textAreaRef, value]); // Siempre se ejecuta al cambiar el valor
+  }, []);
+
+  useEffect(() => {
+    adjustHeight();
+    const rafId = requestAnimationFrame(adjustHeight);
+    const timeout1 = setTimeout(adjustHeight, 50);
+    const timeout2 = setTimeout(adjustHeight, 200);
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+    };
+  }, [adjustHeight, ...dependencies]);
+
+  return { textareaRef, adjustHeight };
 };
 
-export default useAutosizeTextArea;
+export default useAutoGrowTextArea;

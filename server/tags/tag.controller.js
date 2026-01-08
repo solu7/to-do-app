@@ -1,9 +1,10 @@
 import {
   createTag as _createTag,
+  deleteTag as _deleteTag,
   assignTagToTask as _assignTagToTask,
   removeTagFromTask as _removeTagFromTask,
   getTagsInTask as _getTagsInTask,
-  getTagsByUserId as _getTagsByUserId
+  getTagsByUserId as _getTagsByUserId,
 } from "./tag.model.js";
 
 export const createTag = async (req, res) => {
@@ -11,9 +12,7 @@ export const createTag = async (req, res) => {
   const { name } = req.body;
 
   if (!name || name.trim() === "") {
-    return res
-      .status(400)
-      .json({ message: "The tag name is required" });
+    return res.status(400).json({ message: "The tag name is required" });
   }
 
   try {
@@ -22,6 +21,19 @@ export const createTag = async (req, res) => {
   } catch (error) {
     console.error("Error creating tag:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const deleteTag = async (req, res) => {
+  const userId = req.user.id;
+  const { tagId } = req.params;
+
+  try {
+    await _deleteTag(userId, tagId);
+    res.status(200).json({ message: "Tag deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting tag:", error);
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -75,9 +87,7 @@ export const removeTagFromTask = async (req, res) => {
 
   try {
     await _removeTagFromTask(userId, taskId, tagId);
-    res
-      .status(200)
-      .json({ message: "Tag successfully removed from task" });
+    res.status(200).json({ message: "Tag successfully removed from task" });
   } catch (error) {
     console.error("Error deleting task tag:", error);
     res.status(400).json({ message: error.message });
