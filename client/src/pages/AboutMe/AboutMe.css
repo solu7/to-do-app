@@ -254,24 +254,3 @@
   flex-direction: row;
   gap: 10px;
 }
-
-.about-me__download-cv {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  cursor: pointer;
-  transition: 0.25s;
-}
-.about-me__download-cv:hover {
-  transform: scale(0.95);
-}
-.about-me__download-button {
-  color: var(--light-grey);
-  font-family: "principal-font-bold";
-  font-size: 13px;
-}
-.about-me__download-icon {
-  height: 20px;
-  object-fit: contain;
-}

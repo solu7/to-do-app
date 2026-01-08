@@ -3,21 +3,20 @@ import userIcon from "../../core/assets/icons/logo.png";
 import featuresIcon from "./assets/images/features.png";
 import aboutmeIcon from "./assets/images/aboutme.png";
 import contactIcon from "./assets/images/contact.png";
-import resourcesIcon from "./assets/images/resources.png";
 import phoneIcon from "./assets/images/phone.png";
 import emailIcon from "./assets/images/email.png";
 import githubIcon from "./assets/images/github.png";
 import linkedinIcon from "./assets/images/linkedin.png";
 import moreproyectsIcon from "./assets/images/moreproyects.png";
 import downloadIcon from "./assets/images/download.png";
-import documentationIcon from "./assets/images/documentation.png";
-import seecodeIcon from "./assets/images/seecode.png";
+import DownloadCV from "../../core/components/DownloadCV/DownloadCV";
 import { useNavigation } from "../../core/hooks/useNavigation";
 import { useExternalNavigation } from "../../core/hooks/useExternalNavigation";
 
 function Footer() {
   const { goToAboutMe } = useNavigation();
-  const { goToGitHubProfile, goToLinkedIn, goToGitHubRepos } = useExternalNavigation();
+  const { goToGitHubProfile, goToLinkedIn, goToGitHubRepos } =
+    useExternalNavigation();
   return (
     <footer className="footer">
       <div className="footer-about-project">
@@ -68,7 +67,9 @@ function Footer() {
           />
         </section>
         <ul className="footer-list footer-about-list">
-          <li onClick={goToAboutMe}>Acerca del desarrolador</li>
+          <li onClick={goToAboutMe} className="footer-list-item">
+            Acerca del desarrolador
+          </li>
           <li
             className="footer-list-item footer-about-list-item"
             onClick={goToGitHubRepos}
@@ -80,14 +81,7 @@ function Footer() {
               alt="More proyects icon"
             />
           </li>
-          <li className="footer-list-item footer-about-list-item">
-            Descargar CV
-            <img
-              className="list-item-icon"
-              src={downloadIcon}
-              alt="Download icon"
-            />
-          </li>
+          <DownloadCV />
         </ul>
       </div>
 
@@ -114,7 +108,10 @@ function Footer() {
         </ul>
         <p className="footer-list-title footer-social-list-title">Redes</p>
         <ul className="footer-list footer-social-list">
-          <li className="footer-list-item footer-contact-list-item" onClick={goToGitHubProfile}>
+          <li
+            className="footer-list-item footer-contact-list-item"
+            onClick={goToGitHubProfile}
+          >
             GitHub
             <img
               className="list-item-icon"
@@ -122,7 +119,10 @@ function Footer() {
               alt="Github Icon"
             />
           </li>
-          <li className="footer-list-item footer-contact-list-item" onClick={goToLinkedIn}>
+          <li
+            className="footer-list-item footer-contact-list-item"
+            onClick={goToLinkedIn}
+          >
             LinkedIn
             <img
               className="list-item-icon"

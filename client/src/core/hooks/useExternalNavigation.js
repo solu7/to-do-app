@@ -1,7 +1,7 @@
 const EXTERNAL_LINKS = {
-  githubProject: "https://github.com/solu7/to-do-app",
+  githubProject: "https://github.com/agustin-salva-dev/to-do-app",
   githubProfile: "https://github.com/agustin-salva-dev",
-  githubRepos: "https://github.com/solu7?tab=repositories",
+  githubRepos: "https://github.com/agustin-salva-dev?tab=repositories",
   linkedin: "https://www.linkedin.com/in/agustin-salva-dev/",
 };
 
