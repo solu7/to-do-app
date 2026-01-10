@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import verifyToken from "../auth/auth.middleware.js";
+import { verifyOnlyToken } from "../auth/auth.middleware.js";
 import {
   getAllTasks,
   getInboxTasks,
@@ -10,25 +10,39 @@ import {
   deleteTask,
   getTaskCompletionStatus,
   toggleTaskCompletionStatus,
-  getFilteredTasks,
+  setTaskDueDate,
+  getTaskDueDate,
+  getTodayTasks,
+  getUpcomingTasks,
 } from "./task.controller.js";
 
-router.get("/", verifyToken, getInboxTasks);
+router.get("/", verifyOnlyToken, getInboxTasks);
 
-router.get("/all", verifyToken, getAllTasks);
+router.get("/all", verifyOnlyToken, getAllTasks);
 
-router.get("/filtered", verifyToken, getFilteredTasks);
+router.get("/today", verifyOnlyToken, getTodayTasks);
 
-router.get("/completed", verifyToken, getCompletedTasks);
+router.get("/upcoming", verifyOnlyToken, getUpcomingTasks);
 
-router.get("/:id/status", verifyToken, getTaskCompletionStatus);
+/*
+! NOT IN USE
+router.get("/filtered", verifyOnlyToken, getFilteredTasks);
+*/
 
-router.post("/", verifyToken, createTask);
+router.get("/completed", verifyOnlyToken, getCompletedTasks);
 
-router.patch("/:id", verifyToken, updateTask);
+router.get("/:id/status", verifyOnlyToken, getTaskCompletionStatus);
 
-router.patch("/:id/toggle", verifyToken, toggleTaskCompletionStatus);
+router.get("/:taskId/date", verifyOnlyToken, getTaskDueDate);
 
-router.delete("/:id", verifyToken, deleteTask);
+router.post("/", verifyOnlyToken, createTask);
+
+router.post("/:taskId/date", verifyOnlyToken, setTaskDueDate);
+
+router.patch("/:id", verifyOnlyToken, updateTask);
+
+router.patch("/:id/toggle", verifyOnlyToken, toggleTaskCompletionStatus);
+
+router.delete("/:id", verifyOnlyToken, deleteTask);
 
 export default router;

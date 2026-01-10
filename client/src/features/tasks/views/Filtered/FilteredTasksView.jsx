@@ -1,14 +1,12 @@
 import "./FilteredTasksView.css";
+import { useFilters } from "../../../../context/FilterContext.jsx";
 import { useFilteredTasks } from "../../hooks/useFilteredTasks";
 import TaskCard from "../../TaskCard.jsx";
 import tagIcon from "../../assets/images/SectionIcon/tagIcon.png";
 import categoryIcon from "../../assets/images/SectionIcon/categoryIcon.png";
 import priorityIcon from "../../assets/images/SectionIcon/priorityIcon.png";
-import { useTaskData } from "../../services/useTaskData.js";
-import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
-import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
-import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices.js";
 import taskIcon from "../../assets/images/SectionIcon/taskIcon.png";
+import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
 
 function FilteredTasksView({ onTaskClick }) {
   const ICON_MAP = {
@@ -16,51 +14,54 @@ function FilteredTasksView({ onTaskClick }) {
     tagId: tagIcon,
     priority: priorityIcon,
   };
+
+  const { activeFilter } = useFilters();
+
   const { tasks, filters } = useFilteredTasks();
-
-  const { data: tagsInTask } = useTaskData(tasks, getTagsInTask);
-  const { data: categoriesInTask } = useTaskData(tasks, getCategoriesInTask);
-  const { data: priorityInTask } = useTaskData(tasks, getTaskPriority);
-
-  const filterKey = Object.keys(filters).find((key) => key !== "name");
-  const filterName = filters.name ? decodeURIComponent(filters.name) : null;
-  const displayIcon = filterKey ? ICON_MAP[filterKey] : null;
   return (
-    <div className="filtered-tasks__container">
-      <section className="filtered-tasks__header">
-        <h3 className="filtered-tasks__header-title">
+    <div className="task-view__container">
+      <section className="task-view__header">
+        <h3 className="task-view__header-title">
           Tus <span>tareas</span>
         </h3>
         <img
-          className="filtered-tasks__header-icon"
+          className="task-view__header-icon"
           src={taskIcon}
           alt="Icono de bandeja de entrada"
         />
-        <h3 className="filtered-tasks__header-title">con</h3>
-        {filterName && displayIcon && (
+        <h3 className="task-view__header-title">con</h3>
+        {activeFilter.type && (
           <div className="filtered-tasks__filter">
             <img
               className="filtered-tasks__filter-icon"
-              src={displayIcon}
+              src={ICON_MAP[activeFilter.type]}
               alt="Icono de filtro"
             />
-            <p>{filterName}</p>
+            <p>{activeFilter.name}</p>
           </div>
         )}
       </section>
       {tasks.length === 0 ? (
-        <p>No se encontraron tareas con estos filtros.</p>
+        <section className="no-tasks__message">
+          <h2>No se encontraron tareas con estos filtros.</h2>
+          <img
+            className="no-tasks__icon"
+            src={cleanIcon}
+            alt="Icono de limpio"
+          />
+        </section>
       ) : (
-        <section className="filtered-task__list">
+        <section className="task-view__tasks">
           {tasks.map((task) => (
             <TaskCard
               key={task.id}
               title={task.title}
               description={task.description}
               onClick={() => onTaskClick(task.id)}
-              tagsInTask={tagsInTask[task.id] || []}
-              categoriesInTask={categoriesInTask[task.id] || []}
-              priority={priorityInTask[task.id]?.priority ?? 0}
+              tagsInTask={task.tags}
+              categoriesInTask={task.categories}
+              priority={task.priority}
+              dueDate={task.due_date}
             />
           ))}
         </section>

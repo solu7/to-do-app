@@ -18,3 +18,15 @@
   height: 50px;
   object-fit: contain;
 }
+@media (width <= 1024px) {
+  .tech-used {
+    gap: 7px;
+    padding-right: 10px;
+  }
+  .techs-used img {
+    height: 40px;
+  }
+  .tech-used p {
+    font-size: 13px;
+  }
+}

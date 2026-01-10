@@ -1,100 +1,140 @@
 import "./Sidebar.css";
-import { useAddTaskModal } from "../../../../features/tasks/hooks/useAddTaskModal.js";
-import { motion } from "framer-motion";
+import { useModal } from "../../../../features/tasks/hooks/useModal.js";
+import { motion, AnimatePresence } from "framer-motion";
 import userIcon from "../../assets/images/userIcon.png";
 import configIcon from "../../assets/images/configIcon.png";
 import closepanelIcon from "../../assets/images/closepanelIcon.png";
 import projectsIcon from "../../assets/images/projectsIcon.png";
 import helpIcon from "../../assets/images/helpIcon.png";
 import AddTaskModal from "../../../../features/tasks/components/AddTaskModal/AddTaskModal.jsx";
+import MoreActionsModal from "../MoreActionsModal/MoreActionsModal.jsx";
 import NavItem from "./components/NavItem.jsx";
 import { navItems } from "./data/navItems.js";
+import UserPanel from "../../../../features/user/components/UserPanel.jsx";
+import { useUser } from "../../../../context/UserContext.jsx";
+
+const formatTime = (totalSeconds) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const pad = (num) => String(num).padStart(2, "0");
+
+  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+};
 
 function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
-  const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
-    useAddTaskModal();
+  const { userData, sessionTimeRemaining } = useUser();
+  const isGuest = userData?.is_guest;
+  const addTaskModal = useModal();
+  const userPanelModal = useModal();
+  const moreActionsModal = useModal();
 
-  const sidebarVariants = {
-    open: { transition: { duration: 0.8 } },
-    closed: { transition: { duration: 0.8 } },
+  const contentVariants = {
+    open: { opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.3 } },
+    closed: { opacity: 0, x: -50, transition: { duration: 0.2 } },
   };
+
   const arrowVariants = {
-    open: { rotate: 0, transition: { duration: 0.02 } },
-    closed: { rotate: 180, transition: { duration: 0.02 } },
+    open: { rotate: 0, transition: { duration: 0.2 } },
+    closed: { rotate: 180, transition: { duration: 0.2 } },
   };
   return (
-    <motion.nav
-      className="sidebar"
-      variants={sidebarVariants}
-      initial={isOpen ? "open" : "closed"}
-      animate={isOpen ? "open" : "closed"}
-      exit="closed"
-    >
-      {isOpen && (
-        <motion.div
-          className="sidebar-content-wrapper"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.3 } }}
-          exit={{ opacity: 0 }}
-        >
-          <section className="sidebar-header">
-            <div className="sidebar-user">
-              <img
-                className="sidebar-header-img"
-                src={userIcon}
-                alt="User icon"
-              />
-              <p>{username}</p>
-            </div>
-          </section>
+    <>
+      <motion.nav
+        className="sidebar"
+        layout
+        initial={false}
+        animate={isOpen ? "open" : "closed"}
+      >
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="sidebar-content-wrapper"
+              variants={contentVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+            >
+              {isGuest && sessionTimeRemaining > 0 && (
+                <div className="sidebar__guest-timer">
+                  <p>Sesión de invitado expira en: </p>
+                  <span>{formatTime(sessionTimeRemaining)}</span>
+                </div>
+              )}
+              <section className="sidebar-header">
+                <div className="sidebar-user">
+                  <img
+                    className="sidebar-header-img"
+                    src={userIcon}
+                    alt="User icon"
+                  />
+                  <p>{username}</p>
+                </div>
+              </section>
 
-          <ul className="principal-nav">
-            {navItems.map((item, idx) => (
-              <NavItem
-                key={idx}
-                {...item}
-                onClick={
-                  item.action === "addTask" ? openAddTaskModal : undefined
-                }
+              <ul className="principal-nav">
+                {navItems.map((item) => (
+                  <NavItem
+                    key={item.name}
+                    {...item}
+                    onClick={
+                      item.action === "addTask" ? addTaskModal.open : undefined
+                    }
+                  />
+                ))}
+              </ul>
+              <AddTaskModal
+                onClose={addTaskModal.close}
+                isOpen={addTaskModal.isOpen}
               />
-            ))}
-          </ul>
-          <AddTaskModal
-            onClose={closeAddTaskModal}
-            AddTaskModalIsOpen={addTaskModalIsOpen}
+
+              <section className="my-projects">
+                <p>Mis proyectos</p>
+                <div className="project">
+                  <img src={projectsIcon} alt="Project icon" />
+                  <p>Proyecto</p>
+                </div>
+              </section>
+
+              <section
+                className="sidebar-help"
+                onClick={moreActionsModal.toggle}
+              >
+                <img src={helpIcon} alt="Help icon" />
+                <p>Mas</p>
+                <MoreActionsModal
+                  onClose={moreActionsModal.close}
+                  isOpen={moreActionsModal.isOpen}
+                />
+              </section>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <div className="sidebar-config">
+          <img
+            className="sidebar-config__icon"
+            src={configIcon}
+            alt="Config icon"
+            role="button"
+            onClick={userPanelModal.open}
           />
-
-          <section className="my-projects">
-            <p>Mis proyectos</p>
-            <div className="project">
-              <img src={projectsIcon} alt="Project icon" />
-              <p>Proyecto</p>
-            </div>
-          </section>
-
-          <section className="sidebar-help">
-            <img src={helpIcon} alt="Help icon" />
-            <p>Mas</p>
-          </section>
-        </motion.div>
-      )}
-      <div className="sidebar-config">
-        <img
-          className="sidebar-config__icon"
-          src={configIcon}
-          alt="Config icon"
-        />
-        <motion.img
-          className="sidebar-config__icon"
-          src={closepanelIcon}
-          alt="Close panel icon"
-          role="button"
-          onClick={isOpen ? onClose : openDashboardSidebar}
-          variants={arrowVariants}
-          animate={isOpen ? "open" : "closed"}
-        />
-      </div>
-    </motion.nav>
+          <motion.img
+            className="sidebar-config__icon"
+            src={closepanelIcon}
+            alt="Close panel icon"
+            role="button"
+            onClick={isOpen ? onClose : openDashboardSidebar}
+            variants={arrowVariants}
+            animate={isOpen ? "open" : "closed"}
+          />
+        </div>
+      </motion.nav>
+      <UserPanel
+        isOpen={userPanelModal.isOpen}
+        onClose={userPanelModal.close}
+      />
+    </>
   );
 }
 export default Sidebar;

@@ -3,8 +3,8 @@ import addIconWhite from "../../../../pages/Dashboard/assets/images/addIconWhite
 
 function AddTaskButton({ onClick }) {
   return (
-    <div className="add-task-container" onClick={onClick}>
-      <section className="add-task">
+    <div className="add-task-container">
+      <section className="add-task" role="button" onClick={onClick}>
         <img src={addIconWhite} alt="Icono de añadir" />
         <p>Añadir tarea</p>
       </section>

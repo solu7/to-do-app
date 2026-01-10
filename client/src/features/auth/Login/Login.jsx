@@ -1,22 +1,21 @@
 import "./Login.css";
-import { motion, AnimatePresence } from "framer-motion";
-
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { InputField } from "../../../core/components/InputField/InputField.jsx";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "../validation/authSchemas.js";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "../../../core/hooks/useNavigation.js";
 import { loginUser } from "./loginService.js";
-
+import StatusMessage from "../../../core/components/StatusMessage/StatusMessage.jsx";
 import logo from "../../../core/assets/icons/logo.png";
 import passIcon from "../../assets/images/passIcon.png";
 import emailIcon from "../../assets/images/emailIcon.svg";
 import homeIcon from "../../../core/assets/icons/homeIcon.svg";
 
 function Login() {
-  const { goToDashboard } = useNavigation();
-  const [generalError, setGeneralError] = useState("");
-  const [success, setSuccess] = useState("");
+  const { goToDashboard, goToHome } = useNavigation();
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const {
     register,
     handleSubmit,
@@ -24,11 +23,12 @@ function Login() {
     setError: setFormError,
     formState: { errors },
   } = useForm({
+    resolver: zodResolver(loginSchema),
     mode: "onTouched",
   });
 
   const onSubmit = async (data) => {
-    setGeneralError("");
+    setError("");
 
     try {
       const response = await loginUser({
@@ -37,19 +37,14 @@ function Login() {
       });
 
       console.log("Login exitoso:", response);
-      setSuccess("¡Usuario logeado correctamente!");
+      setSuccessMsg("¡Usuario logeado correctamente!");
       reset();
       setTimeout(() => {
         goToDashboard();
       }, 2500);
     } catch (err) {
       console.error("Error al logear el usuario:", err);
-
-      if (
-        err.details &&
-        err.details.errors &&
-        Array.isArray(err.details.errors)
-      ) {
+      if (err.details?.errors && Array.isArray(err.details.errors)) {
         err.details.errors.forEach((backendError) => {
           if (backendError.path) {
             setFormError(backendError.path, {
@@ -57,112 +52,68 @@ function Login() {
               message: backendError.msg,
             });
           } else {
-            setFormError(backendError.msg);
+            setError(backendError.msg);
           }
         });
       } else if (err.message) {
-        setGeneralError(err.message);
+        setError(err.message);
       } else {
-        setGeneralError(
-          "Ocurrió un error inesperado al intentar logear el usuario."
-        );
+        setError("Ocurrió un error inesperado al intentar logear el usuario.");
       }
     }
   };
   return (
     <div className="login">
-        <div className="login-header">
-          <img className="login-logo" src={logo} alt="App Logo" />
-          <h1>
-            todo-<span>app</span>
-          </h1>
-        </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <InputField
-            inputIcon={emailIcon}
-            inputTitle="E-mail"
-            placeholder="Enter your email"
-            type="email"
-            inputName="email"
-            register={register}
-            errors={errors}
-          />
-
-          <InputField
-            inputIcon={passIcon}
-            inputTitle="Password"
-            placeholder="Enter your password"
-            type="password"
-            inputName="password"
-            register={register}
-            errors={errors}
-          />
-
-          <AnimatePresence>
-            {!!generalError && (
-              <motion.div
-                className="error-message"
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                  height: 0,
-                  marginTop: 0,
-                  padding: "0 10px",
-                }}
-                transition={{ duration: 1, ease: "easeInOut" }}
-              >
-                <p>
-                  Email o contraseña <span>incorrectos</span>
-                </p>
-                <hr className="error-message-hr" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <AnimatePresence>
-            {!!success && (
-              <motion.div
-                className="success-message"
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                  height: 0,
-                  marginTop: 0,
-                  padding: "0 10px",
-                }}
-                transition={{ duration: 1, ease: "easeInOut" }}
-              >
-                <p>
-                  ¡Usuario logeado <span>correctamente!</span>
-                </p>
-                <hr className="success-message-hr" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <div className="login-buttons">
-            <button type="submit" className="btn login-btn">
-              Log in
-            </button>
-            <p className="btn-secondary login-btn">Forgot your password?</p>
-          </div>
-        </form>
-        <Link to="/">
-          <div className="login-back-home">
-            <img src={homeIcon} alt="Icono de HomePage" />
-            <p>Back to Homepage</p>
-          </div>
-        </Link>
+      <div className="login-header">
+        <img className="login-logo" src={logo} alt="App Logo" />
+        <h1>
+          todo-<span>app</span>
+        </h1>
       </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InputField
+          inputIcon={emailIcon}
+          inputTitle="E-mail"
+          placeholder="Enter your email"
+          type="email"
+          inputName="email"
+          register={register}
+          errors={errors}
+        />
+
+        <InputField
+          inputIcon={passIcon}
+          inputTitle="Password"
+          placeholder="Enter your password"
+          type="password"
+          inputName="password"
+          register={register}
+          errors={errors}
+        />
+        {error && (
+          <div className="login__status-msg">
+            <StatusMessage message={error} type="error" />
+            <hr className="error-message-hr" />
+          </div>
+        )}
+        {successMsg && (
+          <div className="login__status-msg">
+            <StatusMessage message={successMsg} type="success" />
+            <hr className="success-message-hr" />
+          </div>
+        )}
+        <div className="login-buttons">
+          <button type="submit" className="btn login-btn">
+            Log in
+          </button>
+          <p className="btn-secondary login-btn">Forgot your password?</p>
+        </div>
+      </form>
+      <div className="login-back-home" role="button" onClick={goToHome}>
+        <img src={homeIcon} alt="Icono de HomePage" />
+        <p>Back to Homepage</p>
+      </div>
+    </div>
   );
 }
 export default Login;

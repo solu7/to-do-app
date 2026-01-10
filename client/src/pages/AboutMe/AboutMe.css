@@ -1,5 +1,6 @@
 .about-me {
   position: absolute;
+  width: 100vw;
 }
 .about-me__title {
   display: flex;
@@ -58,12 +59,13 @@
 .about-me__column-meta {
   display: flex;
   flex-direction: column;
+  gap: 40px;
 }
 .about-me__column-main {
   width: 30%;
-  gap: 25px;
 }
 .about-me__column-meta {
+  position: relative;
   padding-bottom: 15px;
 }
 
@@ -150,7 +152,7 @@
 }
 
 .about-me__pfp {
-  width: 485px;
+  width: clamp(400px, 10vw + 350px, 600px);
   object-fit: contain;
 }
 
@@ -195,9 +197,10 @@
 .bg-deco {
   height: 735px;
   position: absolute;
-  right: 0px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: -1;
-  top: -80px;
   opacity: 35%;
 }
 
@@ -228,11 +231,11 @@
   color: var(--ultra-light-blue);
   transition: 0.3s ease;
   cursor: pointer;
+  border: 1px solid var(--primary-color);
 }
 .about-me__cta-button:hover {
   transform: scale(0.9);
   background-color: var(--light-blue);
-  border: 1px solid var(--primary-color);
   color: var(--primary-color);
 }
 .about-me__cta-button p {
@@ -244,26 +247,41 @@
   height: 38px;
   object-fit: contain;
   cursor: pointer;
+  transition: 0.2s;
+}
+.about-me__cta-icon:hover {
+  transform: scale(0.92);
 }
 .about-me__cta-socials {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
-
-.about-me__download-cv {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  cursor: pointer;
-}
-.about-me__download-button {
-  color: var(--light-grey);
-  font-family: "principal-font-bold";
-  font-size: 13px;
-}
-.about-me__download-icon {
-  height: 20px;
-  object-fit: contain;
+@media (width <= 1500px) {
+  .about-me__content-wrapper {
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 50px;
+  }
+  .about-me__column-main {
+    padding-top: 40px;
+    width: 100%;
+  }
+  .about-me__column-meta {
+    align-items: center;
+    gap: 80px;
+  }
+  .about-me__contact {
+    align-items: center;
+  }
+  .bg-deco {
+    height: 390px;
+  }
+  .about-me__cta-links {
+    padding: 0px 50px;
+    margin-bottom: 30px;
+  }
+  .about-me__call-to-action {
+    padding: 15px;
+  }
 }

@@ -67,8 +67,9 @@
   }
   .navbar {
     flex-direction: column;
-    gap: 30px;
+    gap: 25px;
     padding: 20px 50px;
+    align-items: end;
   }
   .navbar__links {
     display: none;
@@ -76,6 +77,15 @@
   }
   .navbar__links.active {
     display: flex;
+    background-color: white;
+    border: 1px solid var(--opacity-grey);
+    border-radius: 9px;
+    padding: 20px;
+    font-family: "principal-font-extra-bold";
+  }
+  .navbar__auth-links {
+    flex-direction: column;
+    align-items: center;
   }
   .menu-toggle {
     display: block;

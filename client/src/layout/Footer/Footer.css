@@ -6,9 +6,6 @@
   position: relative;
   flex-wrap: wrap;
   font-family: "principal-font", sans-serif;
-  @media (width <= 1100px) {
-    padding: 0px 50px;
-  }
 }
 .footer-user-icon {
   width: 40px;
@@ -32,6 +29,17 @@
   list-style: none;
   cursor: pointer;
 }
+.footer-list .download-cv {
+  justify-content: left;
+  gap: 8px;
+}
+.footer-list .download-cv__btn {
+  font-size: 11px;
+  font-family: "principal-font";
+}
+.footer-list .download-cv__icon {
+  width: 13px;
+}
 .footer-list-features {
   cursor: initial;
 }
@@ -43,6 +51,11 @@
   flex-direction: row;
   gap: 8px;
   align-items: center;
+  height: 2vh;
+  transition: 0.3s;
+}
+.footer-list-item:hover {
+  transform: scale(0.95);
 }
 .footer-header {
   display: flex;
@@ -101,4 +114,17 @@
   text-align: center;
   padding-bottom: 15px;
   left: 46%;
+}
+@media (width <= 1024px) {
+  .footer {
+    padding: 0px 50px;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .footer-about-project {
+    width: auto;
+  }
+  .codedBy {
+    position: static;
+  }
 }

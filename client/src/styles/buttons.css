@@ -1,45 +1,97 @@
-.btn {
+.btn,
+.btn-secondary,
+.add-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px 30px;
-  background-color: var(--primary-color, #327dee);
-  color: white;
   font-family: "principal-font", sans-serif;
   font-size: 12px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
-.btn:hover {
-  transition: all 0.25s ease-in-out;
+.btn:hover,
+.btn-secondary:hover {
   transform: scale(0.95);
-  background: none;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
   font-family: "principal-font-bold", sans-serif;
   box-shadow: 3px 3px 9px rgba(56, 56, 56, 0.1);
 }
 
+.btn {
+  background-color: var(--primary-color, #327dee);
+  color: white;
+  border: 1px solid var(--primary-color);
+}
+.btn:hover {
+  background: none;
+  color: var(--primary-color);
+}
+
 .btn-secondary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 35px;
-  width: 130px;
   background-color: var(--secondary-color, #14348f);
   color: var(--primary-color);
-  font-family: "principal-font", sans-serif;
-  font-size: 12px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
 }
 .btn-secondary:hover {
-  transition: all 0.4s ease-in-out;
-  transform: scale(0.95);
   background-color: white;
   border: 1px solid var(--primary-color);
-  font-family: "principal-font-bold", sans-serif;
-  box-shadow: 3px 3px 9px rgba(56, 56, 56, 0.1);
 }
+
+.add-btn {
+  padding: 0px 8px;
+  font-family: "principal-font-bold";
+  font-size: 18px;
+  background-color: var(--opacity-grey);
+  color: var(--light-grey);
+  border: 1px solid var(--opacity-grey);
+}
+.add-btn:hover {
+  transform: scale(0.9);
+  box-shadow: 3px 3px 9px rgba(56, 56, 56, 0.1);
+  border: 1px solid var(--primary-color);
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.add-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--ultra-light-grey);
+  padding: 3px 10px;
+  border-radius: 5px;
+  color: var(--light-grey);
+  cursor: pointer;
+  width: fit-content;
+  font-family: "principal-font-bold";
+  font-size: 14px;
+  background: none;
+  transition: 0.3s;
+}
+.add-button p {
+  font-size: 11px;
+  font-family: "principal-font";
+}
+.add-button:hover {
+  transform: scale(0.97);
+}
+
+.remove-button {
+  width: 15px;
+  object-fit: contain;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.2s;
+}
+.item-to-remove:hover .remove-button {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .remove-button {
+    opacity: 1;
+  }
+}
+

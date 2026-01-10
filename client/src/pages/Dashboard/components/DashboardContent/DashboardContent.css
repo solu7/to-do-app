@@ -1,16 +1,30 @@
 .dashboard {
+  position: relative;
   display: flex;
   justify-content: space-between;
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
-  gap: 75px;
+  gap: 30px;
 }
-.dashboard__view {
+.dashboard__view-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 80px 0px;
+  container-type: inline-size;
+  container-name: view-container;
+  min-width: 7vw;
   flex-grow: 1;
   overflow-y: auto;
-  gap: 60px;
-  padding: 80px 75px;
-  scrollbar-color: var(--secondary-color) var(--light-blue);
+  scrollbar-width: none;
+}
+.dashboard__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
 }

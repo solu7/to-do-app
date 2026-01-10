@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { getUsernameByUserId } from "./user.controller.js";
-import verifyToken from "../auth/auth.middleware.js";
+import { getUserData, updateUsername, updatePassword, deleteAccount } from "./user.controller.js";
+import { authenticateUser } from "../auth/auth.middleware.js";
 const router = Router();
 
-router.get("/", verifyToken, getUsernameByUserId);
-
+router.get("/", authenticateUser, getUserData);
+router.put("/username", authenticateUser, updateUsername);
+router.put('/password', authenticateUser, updatePassword);
+router.delete('/account', authenticateUser, deleteAccount);
 export default router;

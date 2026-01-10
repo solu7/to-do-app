@@ -22,6 +22,18 @@ export const createTag = async (userId, name) => {
   }
 };
 
+export const deleteTag = async (userId, tagId) => {
+  const [result] = await pool.query(
+    "DELETE FROM tags WHERE id = ? AND user_id = ?",
+    [tagId, userId]
+  );
+
+  if (result.affectedRows === 0) {
+    throw new Error("Tag not found or not authorized to delete");
+  }
+  return result;
+};
+
 export const getTagsByUserId = async (userId) => {
   const [tags] = await pool.query("SELECT * FROM tags WHERE user_id = ?", [
     userId,
