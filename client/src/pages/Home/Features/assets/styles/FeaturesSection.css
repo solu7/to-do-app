@@ -10,11 +10,11 @@
   gap: 35px;
   width: 100%;
   justify-content: space-between;
+  flex-wrap: wrap;
   @media (width <= 1500px) {
     padding: 0px 50px;
     justify-content: center;
   };
-  flex-wrap: wrap;
 }
 .features-title {
   margin-top: 70px;

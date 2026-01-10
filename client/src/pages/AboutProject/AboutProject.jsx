@@ -205,7 +205,7 @@ function AboutProject() {
 
           <div className="about-project__functionality-heading-extra">
             <p className="about-project__functionality-question">
-              Aqui va una pregunta?
+              ¿Qué hay detrás del código?
             </p>
             <img
               className="about-project-functionality-question-icon"

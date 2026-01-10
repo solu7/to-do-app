@@ -8,7 +8,7 @@ import { useNavigation } from "../../core/hooks/useNavigation";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { goToDashboard } = useNavigation();
+  const { goToDashboard, goToHome } = useNavigation();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [error, setError] = useState(null);
   const handleGuestLogin = async () => {
@@ -33,7 +33,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar__header">
-        <div className="navbar__brand">
+        <div className="navbar__brand" onClick={goToHome}>
           <img className="navbar__logo" src={logo} alt="Aplication Logo" />
           <p>
             <span>todo</span>-app

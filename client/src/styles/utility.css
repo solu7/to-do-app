@@ -5,7 +5,7 @@
 }
 .section-title {
   font-family: "principal-font", sans-serif;
-  font-size: 30px;
+  font-size: clamp(1.5rem, 2.5vw + 1rem, 2.25rem);
   color: var(--dark-grey);
   text-align: center;
   letter-spacing: 0.5px;
