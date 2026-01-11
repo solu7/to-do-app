@@ -7,7 +7,6 @@ import {
 } from "react";
 import { logoutUser } from "../features/auth/services/authServices";
 import { useNavigation } from "../core/hooks/useNavigation";
-import SessionExpiryModal from "../core/components/SessionExpiryModal/SessionExpiryModal.jsx";
 const UserContext = createContext();
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -20,8 +19,6 @@ export const UserProvider = ({ children }) => {
   const [isExpiryModalOpen, setIsExpiryModalOpen] = useState(false);
 
   const handleLogout = useCallback(async () => {
-    console.log("DEBUG: Iniciando proceso de Logout real");
-
     try {
       const result = await logoutUser();
 
@@ -108,7 +105,6 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log("DEBUG: Reiniciando Intervalo");
     if (!userData?.tokenExp) return;
 
     window.addEventListener("focus", refreshTimer);
@@ -134,15 +130,11 @@ export const UserProvider = ({ children }) => {
         fetchUserData,
         sessionTimeRemaining,
         handleLogout,
+        extendSession,
+        isExpiryModalOpen,
       }}
     >
       {children}
-      <SessionExpiryModal
-        isOpen={isExpiryModalOpen}
-        onExtend={extendSession}
-        onLogout={handleLogout}
-        isGuest={userData?.is_guest}
-      />
     </UserContext.Provider>
   );
 };
