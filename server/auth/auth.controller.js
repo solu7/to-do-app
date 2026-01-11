@@ -77,8 +77,8 @@ export async function login(req, res) {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
       maxAge: SESION_24HS_MS + GRACE_10MIN_MS,
     });
 
@@ -105,8 +105,8 @@ export async function loginAsGuest(req, res) {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
       maxAge: SESION_2HS_MS + GRACE_10MIN_MS,
     });
 
@@ -138,8 +138,8 @@ export async function refreshSession(req, res) {
 
     res.cookie("token", newToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
       maxAge: maxAge,
     });
 
@@ -152,8 +152,8 @@ export async function refreshSession(req, res) {
 export async function logout(req, res) {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    secure: true,
+    sameSite: "none",
   });
 
   res.status(200).json({ message: "Sesión cerrada correctamente" });

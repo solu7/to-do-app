@@ -47,7 +47,6 @@ export const UserProvider = ({ children }) => {
     async (url, options = {}) => {
       const response = await fetch(url, { ...options, credentials: "include" });
 
-      // Solo disparamos logout si el usuario creía estar logueado y recibe un 401
       if (response.status === 401 && isAuthenticated) {
         handleLogout();
       }
