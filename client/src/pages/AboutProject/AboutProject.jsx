@@ -2,7 +2,7 @@ import "./AboutProject.css";
 import Navbar from "../../layout/NavBar/Navbar.jsx";
 import backendIcon from "./assets/images/backend.png";
 import frontendIcon from "./assets/images/frontend.png";
-import clientServerIcon from "./assets/images/client-server.png";
+import structureIcon from "./assets/images/structure.png";
 import funcionalityIcon from "./assets/images/functionality.png";
 import questionIcon from "./assets/images/question.png";
 import authIcon from "./assets/images/auth.png";
@@ -13,6 +13,9 @@ import securityIcon from "./assets/images/security.png";
 import projectsIcon from "./assets/images/projects.png";
 import uxIcon from "./assets/images/ux.png";
 import optimizationIcon from "./assets/images/optimization.png";
+import documentationIcon from "./assets/images/documentation.png";
+import deploymentIcon from "./assets/images/deployment.png";
+import githubIcon from "./assets/images/github.png";
 import { useExternalNavigation } from "../../core/hooks/useExternalNavigation.js";
 
 function AboutProject() {
@@ -35,46 +38,46 @@ function AboutProject() {
         <section className="about-project__structure-content">
           <section className="about-project__structure-item">
             <section className="about-project__structure-item-heading">
-              <h2 className="about-project__structure-title">
-                Frontend: Arquitectura y UI:
-              </h2>
               <img
                 className="about-project__structure-item-icon"
                 src={frontendIcon}
                 alt="Web design icon"
               />
+              <h2 className="about-project__structure-title">
+                Frontend: Arquitectura y UI:
+              </h2>
             </section>
-            <p className="about-project__structure-item-info">
+            <p className="about-project__structure-item-info theme-secondary">
               El cliente está desarrollado con React y se organiza bajo
               principios de modularidad para facilitar la reutilización de
               código y la separación de intereses.
             </p>
             <section className="about-project__structure-item-main-content">
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   Arquitectura por Features:
                 </p>
-                <p className="about-project__structure-subItem-desc  theme-primary">
+                <p className="about-project__structure-subItem-desc">
                   El código se organiza por funcionalidades (auth, tasks,
                   filters), asegurando que cada módulo sea independiente y fácil
                   de localizar.
                 </p>
               </div>
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   Custom Hooks:
                 </p>
-                <p className="about-project__structure-subItem-desc  theme-secondary">
+                <p className="about-project__structure-subItem-desc ">
                   La lógica de negocio se aísla en hooks personalizados,
                   permitiendo que los componentes de UI se dediquen
                   exclusivamente a la presentación visual.
                 </p>
               </div>
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   Gestión de Estado Nativa:
                 </p>
-                <p className="about-project__structure-subItem-desc theme-primary">
+                <p className="about-project__structure-subItem-desc">
                   Se utiliza Context API y hooks nativos para el manejo de
                   estados globales, priorizando las herramientas fundamentales
                   de React antes de introducir librerías externas
@@ -84,46 +87,46 @@ function AboutProject() {
           </section>
           <section className="about-project__structure-item">
             <section className="about-project__structure-item-heading">
+              <img
+                className="about-project__structure-item-icon"
+                src={structureIcon}
+                alt="Structure Icon"
+              />
               <h2 className="about-project__structure-title">
                 Integración y Flujo de Datos
               </h2>
-              <img
-                className="about-project__structure-item-icon"
-                src={clientServerIcon}
-                alt="Client-server Icon"
-              />
             </section>
-            <p className="about-project__structure-item-info">
+            <p className="about-project__structure-item-info theme-secondary">
               La aplicación emplea un diseño Full-Stack donde la comunicación
               entre el cliente y el servidor es el eje central para la
               persistencia y seguridad de los datos.
             </p>
             <section className="about-project__structure-item-main-content">
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   API RESTful:
                 </p>
-                <p className="about-project__structure-subItem-desc theme-primary">
+                <p className="about-project__structure-subItem-desc">
                   Integración fluida mediante Fetch API nativo para el manejo de
                   peticiones asíncronas, priorizando el dominio de las
                   interfaces estándar del navegador.
                 </p>
               </div>
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   Seguridad con JWT:
                 </p>
-                <p className="about-project__structure-subItem-desc theme-secondary">
+                <p className="about-project__structure-subItem-desc">
                   Implementación de autenticación basada en JSON Web Tokens,
                   gestionando el acceso a rutas protegidas y la identidad del
                   usuario de forma segura.
                 </p>
               </div>
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   Validación Estricta:
                 </p>
-                <p className="about-project__structure-subItem-desc theme-primary">
+                <p className="about-project__structure-subItem-desc">
                   Uso de React Hook Form en el frontend y validadores en el
                   servidor para asegurar que la información cumpla con el
                   formato requerido antes de ser procesada.
@@ -133,26 +136,26 @@ function AboutProject() {
           </section>
           <section className="about-project__structure-item">
             <section className="about-project__structure-item-heading">
-              <h2 className="about-project__structure-title">
-                Backend: Infraestructura y API:
-              </h2>
               <img
                 className="about-project__structure-item-icon"
                 src={backendIcon}
                 alt="Server icon"
               />
+              <h2 className="about-project__structure-title">
+                Backend: Infraestructura y API:
+              </h2>
             </section>
-            <p className="about-project__structure-item-info">
+            <p className="about-project__structure-item-info theme-secondary">
               El servidor está construido con Node.js y Express, siguiendo una
               estructura de capas clara que divide las responsabilidades desde
               la ruta hasta la base de datos.
             </p>
             <section className="about-project__structure-item-main-content">
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   Arquitectura MVC:
                 </p>
-                <p className="about-project__structure-subItem-desc theme-primary">
+                <p className="about-project__structure-subItem-desc">
                   Organización basada en Routes, Controllers y Models,
                   asegurando que cada componente tenga una responsabilidad
                   única, garantizando la escalabilidad y el mantenimiento del
@@ -160,20 +163,20 @@ function AboutProject() {
                 </p>
               </div>
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   Persistencia en SQL Nativo:
                 </p>
-                <p className="about-project__structure-subItem-desc theme-secondary">
+                <p className="about-project__structure-subItem-desc">
                   Interacción directa con MySQL/PostgreSQL mediante consultas
                   SQL puras, demostrando el manejo del lenguaje de bases de
                   datos sin abstracciones intermedias (ORMs).
                 </p>
               </div>
               <div className="about-project__structure-subItem">
-                <p className="about-project__structure-subItem-title">
+                <p className="about-project__structure-subItem-title theme-primary">
                   Seguridad en el Servidor:
                 </p>
-                <p className="about-project__structure-subItem-desc theme-primary">
+                <p className="about-project__structure-subItem-desc">
                   Implementación de bcrypt para el hashing de contraseñas y
                   middlewares de seguridad para proteger los endpoints de la
                   API.
@@ -432,6 +435,11 @@ function AboutProject() {
             className="about-project__resources-links-item"
             style={{ gridArea: "box1" }}
           >
+            <img
+              className="about-project__links-item-icon"
+              src={githubIcon}
+              alt="Logo de GitHub"
+            />
             <p className="about-project__links-item-title">
               Explorar Código Fuente
             </p>
@@ -442,7 +450,7 @@ function AboutProject() {
               </p>
               <button
                 onClick={goToGitHubProject}
-                className="about-project__links-button btn"
+                className="about-project__links-button"
               >
                 Ver respositorio
               </button>
@@ -452,6 +460,11 @@ function AboutProject() {
             className="about-project__resources-links-item"
             style={{ gridArea: "box2" }}
           >
+            <img
+              className="about-project__links-item-icon"
+              src={documentationIcon}
+              alt="Logo de GitHub"
+            />
             <p className="about-project__links-item-title">Guía de Endpoints</p>
             <div className="about-project__resources-item-info">
               <p className="about-project__links-item-paragraph">
@@ -459,10 +472,7 @@ function AboutProject() {
                 servidor, facilitando la comprensión del flujo de datos y la
                 integración.
               </p>
-              <button
-                onClick={goToGitHubProject}
-                className="about-project__links-button btn"
-              >
+              <button className="about-project__links-button">
                 Ver Documentación
               </button>
             </div>
@@ -471,6 +481,11 @@ function AboutProject() {
             className="about-project__resources-links-item"
             style={{ gridArea: "box3" }}
           >
+            <img
+              className="about-project__links-item-icon"
+              src={deploymentIcon}
+              alt="Logo de GitHub"
+            />
             <p className="about-project__links-item-title">
               Entorno de producción
             </p>
@@ -480,7 +495,7 @@ function AboutProject() {
                 disponible para ejecución en entorno local mediante la guía de
                 instalación del repositorio.
               </p>
-              <button className="about-project__links-button btn">
+              <button className="about-project__links-button">
                 Guía de instalación
               </button>
             </div>
