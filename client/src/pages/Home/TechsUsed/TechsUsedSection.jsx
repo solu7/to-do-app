@@ -1,5 +1,3 @@
-import "./assets/styles/TechsUsedSection.css";
-
 import { techsUsedFront } from "./assets/data/techsUsedFront";
 import TechsUsedFrontArticle from "./components/techsUsedFrontArticle";
 
