@@ -74,7 +74,7 @@ function Login() {
         <InputField
           inputIcon={emailIcon}
           inputTitle="E-mail"
-          placeholder="Enter your email"
+          placeholder="Introduce el correo de tu cuenta"
           type="email"
           inputName="email"
           register={register}
@@ -83,8 +83,8 @@ function Login() {
 
         <InputField
           inputIcon={passIcon}
-          inputTitle="Password"
-          placeholder="Enter your password"
+          inputTitle="Contraseña"
+          placeholder="¿Cual es tu contraseña?"
           type="password"
           inputName="password"
           register={register}
@@ -104,14 +104,13 @@ function Login() {
         )}
         <div className="login-buttons">
           <button type="submit" className="btn login-btn">
-            Log in
+            Iniciar sesion
           </button>
-          <p className="btn-secondary login-btn">Forgot your password?</p>
         </div>
       </form>
       <div className="login-back-home" role="button" onClick={goToHome}>
         <img src={homeIcon} alt="Icono de HomePage" />
-        <p>Back to Homepage</p>
+        <p>Volver a la pagina de inicio</p>
       </div>
     </div>
   );
