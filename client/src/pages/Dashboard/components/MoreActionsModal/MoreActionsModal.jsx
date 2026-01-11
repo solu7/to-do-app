@@ -6,7 +6,7 @@ import ConfirmDialog from "../../../../core/components/ConfirmDialog/ConfirmDial
 import logoutIcon from "../../assets/images/logout.png";
 import homeIcon from "../../assets/images/home.png";
 import gitHubIcon from "../../assets/images/github.png";
-import linkedInIcon from "../../assets/images/linkedIn.png";
+import linkedInIcon from "../../assets/images/linkedin.png";
 import { useNavigation } from "../../../../core/hooks/useNavigation";
 import { useExternalNavigation } from "../../../../core/hooks/useExternalNavigation";
 
