@@ -36,6 +36,9 @@
   margin: 0;
   padding: 0;
 }
+.navbar__link {
+  cursor: pointer;
+}
 .navbar__links a {
   font-family: "principal-font", sans-serif;
   color: var(--dark-grey);

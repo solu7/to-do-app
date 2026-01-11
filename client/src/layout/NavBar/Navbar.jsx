@@ -65,9 +65,9 @@ function Navbar() {
         className={`navbar__links ${isMenuOpen ? "active" : ""}`}
         id="navbar__menu"
       >
-        <p onClick={goToHome}>Inicio</p>
-        <p onClick={goToAboutMe}>Sobre mi</p>
-        <p onClick={goToAboutProject}>Sobre el proyecto</p>
+        <p className="navbar__link" onClick={goToHome}>Inicio</p>
+        <p className="navbar__link" onClick={goToAboutMe}>Sobre mi</p>
+        <p className="navbar__link" onClick={goToAboutProject}>Sobre el proyecto</p>
         <div className="navbar__auth-links">
           {isAuthenticated ? (
             <>
