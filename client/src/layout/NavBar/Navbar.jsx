@@ -1,4 +1,4 @@
-import "./navbar.css";
+import "./Navbar.css";
 import { useState } from "react";
 import { useUser } from "../../context/UserContext";
 import logo from "../../core/assets/icons/logo.png";
