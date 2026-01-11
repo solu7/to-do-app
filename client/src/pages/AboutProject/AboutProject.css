@@ -102,7 +102,8 @@
   gap: 40px;
   grid-template-areas:
     "title item2 item3"
-    "title item4 item5";
+    "title item4 item5"
+    "title item6 item7";
   padding: 0px 190px;
 }
 .about-project__functionality-heading {
@@ -230,10 +231,10 @@
 .about-project__resources-links {
   display: grid;
   justify-items: center;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
-    "title title"
-    "box1 box2";
+    "title title title"
+    "box1 box2 box3";
   row-gap: 70px;
   align-content: space-around;
 }
@@ -370,7 +371,8 @@
     grid-template-areas:
       "title title"
       "item2 item3"
-      "item4 item5";
+      "item4 item5"
+      "item6 item7";
   }
   .about-project__functionality-heading {
     flex-direction: column;
@@ -397,7 +399,8 @@
     grid-template-areas:
       "title"
       "box1"
-      "box2";
+      "box2"
+      "box3";
   }
   .bar-line {
     display: none;
