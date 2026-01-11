@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useUser } from "../../context/UserContext";
 import logo from "../../core/assets/icons/logo.png";
 import menuIcon from "../../core/assets/icons/menuIcon.png";
-import { Link } from "react-router-dom";
 import { loginAsGuest } from "../../features/auth/Login/loginService";
 import { useNavigation } from "../../core/hooks/useNavigation";
 

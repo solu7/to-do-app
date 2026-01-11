@@ -24,14 +24,12 @@ export default defineConfig([
     },
     rules: {
       "no-unused-vars": "warn",
-
       "react-refresh/only-export-components": "off",
-
       "no-useless-catch": "warn",
-
       "react-hooks/exhaustive-deps": "warn",
-
       "react-hooks/rules-of-hooks": "error",
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
     },
   },
 ]);

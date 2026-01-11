@@ -6,7 +6,6 @@ import {
   useCallback,
 } from "react";
 import { logoutUser } from "../features/auth/services/authServices";
-import SessionExpiryModal from "../core/components/SessionExpiryModal/SessionExpiryModal";
 import { useNavigation } from "../core/hooks/useNavigation";
 const UserContext = createContext();
 const API_URL = import.meta.env.VITE_API_URL;
@@ -41,7 +40,7 @@ export const UserProvider = ({ children }) => {
       setIsAuthenticated(false);
       window.location.href = "/";
     }
-  }, []);
+  }, [goToHome]);
 
   const authorizedFetch = useCallback(
     async (url, options = {}) => {
@@ -122,7 +121,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [fetchUserData]);
 
   return (
     <UserContext.Provider
