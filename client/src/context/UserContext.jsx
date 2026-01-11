@@ -7,37 +7,53 @@ import {
 } from "react";
 import { logoutUser } from "../features/auth/services/authServices";
 import SessionExpiryModal from "../core/components/SessionExpiryModal/SessionExpiryModal";
+import { useNavigation } from "../core/hooks/useNavigation";
 const UserContext = createContext();
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const UserProvider = ({ children }) => {
+  const { goToHome } = useNavigation();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sessionTimeRemaining, setSessionTimeRemaining] = useState(null);
   const [isExpiryModalOpen, setIsExpiryModalOpen] = useState(false);
 
-  const handleLogout = async () => {
-    const result = await logoutUser();
-    if (result.success) {
+  const handleLogout = useCallback(async () => {
+    console.log("DEBUG: Iniciando proceso de Logout real");
+
+    try {
+      const result = await logoutUser();
+
+      if (result.success) {
+        setUserData(null);
+        setIsAuthenticated(false);
+        setSessionTimeRemaining(null);
+        setIsExpiryModalOpen(false);
+
+        goToHome();
+      } else {
+        throw new Error(result.error || "Error desconocido en el servidor");
+      }
+    } catch (error) {
+      console.error("No se pudo cerrar la sesión:", error);
       setUserData(null);
-      setSessionTimeRemaining(null);
-      setIsExpiryModalOpen(false);
-      window.location.href = "/";
-    } else {
-      console.error("Error al cerrar sesión:", result.error);
+      setIsAuthenticated(false);
       window.location.href = "/";
     }
-  };
+  }, []);
 
   const authorizedFetch = useCallback(
     async (url, options = {}) => {
       const response = await fetch(url, { ...options, credentials: "include" });
-      if (response.status === 401) {
+
+      // Solo disparamos logout si el usuario creía estar logueado y recibe un 401
+      if (response.status === 401 && isAuthenticated) {
         handleLogout();
       }
       return response;
     },
-    [handleLogout]
+    [handleLogout, isAuthenticated]
   );
 
   const refreshTimer = useCallback(() => {
@@ -69,25 +85,31 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await authorizedFetch(`${API_URL}/users`);
-      if (response && response.ok) {
+      const response = await fetch(`${API_URL}/users`, {
+        credentials: "include",
+      });
+
+      if (response.ok) {
         const data = await response.json();
         setUserData(data);
+        setIsAuthenticated(true);
       } else {
-        setUserData({ username: "Invitado", email: "", is_guest: true });
+        setUserData(null);
+        setIsAuthenticated(false);
       }
     } catch (error) {
       console.error("Error de conexión:", error);
-      setUserData({ username: "Error", email: "" });
+      setIsAuthenticated(false);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
+    console.log("DEBUG: Reiniciando Intervalo");
     if (!userData?.tokenExp) return;
 
     window.addEventListener("focus", refreshTimer);
@@ -105,7 +127,15 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ userData, loading, fetchUserData, sessionTimeRemaining }}
+      value={{
+        userData,
+        isAuthenticated,
+        setIsAuthenticated,
+        loading,
+        fetchUserData,
+        sessionTimeRemaining,
+        handleLogout,
+      }}
     >
       {children}
       <SessionExpiryModal
@@ -119,5 +149,6 @@ export const UserProvider = ({ children }) => {
 };
 
 export const useUser = () => {
+  console.log("DEBUG: Renderizando UserProvider");
   return useContext(UserContext);
 };
