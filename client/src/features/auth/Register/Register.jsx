@@ -25,8 +25,8 @@ function Register() {
       <form onSubmit={handleSubmit}>
         <InputField
           inputIcon={userIcon}
-          inputTitle="Username"
-          placeholder="Pick your username"
+          inputTitle="Nombre de usuario"
+          placeholder="Elige tu nombre"
           type="text"
           inputName="username"
           register={register}
@@ -44,8 +44,8 @@ function Register() {
 
         <InputField
           inputIcon={passIcon}
-          inputTitle="Password"
-          placeholder="Place a secure password"
+          inputTitle="Contraseña"
+          placeholder="Elija una contraseña segura"
           type="password"
           inputName="password"
           register={register}
@@ -54,8 +54,8 @@ function Register() {
 
         <InputField
           inputIcon={passIcon}
-          inputTitle="Confirm password"
-          placeholder="Confirm your password"
+          inputTitle="Confirme su contraseña"
+          placeholder="Introduzca nuevamente su contraseña"
           type="password"
           inputName="confirmPassword"
           register={register}
@@ -65,20 +65,20 @@ function Register() {
         <StatusMessage message={success} type="success" />
         <div className="register-buttons">
           <button type="submit" className="btn register-btn">
-            Create account
+            Crear cuenta
           </button>
           <button
             className="btn-secondary register-btn-sec"
             role="button"
             onClick={goLoginPage}
           >
-            Already have an account? Log in
+            Ya tienes una cuenta? Inicia sesion
           </button>
         </div>
       </form>
       <div className="register-back-home" role="button" onClick={goToHome}>
         <img src={homeIcon} alt="Icono de HomePage" />
-        <p>Back to Homepage</p>
+        <p>Volver a la pagina de inicio</p>
       </div>
     </div>
   );
