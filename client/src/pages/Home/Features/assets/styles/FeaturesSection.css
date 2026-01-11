@@ -19,10 +19,3 @@
 .features-title {
   margin-top: 70px;
 }
-/*@media (width <= 1500px) {
-    .features-list {
-      flex-direction: column;
-      padding: 0px 50px;
-      align-items: center;
-    }
- }
