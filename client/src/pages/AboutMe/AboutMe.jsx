@@ -105,12 +105,12 @@ function AboutMe() {
               <p className="about-me__phone-number">+54 387 6 136 086</p>
             </div>
           </section>
+          <img
+            className="bg-deco"
+            src={decorationImg}
+            alt="Background Decoration"
+          />
         </section>
-        <img
-          className="bg-deco"
-          src={decorationImg}
-          alt="Background Decoration"
-        />
       </div>
       <section className="about-me__cta-links">
         <section className="about-me__cta-main">

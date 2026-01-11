@@ -14,13 +14,12 @@
   border: 3px solid var(--primary-color);
 }
 .feature-card-icon {
-  height: 60px;
-  width: 60px;
+  width: clamp(40px, 2vw + 32px, 60px);
   object-fit: contain;
 }
 .feature-card-title {
   font-family: "principal-font", sans-serif;
-  font-size: 20px;
+  font-size: clamp(0.875rem, 0.6vw + 0.75rem, 1.15rem);
   color: var(--grey);
   margin-top: 30px;
 }
@@ -30,4 +29,10 @@
   color: var(--light-grey);
   line-height: 30px;
   margin-top: 15px;
+  font-size: clamp(0.6875rem, 0.5vw + 0.55rem, 0.9rem);
+}
+@media (width <= 1500px) {
+  .feature-card {
+    height: auto;
+  }
 }

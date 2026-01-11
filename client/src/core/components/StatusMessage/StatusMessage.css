@@ -9,6 +9,7 @@
   font-family: "principal-font-bold";
   font-size: 15px;
   color: var(--grey);
+  text-align: center;
 }
 .success-message,
 .error-message span {
