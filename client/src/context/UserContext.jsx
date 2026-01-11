@@ -7,7 +7,7 @@ import {
 } from "react";
 import { logoutUser } from "../features/auth/services/authServices";
 import { useNavigation } from "../core/hooks/useNavigation";
-import SessionExpiryModal from "../core/components/SessionExpiryModal/SessionExpiryModal";
+import SessionExpiryModal from "../core/components/SessionExpiryModal/SessionExpiryModal.jsx";
 const UserContext = createContext();
 const API_URL = import.meta.env.VITE_API_URL;
 
