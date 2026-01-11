@@ -8,6 +8,7 @@ import {
 } from "../utils/taskDateFormatter";
 
 export const useTaskDueDate = (task) => {
+  const setTaskDueDate = useSetTaskDueDate();
   const { data: taskDueDateString, refetch: refetchTaskDate } = useTaskData(
     task,
     useGetTaskDueDate
@@ -47,7 +48,7 @@ export const useTaskDueDate = (task) => {
     }
     try {
       const formattedDate = date ? date.toISOString() : null;
-      await useSetTaskDueDate({ taskId, date: formattedDate });
+      await setTaskDueDate({ taskId, date: formattedDate });
     } catch (error) {
       console.error("Error al guardar la fecha:", error);
     }
