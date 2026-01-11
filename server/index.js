@@ -17,14 +17,24 @@ import prioritiesRoutes from "./priorities/priorities.routes.js";
 import { deleteExpiredGuestUsers } from "./users/user.model.js";
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 app.use(json());
 app.use(cookieParser());
+
+const allowedOrigins = ["http://localhost:5173", process.env.FRONTEND_URL];
+
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 app.use("/auth", authRoutes);
@@ -56,5 +66,5 @@ cron.schedule("*/30 * * * *", async () => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running in http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
