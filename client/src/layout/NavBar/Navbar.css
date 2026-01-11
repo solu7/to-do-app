@@ -28,6 +28,7 @@
   color: var(--primary-color);
 }
 .navbar__links {
+  font-family: "principal-font";
   display: flex;
   gap: 2.5rem;
   font-size: 13px;

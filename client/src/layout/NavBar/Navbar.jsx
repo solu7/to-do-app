@@ -10,8 +10,14 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { fetchUserData, isAuthenticated, setIsAuthenticated, handleLogout } =
     useUser();
-  const { goToDashboard, goToHome, goLoginPage, goRegisterPage } =
-    useNavigation();
+  const {
+    goToDashboard,
+    goToHome,
+    goToAboutMe,
+    goToAboutProject,
+    goLoginPage,
+    goRegisterPage,
+  } = useNavigation();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [error, setError] = useState(null);
 
@@ -59,9 +65,9 @@ function Navbar() {
         className={`navbar__links ${isMenuOpen ? "active" : ""}`}
         id="navbar__menu"
       >
-        <Link to="/">Inicio</Link>
-        <Link to="/about-me">Sobre mi</Link>
-        <Link to="/about-project">Sobre el proyecto</Link>
+        <p onClick={goToHome}>Inicio</p>
+        <p onClick={goToAboutMe}>Sobre mi</p>
+        <p onClick={goToAboutProject}>Sobre el proyecto</p>
         <div className="navbar__auth-links">
           {isAuthenticated ? (
             <>
