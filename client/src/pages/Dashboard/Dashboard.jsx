@@ -6,11 +6,9 @@ import DashboardContent from "./components/DashboardContent/DashboardContent";
 function Dashboard() {
   return (
     <TaskProvider>
-      <UserProvider>
         <FilterProvider>
           <DashboardContent />
         </FilterProvider>
-      </UserProvider>
     </TaskProvider>
   );
 }

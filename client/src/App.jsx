@@ -1,5 +1,6 @@
+import { UserProvider } from "./context/UserContext.jsx";
 import { Routes, Route } from "react-router-dom";
-
+import Navbar from "./layout/NavBar/Navbar.jsx";
 import HomePage from "./pages/Home/HomePage.jsx";
 import AboutMePage from "./pages/AboutMe/AboutMe.jsx";
 import AboutProjectPage from "./pages/AboutProject/AboutProject.jsx";
@@ -9,14 +10,16 @@ import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/about-me" element={<AboutMePage />} />
-      <Route path="/about-project" element={<AboutProjectPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/dashboard/*" element={<Dashboard />} />
-    </Routes>
+    <UserProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about-me" element={<AboutMePage />} />
+        <Route path="/about-project" element={<AboutProjectPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
+      </Routes>
+    </UserProvider>
   );
 }
 
