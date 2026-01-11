@@ -1,4 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
+import * as FramerMotion from "framer-motion";
+const { motion, AnimatePresence } = FramerMotion;
 import "./SessionExpiryModal.css";
 
 export default function SessionExpiryModal({
