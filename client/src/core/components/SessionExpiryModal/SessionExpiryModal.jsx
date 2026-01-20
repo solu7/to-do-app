@@ -2,12 +2,7 @@ import * as FramerMotion from "framer-motion";
 const { motion, AnimatePresence } = FramerMotion;
 import "./SessionExpiryModal.css";
 
-export default function SessionExpiryModal({
-  isOpen,
-  onExtend,
-  onLogout,
-  isGuest,
-}) {
+function SessionExpiryModal({ isOpen, onExtend, onLogout, isGuest }) {
   const content = isGuest
     ? {
         title: "¡Tu sesión de invitado va a expirar!",
@@ -52,3 +47,4 @@ export default function SessionExpiryModal({
     </AnimatePresence>
   );
 }
+export default SessionExpiryModal;
