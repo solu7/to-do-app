@@ -12,33 +12,25 @@ import NavItem from "./components/NavItem.jsx";
 import { navItems } from "./data/navItems.js";
 import UserPanel from "../../../../features/user/components/UserPanel.jsx";
 import { useUser } from "../../../../context/UserContext.jsx";
+import { SessionTimer } from "../../../../core/components/SessionTimer/SessionTimer.jsx";
 
-const formatTime = (totalSeconds) => {
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
+const contentVariants = {
+  open: { opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.3 } },
+  closed: { opacity: 0, x: -50, transition: { duration: 0.2 } },
+};
 
-  const pad = (num) => String(num).padStart(2, "0");
-
-  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+const arrowVariants = {
+  open: { rotate: 0, transition: { duration: 0.2 } },
+  closed: { rotate: 180, transition: { duration: 0.2 } },
 };
 
 function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
-  const { userData, sessionTimeRemaining } = useUser();
+  const { userData } = useUser();
   const isGuest = userData?.is_guest;
   const addTaskModal = useModal();
   const userPanelModal = useModal();
   const moreActionsModal = useModal();
 
-  const contentVariants = {
-    open: { opacity: 1, x: 0, transition: { delay: 0.2, duration: 0.3 } },
-    closed: { opacity: 0, x: -50, transition: { duration: 0.2 } },
-  };
-
-  const arrowVariants = {
-    open: { rotate: 0, transition: { duration: 0.2 } },
-    closed: { rotate: 180, transition: { duration: 0.2 } },
-  };
   return (
     <>
       <motion.nav
@@ -47,19 +39,20 @@ function Sidebar({ username, onClose, isOpen, openDashboardSidebar }) {
         initial={false}
         animate={isOpen ? "open" : "closed"}
       >
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isOpen && (
             <motion.div
+              key="sidebar-content"
               className="sidebar-content-wrapper"
               variants={contentVariants}
               initial="closed"
               animate="open"
               exit="closed"
             >
-              {isGuest && sessionTimeRemaining > 0 && (
+              {isGuest && (
                 <div className="sidebar__guest-timer">
                   <p>Sesión de invitado expira en: </p>
-                  <span>{formatTime(sessionTimeRemaining)}</span>
+                  <SessionTimer />
                 </div>
               )}
               <section className="sidebar-header">

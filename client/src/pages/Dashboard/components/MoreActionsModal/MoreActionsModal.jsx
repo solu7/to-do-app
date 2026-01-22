@@ -1,4 +1,6 @@
 import "./MoreActionsModal.css";
+import { motion, AnimatePresence } from "framer-motion";
+import ConfirmDialog from "../../../../core/components/ConfirmDialog/ConfirmDialog";
 import { useUser } from "../../../../context/UserContext";
 import { useModal } from "../../../../features/tasks/hooks/useModal";
 import logoutIcon from "../../assets/images/logout.png";

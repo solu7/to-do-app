@@ -1,6 +1,8 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export async function useGetTaskDueDate({ taskId }) {
+export async function getTaskDueDate({ taskId }) {
+  if (!taskId) return null;
+
   try {
     const response = await fetch(`${API_URL}/tasks/${taskId}/date`, {
       method: "GET",
@@ -10,7 +12,7 @@ export async function useGetTaskDueDate({ taskId }) {
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(
-        errorData.message || "Error al obtener la fecha de la tarea."
+        errorData.message || "Error al obtener la fecha de la tarea.",
       );
     }
 
@@ -21,7 +23,9 @@ export async function useGetTaskDueDate({ taskId }) {
   }
 }
 
-export async function useSetTaskDueDate({ taskId, date }) {
+export async function setTaskDueDate({ taskId, date }) {
+  if (!taskId) throw new Error("TaskId es requerido para guardar");
+
   try {
     const response = await fetch(`${API_URL}/tasks/${taskId}/date`, {
       method: "POST",
@@ -35,7 +39,7 @@ export async function useSetTaskDueDate({ taskId, date }) {
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(
-        errorData.message || "Error al guardar la fecha de la tarea."
+        errorData.message || "Error al guardar la fecha de la tarea.",
       );
     }
 

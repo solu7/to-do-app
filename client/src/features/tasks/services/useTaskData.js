@@ -28,7 +28,9 @@ export const useTaskData = (tasks, fetchFunction, externalTrigger = null) => {
           const data = await fetchFunction({ taskId: task.id });
           allData[task.id] = data;
         }
-        setDataByTaskId(allData);
+        if (JSON.stringify(allData) !== JSON.stringify(dataByTaskId)) {
+          setDataByTaskId(allData);
+        }
       } catch (err) {
         console.error("Error al obtener datos:", err);
       }
