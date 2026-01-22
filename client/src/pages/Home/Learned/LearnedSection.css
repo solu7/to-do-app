@@ -7,18 +7,22 @@
 .learned__list {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   font-family: "principal-font";
   font-size: 14px;
-  gap: 40px;
 }
 .learned__list ul {
+  width: 40%;
   display: flex;
   flex-direction: column;
   gap: 40px;
   padding-left: 10px;
   margin: 0;
   color: var(--grey);
+}
+.learned__list li::marker {
+  color: var(--primary-color);
+  font-size: 25px;
 }
 @media (width <= 1024px) {
   .learned {
@@ -28,5 +32,8 @@
 @media (width <= 768px) {
   .learned__list {
     flex-direction: column;
+  }
+  .learned__list ul {
+    width: 100%;
   }
 }
