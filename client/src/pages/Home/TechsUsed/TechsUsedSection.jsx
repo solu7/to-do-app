@@ -1,3 +1,4 @@
+import "./assets/styles/techsUsedSection.css";
 import { techsUsedFront } from "./assets/data/techsUsedFront";
 import TechsUsedFrontArticle from "./components/techsUsedFrontArticle";
 
