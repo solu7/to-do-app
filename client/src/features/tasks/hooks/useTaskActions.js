@@ -1,7 +1,9 @@
-import { updateTask as updateTaskService, deleteTask as deleteTaskService } from "../services/tasksServices";
+import {
+  updateTask as updateTaskService,
+  deleteTask as deleteTaskService,
+} from "../services/tasksServices";
 
 export const useTaskActions = (fetchTasks, onClose) => {
-
   const handleSaveTask = async (task, title, description) => {
     if (!task || !task.id) {
       console.error("No se puede guardar: Tarea no válida.");
@@ -37,7 +39,6 @@ export const useTaskActions = (fetchTasks, onClose) => {
       await deleteTaskService(taskId);
       fetchTasks();
       onClose();
-      console.log("Panel cerrado y tarea eliminada.");
     } catch (error) {
       console.error("Error al eliminar la tarea:", error);
     }

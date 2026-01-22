@@ -25,18 +25,24 @@ export async function loginUser({ email, password }) {
 }
 
 export async function loginAsGuest() {
-  const GUEST_EMAIL = "guest@taskapp.com";
-  const GUEST_PASSWORD = "Admin123!";
-
   try {
-    const data = await loginUser({
-      email: GUEST_EMAIL,
-      password: GUEST_PASSWORD,
+    const response = await fetch(`${API_URL}/auth/guest`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
-    return data;
+
+    const result = await response.json();
+
+    if (response.ok) {
+      return { success: true, data: result };
+    } else {
+      return {
+        success: false,
+        error: result.message || "Error al iniciar sesión como invitado.",
+      };
+    }
   } catch (error) {
-    throw new Error(
-      "No se pudo iniciar sesión como invitado. Verifique el usuario de prueba en el backend."
-    );
+    return { success: false, error: "Error de conexión con el servidor." };
   }
 }

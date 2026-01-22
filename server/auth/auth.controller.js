@@ -4,21 +4,30 @@ const { sign } = jsonwebtoken;
 import {
   findUserByUsername,
   findUserByEmail,
+  findUserById,
   createUser,
+  createGuestUser,
 } from "../users/user.model.js";
+
+import { initializeUserData } from "../tasks/task.model.js";
+
+const TEST_MS = 20000;
+const SESION_24HS_MS = 86400000;
+const SESION_2HS_MS = 7200000;
+const GRACE_10MIN_MS = 600000;
 
 export async function register(req, res) {
   const { username, email, password } = req.body;
   if (!email || !password || !username) {
-    return res
-      .status(400)
-      .json({ message: "All fields are required." });
+    return res.status(400).json({ message: "All fields are required." });
   }
 
   try {
     const existingUser = await findUserByEmail(email);
     if (existingUser.length > 0) {
-      return res.status(409).json({ message: "The email is already registered" });
+      return res
+        .status(409)
+        .json({ message: "The email is already registered" });
     }
 
     const existingUsername = await findUserByUsername(username);
@@ -29,7 +38,8 @@ export async function register(req, res) {
     }
 
     const hashedPassword = await hash(password, 10);
-    await createUser(username, email, hashedPassword);
+    const userId = await createUser(username, email, hashedPassword);
+    await initializeUserData(userId);
 
     res.status(201).json({ message: "Successfully registered user" });
   } catch (error) {
@@ -41,9 +51,7 @@ export async function register(req, res) {
 export async function login(req, res) {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "Email and password are required" });
+    return res.status(400).json({ message: "Email and password are required" });
   }
 
   try {
@@ -64,14 +72,14 @@ export async function login(req, res) {
     const token = sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "2h" }
+      { expiresIn: "1d" }
     );
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7200000,
+      secure: true,
+      sameSite: "none",
+      maxAge: SESION_24HS_MS + GRACE_10MIN_MS,
     });
 
     res.status(200).json({ message: "Inicio de sesión exitoso" });
@@ -79,4 +87,74 @@ export async function login(req, res) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
+}
+
+export async function loginAsGuest(req, res) {
+  try {
+    const userId = await createGuestUser();
+    await initializeUserData(userId);
+    const user = await findUserById(userId);
+
+    const token = sign(
+      { id: userId, isGuest: user.is_guest, username: user.username },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "2h",
+      }
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: SESION_2HS_MS + GRACE_10MIN_MS,
+    });
+
+    res.status(200).json({
+      message: "Inicio de sesión como invitado exitoso.",
+    });
+  } catch (error) {
+    console.error("Error al iniciar sesión como invitado:", error);
+    res
+      .status(500)
+      .json({ message: "Server error al crear sesión de invitado" });
+  }
+}
+
+export async function refreshSession(req, res) {
+  try {
+    const { id, isGuest, username, email } = req.user;
+
+    const payload = isGuest
+      ? { id, isGuest, username }
+      : { id, isGuest: false, email };
+
+    const expiresIn = isGuest ? "2h" : "1d";
+    const maxAge = isGuest
+      ? SESION_2HS_MS + GRACE_10MIN_MS
+      : SESION_24HS_MS + GRACE_10MIN_MS;
+
+    const newToken = sign(payload, process.env.JWT_SECRET, { expiresIn });
+
+    res.cookie("token", newToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: maxAge,
+    });
+
+    res.status(200).json({ message: "Sesión renovada" });
+  } catch (error) {
+    res.status(500).json({ message: "Error al renovar sesión" });
+  }
+}
+
+export async function logout(req, res) {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+
+  res.status(200).json({ message: "Sesión cerrada correctamente" });
 }

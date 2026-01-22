@@ -1,43 +1,28 @@
-import "./InboxView.css";
-import { useAddTaskModal } from "../../hooks/useAddTaskModal.js";
+import { useModal } from "../../hooks/useModal.js";
+import { useTasks } from "../../../../context/TaskContext";
 import TaskCard from "../../TaskCard.jsx";
 import AddTaskButton from "../../components/AddTaskButton/AddTaskButton.jsx";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.jsx";
 import cleanIcon from "../../../../pages/Dashboard/assets/images/cleanIcon.png";
-import { getTagsInTask } from "../../../filters/tags/services/tagsServices.js";
-import { getCategoriesInTask } from "../../../filters/categories/services/categoriesServices.js";
-import { useTasks } from "../../../../context/TaskContext.jsx";
-import { useTaskData } from "../../services/useTaskData.js";
-import { getTaskPriority } from "../../../filters/priorities/services/prioritiesServices.js";
 import inboxIcon from "../../../../pages/Dashboard/assets/images/inboxIcon.png";
 
 function Inbox({ onTaskClick }) {
-  const { addTaskModalIsOpen, openAddTaskModal, closeAddTaskModal } =
-    useAddTaskModal();
+  const addTaskModal = useModal();
   const { inboxTasks } = useTasks();
-  const { data: tagsInTask } = useTaskData(inboxTasks, getTagsInTask);
-  const { data: categoriesInTask } = useTaskData(
-    inboxTasks,
-    getCategoriesInTask
-  );
-  const { data: priorityInTask } = useTaskData(inboxTasks, getTaskPriority);
   return (
-    <div
-      className={
-        inboxTasks.length > 0 ? "inbox__container" : "inbox__container no-tasks"
-      }
-    >
-      <section className="inbox__header">
-        <h3 className="inbox__header-title">
-          Bandeja <span>de entrada</span>
+    <div className="task-view__container">
+      <section className="task-view__header">
+        <h3 className="task-view__header-title">
+          Bandeja{" "}
+          <span className="task-view__header-title--highlight">de entrada</span>
         </h3>
         <img
-          className="inbox__header-icon"
+          className="task-view__header-icon"
           src={inboxIcon}
           alt="Icono de bandeja de entrada"
         />
       </section>
-      <section className="inbox__tasks">
+      <section className="task-view__tasks">
         {inboxTasks.length > 0 ? (
           inboxTasks.map((task) => (
             <TaskCard
@@ -45,14 +30,15 @@ function Inbox({ onTaskClick }) {
               title={task.title}
               description={task.description}
               onClick={() => onTaskClick(task.id)}
-              tagsInTask={tagsInTask[task.id] || []}
-              categoriesInTask={categoriesInTask[task.id] || []}
-              priority={priorityInTask[task.id]?.priority ?? 0}
+              tagsInTask={task.tags}
+              categoriesInTask={task.categories}
+              priority={task.priority}
+              dueDate={task.due_date}
             />
           ))
         ) : (
           <section className="no-tasks__message">
-            <h2>No tenes nada para hoy</h2>
+            <h2>No tienes tareas disponibles</h2>
             <img
               className="no-tasks__icon"
               src={cleanIcon}
@@ -61,12 +47,9 @@ function Inbox({ onTaskClick }) {
           </section>
         )}
       </section>
-      <AddTaskButton onClick={openAddTaskModal} />
+      <AddTaskButton onClick={addTaskModal.open} />
 
-      <AddTaskModal
-        onClose={closeAddTaskModal}
-        AddTaskModalIsOpen={addTaskModalIsOpen}
-      />
+      <AddTaskModal onClose={addTaskModal.close} isOpen={addTaskModal.isOpen} />
     </div>
   );
 }

@@ -1,0 +1,69 @@
+.create-filter-modal__container {
+  width: 350px;
+  background-color: var(--light-blue);
+  border: solid 2px var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 9px rgb(109 109 109 / 16%);
+}
+
+.create-filter-modal__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.create-filter-modal__header-text {
+  color: var(--ultra-light-grey);
+  font-family: "principal-font";
+  font-size: 12px;
+}
+.create-filter-modal__close-icon {
+  height: 20px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+.create-filter-modal__close-icon:hover {
+  transform: scale(1.1);
+}
+.create-filter-modal__container hr {
+  margin: -10px 0px 0px;
+}
+
+.create-filter-modal__title {
+  font-size: 15px;
+  font-family: "principal-font";
+  color: var(--grey);
+  text-align: center;
+}
+.create-filter-modal__title span {
+  color: var(--primary-color);
+}
+
+.create-filter-modal__input-container {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.create-filter-modal__input-name {
+  font-size: 13px;
+  font-family: "principal-font-bold";
+  color: var(--dark-grey);
+}
+.create-filter-modal__input {
+  padding: 8px;
+  border: 1px solid var(--ultra-light-grey);
+  border-radius: 5px;
+  font-family: "principal-font";
+  font-size: 13px;
+  color: var(--grey);
+  outline: none;
+}
+.create-filter-modal__input:focus {
+  border: 1px solid var(--primary-color);
+}

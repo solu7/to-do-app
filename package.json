@@ -6,7 +6,15 @@
     "client",
     "server"
   ],
+  "scripts": {
+    "server": "cd server && node --watch index.js",
+    "client": "npm run dev -w client",
+    "start": "concurrently -k -n \"BACK,FRONT\" -c \"yellow.bold,cyan.bold\" \"npm run server\" \"npm run client\""
+  },
   "dependencies": {
     "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

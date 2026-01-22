@@ -1,17 +1,25 @@
 import "./DashboardContent.css";
+import "react-datepicker/dist/react-datepicker.css";
+import "../../../../styles/utility.css";
+import "../../../../styles/modals.css";
+import "../../../../features/tasks/styles/TaskViewLayout.css";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDashboardSidebar } from "../../components/Sidebar/hooks/useDashboardSidebar.js";
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import InboxView from "../../../../features/tasks/views/Inbox/InboxView.jsx";
+import TodayView from "../../../../features/tasks/views/Today/TodayView.jsx";
+import UpcomingView from "../../../../features/tasks/views/Upcoming/UpcomingView.jsx";
 import CompletedView from "../../../../features/tasks/views/Completed/CompletedView.jsx";
 import FiltersView from "../../../../features/tasks/views/Filters/FiltersView.jsx";
 import FilteredTasksView from "../../../../features/tasks/views/Filtered/FilteredTasksView.jsx";
 import EditPanel from "../EditPanel/EditPanel.jsx";
 import { useTaskEditPanel } from "../Sidebar/hooks/useTaskEditPanel.js";
 import { useTasks } from "../../../../context/TaskContext.jsx";
-const API_URL = import.meta.env.VITE_API_URL;
+import { useUser } from "../../../../context/UserContext.jsx";
+
 function DashboardContent() {
+  const { userData } = useUser();
   const {
     dashboardSidebarIsOpen,
     openDashboardSidebar,
@@ -19,7 +27,6 @@ function DashboardContent() {
   } = useDashboardSidebar();
   const { taskEditPanelIsOpen, openTaskEditPanel, closeTaskEditPanel } =
     useTaskEditPanel();
-  const [username, setUsername] = useState("");
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const { getTaskById } = useTasks();
   const selectedTask = selectedTaskId ? getTaskById(selectedTaskId) : null;
@@ -34,54 +41,55 @@ function DashboardContent() {
       closeTaskEditPanel();
     }
   };
-  const getLoggedUsername = async () => {
-    try {
-      const response = await fetch(`${API_URL}/users`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUsername(data.username);
-      }
-    } catch (error) {
-      console.error("Error de conexión:", error);
-      setUsername("Invitado");
-    }
-  };
   useEffect(() => {
-    getLoggedUsername();
     openDashboardSidebar();
   }, []);
-
+  const isMobile = window.innerWidth <= 1024;
   return (
-    <div className="dashboard">
+    <div
+      className={`dashboard ${dashboardSidebarIsOpen ? "sidebar-open" : ""} ${
+        taskEditPanelIsOpen ? "panel-open" : ""
+      }`}
+    >
+      {isMobile && (dashboardSidebarIsOpen || taskEditPanelIsOpen) && (
+        <div
+          className="dashboard__overlay"
+          onClick={() => {
+            closeDashboardSidebar();
+            closeTaskEditPanel();
+          }}
+        />
+      )}
       <Sidebar
         isOpen={dashboardSidebarIsOpen}
         onClose={closeDashboardSidebar}
-        username={username}
+        username={userData?.username || "Invitado"}
         openDashboardSidebar={openDashboardSidebar}
       />
-      <div className="dashboard__view">
-      <Routes>
-        <Route
-          path="/"
-          element={<InboxView onTaskClick={handleTaskSelection} />}
-        />
-        <Route
-          path="/completed"
-          element={<CompletedView onTaskClick={handleTaskSelection} />}
-        />
-        <Route path="/filters" element={<FiltersView />} />
-        <Route
-          path="/filtered-tasks"
-          element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
-        />
-      </Routes>
+      <div className="dashboard__view-container">
+        <Routes>
+          <Route
+            path="/"
+            element={<InboxView onTaskClick={handleTaskSelection} />}
+          />
+          <Route
+            path="/today"
+            element={<TodayView onTaskClick={handleTaskSelection} />}
+          />
+          <Route
+            path="/upcoming"
+            element={<UpcomingView onTaskClick={handleTaskSelection} />}
+          />
+          <Route
+            path="/completed"
+            element={<CompletedView onTaskClick={handleTaskSelection} />}
+          />
+          <Route path="/filters" element={<FiltersView />} />
+          <Route
+            path="/filtered-tasks"
+            element={<FilteredTasksView onTaskClick={handleTaskSelection} />}
+          />
+        </Routes>
       </div>
       <EditPanel
         isOpen={taskEditPanelIsOpen}

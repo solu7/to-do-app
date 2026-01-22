@@ -1,0 +1,21 @@
+.download-cv {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.download-cv:hover {
+  transform: scale(0.95);
+}
+.download-cv__btn {
+  color: var(--light-grey);
+  font-family: "principal-font-bold";
+  font-size: 13px;
+}
+.download-cv__icon {
+  height: 20px;
+  object-fit: contain;
+}

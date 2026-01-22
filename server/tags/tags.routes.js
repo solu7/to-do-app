@@ -1,16 +1,25 @@
 import { Router } from "express";
 const router = Router();
-import verifyToken from "../auth/auth.middleware.js";
-import { createTag, assignTagToTask, removeTagFromTask, getTagsInTask, getTagsByUserId } from "./tag.controller.js";
+import { verifyOnlyToken } from "../auth/auth.middleware.js";
+import {
+  createTag,
+  deleteTag,
+  assignTagToTask,
+  removeTagFromTask,
+  getTagsInTask,
+  getTagsByUserId,
+} from "./tag.controller.js";
 
-router.get("/", verifyToken, getTagsByUserId);
+router.get("/", verifyOnlyToken, getTagsByUserId);
 
-router.get("/:taskId", verifyToken, getTagsInTask);
+router.get("/:taskId", verifyOnlyToken, getTagsInTask);
 
-router.post("/", verifyToken, createTag);
+router.post("/", verifyOnlyToken, createTag);
 
-router.post("/:taskId", verifyToken, assignTagToTask);
+router.post("/:taskId", verifyOnlyToken, assignTagToTask);
 
-router.delete("/:taskId", verifyToken, removeTagFromTask);
+router.delete("/:taskId", verifyOnlyToken, removeTagFromTask);
+
+router.delete("/resource/:tagId", verifyOnlyToken, deleteTag);
 
 export default router;

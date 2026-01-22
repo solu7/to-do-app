@@ -1,5 +1,54 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+export async function createCategory({ name }) {
+  try {
+    const response = await fetch(`${API_URL}/categories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name }),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al crear la categoría.");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en createCategory service:", error);
+    throw error;
+  }
+}
+
+export async function deleteCategory(categoryId) {
+  try {
+    const response = await fetch(
+      `${API_URL}/categories/resource/${categoryId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message || "Error al eliminar la categoría permanentemente."
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en deleteCategory service:", error);
+    throw error;
+  }
+}
+
 export async function getAllCategories() {
   try {
     const response = await fetch(`${API_URL}/categories`, {

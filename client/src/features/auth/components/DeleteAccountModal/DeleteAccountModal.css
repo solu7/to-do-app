@@ -1,0 +1,69 @@
+.delete-account-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 26%;
+}
+
+.delete-account-modal__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.delete-account-modal__header-title {
+  color: var(--ultra-light-grey);
+  font-family: "principal-font";
+  font-size: 11px;
+}
+.delete-account-modal__close-icon {
+  height: 20px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+.delete-account-modal__close-icon:hover {
+  transform: scale(1.1);
+}
+
+.delete-account-modal hr {
+  margin: -10px 0px 0px;
+}
+
+.delete-account-modal__info {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  color: var(--grey);
+}
+.delete-account-modal__info span {
+  color: var(--primary-color);
+}
+.delete-account-modal__info p:last-child {
+  color: var(--grey);
+  font-family: "principal-font";
+  font-size: 11px;
+}
+
+.delete-account-modal__input-container {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.delete-account-modal__delete-condition {
+  font-size: 9px;
+  color: var(--light-grey);
+  font-family: "principal-font";
+}
+
+@media (max-width: 768px) {
+  .delete-account-modal {
+    width: 75%;
+  }
+}

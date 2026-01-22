@@ -9,11 +9,13 @@ import emailIcon from "./assets/images/email.png";
 import decorationImg from "./assets/images/decoration.png";
 import githubIcon from "./assets/images/github.png";
 import linkedinIcon from "./assets/images/linkedin.png";
-import downloadIcon from "./assets/images/download.png";
 import pfpDeco from "./assets/images/pfpDeco.png";
-import { useNavigation } from "../../core/hooks/useNavigation.js";
+import { useExternalNavigation } from "../../core/hooks/useExternalNavigation.js";
+import DownloadCV from "../../core/components/DownloadCV/DownloadCV.jsx";
+
 function AboutMe() {
-  const { goToExternalLink } = useNavigation();
+  const { goToGitHubProfile, goToLinkedIn, goToGitHubRepos } =
+    useExternalNavigation();
   return (
     <div className="about-me">
       <Navbar />
@@ -103,16 +105,16 @@ function AboutMe() {
               <p className="about-me__phone-number">+54 387 6 136 086</p>
             </div>
           </section>
+          <img
+            className="bg-deco"
+            src={decorationImg}
+            alt="Background Decoration"
+          />
         </section>
-        <img
-          className="bg-deco"
-          src={decorationImg}
-          alt="Background Decoration"
-        />
       </div>
       <section className="about-me__cta-links">
         <section className="about-me__cta-main">
-          <div className="about-me__cta-button">
+          <div className="about-me__cta-button" onClick={goToGitHubRepos}>
             <p>Portafolio</p>
           </div>
           <div className="about-me__cta-socials">
@@ -120,26 +122,19 @@ function AboutMe() {
               className="about-me__cta-icon"
               role="button"
               src={githubIcon}
-              onClick={() => goToExternalLink('https://github.com/solu7')}
+              onClick={goToGitHubProfile}
               alt="GitHub Logo"
             />
             <img
               className="about-me__cta-icon"
               role="button"
               src={linkedinIcon}
-              onClick={() => goToExternalLink('https://www.linkedin.com/in/emiliano-agustin-salva-563b2a300')}
+              onClick={goToLinkedIn}
               alt="LinkedIn Logo"
             />
           </div>
         </section>
-        <section className="about-me__download-cv">
-          <p className="about-me__download-button">Descargar CV</p>
-          <img
-            className="about-me__download-icon"
-            src={downloadIcon}
-            alt="Download Icon"
-          />
-        </section>
+        <DownloadCV />
       </section>
     </div>
   );

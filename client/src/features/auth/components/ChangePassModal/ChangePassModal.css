@@ -1,0 +1,62 @@
+.change-pass-modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 20%;
+}
+
+.change-pass-modal__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.change-pass-modal__header-title {
+  color: var(--ultra-light-grey);
+  font-family: "principal-font";
+  font-size: 11px;
+}
+.change-pass-modal__close-icon {
+  height: 20px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+.change-pass-modal__close-icon:hover {
+  transform: scale(1.1);
+}
+
+.change-pass-modal hr {
+  margin: -10px 0px 0px;
+}
+
+.change-pass-modal__input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: none;
+  color: var(--dark-grey);
+}
+.change-pass-modal__input-container input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--ultra-light-grey);
+  color: var(--grey);
+}
+.change-pass-modal__input-container input:focus {
+  border: 2px solid var(--primary-color);
+  outline: none;
+}
+
+.change-pass-modal .btn {
+  padding: 8px;
+}
+
+@media (max-width: 768px) {
+  .change-pass-modal {
+    width: 75%;
+  }
+}
