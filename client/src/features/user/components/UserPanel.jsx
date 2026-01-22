@@ -1,4 +1,5 @@
 import "./UserPanel.css";
+import { motion, AnimatePresence } from "framer-motion";
 import userPfp from "../assets/images/userPfp.png";
 import nameIcon from "../assets/images/name.png";
 import emailIcon from "../assets/images/email.png";

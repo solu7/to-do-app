@@ -1,5 +1,4 @@
-import * as FramerMotion from "framer-motion";
-const { motion, AnimatePresence } = FramerMotion;
+import { motion, AnimatePresence } from "framer-motion";
 import "./SessionExpiryModal.css";
 
 function SessionExpiryModal({ isOpen, onExtend, onLogout, isGuest }) {

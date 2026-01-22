@@ -49,37 +49,8 @@ export const UserProvider = ({ children }) => {
       }
       return response;
     },
-    [handleLogout, isAuthenticated]
+    [handleLogout, isAuthenticated],
   );
-
-  const refreshTimer = useCallback(() => {
-    if (!userData?.tokenExp) return;
-    const remaining = Math.floor(
-      (userData.tokenExp * 1000 - Date.now()) / 1000
-    );
-    setSessionTimeRemaining(remaining);
-    if (remaining <= 30 && remaining > 0 && !isExpiryModalOpen) {
-      setIsExpiryModalOpen(true);
-    }
-    if (remaining <= -600) {
-      handleLogout();
-    }
-  }, [userData, isExpiryModalOpen, handleLogout]);
-
-  const extendSession = async () => {
-    try {
-      const response = await authorizedFetch(`${API_URL}/auth/refresh`, {
-        method: "POST",
-        credentials: "include",
-      });
-      if (response.ok) {
-        await fetchUserData();
-        setIsExpiryModalOpen(false);
-      }
-    } catch (error) {
-      console.error("Error renovando sesión", error);
-    }
-  };
 
   const fetchUserData = useCallback(async () => {
     setLoading(true);
@@ -104,11 +75,46 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  const refreshTimer = useCallback(() => {
+    if (!userData?.tokenExp) return;
+
+    const remaining = Math.floor(
+      (userData.tokenExp * 1000 - Date.now()) / 1000,
+    );
+    if (remaining <= 30 && remaining > 0) {
+      setIsExpiryModalOpen((prevOpen) => {
+        if (!prevOpen) {
+          setSessionTimeRemaining(remaining);
+          return true;
+        }
+        return prevOpen;
+      });
+    }
+    if (remaining <= -600) {
+      handleLogout();
+    }
+  }, [userData?.tokenExp, handleLogout]);
+
+  const extendSession = async () => {
+    try {
+      const response = await authorizedFetch(`${API_URL}/auth/refresh`, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (response.ok) {
+        await fetchUserData();
+        setIsExpiryModalOpen(false);
+      }
+    } catch (error) {
+      console.error("Error renovando sesión", error);
+    }
+  };
+
   useEffect(() => {
     if (!userData?.tokenExp) return;
 
     window.addEventListener("focus", refreshTimer);
-    const interval = setInterval(refreshTimer, 1000);
+    const interval = setInterval(refreshTimer, 5000);
 
     return () => {
       window.removeEventListener("focus", refreshTimer);
