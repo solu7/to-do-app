@@ -1,5 +1,5 @@
 import "./UserPanel.css";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import userPfp from "../assets/images/userPfp.png";
 import nameIcon from "../assets/images/name.png";
 import emailIcon from "../assets/images/email.png";
@@ -10,9 +10,6 @@ import { useUser } from "../../../context/UserContext";
 import { useState, useEffect } from "react";
 import { useUserActions } from "../hooks/useUserActions";
 import { useModal } from "../../tasks/hooks/useModal.js";
-import ChangePassModal from "../../auth/components/ChangePassModal/ChangePassModal.jsx";
-import DeleteAccountModal from "../../auth/components/DeleteAccountModal/DeleteAccountModal.jsx";
-import StatusMessage from "../../../core/components/StatusMessage/StatusMessage.jsx";
 
 function UserPanel({ isOpen, onClose }) {
   const changePassModal = useModal();

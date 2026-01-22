@@ -6,53 +6,94 @@ import {
   useCallback,
 } from "react";
 import { logoutUser } from "../features/auth/services/authServices";
-import SessionExpiryModal from "../core/components/SessionExpiryModal/SessionExpiryModal";
+import { useNavigation } from "../core/hooks/useNavigation";
 const UserContext = createContext();
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const UserProvider = ({ children }) => {
+  const { goToHome } = useNavigation();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sessionTimeRemaining, setSessionTimeRemaining] = useState(null);
   const [isExpiryModalOpen, setIsExpiryModalOpen] = useState(false);
 
-  const handleLogout = async () => {
-    const result = await logoutUser();
-    if (result.success) {
+  const handleLogout = useCallback(async () => {
+    try {
+      const result = await logoutUser();
+
+      if (result.success) {
+        setUserData(null);
+        setIsAuthenticated(false);
+        setSessionTimeRemaining(null);
+        setIsExpiryModalOpen(false);
+
+        goToHome();
+      } else {
+        throw new Error(result.error || "Error desconocido en el servidor");
+      }
+    } catch (error) {
+      console.error("No se pudo cerrar la sesión:", error);
       setUserData(null);
-      setSessionTimeRemaining(null);
-      setIsExpiryModalOpen(false);
-      window.location.href = "/";
-    } else {
-      console.error("Error al cerrar sesión:", result.error);
+      setIsAuthenticated(false);
       window.location.href = "/";
     }
-  };
+  }, [goToHome]);
 
   const authorizedFetch = useCallback(
     async (url, options = {}) => {
       const response = await fetch(url, { ...options, credentials: "include" });
-      if (response.status === 401) {
+
+      if (response.status === 401 && isAuthenticated) {
         handleLogout();
       }
       return response;
     },
-    [handleLogout]
+    [handleLogout, isAuthenticated],
   );
+
+  const fetchUserData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/users`, {
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data);
+        setIsAuthenticated(true);
+      } else {
+        setUserData(null);
+        setIsAuthenticated(false);
+      }
+    } catch (error) {
+      console.error("Error de conexión:", error);
+      setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const refreshTimer = useCallback(() => {
     if (!userData?.tokenExp) return;
+
     const remaining = Math.floor(
-      (userData.tokenExp * 1000 - Date.now()) / 1000
+      (userData.tokenExp * 1000 - Date.now()) / 1000,
     );
-    setSessionTimeRemaining(remaining);
-    if (remaining <= 30 && remaining > 0 && !isExpiryModalOpen) {
-      setIsExpiryModalOpen(true);
+    if (remaining <= 30 && remaining > 0) {
+      setIsExpiryModalOpen((prevOpen) => {
+        if (!prevOpen) {
+          setSessionTimeRemaining(remaining);
+          return true;
+        }
+        return prevOpen;
+      });
     }
     if (remaining <= -600) {
       handleLogout();
     }
-  }, [userData, isExpiryModalOpen, handleLogout]);
+  }, [userData?.tokenExp, handleLogout]);
 
   const extendSession = async () => {
     try {
@@ -69,29 +110,11 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const fetchUserData = async () => {
-    setLoading(true);
-    try {
-      const response = await authorizedFetch(`${API_URL}/users`);
-      if (response && response.ok) {
-        const data = await response.json();
-        setUserData(data);
-      } else {
-        setUserData({ username: "Invitado", email: "", is_guest: true });
-      }
-    } catch (error) {
-      console.error("Error de conexión:", error);
-      setUserData({ username: "Error", email: "" });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (!userData?.tokenExp) return;
 
     window.addEventListener("focus", refreshTimer);
-    const interval = setInterval(refreshTimer, 1000);
+    const interval = setInterval(refreshTimer, 5000);
 
     return () => {
       window.removeEventListener("focus", refreshTimer);
@@ -101,19 +124,23 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [fetchUserData]);
 
   return (
     <UserContext.Provider
-      value={{ userData, loading, fetchUserData, sessionTimeRemaining }}
+      value={{
+        userData,
+        isAuthenticated,
+        setIsAuthenticated,
+        loading,
+        fetchUserData,
+        sessionTimeRemaining,
+        handleLogout,
+        extendSession,
+        isExpiryModalOpen,
+      }}
     >
       {children}
-      <SessionExpiryModal
-        isOpen={isExpiryModalOpen}
-        onExtend={extendSession}
-        onLogout={handleLogout}
-        isGuest={userData?.is_guest}
-      />
     </UserContext.Provider>
   );
 };

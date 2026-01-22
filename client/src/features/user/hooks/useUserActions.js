@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateUsernameService } from "../services/UserServices";
+import { updateUsernameService } from "../services/userServices.js";
 import { useUser } from "../../../context/UserContext";
 
 export const useUserActions = () => {
@@ -36,7 +36,7 @@ export const useUserActions = () => {
         setIsLoading(false);
         return false;
       }
-    } catch (err) {
+    } catch {
       setError("Fallo al conectar con el servicio de actualización.");
       setIsLoading(false);
       return false;

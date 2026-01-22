@@ -1,16 +1,26 @@
-import "./navbar.css";
+import "./Navbar.css";
 import { useState } from "react";
+import { useUser } from "../../context/UserContext";
 import logo from "../../core/assets/icons/logo.png";
 import menuIcon from "../../core/assets/icons/menuIcon.png";
-import { Link } from "react-router-dom";
 import { loginAsGuest } from "../../features/auth/Login/loginService";
 import { useNavigation } from "../../core/hooks/useNavigation";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { goToDashboard, goToHome } = useNavigation();
+  const { fetchUserData, isAuthenticated, setIsAuthenticated, handleLogout } =
+    useUser();
+  const {
+    goToDashboard,
+    goToHome,
+    goToAboutMe,
+    goToAboutProject,
+    goLoginPage,
+    goRegisterPage,
+  } = useNavigation();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [error, setError] = useState(null);
+
   const handleGuestLogin = async () => {
     if (isLoggingIn) return;
 
@@ -19,6 +29,8 @@ function Navbar() {
 
     try {
       await loginAsGuest();
+      await fetchUserData();
+      setIsAuthenticated(true);
       goToDashboard();
     } catch (err) {
       setError(err.message);
@@ -53,19 +65,32 @@ function Navbar() {
         className={`navbar__links ${isMenuOpen ? "active" : ""}`}
         id="navbar__menu"
       >
-        <Link to="/">Inicio</Link>
-        <Link to="/about-me">Sobre mi</Link>
-        <Link to="/about-project">Sobre el proyecto</Link>
-        <Link onClick={handleGuestLogin} disabled={isLoggingIn}>
-          {isLoggingIn ? "Iniciando..." : "Iniciar como invitado"}
-        </Link>
+        <p className="navbar__link" onClick={goToHome}>Inicio</p>
+        <p className="navbar__link" onClick={goToAboutMe}>Sobre mi</p>
+        <p className="navbar__link" onClick={goToAboutProject}>Sobre el proyecto</p>
         <div className="navbar__auth-links">
-          <Link to="/login">
-            <button className="btn">Iniciar Sesion</button>
-          </Link>
-          <Link to="/register">
-            <button className="btn-secondary">Registrarse</button>
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <button className="btn" onClick={goToDashboard}>
+                Volver al Dashboard
+              </button>
+              <button className="btn-secondary" onClick={handleLogout}>
+                Cerrar Sesión
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="btn" onClick={handleGuestLogin}>
+                Iniciar como invitado
+              </button>
+              <button className="btn" onClick={goLoginPage}>
+                Iniciar Sesion
+              </button>
+              <button className="btn-secondary" onClick={goRegisterPage}>
+                Registrarse
+              </button>
+            </>
+          )}
         </div>
       </div>
       {error && <p className="error-message">{error}</p>}

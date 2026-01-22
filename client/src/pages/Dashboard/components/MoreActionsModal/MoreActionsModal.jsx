@@ -1,18 +1,17 @@
 import "./MoreActionsModal.css";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import ConfirmDialog from "../../../../core/components/ConfirmDialog/ConfirmDialog";
 import { useUser } from "../../../../context/UserContext";
 import { useModal } from "../../../../features/tasks/hooks/useModal";
-import ConfirmDialog from "../../../../core/components/ConfirmDialog/ConfirmDialog";
 import logoutIcon from "../../assets/images/logout.png";
 import homeIcon from "../../assets/images/home.png";
-import gitHubIcon from "../../assets/images/gitHub.png";
-import linkedInIcon from "../../assets/images/linkedIn.png";
+import gitHubIcon from "../../assets/images/github.png";
+import linkedInIcon from "../../assets/images/linkedin.png";
 import { useNavigation } from "../../../../core/hooks/useNavigation";
 import { useExternalNavigation } from "../../../../core/hooks/useExternalNavigation";
-import { logoutUser } from "../../../../features/auth/services/authServices";
 
 function MoreActionsModal({ isOpen, onClose }) {
-  const { userData } = useUser();
+  const { userData, handleLogout } = useUser();
   const confirmLogoutModal = useModal();
   const { goToGitHubProject, goToLinkedIn } = useExternalNavigation();
   const { goToHome } = useNavigation();
@@ -22,17 +21,6 @@ function MoreActionsModal({ isOpen, onClose }) {
   const logoutMessage = isGuest
     ? "¿Estas seguro que deseas cerrar sesion? Se perderán todos los datos y no podrás volver a iniciar sesión en esta cuenta."
     : "¿Estás seguro de que deseas cerrar sesión?";
-
-  const handleLogoutConfirm = async () => {
-    const result = await logoutUser();
-
-    if (result.success) {
-      goToHome();
-    } else {
-      console.error(result.error);
-      alert("No se pudo cerrar la sesión: " + result.error);
-    }
-  };
   return (
     <>
       <AnimatePresence>
@@ -91,7 +79,7 @@ function MoreActionsModal({ isOpen, onClose }) {
         <ConfirmDialog
           isOpen={confirmLogoutModal.isOpen}
           onClose={confirmLogoutModal.close}
-          onConfirm={handleLogoutConfirm}
+          onConfirm={handleLogout}
           title={logoutTitle}
           message={logoutMessage}
           confirmText="Cerrar sesión"

@@ -13,6 +13,7 @@ export const useNavigation = () => {
   return {
     goToHome: () => navigate("/"),
     goToAboutMe: () => navigate("/about-me"),
+    goToAboutProject: () => navigate("/about-project"),
     goRegisterPage: () => navigate("/register"),
     goLoginPage: () => navigate("/login"),
     goToDashboard: () => navigate("/dashboard"),

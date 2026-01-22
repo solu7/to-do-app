@@ -1,6 +1,9 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTaskData } from "../services/useTaskData";
-import { useGetTaskDueDate, useSetTaskDueDate } from "./taskDueDateServices";
+import {
+  getTaskDueDate,
+  setTaskDueDate,
+} from "../services/taskDueDateServices";
 
 import {
   formatTaskCardDate,
@@ -9,36 +12,37 @@ import {
 
 export const useTaskDueDate = (task) => {
   const { data: taskDueDateString, refetch: refetchTaskDate } = useTaskData(
-    task,
-    useGetTaskDueDate
+    task?.id ? task : null,
+    getTaskDueDate,
   );
 
   const [selectedDueDate, setSelectedDueDate] = useState(null);
 
+  const taskId = task?.id;
+  const specificDateValue =
+    taskDueDateString && taskId ? taskDueDateString[taskId] : null;
+
   useEffect(() => {
-    const taskId = task?.id;
-    let dateValue = null;
-
-    if (
-      taskId &&
-      typeof taskDueDateString === "object" &&
-      taskDueDateString !== null
-    ) {
-      dateValue = taskDueDateString[taskId];
+    if (!taskId) {
+      if (selectedDueDate !== null) setSelectedDueDate(null);
+      return;
     }
+    if (specificDateValue === undefined) return;
 
-    if (dateValue && typeof dateValue === "string") {
-      const dateObject = new Date(dateValue);
+    if (specificDateValue && typeof specificDateValue === "string") {
+      const dateObject = new Date(specificDateValue);
+      const currentTime = selectedDueDate?.getTime();
+      const newTime = dateObject.getTime();
 
-      if (!isNaN(dateObject.getTime())) {
+      if (!isNaN(newTime) && currentTime !== newTime) {
         setSelectedDueDate(dateObject);
-      } else {
-        setSelectedDueDate(null);
       }
     } else {
-      setSelectedDueDate(null);
+      if (selectedDueDate !== null) {
+        setSelectedDueDate(null);
+      }
     }
-  }, [task, taskDueDateString]);
+  }, [taskId, specificDateValue]);
 
   const handleSaveDueDate = async (taskId, date) => {
     if (!taskId) {
@@ -47,7 +51,7 @@ export const useTaskDueDate = (task) => {
     }
     try {
       const formattedDate = date ? date.toISOString() : null;
-      await useSetTaskDueDate({ taskId, date: formattedDate });
+      await setTaskDueDate({ taskId, date: formattedDate });
     } catch (error) {
       console.error("Error al guardar la fecha:", error);
     }

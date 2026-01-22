@@ -28,12 +28,16 @@
   color: var(--primary-color);
 }
 .navbar__links {
+  font-family: "principal-font";
   display: flex;
   gap: 2.5rem;
   font-size: 13px;
   align-items: center;
   margin: 0;
   padding: 0;
+}
+.navbar__link {
+  cursor: pointer;
 }
 .navbar__links a {
   font-family: "principal-font", sans-serif;

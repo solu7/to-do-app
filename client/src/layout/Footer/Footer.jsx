@@ -8,7 +8,6 @@ import emailIcon from "./assets/images/email.png";
 import githubIcon from "./assets/images/github.png";
 import linkedinIcon from "./assets/images/linkedin.png";
 import moreproyectsIcon from "./assets/images/moreproyects.png";
-import downloadIcon from "./assets/images/download.png";
 import DownloadCV from "../../core/components/DownloadCV/DownloadCV";
 import { useNavigation } from "../../core/hooks/useNavigation";
 import { useExternalNavigation } from "../../core/hooks/useExternalNavigation";

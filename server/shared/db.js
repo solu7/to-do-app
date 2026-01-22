@@ -4,6 +4,9 @@ dotenv.config();
 
 const pool = createPool({
   uri: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
