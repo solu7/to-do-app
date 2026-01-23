@@ -135,9 +135,11 @@ Todos los endpoints (excepto los de autenticación pública) requieren un token 
   <table>
     <tr>
       <td width="50%">
+        <video src="https://github.com/user-attachments/assets/10f28f5d-fc3f-456b-a807-987388e8ed1f" width="100%" muted autoplay loop playsinline></video>
         <p align="center">🎥 <b>Panel de Edición Lateral</b><br>Desplazamiento fluido y redimensionamiento dinámico.</p>
       </td>
       <td width="50%">
+        <video src="https://github.com/user-attachments/assets/ed7450ce-8a60-43a9-9925-22121ad9d5d7" width="100%" muted autoplay loop playsinline></video>
         <p align="center">🎥 <b>Añadir Tarea & Quick Actions</b><br>Flujo de creación de tareas sin fricción.</p>
       </td>
     </tr>
