@@ -5,6 +5,7 @@
 .user-panel .success-message,
 .user-panel .error-message {
   font-size: 12px;
+  text-align: left;
 }
 .user-panel {
   font-family: "principal-font-bold";
