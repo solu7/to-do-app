@@ -83,7 +83,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
 
   const { handleSaveTask, handleDeleteTask } = useTaskActions(
     refreshAllLists,
-    onClose
+    onClose,
   );
 
   const { selectedDueDate, handleDueDateChange, formattedDateText } =
@@ -205,6 +205,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
             <section className="edit-panel__task-main">
               <div className="edit-panel__task-header">
                 <textarea
+                  spellCheck="false"
                   id="edit-panel__task-title"
                   ref={titleRef}
                   type="text"
@@ -224,6 +225,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 )}
               </div>
               <textarea
+                spellCheck="false"
                 id="edit-panel__task-description"
                 ref={descriptionRef}
                 type="text"
@@ -242,6 +244,7 @@ function EditPanel({ isOpen, onClose, handleOpenEditPanel, task }) {
                 alt=""
               />
               <textarea
+                spellCheck="false"
                 id="edit-panel__task-comment"
                 ref={commentRef}
                 type="text"
