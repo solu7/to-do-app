@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { changePasswordSchema } from "../validation/authSchemas.js";
-import { updatePasswordService } from "../../user/services/UserServices.js";
+import { updatePasswordService } from "../../user/services/userServices.js";
 
 export const useChangePassword = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,10 +21,10 @@ export const useChangePassword = () => {
 
   const { handleSubmit, reset } = form;
 
-const cleanState = useCallback(() => {
-        setApiError(null);
-        setSuccessMessage(null);
-    }, []);
+  const cleanState = useCallback(() => {
+    setApiError(null);
+    setSuccessMessage(null);
+  }, []);
 
   const onSubmit = form.handleSubmit(async (data) => {
     setIsLoading(true);
