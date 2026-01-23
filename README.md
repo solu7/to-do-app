@@ -102,18 +102,28 @@ Todos los endpoints (excepto los de autenticación pública) requieren un token 
 
 ## 📸 Visual Preview
 
-### 💻 Desktop Experience
+### 💻 Desktop Experience (Core Components)
 
 <div align="center">
   <table>
     <tr>
       <td width="50%">
-        <img src="./screenshots/dashboard.png" alt="Main Dashboard">
-        <p align="center"><i>Dashboard principal: Gestión centralizada de tareas con filtros inteligentes.</i></p>
+        <img src="./screenshots/homepage.png" alt="Landing Page">
+        <p align="center"><i>Landing Page: Puerta de entrada con diseño moderno y minimalista.</i></p>
       </td>
       <td width="50%">
-        <img src="./screenshots/appmodals.png" alt="Task Modals">
-        <p align="center"><i>Sistema de modales dinámicos para asignación de fechas y metadatos.</i></p>
+        <img src="./screenshots/dashboard.png" alt="Main Dashboard">
+        <p align="center"><i>Dashboard: Gestión centralizada de tareas con filtros inteligentes.</i></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="50%">
+        <img src="./screenshots/aboutproject.png" alt="Project Architecture">
+        <p align="center"><i>Arquitectura: Detalle técnico y estructural del proyecto.</i></p>
+      </td>
+      <td width="50%">
+        <img src="./screenshots/aboutme.png" alt="Developer Profile">
+        <p align="center"><i>Perfil: Información sobre el desarrollador y stack técnico.</i></p>
       </td>
     </tr>
   </table>
