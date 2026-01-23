@@ -26,7 +26,7 @@ export async function getAllTasks() {
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(
-        errorData.message || "Error al obtener todas las tareas."
+        errorData.message || "Error al obtener todas las tareas.",
       );
     }
     return await response.json();
@@ -73,7 +73,7 @@ export async function getCompletedTasks() {
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(
-        errorData.message || "Error al obtener tareas completadas."
+        errorData.message || "Error al obtener tareas completadas.",
       );
     }
     return await response.json();
@@ -84,26 +84,22 @@ export async function getCompletedTasks() {
 }
 
 export async function createTask({ title, description }) {
-  try {
-    const response = await fetch(`${API_URL}/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, description }),
-      credentials: "include",
-    });
+  const response = await fetch(`${API_URL}/tasks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title, description }),
+    credentials: "include",
+  });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Error al crear la tarea.");
-    }
-
-    const newTaskData = await response.json();
-    return newTaskData;
-  } catch (error) {
-    throw error;
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Error al crear la tarea.");
   }
+
+  const newTaskData = await response.json();
+  return newTaskData;
 }
 
 export async function updateTask({ taskId, title, description }) {

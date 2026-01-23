@@ -11,7 +11,7 @@ export const useCreateFilter = (onSuccess) => {
     anchorRect: null,
   });
 
-  const openModal = (type, e) => {
+  const openModal = (type) => {
     const config =
       type === "category"
         ? { title: "nueva categoría", placeholder: "Ej: Trabajo...", type }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import useAutoGrowTextArea from "../../../../../core/hooks/useAutoGrowTextarea";
 
 export const useTaskEditPanel = (task) => {
@@ -8,17 +8,9 @@ export const useTaskEditPanel = (task) => {
   const [comment, setComment] = useState("");
   const [originalTask, setOriginalTask] = useState(null);
 
-  const titleGrow = useAutoGrowTextArea([title, task?.id, taskEditPanelIsOpen]);
-  const descGrow = useAutoGrowTextArea([
-    description,
-    task?.id,
-    taskEditPanelIsOpen,
-  ]);
-  const commentGrow = useAutoGrowTextArea([
-    comment,
-    task?.id,
-    taskEditPanelIsOpen,
-  ]);
+  const titleGrow = useAutoGrowTextArea(title);
+  const descGrow = useAutoGrowTextArea(description);
+  const commentGrow = useAutoGrowTextArea(comment);
 
   useEffect(() => {
     if (task) {
@@ -27,7 +19,7 @@ export const useTaskEditPanel = (task) => {
       setDescription(task.description || "");
       setComment(task.comment || "");
     }
-  }, [task?.id]);
+  }, [task]);
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);

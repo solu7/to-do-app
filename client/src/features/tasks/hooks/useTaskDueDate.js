@@ -42,6 +42,7 @@ export const useTaskDueDate = (task) => {
         setSelectedDueDate(null);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId, specificDateValue]);
 
   const handleSaveDueDate = async (taskId, date) => {

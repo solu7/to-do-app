@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-const useAutoGrowTextArea = (dependencies = []) => {
+const useAutoGrowTextArea = (text) => {
   const textareaRef = useRef(null);
 
   const adjustHeight = useCallback(() => {
@@ -24,7 +24,7 @@ const useAutoGrowTextArea = (dependencies = []) => {
       clearTimeout(timeout1);
       clearTimeout(timeout2);
     };
-  }, [adjustHeight, ...dependencies]);
+  }, [adjustHeight, text]);
 
   return { textareaRef, adjustHeight };
 };

@@ -26,26 +26,21 @@ export async function getTaskDueDate({ taskId }) {
 export async function setTaskDueDate({ taskId, date }) {
   if (!taskId) throw new Error("TaskId es requerido para guardar");
 
-  try {
-    const response = await fetch(`${API_URL}/tasks/${taskId}/date`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ date: date }),
-      credentials: "include",
-    });
+  const response = await fetch(`${API_URL}/tasks/${taskId}/date`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ date: date }),
+    credentials: "include",
+  });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.message || "Error al guardar la fecha de la tarea.",
-      );
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw error;
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(
+      errorData.message || "Error al guardar la fecha de la tarea.",
+    );
   }
+
+  return await response.json();
 }

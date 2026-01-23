@@ -261,7 +261,7 @@ function AboutProject() {
           </h2>
           <p className="about-project__funcionality-desc">
             Procesamiento de rangos de fecha nativos en el servidor para
-            segmentar tareas en "Hoy" y "Próximos", optimizando la carga de
+            segmentar tareas en &quot;Hoy&quot; y &quot;Próximos&quot;, optimizando la carga de
             datos mediante filtros de tiempo exactos.
           </p>
         </div>
@@ -517,9 +517,9 @@ function AboutProject() {
                 </p>
               </section>
               <p className="about-project__expansion-item-desc">
-                Implementación de entornos de "Proyectos" separados. Esto
-                permitirá agrupar tareas bajo contextos específicos, ofreciendo
-                un nivel superior de organización al usuario.
+                Implementación de entornos de &quot;Proyectos&quot; separados.
+                Esto permitirá agrupar tareas bajo contextos específicos,
+                ofreciendo un nivel superior de organización al usuario.
               </p>
             </div>
             <div className="about-project__expansion-item">

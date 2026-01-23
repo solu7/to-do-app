@@ -1,7 +1,7 @@
-import { UserProvider } from "./context/UserContext.jsx";
+import { UserProvider , useUser } from "./context/UserContext.jsx";
 import { Routes, Route } from "react-router-dom";
 import SessionExpiryModal from "./core/components/SessionExpiryModal/SessionExpiryModal.jsx";
-import { useUser } from "./context/UserContext.jsx";
+
 import HomePage from "./pages/Home/HomePage.jsx";
 import AboutMePage from "./pages/AboutMe/AboutMe.jsx";
 import AboutProjectPage from "./pages/AboutProject/AboutProject.jsx";

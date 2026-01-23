@@ -26,7 +26,7 @@ export const useChangePassword = () => {
     setSuccessMessage(null);
   }, []);
 
-  const onSubmit = form.handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (data) => {
     setIsLoading(true);
     cleanState();
 
@@ -43,6 +43,7 @@ export const useChangePassword = () => {
         setApiError(result.error);
       }
     } catch (error) {
+      console.error("Change Password Error:", error);
       setApiError("Error de conexión o inesperado.");
     } finally {
       setIsLoading(false);

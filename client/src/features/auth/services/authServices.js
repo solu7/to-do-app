@@ -19,6 +19,7 @@ export async function logoutUser() {
       };
     }
   } catch (error) {
+    console.error("Logout User Error:", error);
     return { success: false, error: "Error de conexión con el servidor" };
   }
 }

@@ -3,7 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../../../../styles/utility.css";
 import "../../../../styles/modals.css";
 import "../../../../features/tasks/styles/TaskViewLayout.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDashboardSidebar } from "../../components/Sidebar/hooks/useDashboardSidebar.js";
 import Sidebar from "../Sidebar/Sidebar.jsx";
@@ -41,9 +41,6 @@ function DashboardContent() {
       closeTaskEditPanel();
     }
   };
-  useEffect(() => {
-    openDashboardSidebar();
-  }, []);
   const isMobile = window.innerWidth <= 1024;
   return (
     <div

@@ -2,17 +2,20 @@ import js from "@eslint/js";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import reactPlugin from "eslint-plugin-react";
 import { defineConfig, globalIgnores } from "eslint/config";
+import importPlugin from "eslint-plugin-import";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "node_modules"]),
   {
     files: ["**/*.{js,jsx}"],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs["recommended-latest"],
-      reactRefresh.configs.vite,
-    ],
+    plugins: {
+      "react": reactPlugin,
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      import: importPlugin,
+    },
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -22,14 +25,31 @@ export default defineConfig([
         sourceType: "module",
       },
     },
+    settings: {
+      react: { version: "detect" },
+      "import/resolver": {
+        node: {
+          extensions: [".js", ".jsx"],
+        },
+      },
+    },
     rules: {
+      ...js.configs.recommended.rules,
+      ...reactPlugin.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
       "no-unused-vars": "warn",
-      "react-refresh/only-export-components": "off",
       "no-useless-catch": "warn",
-      "react-hooks/exhaustive-deps": "warn",
-      "react-hooks/rules-of-hooks": "error",
+
+      "import/no-unresolved": "error",
+      "import/no-duplicates": "warn",
+      "import/newline-after-import": "warn",
+
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
+
+      "react/prop-types": "off",
+      
+      "react/react-in-jsx-scope": "off",
     },
   },
 ]);
