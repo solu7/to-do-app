@@ -135,7 +135,7 @@ Todos los endpoints (excepto los de autenticación pública) requieren un token 
   <table>
     <tr>
       <td width="50%">
-        <video src="https://github.com/user-attachments/assets/10f28f5d-fc3f-456b-a807-987388e8ed1f" width="100%" muted autoplay loop playsinline></video>
+        <video src="https://github.com/user-attachments/assets/3129996f-c942-4e47-b12e-e81b51649545" width="100%" muted autoplay loop playsinline></video>
         <p align="center">🎥 <b>Panel de Edición Lateral</b><br>Desplazamiento fluido y redimensionamiento dinámico.</p>
       </td>
       <td width="50%">
