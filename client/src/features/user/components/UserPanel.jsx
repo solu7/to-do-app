@@ -10,6 +10,9 @@ import { useUser } from "../../../context/UserContext";
 import { useState, useEffect } from "react";
 import { useUserActions } from "../hooks/useUserActions";
 import { useModal } from "../../tasks/hooks/useModal.js";
+import StatusMessage from "../../../core/components/StatusMessage/StatusMessage.jsx";
+import ChangePassModal from "../../auth/components/ChangePassModal/ChangePassModal.jsx";
+import DeleteAccountModal from "../../auth/components/DeleteAccountModal/DeleteAccountModal.jsx";
 
 function UserPanel({ isOpen, onClose }) {
   const changePassModal = useModal();
