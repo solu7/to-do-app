@@ -70,6 +70,7 @@ export async function deleteAccountService(password) {
       };
     }
   } catch (error) {
+    console.error("Delete account service error:", error);
     return { success: false, error: "Error de conexión con el servidor." };
   }
 }

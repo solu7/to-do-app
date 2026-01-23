@@ -37,7 +37,7 @@ export const useTaskData = (tasks, fetchFunction, externalTrigger = null) => {
     };
 
     fetchData();
-  }, [tasks, fetchFunction, refetchTrigger, externalTrigger]);
+  }, [tasks, fetchFunction, refetchTrigger, externalTrigger, dataByTaskId]);
   const refetch = () => setRefetchTrigger((prev) => prev + 1);
 
   return { data: dataByTaskId, refetch };

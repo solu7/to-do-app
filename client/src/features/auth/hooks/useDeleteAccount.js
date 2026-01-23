@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { deleteAccountSchema } from "../validation/authSchemas";
-import { deleteAccountService } from "../../user/services/UserServices";
+import { deleteAccountService } from "../../user/services/userServices";
 
 export const useDeleteAccount = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +30,7 @@ export const useDeleteAccount = () => {
         setApiError(result.error);
       }
     } catch (error) {
+      console.error("Delete account error:", error);
       setApiError("Error de conexión o inesperado.");
     } finally {
       setIsLoading(false);

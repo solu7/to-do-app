@@ -1,6 +1,6 @@
 import "./DropdownWrapper.css";
 
-function DropdownWrapper( {buttonText, buttonIcon, onClick, value, ...props} ) {
+function DropdownWrapper( {buttonText, buttonIcon, onClick} ) {
   return (
     <div className="dropdown-button__wrapper" onClick={onClick}>
       <img

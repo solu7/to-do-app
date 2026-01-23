@@ -1,5 +1,4 @@
 import "./Register.css";
-import { motion, AnimatePresence } from "framer-motion";
 import StatusMessage from "../../../core/components/StatusMessage/StatusMessage.jsx";
 import { useRegisterForm } from "./hooks/useRegisterForm.js";
 import { useNavigation } from "../../../core/hooks/useNavigation.js";

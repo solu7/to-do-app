@@ -17,7 +17,7 @@ function FilteredTasksView({ onTaskClick }) {
 
   const { activeFilter } = useFilters();
 
-  const { tasks, filters } = useFilteredTasks();
+  const { tasks } = useFilteredTasks();
   return (
     <div className="task-view__container">
       <section className="task-view__header">
