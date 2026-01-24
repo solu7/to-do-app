@@ -2,7 +2,7 @@
 
 <p align="center"> <a href="https://agvstindev-to-do-app.vercel.app" target="_blank"> <img src="https://img.shields.io/badge/Demo_en_Vivo-Vercel-black?style=for-the-badge&logo=vercel" alt="Demo Link"> </a> <img src="https://img.shields.io/badge/Status-Producción-success?style=for-the-badge" alt="Status"> </p>
 
-## 🧠 El Desafío de Ingeniería
+## 🧠 El Desafío
 
 Este proyecto no nació para ser una simple lista de tareas, sino como un **desafío evolutivo** para dominar el desarrollo Full-Stack. Mi objetivo fue construir una herramienta robusta desde cero, priorizando la **seguridad del usuario**, la **integridad de los datos** y una **experiencia de usuario fluida**.
 
